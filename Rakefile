@@ -8,10 +8,21 @@ task default: :ci
 
 Rails.application.load_tasks
 
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new(:rubocop) do |task|
+    task.fail_on_error = true
+  end
+rescue LoadError
+  # this rescue block is here for deployment to production, where
+  # certain dependencies are not expected, and that is OK
+  STDERR.puts 'WARNING: Rubocop was not found and could not be required.'
+end
+
 require 'solr_wrapper/rake_task' unless Rails.env.production?
 
 desc 'Run tests in generated test Rails app with generated Solr instance running'
-task ci: :environment do
+task ci: %i[rubocop environment] do
   require 'solr_wrapper'
   ENV['environment'] = 'test'
   SolrWrapper.wrap(port: '8983') do |solr|
