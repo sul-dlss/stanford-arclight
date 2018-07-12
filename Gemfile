@@ -55,6 +55,8 @@ gem 'arclight', github: 'sul-dlss/arclight', branch: 'use-released-versions'
 gem 'blacklight_range_limit', '7.0.0.rc2'
 
 group :development, :test do
+  gem 'capybara'
+  gem 'rspec-rails'
   gem 'solr_wrapper', '>= 0.3'
 end
 
