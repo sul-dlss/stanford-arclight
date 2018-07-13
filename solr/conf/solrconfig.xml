@@ -54,6 +54,8 @@
     </updateLog>
   </updateHandler>
 
+  <jmx />
+
   <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
 
   <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" />
