@@ -19,7 +19,15 @@ rescue LoadError
   STDERR.puts 'WARNING: Rubocop was not found and could not be required.'
 end
 
-require 'solr_wrapper/rake_task' unless Rails.env.production?
+unless Rails.env.production?
+  begin
+    require 'solr_wrapper/rake_task'
+  rescue LoadError
+    # this rescue block is here for deployment to production, where
+    # certain dependencies are not expected, and that is OK
+    STDERR.puts 'solr_werapper was not found and could not be required.'
+  end
+end
 
 desc 'Run tests in generated test Rails app with generated Solr instance running'
 task ci: %i[rubocop environment] do
