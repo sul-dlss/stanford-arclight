@@ -25,7 +25,7 @@ unless Rails.env.production?
   rescue LoadError
     # this rescue block is here for deployment to production, where
     # certain dependencies are not expected, and that is OK
-    STDERR.puts 'solr_werapper was not found and could not be required.'
+    STDERR.puts 'solr_wrapper was not found and could not be required.'
   end
 end
 
