@@ -3,7 +3,7 @@
 # config valid for current version and patch releases of Capistrano
 lock '~> 3.11.0'
 
-set :application, 'stanford-arclihgt'
+set :application, 'stanford-arclight'
 set :repo_url, 'https://github.com/sul-dlss/stanford-arclight.git'
 
 # Default branch is :master
