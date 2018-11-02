@@ -24,11 +24,12 @@ set :deploy_to, '/opt/app/arclight/arclight'
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w[config/secrets.yml config/database.yml config/blacklight.yml]
+set :linked_files, %w[config/secrets.yml config/database.yml config/blacklight.yml config/honeybadger.yml]
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w[log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system]
+set :linked_dirs, %w[config/settings log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system]
 
+set :honeybadger_env, fetch(:stage)
 # Default value for default_env is {}
 # set :default_env, { path: '/opt/ruby/bin:$PATH' }
 
