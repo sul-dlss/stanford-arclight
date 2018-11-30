@@ -245,7 +245,7 @@ class CatalogController < ApplicationController
     }
 
     # Collection Show Page - Indexed Terms Section
-    config.add_component_indexed_terms_field 'access_subjects_ssim', label: 'Subjects', :link_to_facet => true, separator_options: {
+    config.add_component_indexed_terms_field 'access_subjects_ssim', label: 'Subjects', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
@@ -257,7 +257,7 @@ class CatalogController < ApplicationController
       last_word_connector: '<br/>'
     }, helper_method: :link_to_name_facet
 
-    config.add_component_indexed_terms_field 'places_ssim', label: 'Places', :link_to_facet => true, separator_options: {
+    config.add_component_indexed_terms_field 'places_ssim', label: 'Places', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
@@ -268,7 +268,7 @@ class CatalogController < ApplicationController
     config.add_component_terms_field 'parent_access_terms_ssm', label: 'Terms of Access'
 
     # Collection Show Page - Summary Section
-    config.add_summary_field 'creators_ssim', label: 'Creator', :link_to_facet => true
+    config.add_summary_field 'creators_ssim', label: 'Creator', link_to_facet: true
     config.add_summary_field 'abstract_ssm', label: 'Abstract'
     config.add_summary_field 'extent_ssm', label: 'Extent'
     config.add_summary_field 'language_ssm', label: 'Language'
@@ -306,7 +306,7 @@ class CatalogController < ApplicationController
     config.add_related_field 'originalsloc_ssm', label: 'Location of originals', helper_method: :paragraph_separator
 
     # Collection Show Page - Indexed Terms Section
-    config.add_indexed_terms_field 'access_subjects_ssim', label: 'Subjects', :link_to_facet => true, separator_options: {
+    config.add_indexed_terms_field 'access_subjects_ssim', label: 'Subjects', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
@@ -318,7 +318,7 @@ class CatalogController < ApplicationController
       last_word_connector: '<br/>'
     }, helper_method: :link_to_name_facet
 
-    config.add_indexed_terms_field 'places_ssim', label: 'Places', :link_to_facet => true, separator_options: {
+    config.add_indexed_terms_field 'places_ssim', label: 'Places', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
       two_words_connector: '<br/>',
       last_word_connector: '<br/>'
