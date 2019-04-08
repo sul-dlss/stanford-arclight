@@ -18,7 +18,7 @@ begin
 rescue LoadError
   # this rescue block is here for deployment to production, where
   # certain dependencies are not expected, and that is OK
-  STDERR.puts 'WARNING: Rubocop was not found and could not be required.'
+  warn 'WARNING: Rubocop was not found and could not be required.'
 end
 
 unless Rails.env.production?
@@ -27,7 +27,7 @@ unless Rails.env.production?
   rescue LoadError
     # this rescue block is here for deployment to production, where
     # certain dependencies are not expected, and that is OK
-    STDERR.puts 'solr_wrapper was not found and could not be required.'
+    warn 'solr_wrapper was not found and could not be required.'
   end
 end
 
