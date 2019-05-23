@@ -352,8 +352,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  arclight
-  blacklight_range_limit (= 7.0.0.rc2)
+  arclight (~> 0.1.4)
+  blacklight_range_limit
   bootsnap (>= 1.1.0)
   bootstrap (~> 4.0)
   byebug
