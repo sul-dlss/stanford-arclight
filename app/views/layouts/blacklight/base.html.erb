@@ -12,6 +12,8 @@
     <%= opensearch_description_tag application_name, opensearch_catalog_url(format: 'xml') %>
     <%= favicon_link_tag %>
     <%= stylesheet_link_tag "application", media: "all" %>
+    <%= stylesheet_link_tag "https://www-media.stanford.edu/su-identity/css/su-identity.css" %>
+    <%= stylesheet_link_tag "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= content_for(:head) %>
@@ -22,19 +24,23 @@
       <%= link_to t('blacklight.skip_links.main_content'), '#main-container', class: 'element-invisible element-focusable rounded-bottom py-2 px-3', data: { turbolinks: 'false' } %>
       <%= content_for(:skip_links) %>
     </div>
-    <%= render partial: 'shared/header_navbar' %>
+    <div id="su-wrap"> <!-- #su-wrap start -->
+      <div id="su-content"> <!-- #su-content start -->
+        <%= render partial: 'shared/header_navbar' %>
 
-  <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
-    <%= content_for(:container_header) %>
+        <main id="main-container" class="<%= container_classes %>" role="main" aria-label="<%= t('blacklight.main.aria.main_container') %>">
+          <%= content_for(:container_header) %>
 
-    <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
+          <%= render partial: 'shared/flash_msg', layout: 'shared/flash_messages' %>
 
-    <div class="row">
-      <%= content_for?(:content) ? yield(:content) : yield %>
-    </div>
-  </main>
-
+          <div class="row">
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </div>
+        </main>
+      </div> <!-- #su-content end -->
+    </div> <!-- #su-wrap end -->
     <%= render partial: 'shared/footer' %>
     <%= render partial: 'shared/modal' %>
+    <%= render 'shared/su_footer' %>
   </body>
 </html>
