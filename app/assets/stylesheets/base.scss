@@ -1,0 +1,72 @@
+// Override base HTML here
+
+a {
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+
+  &.disabled {
+    color: $sul-btn-disabled-color;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+}
+
+:disabled {
+  // scss-lint:disable ImportantRule
+  background-color: $sul-btn-disabled-color !important;
+  color: $white;
+  cursor: not-allowed;
+  text-decoration: none;
+  // scss-lint:enable ImportantRule
+}
+
+a:hover,
+a:focus,
+a:active {
+  @include link-styling;
+
+  &.btn-link,
+  &.nav-link {
+    border-bottom: 1px solid transparent;
+  }
+}
+
+
+body {
+  background-color: $sul-bg-color;
+  color: $sul-text-color;
+  font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+}
+
+h1 {
+  color: $sul-h1-font-color;
+  font-weight: 300;
+  line-height: 1.2em;
+}
+
+h2 {
+  color: $sul-h2-font-color;
+  line-height: 1.2em;
+}
+
+h3 {
+  color: $sul-h3-font-color;
+  line-height: 1.2em;
+}
+
+h4 {
+  color: $sul-h4-font-color;
+  line-height: 1.2em;
+}
+
+.turbolinks-progress-bar {
+  background: $blue;
+  display: block;
+  height: 3px;
+  left: 0;
+  position: fixed;
+  top: 0;
+  transform: translate3d(0, 0, 0);
+  transition: width 300ms ease-out, opacity 150ms 150ms ease-in;
+  z-index: 9999;
+}
