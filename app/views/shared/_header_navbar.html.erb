@@ -5,8 +5,13 @@
     </h1>
 
     <div class="topnav-links">
-      <ul class="navbar-nav" aria-label="browse" role="navigation">
+      <ul class="navbar-nav flex-row" aria-label="browse" role="navigation">
         <%= render 'shared/main_menu_links' %>
+        <%= render_nav_actions do |_config, action|%>
+          <li class="nav-item ml-3 <%= 'active' if controller_name == 'bookmarks' %>">
+            <%= action %>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>
