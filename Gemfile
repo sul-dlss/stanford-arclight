@@ -60,7 +60,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'arclight', '~> 0.2.0'
+gem 'arclight', '~> 0.3.2'
 gem 'blacklight_range_limit'
 
 group :development, :test do

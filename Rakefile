@@ -38,7 +38,18 @@ task ci: %i[rubocop environment] do
   SolrWrapper.wrap(port: '8983') do |solr|
     solr.with_collection(name: 'blacklight-core', dir: Rails.root.join('solr', 'conf')) do
       # run the tests
+      Rake::Task['seed'].invoke
       Rake::Task['spec'].invoke
     end
+  end
+end
+
+desc 'Seed ArcLight fixture data'
+task :seed do
+  # Read the repository configuration
+  repo_config = YAML.safe_load(File.read('./config/repositories.yml'))
+  repo_config.keys.map do |repository|
+    # Index a directory with a given repository ID that matches its filename
+    system("DIR=./spec/fixtures/ead/#{repository} REPOSITORY_ID=#{repository} rake arclight:index_dir")
   end
 end
