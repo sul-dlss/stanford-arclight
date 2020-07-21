@@ -11,3 +11,9 @@ sample_unitid:
   ead:
     href: 'http://example.com/sample.xml'
     size: 123456
+default:
+  disabled: true
+  pdf:
+    template: 'http://example.com/%{unitid}.pdf'
+  ead:
+    template: 'http://example.com/%{unitid}.xml'
