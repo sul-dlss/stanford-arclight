@@ -46,10 +46,10 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    arclight (0.3.2)
+    arclight (0.3.3)
       blacklight (~> 7.2)
       blacklight_range_limit (~> 7.1)
-      rails (~> 5.0)
+      rails (>= 5.2.3, < 6.1)
       sprockets-bumble_d
       traject (~> 3.0)
       traject_plus (~> 1.2)
@@ -57,7 +57,7 @@ GEM
     ast (2.4.1)
     autoprefixer-rails (9.8.5)
       execjs
-    bcrypt (3.1.13)
+    bcrypt (3.1.15)
     bindex (0.8.1)
     blacklight (7.10.0)
       deprecation
@@ -68,7 +68,7 @@ GEM
       view_component
     blacklight_range_limit (7.9.0)
       blacklight (~> 7.0)
-    bootsnap (1.4.6)
+    bootsnap (1.4.7)
       msgpack (~> 1.0)
     bootstrap (4.5.0)
       autoprefixer-rails (>= 9.1.0)
@@ -150,7 +150,7 @@ GEM
     http-parser (1.2.1)
       ffi-compiler (>= 1.0, < 2.0)
     httpclient (2.8.3)
-    i18n (1.8.4)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     jbuilder (2.10.0)
       activesupport (>= 5.0.0)
@@ -364,7 +364,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.7)
     unicode-display_width (1.7.0)
-    view_component (2.16.0)
+    view_component (2.17.1)
       activesupport (>= 5.0.0, < 7.0)
     warden (1.2.8)
       rack (>= 2.0.6)
