@@ -68,11 +68,11 @@ GEM
       traject (~> 3.0)
       traject_plus (~> 1.2)
     ast (2.4.1)
-    autoprefixer-rails (10.0.1.0)
+    autoprefixer-rails (10.0.1.1)
       execjs
     bcrypt (3.1.16)
     bindex (0.8.1)
-    blacklight (7.13.0)
+    blacklight (7.13.1)
       deprecation
       globalid
       jbuilder (~> 2.7)
@@ -81,7 +81,7 @@ GEM
       view_component
     blacklight_range_limit (7.9.1)
       blacklight (~> 7.0)
-    bootsnap (1.4.9)
+    bootsnap (1.5.0)
       msgpack (~> 1.0)
     bootstrap (4.5.2)
       autoprefixer-rails (>= 9.1.0)
@@ -269,14 +269,14 @@ GEM
     rsolr (2.3.0)
       builder (>= 2.1.2)
       faraday (>= 0.9.0)
-    rspec-core (3.9.3)
-      rspec-support (~> 3.9.3)
-    rspec-expectations (3.9.3)
+    rspec-core (3.10.0)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-mocks (3.9.1)
+      rspec-support (~> 3.10.0)
+    rspec-mocks (3.10.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
+      rspec-support (~> 3.10.0)
     rspec-rails (4.0.1)
       actionpack (>= 4.2)
       activesupport (>= 4.2)
@@ -285,7 +285,7 @@ GEM
       rspec-expectations (~> 3.9)
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
-    rspec-support (3.9.4)
+    rspec-support (3.10.0)
     rubocop (0.93.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.5)
@@ -399,7 +399,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yell (2.2.2)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby
