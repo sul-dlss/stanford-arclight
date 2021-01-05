@@ -34,6 +34,7 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   Exclude:
     - !ruby/regexp /\.rake$/
+    - 'app/controllers/catalog_controller.rb' # holds a long bl configuration
     - 'spec/**/*'
 
 RSpec/ExampleLength:
