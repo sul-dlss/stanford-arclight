@@ -135,7 +135,7 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-guests (0.7.0)
+    devise-guests (0.8.0)
       devise
     diff-lcs (1.4.4)
     dlss-capistrano (3.11.1)
@@ -243,7 +243,7 @@ GEM
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    ostruct (0.4.0)
+    ostruct (0.5.0)
     parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
@@ -251,7 +251,7 @@ GEM
     public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
-    racc (1.5.2)
+    racc (1.6.0)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -312,7 +312,7 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.10.2)
-    rubocop (1.22.1)
+    rubocop (1.22.2)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -411,7 +411,7 @@ GEM
       unf_ext
     unf_ext (0.0.8)
     unicode-display_width (2.1.0)
-    view_component (2.40.0)
+    view_component (2.41.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
     warden (1.2.9)
@@ -427,7 +427,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yell (2.2.2)
-    zeitwerk (2.4.2)
+    zeitwerk (2.5.1)
 
 PLATFORMS
   ruby
