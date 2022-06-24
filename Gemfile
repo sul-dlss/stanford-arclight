@@ -4,7 +4,11 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
+
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem 'sprockets-rails'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -42,8 +46,8 @@ group :production do
 end
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -63,7 +67,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'arclight', '~> 0.4.0'
+gem 'arclight', '~> 0.5'
 gem 'blacklight_range_limit'
 
 group :development, :test do
@@ -76,7 +80,7 @@ group :development, :test do
   gem 'solr_wrapper', '>= 0.3'
 end
 
-gem 'rsolr', '>= 1.0', '< 3'
+gem 'rsolr', '~> 2.5'
 gem 'bootstrap', '~> 4.0'
 gem 'popper_js'
 gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
