@@ -288,10 +288,10 @@ class CatalogController < ApplicationController
     }
 
     config.add_indexed_terms_field 'names_coll_ssim', label: 'Names', separator_options: {
-      words_connector: '<br/>',
-      two_words_connector: '<br/>',
-      last_word_connector: '<br/>'
-    }, helper_method: :link_to_name_facet
+                                                                        words_connector: '<br/>',
+                                                                        two_words_connector: '<br/>',
+                                                                        last_word_connector: '<br/>'
+                                                                      }, helper_method: :link_to_name_facet
 
     config.add_indexed_terms_field 'places_ssim', label: 'Places', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
@@ -305,12 +305,12 @@ class CatalogController < ApplicationController
 
     # Component Show Page - Metadata Section
     config.add_component_field 'containers', label: 'Containers', accessor: 'containers', separator_options: {
-      words_connector: ', ',
-      two_words_connector: ', ',
-      last_word_connector: ', '
-    }, if: lambda { |_context, _field_config, document|
-      document.containers.present?
-    }
+                                                                                            words_connector: ', ',
+                                                                                            two_words_connector: ', ',
+                                                                                            last_word_connector: ', '
+                                                                                          }, if: lambda { |_context, _field_config, document|
+                                                                                                   document.containers.present?
+                                                                                                 }
     config.add_component_field 'abstract_ssm', label: 'Abstract', helper_method: :render_html_tags
     config.add_component_field 'extent_ssm', label: 'Extent'
     config.add_component_field 'scopecontent_ssm', label: 'Scope and Content', helper_method: :render_html_tags
@@ -331,10 +331,10 @@ class CatalogController < ApplicationController
     }
 
     config.add_component_indexed_terms_field 'names_ssim', label: 'Names', separator_options: {
-      words_connector: '<br/>',
-      two_words_connector: '<br/>',
-      last_word_connector: '<br/>'
-    }, helper_method: :link_to_name_facet
+                                                                             words_connector: '<br/>',
+                                                                             two_words_connector: '<br/>',
+                                                                             last_word_connector: '<br/>'
+                                                                           }, helper_method: :link_to_name_facet
 
     config.add_component_indexed_terms_field 'places_ssim', label: 'Places', link_to_facet: true, separator_options: {
       words_connector: '<br/>',
