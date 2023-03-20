@@ -99,3 +99,5 @@ gem 'devise-guests', '~> 0.8'
 gem 'blacklight-locale_picker'
 
 gem "honeybadger", "~> 5.2"
+
+gem "okcomputer", "~> 1.18"
