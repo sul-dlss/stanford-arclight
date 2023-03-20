@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   mount Blacklight::Engine => '/'
   mount Arclight::Engine => '/'
 
-  root to: "arclight/repositories#index"
+  root to: 'arclight/repositories#index'
   concern :searchable, Blacklight::Routes::Searchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
@@ -14,7 +16,7 @@ Rails.application.routes.draw do
   concern :hierarchy, Arclight::Routes::Hierarchy.new
 
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
-  concerns :hierarchy
+    concerns :hierarchy
     concerns :exportable
   end
 

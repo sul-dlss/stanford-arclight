@@ -39,12 +39,12 @@ class CatalogController < ApplicationController
     ## parameters included in the Blacklight-jetty document requestHandler.
     #
     config.default_document_solr_params = {
-     qt: 'document',
-     fl: '*,collection:[subquery]',
-     'collection.q': '{!terms f=id v=$row._root_}',
-     'collection.defType': 'lucene',
-     'collection.fl': '*',
-     'collection.rows': 1
+      qt: 'document',
+      fl: '*,collection:[subquery]',
+      'collection.q': '{!terms f=id v=$row._root_}',
+      'collection.defType': 'lucene',
+      'collection.fl': '*',
+      'collection.rows': 1
     }
 
     config.header_component = Arclight::HeaderComponent
@@ -206,29 +206,29 @@ class CatalogController < ApplicationController
     config.add_search_field 'name', label: 'Name' do |field|
       field.qt = 'search'
       field.solr_parameters = {
-        qf:  '${qf_name}',
-        pf:  '${pf_name}'
+        qf: '${qf_name}',
+        pf: '${pf_name}'
       }
     end
     config.add_search_field 'place', label: 'Place' do |field|
       field.qt = 'search'
       field.solr_parameters = {
-        qf:  '${qf_place}',
-        pf:  '${pf_place}'
+        qf: '${qf_place}',
+        pf: '${pf_place}'
       }
     end
     config.add_search_field 'subject', label: 'Subject' do |field|
       field.qt = 'search'
       field.solr_parameters = {
-        qf:  '${qf_subject}',
-        pf:  '${pf_subject}'
+        qf: '${qf_subject}',
+        pf: '${pf_subject}'
       }
     end
     config.add_search_field 'title', label: 'Title' do |field|
       field.qt = 'search'
       field.solr_parameters = {
-        qf:  '${qf_title}',
-        pf:  '${pf_title}'
+        qf: '${qf_title}',
+        pf: '${pf_title}'
       }
     end
 
@@ -255,7 +255,6 @@ class CatalogController < ApplicationController
     # Configuration for autocomplete suggestor
     config.autocomplete_enabled = true
     config.autocomplete_path = 'suggest'
-
 
     # ===========================
     # COLLECTION SHOW PAGE FIELDS
