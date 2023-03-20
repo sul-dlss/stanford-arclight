@@ -232,6 +232,7 @@ GEM
     minitest (5.18.0)
     msgpack (1.6.1)
     multi_json (1.15.0)
+    mysql2 (0.5.5)
     net-imap (0.3.4)
       date
       net-protocol
@@ -449,6 +450,7 @@ DEPENDENCIES
   honeybadger (~> 5.2)
   importmap-rails
   jbuilder
+  mysql2
   okcomputer (~> 1.18)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
