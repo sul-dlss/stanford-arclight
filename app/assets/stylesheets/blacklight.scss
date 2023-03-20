@@ -1,0 +1,8 @@
+@import 'bootstrap';
+
+@import 'blacklight/blacklight';
+
+.blacklight-icons svg {
+  max-height: 1rem;
+  max-width: 1rem;
+}
