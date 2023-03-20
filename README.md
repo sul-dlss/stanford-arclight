@@ -1,5 +1,24 @@
-![ci build](https://github.com/sul-dlss/stanford-arclight/actions/workflows/ruby.yml/badge.svg)
+# README
 
-# Stanford Arclight
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-This is the Stanford specific installation of the [Arclight](https://github.com/sul-dlss/arclight) extention to Blacklight
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
