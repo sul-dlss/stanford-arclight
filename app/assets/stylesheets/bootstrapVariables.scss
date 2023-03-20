@@ -1,0 +1,15 @@
+// Colors
+$primary: $stanford-cardinal;
+$danger: $stanford-digital-red;
+$info: $stanford-digital-blue;
+$success: $stanford-fog;
+$dark: $stanford-cardinal;
+
+// Navbar
+$navbar-padding-y: 0;
+$navbar-dark-color: white;
+$nav-link-padding-y: 0.3rem;
+
+nav .navbar-nav {
+  --bs-nav-link-font-size: 0.938rem;
+}

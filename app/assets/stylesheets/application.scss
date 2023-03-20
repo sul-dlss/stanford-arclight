@@ -1,10 +1,10 @@
 @import 'palette';
-@import 'sul_variables';
-@import 'mixins';
-@import 'blacklight';
+@import 'bootstrapVariables';
+@import 'bootstrap';
+
+$logo-image: url(StanfordLibraries-logo-whitetext.svg);
+$logo-width: 200px;
+$logo-height: 35px;
+@import 'blacklight/blacklight';
 @import 'arclight/application';
-@import 'base';
-@import 'modules/header_navbar';
-@import 'modules/search_bar';
 @import 'sulFooter';
-@import 'modules/top_navbar';
