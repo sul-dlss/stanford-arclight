@@ -75,6 +75,7 @@ gem "arclight", "= 1.0.0.beta4"
 
 group :development, :test do
   gem "solr_wrapper", ">= 0.3"
+  gem "rspec-rails", "~> 6.0"
 end
 gem "rsolr", ">= 1.0", "< 3"
 gem "bootstrap", "~> 5.1"
@@ -82,3 +83,4 @@ gem "sassc-rails", "~> 2.1"
 gem "devise"
 gem "devise-guests", "~> 0.8"
 gem "blacklight-locale_picker"
+
