@@ -66,6 +66,14 @@ group :development do
   # gem "spring"
 end
 
+group :deployment do
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
+  gem 'capistrano-rails'
+  gem 'dlss-capistrano'
+end
+
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
@@ -89,3 +97,5 @@ gem 'sassc-rails', '~> 2.1'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
 gem 'blacklight-locale_picker'
+
+gem "honeybadger", "~> 5.2"
