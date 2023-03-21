@@ -1,53 +1,88 @@
-nlm:
-  name: 'National Library of Medicine. History of Medicine Division'
-  description: 'NLM’s History of Medicine Division collects, preserves, makes available, and interprets for diverse audiences one of the world’s richest collections of historical material related to human health and disease.'
-  contact_html: |
-    <div class="al-repository-contact-info"><a href="mailto:hmdref@nlm.nih.gov">hmdref@nlm.nih.gov</a></div>
-  location_html: |
-    <div class="al-repository-street-address-building">Building 38, Room 1E-21</div>
-    <div class="al-repository-street-address-address1">8600 Rockville Pike</div>
-    <div class="al-repository-street-address-city_state_zip_country">Bethesda, MD 20894, USA</div>
-  thumbnail_url: "https://collections.nlm.nih.gov/pageturnerserver/ajaxp?theurl=http://localhost:8080/fedora/get/nlm:nlmuid-101421040-img/THUMB"
-  request_types:
-    google_form:
-      request_url: 'https://docs.google.com/a/stanford.edu/forms/d/e/1FAIpQLSeOamhY_IcFw4sPnz0ddwWWkrPaHbM5wp7JVbOLOL_mIusEyw/viewform'
-      request_mappings: "document_url=entry.1980510262&collection_name=entry.619150170&collection_creator=entry.14428541&eadid=entry.996397105&containers=entry.1125277048&title=entry.862815208"
+ars:
+  name: 'Archive of Recorded Sound'
+  visit_note: 'The Archive’s materials are for on-site use only. It is advised that visitors contact the Archive in advance so that required materials can be prepared.'
+  description: 'The Archive of Recorded Sound’s collection contains over 400,000 items that span sound recording history--from its beginnings to the present day. Nearly all formats ever developed to record sound are represented: piano rolls; wax cylinders; shellac, acetate, aluminum, and vinyl discs; magnetic wire and tape recordings; compact discs. Collections are particularly strong in the areas of jazz and opera.'
+  building: 'Braun Music Center'
+  address1: '541 Lasuen Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305-3076'
+  country: 'USA'
+  phone: ''
+  contact_info: 'soundarchive@stanford.edu'
+  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/Edison_002LowRes.jpg'
 
-sul-spec:
-  name: 'Stanford University Libraries. Special Collections and University Archives'
+cubberley:
+  name: 'Cubberley Education Library'
+  visit_note: ''
+  description: 'Cubberley Education Library supports the research and teaching needs of those interested in education at all levels with a collection of over 170,000 volumes and some 1100 journals. Part of this collection is stored off campus in SAL3 for preservation and must be paged to campus. We have a current curriculum collection (including children’s books), plus historical collections of textbooks and college catalogs.'
+  building: 'Education Building'
+  address1: '485 Lasuen Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305-3076'
+  country: 'USA'
+  phone: ''
+  contact_info: 'cubberley@stanford.edu'
+  thumbnail_url: 'http://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/ed%20main.jpg'
+
+
+hoover:
+  name: 'Hoover Institution Archives'
+  description: 'Founded by Herbert Hoover in 1919, the Hoover Institution Library & Archives are dedicated to documenting war, revolution, and peace in the twentieth and twenty-first centuries. With nearly one million volumes and more than six thousand archival collections from 171 countries, Hoover supports a vibrant community of scholars and a broad public interested in the meaning and role of history.'
+  building: ''
+  address1: '434 Galvez Mall'
+  address2: 'Stanford University'
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305-6003'
+  phone: '650-723-1754'
+  contact_info: ''
+  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/hooverarchives_0.jpg'
+  visit_note: 'Archival holdings are brought from the stacks to the reading room at 9:00 a.m., 10:30 a.m., 11:30 a.m., 1:30 p.m., and 3:00 p.m. Some of the archives’ collections are stored off-site.'
+
+music:
+  name: 'Music Library'
+  description: 'The Stanford University Music Library and Archive of Recorded Sound promote research, teaching, and learning in music by providing library services that allow users to find and obtain the resources they need easily and effectively; by developing and maintaining strong collections; by permanently preserving research materials; and by improving methods of access to music materials in all forms for the Stanford University community. '
+  building: 'Braun Music Center'
+  address1: '541 Lasuen Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305-3076'
+  country: 'USA'
+  phone: ''
+  contact_info: 'soundarchive@stanford.edu'
+  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/Pink%20tree.jpg'
+
+spec:
+  name: 'Special Collections'
   visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 36 hours in advance.'
   description: 'The Special Collections and University Archives Department of Stanford University Libraries is committed to acquiring, preserving, and providing access to primary source materials that support the research needs of the Stanford community and beyond. There are three distinct divisions in our department: Manuscripts, Rare Books and University Archives. We welcome all students, scholars and members of the general public to the Field Reading Room. Learn more about using and accessing our collections.'
-  contact_html: |
-    <div class="al-repository-contact-phone">(650) 725-1022</div>
-    <div class="al-repository-contact-info"><a href="mailto:specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>
-  location_html: |
-    <div class="al-repository-street-address-building">Green Library</div>
-    <div class="al-repository-street-address-address1">557 Escondido Mall</div>
-    <div class="al-repository-street-address-city_state_zip_country">Stanford, CA 94305, USA</div>
-  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/collection/image/Collections-Super-Enlight.jpg'
-  request_types:
-    aeon_web_ead:
-      request_url: 'https://sample.request.com'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_info: 'specialcollections@stanford.edu'
+  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/DSC_0011_150.jpg'
 
-umich-bhl:
-  name: 'University of Michigan. Bentley Historical Library'
-  description: 'The Bentley Historical Library collects the materials for and promotes the study of the histories of two great, intertwined institutions, the State of Michigan and the University of Michigan. The Library is open without fee to the public, and we welcome researchers regardless of academic or professional affiliation.'
-  contact_html: |
-    <div class="al-repository-contact-info"><a href="mailto:bentley.ref@umich.edu">bentley.ref@umich.edu</a></div>
-  location_html: |
-    <div class="al-repository-street-address-address1">1150 Beal Ave</div>
-    <div class="al-repository-street-address-city_state_zip_country">Ann Arbor, MI 48109-2113, USA</div>
-  thumbnail_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Bhlexterior.jpg/150px-Bhlexterior.jpg'
-  request_types:
-    aeon_external_request_endpoint:
-      request_url: https://example.com/aeon/aeon.dll
-      request_mappings:
-        url_params:
-          Action: 11
-          Type: 200
-        static:
-          SystemId: ArcLight
-          ItemInfo1: manuscript
-        accessor:
-          ItemTitle: collection_name
+uarc:
+  name: 'University Archives'
+  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 36 hours in advance.'
+  description: 'The Special Collections and University Archives Department of Stanford University Libraries is committed to acquiring, preserving, and providing access to primary source materials that support the research needs of the Stanford community and beyond. There are three distinct divisions in our department: Manuscripts, Rare Books and University Archives. We welcome all students, scholars and members of the general public to the Field Reading Room. Learn more about using and accessing our collections.'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_info: 'specialcollections@stanford.edu'
+  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/DSC_0011_150.jpg'
