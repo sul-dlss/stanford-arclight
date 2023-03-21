@@ -42,9 +42,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-# Use Sass to process CSS
-# gem "sassc-rails"
-
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -94,8 +91,6 @@ group :development, :test do
   gem 'rubocop-rspec', require: false
 end
 gem 'rsolr', '>= 1.0', '< 3'
-gem 'bootstrap', '~> 5.1'
-gem 'sassc-rails', '~> 2.1'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
 gem 'blacklight-locale_picker'
@@ -103,3 +98,5 @@ gem 'blacklight-locale_picker'
 gem 'honeybadger', '~> 5.2'
 
 gem 'okcomputer', '~> 1.18'
+
+gem "cssbundling-rails", "~> 1.1"

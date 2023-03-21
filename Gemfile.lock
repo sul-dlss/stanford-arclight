@@ -77,8 +77,6 @@ GEM
       traject (~> 3.0)
       traject_plus (~> 2.0)
     ast (2.4.2)
-    autoprefixer-rails (10.4.13.0)
-      execjs (~> 2)
     bcrypt (3.1.18)
     bindex (0.8.1)
     blacklight (8.0.0)
@@ -93,10 +91,6 @@ GEM
       rails (>= 5.2.3, < 7.1)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
-    bootstrap (5.2.3)
-      autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 2.11.6, < 3)
-      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
@@ -131,6 +125,8 @@ GEM
       xpath (~> 3.2)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    cssbundling-rails (1.1.2)
+      railties (>= 6.0.0)
     date (3.3.3)
     debug (1.7.1)
       irb (>= 1.5.0)
@@ -156,7 +152,6 @@ GEM
     dot-properties (0.1.4)
       bundler (>= 2.2.33)
     erubi (1.12.0)
-    execjs (2.8.1)
     faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -254,7 +249,6 @@ GEM
     parallel (1.22.1)
     parser (3.2.1.1)
       ast (~> 2.4.1)
-    popper_js (2.11.6)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -345,14 +339,6 @@ GEM
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
     scrub_rb (1.0.1)
     selenium-webdriver (4.8.1)
       rexml (~> 3.2, >= 3.2.5)
@@ -378,7 +364,6 @@ GEM
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
     thor (1.2.1)
-    tilt (2.1.0)
     timeout (0.3.2)
     traject (3.8.1)
       concurrent-ruby (>= 0.8.0)
@@ -437,12 +422,12 @@ DEPENDENCIES
   arclight (= 1.0.0.beta4)
   blacklight-locale_picker
   bootsnap
-  bootstrap (~> 5.1)
   capistrano (~> 3.0)
   capistrano-bundler
   capistrano-passenger
   capistrano-rails
   capybara
+  cssbundling-rails (~> 1.1)
   debug
   devise
   devise-guests (~> 0.8)
@@ -460,7 +445,6 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sassc-rails (~> 2.1)
   selenium-webdriver
   solr_wrapper (>= 0.3)
   sprockets-rails

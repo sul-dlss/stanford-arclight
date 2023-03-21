@@ -1,0 +1,12 @@
+// Entry point for your Sass build
+
+@import 'palette';
+@import 'bootstrapVariables';
+@import 'bootstrap/scss/bootstrap';
+
+$logo-image: url(StanfordLibraries-logo-whitetext.svg);
+$logo-width: 200px;
+$logo-height: 35px;
+@import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight';
+@import 'arclight/app/assets/stylesheets/arclight/application';
+@import 'sulFooter';
