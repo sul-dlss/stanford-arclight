@@ -3,7 +3,7 @@
 # This migration comes from blacklight (originally 20140202020201)
 class CreateSearches < ActiveRecord::Migration[4.2]
   def self.up
-    create_table :searches do |t|
+    create_table :searches, if_not_exists: true do |t|
       t.binary  :query_params
       t.integer :user_id, index: true
       t.string :user_type
