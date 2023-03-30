@@ -1,0 +1,11 @@
+<%# Override Arclight's embed_component template to render the local version of OembedViewerComponent %>
+<div id="embed" class="mb-4">
+  <h2 class="al-show-sub-heading"><%= t('arclight.views.show.embedded_content') %></h2>
+  <%= render OembedViewerComponent.with_collection(embeddable_resources, document: @document) %>
+
+  <% linked_resources.each do |resource| %>
+    <div class="al-digital-object">
+      <%= link_to(resource.label, resource.href) %>
+    </div>
+  <% end %>
+</div>
