@@ -25,4 +25,18 @@ RSpec.describe DigitalObject do
       expect(deserialized.href).to eq 'https://purl.stanford.edu/an-object-id'
     end
   end
+
+  describe "#{described_class}.normalize_href" do
+    it 'returns the href unchanged if it contains a complete URL' do
+      expect(described_class.normalize_href('https://purl.stanford.edu/an-object-id')).to eq 'https://purl.stanford.edu/an-object-id'
+    end
+
+    it 'returns the href but converts http to https' do
+      expect(described_class.normalize_href('http://purl.stanford.edu/an-object-id')).to eq 'https://purl.stanford.edu/an-object-id'
+    end
+
+    it 'returns a complete Purl URL if the href only contains an ID' do
+      expect(described_class.normalize_href('an-object-id')).to eq 'https://purl.stanford.edu/an-object-id'
+    end
+  end
 end
