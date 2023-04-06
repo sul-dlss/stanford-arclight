@@ -10,10 +10,10 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-arclight@^1.0.0-beta.4:
-  version "1.0.0-beta.4"
-  resolved "https://registry.yarnpkg.com/arclight/-/arclight-1.0.0-beta.4.tgz#71d7bdefbc2c0f527a3bd4181ea3eb1a3591aa42"
-  integrity sha512-AXH9/2HoHwf/IJwsnFm0PDVpPZHZNtUFxn+UV0friiCAjBYalejzmeBhQUfJikvfCC1iKZw/0vMkOSU84LKRzA==
+arclight@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/arclight/-/arclight-1.0.0.tgz#0af58f3c945e42c0245e46661ff873827d1f963e"
+  integrity sha512-yNWsIuEwdqkNKzmZ7Vx3k1ACFMZI7BmE2yaPN/BHzXEcQ8cAJX2s4AuTn/kQ8G30YPMTUwru+2ECWZYxrUuXXw==
 
 binary-extensions@^2.0.0:
   version "2.2.0"

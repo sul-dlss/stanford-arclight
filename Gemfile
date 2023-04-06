@@ -80,7 +80,7 @@ group :test do
   gem 'webdrivers'
 end
 
-gem 'arclight', '= 1.0.0.beta4'
+gem 'arclight', '~> 1.0'
 
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'

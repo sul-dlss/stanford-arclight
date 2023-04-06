@@ -70,7 +70,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     airbrussh (1.4.1)
       sshkit (>= 1.6.1, != 1.7.0)
-    arclight (1.0.0.beta4)
+    arclight (1.0.0)
       blacklight (>= 8.0.0, < 9)
       gretel
       rails (~> 7.0)
@@ -423,7 +423,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  arclight (= 1.0.0.beta4)
+  arclight (~> 1.0)
   blacklight-locale_picker
   bootsnap
   capistrano (~> 3.0)
