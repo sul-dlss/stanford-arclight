@@ -20,8 +20,11 @@ class DigitalObject
   # the DigitalObject href in the sample data.
   # Ideally, this value would be consistent, but it is not currently.
   def self.normalize_href(href)
-    return href.gsub('http://', 'https://') if href.match?(%r{https?://})
+    # Some complete Purl URLs do not use https, convert them
+    return href.gsub('http://', 'https://') if href.match?(%r{https?://purl.stanford.edu})
+    # Some hrefs contain only a druid, convert them to a complete Purl URL
+    return "https://purl.stanford.edu/#{href}" if href.match?(/^([a-z]{2})(\d{3})([a-z]{2})(\d{4})$/)
 
-    "https://purl.stanford.edu/#{href}"
+    href
   end
 end
