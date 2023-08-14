@@ -49,11 +49,6 @@ group :production do
   gem 'mysql2'
 end
 
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[mri mingw x64_mingw]
-end
-
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
@@ -83,6 +78,8 @@ end
 gem 'arclight', '~> 1.0'
 
 group :development, :test do
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'solr_wrapper', '>= 0.3'
   gem 'rspec-rails', '~> 6.0'
   gem 'rubocop', require: false
