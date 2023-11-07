@@ -96,3 +96,5 @@ gem 'honeybadger', '~> 5.2'
 gem 'okcomputer', '~> 1.18'
 
 gem 'cssbundling-rails', '~> 1.1'
+
+gem 'sidekiq'
