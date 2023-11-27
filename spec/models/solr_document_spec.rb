@@ -32,4 +32,24 @@ RSpec.describe SolrDocument do
       end
     end
   end
+
+  describe '#collection?' do
+    context 'when the document is a collection' do
+      let(:document) { described_class.new(level_ssm: ['collection'], component_level_isim: [0]) }
+
+      it { expect(document.collection?).to be true }
+    end
+
+    context 'when the document is a file' do
+      let(:document) { described_class.new(level_ssm: ['file'], component_level_isim: [0]) }
+
+      it { expect(document.collection?).to be false }
+    end
+
+    context 'when the document is labeled as a collection but is a lower level compoment' do
+      let(:document) { described_class.new(level_ssm: ['Collection'], component_level_isim: [2]) }
+
+      it { expect(document.collection?).to be false }
+    end
+  end
 end

@@ -17,6 +17,16 @@ class SolrDocument
     end
   end
 
+  # NOTE: Override of method from ArcLight core to guard against cases where
+  # lower level components are set to Collection and lack an EAD ID.
+  # We have requested data remediation, but this is needed until that is complete.
+  # You can check for occurences in the data with this Solr query:
+  # select?fl=id&fq=component_level_isim%3A[1 TO *]&fq=level_ssm%3ACollection OR level_ssm%3Acollection&
+  #   indent=true&q.op=OR&q=*%3A*&rows=100
+  def collection?
+    level&.parameterize == 'collection' && component_level.zero?
+  end
+
   # self.unique_key = 'id'
 
   # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
