@@ -21,10 +21,7 @@ module Sul
 
     attr_reader :title, :date, :default
 
-<<<<<<< HEAD
     # Some EAD components in SUL finding aids lack both a title and date.
-=======
->>>>>>> bc9e434 (WIP)
     def normalize
       result = [title, date].compact.join(', ')
       result = '[NO TITLE PROVIDED]' if result.blank?
