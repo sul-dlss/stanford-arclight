@@ -2,7 +2,7 @@
 
 # Fetches and transforms repository information from archivesspace
 class AspaceRepositories
-  HARVESTABLE_REPOSITORIES = %w[ars cubberley eal].freeze
+  HARVESTABLE_REPOSITORIES = %w[ars cubberley eal speccoll].freeze
 
   class << self
     delegate :all, :all_harvestable, :find_by, to: :instance
