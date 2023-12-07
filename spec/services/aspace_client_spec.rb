@@ -15,20 +15,26 @@ RSpec.describe AspaceClient do
   end
 
   describe '#initialize' do
-    it 'fails without the url arg' do
-      expect { described_class.new(url: nil, user: 'user', password: 'password') }.to raise_error(ArgumentError)
+    context 'without a url argument' do
+      it 'raises an error' do
+        expect { described_class.new(url: nil, user: 'user', password: 'password') }.to raise_error(ArgumentError)
+      end
     end
 
-    it 'fails without the user arg' do
-      expect do
-        described_class.new(url: 'http://example.com:8089', user: nil, password: 'password')
-      end.to raise_error(ArgumentError)
+    context 'without a user argument' do
+      it 'raises an error' do
+        expect do
+          described_class.new(url: 'http://example.com:8089', user: nil, password: 'password')
+        end.to raise_error(ArgumentError)
+      end
     end
 
-    it 'fails without the password arg' do
-      expect do
-        described_class.new(url: 'http://example.com:8089', user: 'user', password: nil)
-      end.to raise_error(ArgumentError)
+    context 'without a password argument' do
+      it 'raises an error' do
+        expect do
+          described_class.new(url: 'http://example.com:8089', user: 'user', password: nil)
+        end.to raise_error(ArgumentError)
+      end
     end
   end
 
@@ -42,16 +48,18 @@ RSpec.describe AspaceClient do
   end
 
   describe '#resource_description' do
-    it 'fails if you do not pass resource_uri' do
-      expect { client.resource_description }.to raise_error(ArgumentError)
-    end
-
     it 'sends an authenticated request with correct auth header to the resource_desriptions address' do
       stub_request(:get, "#{url}/repositories/2/resource_descriptions/10208.xml?include_daos=true")
       client.resource_description('repositories/2/resources/10208')
       expect(WebMock).to have_requested(:get,
                                         "#{url}/repositories/2/resource_descriptions/10208.xml?include_daos=true")
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
+    end
+
+    context 'without a resource_uri argument' do
+      it 'raises an error' do
+        expect { client.resource_description }.to raise_error(ArgumentError)
+      end
     end
   end
 
@@ -63,31 +71,37 @@ RSpec.describe AspaceClient do
                                                        .and_return(aspace_query)
     end
 
-    it 'fails if you do not pass repository_id' do
-      expect { client.published_resource_uris }.to raise_error(ArgumentError)
-    end
-
     it 'returns an instance of AspaceQuery' do
       expect(client.published_resource_uris(repository_id: 11)).to eq aspace_query
+    end
+
+    context 'without a repository_id argument' do
+      it 'raises an error' do
+        expect { client.published_resource_uris }.to raise_error(ArgumentError)
+      end
     end
   end
 
   describe '#authenticated_get' do
-    it 'fails if you do not pass a path' do
-      expect { client.resource_description }.to raise_error(ArgumentError)
-    end
-
-    it 'returns an error if the response is bad' do
-      stub_request(:get, "#{url}/some_request").to_raise(Net::HTTPBadResponse)
-      expect { client.authenticated_get('some_request') }.to raise_error(StandardError)
-    end
-
     it 'sends an authenticated request with correct auth header to the specified address' do
       stub_request(:get, "#{url}/some_request")
       client.authenticated_get('some_request')
       expect(WebMock).to have_requested(:get,
                                         "#{url}/some_request")
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
+    end
+
+    context 'without a path argument' do
+      it 'raises an error' do
+        expect { client.resource_description }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when the HTTP response is bad' do
+      it 'raises an error' do
+        stub_request(:get, "#{url}/some_request").to_raise(Net::HTTPBadResponse)
+        expect { client.authenticated_get('some_request') }.to raise_error(StandardError)
+      end
     end
   end
 end
