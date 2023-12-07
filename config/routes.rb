@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   mount Blacklight::Engine => '/'
   mount Arclight::Engine => '/'
+  mount Sidekiq::Web => '/sidekiq'
 
   root to: 'arclight/repositories#index'
   concern :searchable, Blacklight::Routes::Searchable.new

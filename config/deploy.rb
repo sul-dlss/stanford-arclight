@@ -44,6 +44,9 @@ set :honeybadger_env, fetch(:stage)
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 
+# Allow dlss-capistrano to manage sidekiq via systemd
+set :sidekiq_systemd_use_hooks, true
+
 namespace :deploy do
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
