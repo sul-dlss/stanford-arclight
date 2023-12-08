@@ -175,6 +175,7 @@ class AspaceClient
       { 'field' => 'system_mtime',
         'value' => updated_after,
         'comparator' => 'greater_than',
+        'precision' => 'DAY',
         'jsonmodel_type' => 'date_field_query',
         'negated' => false,
         'literal' => false }
