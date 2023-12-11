@@ -8,6 +8,11 @@ require 'pathname'
 class IndexEadJob < ApplicationJob
   class IndexEadError < StandardError; end
 
+  # @example IndexEadJob.perform_later(file_path: '/data/ars/ars1234.xml')
+  # @param file_path [String] the path to the file to be indexed, such as, '/data/ars/ars1234.xml'
+  # @param arclight_repo_code [String] the arclight repository code, such as 'ars'
+  # @param solr_url [String] the web address for Solr where the file should be indexed
+  # @param app_dir [Pathname] directory where the index command should be executed
   def perform(file_path:,
               arclight_repo_code: nil,
               solr_url: ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri),
