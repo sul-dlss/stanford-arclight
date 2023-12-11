@@ -31,7 +31,7 @@ class AspaceClient
   # Get the EAD XML representation of a resource
   # See https://archivesspace.github.io/archivesspace/api/#get-an-ead-representation-of-a-resource
   # @example client.resource_description('/repositories/2/resources/5363')
-  # @param [String] resource_uri the URI of the resource in ArchivesSpace
+  # @param resource_uri [String] the URI of the resource in ArchivesSpace
   def resource_description(resource_uri)
     unless resource_uri
       raise ArgumentError,
@@ -46,8 +46,8 @@ class AspaceClient
   # hashes containing an ead id and uri for resources of interest,
   # e.g. {"ead_id"=>"sc0348.xml", "uri"=>"/repositories/2/resources/5363"}
   # @example client.published_resource_uris(repository_id: 2, updated_after: '2023-11-21').each { |r| do something }
-  # @param [Integer] repository_id the repository id in ArchivesSpace
-  # @param [String] updated_after YYYY-MM-DD optionally limit the response to resources updated after a specific date
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
   def published_resource_uris(repository_id:, updated_after: nil)
     raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
 
