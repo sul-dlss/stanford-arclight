@@ -99,3 +99,5 @@ gem 'okcomputer', '~> 1.18'
 gem 'cssbundling-rails', '~> 1.1'
 
 gem 'sidekiq', '~> 7.0'
+
+gem 'whenever', require: false
