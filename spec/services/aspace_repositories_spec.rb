@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe AspaceRepository do
+RSpec.describe AspaceRepositories do
   subject(:aspace_repository) { described_class.new }
 
   let(:client) { instance_double(AspaceClient, repositories:) }

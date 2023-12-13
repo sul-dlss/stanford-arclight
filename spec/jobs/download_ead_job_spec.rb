@@ -5,13 +5,13 @@ require 'rails_helper'
 RSpec.describe DownloadEadJob do
   let(:client) { instance_double(AspaceClient, resource_description: '<a/>') }
   let(:file) { instance_double(File, puts: true) }
-  let(:aspace_repository) { instance_double(AspaceRepository, all_harvestable: { 'ars' => '11', 'eal' => '4' }) }
+  let(:aspace_repository) { instance_double(AspaceRepositories, all_harvestable: { 'ars' => '11', 'eal' => '4' }) }
 
   before do
     allow(AspaceClient).to receive(:new).and_return(client)
     allow(File).to receive(:open).and_yield(file)
     allow(FileUtils).to receive(:mkdir_p)
-    allow(AspaceRepository).to receive(:new).and_return(aspace_repository)
+    allow(AspaceRepositories).to receive(:new).and_return(aspace_repository)
   end
 
   it 'fetches an EAD from the client service' do
