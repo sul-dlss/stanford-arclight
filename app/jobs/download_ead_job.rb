@@ -14,7 +14,7 @@ class DownloadEadJob < ApplicationJob
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   def self.enqueue_all(updated_after: nil, data_dir: ENV.fetch('DATA_DIR', 'data'), index: true)
-    AspaceRepository.new.all_harvestable.each do |aspace_repository_code, aspace_repository_id|
+    AspaceRepositories.all_harvestable.each do |aspace_repository_code, aspace_repository_id|
       enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
     end
   end
@@ -26,7 +26,7 @@ class DownloadEadJob < ApplicationJob
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   def self.enqueue_one_by(aspace_repository_code:, updated_after: nil,
                           data_dir: ENV.fetch('DATA_DIR', 'data'), index: true)
-    aspace_repository_id = AspaceRepository.new.find_by(code: aspace_repository_code)
+    aspace_repository_id = AspaceRepositories.find_by(code: aspace_repository_code)
     enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
   end
 

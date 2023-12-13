@@ -1,8 +1,16 @@
 # frozen_string_literal: true
 
 # Fetches and transforms repository information from archivesspace
-class AspaceRepository
+class AspaceRepositories
   HARVESTABLE_REPOSITORIES = %w[ars cubberley eal].freeze
+
+  class << self
+    delegate :all, :all_harvestable, :find_by, to: :instance
+  end
+
+  def self.instance
+    new
+  end
 
   # Returns values like { 'ars' => '11', 'sul' => '1' }
   # where each key is an aspace repository code and the value
