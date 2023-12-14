@@ -26,6 +26,13 @@ RSpec.describe DownloadEadJob do
     expect(file).to have_received(:puts).with("<?xml version=\"1.0\"?>\n<a/>\n")
   end
 
+  it 'cleans up the supplied file name' do
+    described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc 123/ABC.XML',
+                                data_dir: '/data/archive/')
+
+    expect(File).to have_received(:open).with('/data/archive/abc-123-abc.xml', 'wb')
+  end
+
   context 'when index param value is true' do
     it 'enqueues an indexing job with the EAD file' do
       expect do
