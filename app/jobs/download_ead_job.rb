@@ -52,7 +52,8 @@ class DownloadEadJob < ApplicationJob
   def perform(resource_uri:, file_name:, data_dir:, index: false)
     ead_xml = AspaceClient.new.resource_description(resource_uri)
 
-    xml_file_name = file_name.sub(/(\.xml)?$/i, '.xml')
+    # Takes a supplied file name like 'abc 123/ABC.XML' and turns it into: 'abc-123-abc.xml'
+    xml_file_name = file_name.sub(/(\.xml)?$/i, '').parameterize.concat('.xml')
     file_path = File.join(data_dir, xml_file_name.to_s)
 
     File.open(file_path, 'wb') do |f|
