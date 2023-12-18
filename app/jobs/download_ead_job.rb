@@ -14,6 +14,7 @@ class DownloadEadJob < ApplicationJob
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   def self.enqueue_all(updated_after: nil, data_dir: ENV.fetch('DATA_DIR', 'data'), index: true)
+    create_directories(data_dir:)
     AspaceRepositories.all_harvestable.each do |aspace_repository_code, aspace_repository_id|
       enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
     end
@@ -26,20 +27,30 @@ class DownloadEadJob < ApplicationJob
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   def self.enqueue_one_by(aspace_repository_code:, updated_after: nil,
                           data_dir: ENV.fetch('DATA_DIR', 'data'), index: true)
+    create_directories(data_dir:)
     aspace_repository_id = AspaceRepositories.find_by(code: aspace_repository_code)
     enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
   end
 
   def self.enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
-    directory = "#{data_dir}/#{aspace_repository_code}"
-    FileUtils.mkdir_p directory
     resource_uris = AspaceClient.new.published_resource_uris(repository_id: aspace_repository_id, updated_after:)
     resource_uris.each do |resource|
+      arclight_repository_code = ArclightRepositoryMapper.map_to_code(aspace_repository_code:,
+                                                                      ead_id: resource['ead_id'])
+      directory = "#{data_dir}/#{arclight_repository_code}"
       DownloadEadJob.perform_later(resource_uri: resource['uri'], file_name: resource['ead_id'], data_dir: directory,
                                    index:)
     end
   end
   private_class_method :enqueue
+
+  # Ensure all arclight repositories have a directory where EAD files can be stored
+  def self.create_directories(data_dir:)
+    Arclight::Repository.all.map(&:slug).each do |slug|
+      FileUtils.mkdir_p "#{data_dir}/#{slug}"
+    end
+  end
+  private_class_method :create_directories
 
   # @example DownloadEadJob.perform_later(resource_uri: '/repositories/2/resources/5363',
   #                                       file_name: 'ars0018',
