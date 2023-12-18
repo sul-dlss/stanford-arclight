@@ -36,6 +36,8 @@ class ArclightRepositoryMapper
     Arclight::Repository.all.map(&:slug).include?(code)
   end
 
+  # a, f, pc, etc. are call number prefixes used to form EAD IDs
+  # uarc and speccoll are arclight repository codes
   def code_from_ead_id
     case ead_id[/^[A-Z]*/i]
     when 'a', 'f', 'pc', 'sc', 'scm', 'v'
