@@ -75,7 +75,9 @@ group :test do
   gem 'webmock'
 end
 
-gem 'arclight', '~> 1.0'
+# pin arclight to v1.0.* until we address some changes in v1.1.0
+# documented here: https://github.com/sul-dlss/stanford-arclight/issues/404
+gem 'arclight', '~> 1.0.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
