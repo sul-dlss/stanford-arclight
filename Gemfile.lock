@@ -454,7 +454,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  arclight (~> 1.0)
+  arclight (~> 1.0.0)
   blacklight-locale_picker
   bootsnap
   capistrano (~> 3.0)
