@@ -20,6 +20,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+job_type :runner, "cd :path && RAILS_LOG_LEVEL=warn bin/rails runner -e :environment ':task' :output"
 
 every :day do
   runner 'DownloadEadJob.enqueue_all_updated'
