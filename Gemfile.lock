@@ -184,7 +184,7 @@ GEM
       railties (>= 5.1, < 7.2)
     hashdiff (1.1.0)
     hashie (5.0.0)
-    honeybadger (5.4.1)
+    honeybadger (5.5.0)
     http (5.2.0)
       addressable (~> 2.8)
       base64 (~> 0.1)
@@ -326,7 +326,7 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis-client (0.19.1)
+    redis-client (0.20.0)
       connection_pool
     regexp_parser (2.9.0)
     reline (0.4.2)
@@ -394,7 +394,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
-    sidekiq (7.2.1)
+    sidekiq (7.2.2)
       concurrent-ruby (< 2)
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
@@ -440,7 +440,7 @@ GEM
       deprecation
       jsonpath
       traject (~> 3.0)
-    turbo-rails (2.0.2)
+    turbo-rails (2.0.3)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
