@@ -41,3 +41,6 @@ spec/examples.txt
 /node_modules
 
 /data
+
+# Ignore volume data from dockerized Solr
+/solr-data
