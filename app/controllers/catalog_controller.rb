@@ -138,6 +138,9 @@ class CatalogController < ApplicationController
     # :index_range can be an array or range of prefixes that will be used to create the navigation
     #  (note: It is case sensitive when searching values)
 
+    config.add_facet_field 'access', collapse: false, query: {
+      online: { label: 'Online access', fq: 'has_online_content_ssim:true' }
+    }
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
     config.add_facet_field 'creators', field: 'creator_ssim', limit: 10
     config.add_facet_field 'date_range', field: 'date_range_isim', range: true
@@ -162,10 +165,6 @@ class CatalogController < ApplicationController
     config.add_index_field 'creator', accessor: true, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'abstract_or_scope', accessor: true, truncate: true, repository_context: true, helper_method: :render_html_tags, component: Arclight::IndexMetadataFieldComponent
     config.add_index_field 'breadcrumbs', accessor: :itself, component: Arclight::SearchResultBreadcrumbsComponent, compact: { count: 2 }
-
-    config.add_facet_field 'access', query: {
-      online: { label: 'Online access', fq: 'has_online_content_ssim:true' }
-    }
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
