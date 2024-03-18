@@ -44,3 +44,7 @@ spec/examples.txt
 
 # Ignore volume data from dockerized Solr
 /solr-data
+
+config/settings.local.yml
+config/settings/*.local.yml
+config/environments/*.local.yml

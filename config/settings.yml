@@ -1,0 +1,2 @@
+aspace:
+  url: <%= ENV['ASPACE_URL'] || 'http://archivesspace-stage.stanford.edu:8081' %>

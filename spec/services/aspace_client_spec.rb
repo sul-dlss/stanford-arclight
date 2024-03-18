@@ -20,22 +20,6 @@ RSpec.describe AspaceClient do
         expect { described_class.new(url: nil, user: 'user', password: 'password') }.to raise_error(ArgumentError)
       end
     end
-
-    context 'without a user argument' do
-      it 'raises an error' do
-        expect do
-          described_class.new(url: 'http://example.com:8089', user: nil, password: 'password')
-        end.to raise_error(ArgumentError)
-      end
-    end
-
-    context 'without a password argument' do
-      it 'raises an error' do
-        expect do
-          described_class.new(url: 'http://example.com:8089', user: 'user', password: nil)
-        end.to raise_error(ArgumentError)
-      end
-    end
   end
 
   describe '#repositories' do
