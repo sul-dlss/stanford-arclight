@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  solr:
+    image: solr:9.5.0
+    ports:
+      - "8983:8983"
+    volumes:
+      - ./solr/conf:/opt/solr/conf
+      - ./solr-data:/var/solr/data
+    environment:
+      SOLR_HOME: /var/solr/data
+    entrypoint:
+      - docker-entrypoint.sh
+      - solr-precreate
+      - blacklight-core
+      - /opt/solr/conf
+
+  redis:
+    image: "redis:7.2-alpine"
+    ports:
+      - "6379:6379"
+    command: redis-server
+    volumes:
+      - "redis:/data"
+
+volumes:
+  redis:
+  solr-data:
