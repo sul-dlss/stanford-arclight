@@ -11,7 +11,7 @@ ars:
   country: 'USA'
   phone: ''
   contact_info: 'soundarchive@stanford.edu'
-  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/Edison_002LowRes.jpg'
+  thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_ars_202302_web_0055.jpg&w=1080&q=75'
 
 cubberley:
   name: 'Cubberley Education Library'
@@ -26,7 +26,7 @@ cubberley:
   country: 'USA'
   phone: ''
   contact_info: 'cubberley@stanford.edu'
-  thumbnail_url: 'http://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/ed%20main.jpg'
+  thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/education.jpg&w=1080&q=75'
 
 # hoover:
 #   name: 'Hoover Institution Archives'
@@ -68,7 +68,7 @@ eal:
   country: 'USA'
   phone: '(650) 725-3435'
   contact_info: 'eastasialibrary@stanford.edu'
-  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/DSC_0011_150.jpg'
+  thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/placeholder_only_sul_eal_022123_0082-reduced_0.jpg&w=1080&q=75'
 
 manuscripts:
   name: 'Manuscripts'
@@ -83,7 +83,7 @@ manuscripts:
   country: 'USA'
   phone: '(650) 725-1022'
   contact_info: 'specialcollections@stanford.edu'
-  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/DSC_0011_150.jpg'
+  thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_speccoll_archives_202302_web_0019.jpg&w=1080&q=75'
 
 uarc:
   name: 'University Archives'
@@ -98,4 +98,4 @@ uarc:
   country: 'USA'
   phone: '(650) 725-1022'
   contact_info: 'specialcollections@stanford.edu'
-  thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/DSC_0011_150.jpg'
+  thumbnail_url: 'https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_speccoll_archives_202302_web_0033.jpg'
