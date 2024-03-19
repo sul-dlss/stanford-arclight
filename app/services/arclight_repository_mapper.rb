@@ -37,13 +37,13 @@ class ArclightRepositoryMapper
   end
 
   # a, f, pc, etc. are call number prefixes used to form EAD IDs
-  # uarc and speccoll are arclight repository codes
+  # uarc and manuscripts are arclight repository codes
   def code_from_ead_id
     case ead_id[/^[A-Z]*/i]
     when 'a', 'f', 'pc', 'sc', 'scm', 'v'
       'uarc'
     else
-      'speccoll'
+      'manuscripts'
     end
   end
 end

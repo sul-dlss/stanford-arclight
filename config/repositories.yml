@@ -70,9 +70,9 @@ eal:
   contact_info: 'eastasialibrary@stanford.edu'
   thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/DSC_0011_150.jpg'
 
-speccoll:
-  name: 'Special Collections'
-  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 36 hours in advance.'
+manuscripts:
+  name: 'Manuscripts'
+  visit_note: 'Manuscripts materials are stored offsite and must be paged 36 hours in advance.'
   description: 'The Special Collections and University Archives Department of Stanford University Libraries is committed to acquiring, preserving, and providing access to primary source materials that support the research needs of the Stanford community and beyond. There are three distinct divisions in our department: Manuscripts, Rare Books and University Archives. We welcome all students, scholars and members of the general public to the Field Reading Room. Learn more about using and accessing our collections.'
   building: 'Green Library'
   address1: '557 Escondido Mall'
