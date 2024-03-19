@@ -5,20 +5,29 @@ require 'net/http'
 
 # Client for making requests via the ArchivesSpace API
 class AspaceClient
-  attr_reader :url
+  attr_reader :base_url
 
-  def initialize(url: ENV.fetch('ASPACE_URL', nil),
+  # rubocop:disable Metrics/MethodLength
+  def initialize(url: Settings.aspace.url,
                  user: ENV.fetch('ASPACE_USER', nil),
                  password: ENV.fetch('ASPACE_PASSWORD', nil))
-    unless url && user && password
-      raise ArgumentError,
-            'Please provide the url, user, and password for ArchivesSpace'
-    end
+    raise ArgumentError, 'Please provide the url for ArchivesSpace' unless url
 
-    @url = url
+    uri = URI.parse(url)
+    @base_url = url
     @user = user
     @password = password
+
+    return unless uri.user
+
+    @user ||= uri.user
+    @password ||= uri.password
+    @base_url = uri.dup.tap do |u|
+      u.user = nil
+      u.password = nil
+    end.to_s
   end
+  # rubocop:enable Metrics/MethodLength
 
   # Get a list of repositories
   # See https://archivesspace.github.io/archivesspace/api/#get-a-list-of-repositories
@@ -58,7 +67,7 @@ class AspaceClient
   def authenticated_get(path, body = nil)
     raise ArgumentError, 'Please provide a path for the request' unless path
 
-    uri = URI.parse("#{@url}/#{path}")
+    uri = URI.parse("#{@base_url}/#{path}")
     req = Net::HTTP::Get.new(uri)
     req['X-ArchivesSpace-Session'] = session_token
     res = Net::HTTP.start(uri.hostname, uri.port) do |http|
@@ -76,7 +85,7 @@ class AspaceClient
   # https://archivesspace.github.io/archivesspace/api/#log-in
   def session_token
     @session_token ||= begin
-      uri = URI.parse("#{@url}/users/#{@user}/login?password=#{@password}")
+      uri = URI.parse("#{@base_url}/users/#{@user}/login?password=#{@password}")
       res = Net::HTTP.post_form(uri, {})
       raise StandardError, "Unexpected response code #{res.code}: #{res.read_body}" unless res.is_a?(Net::HTTPOK)
 
