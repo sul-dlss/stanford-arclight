@@ -79,7 +79,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     airbrussh (1.5.1)
       sshkit (>= 1.6.1, != 1.7.0)
-    arclight (1.0.1)
+    arclight (1.1.2)
       blacklight (>= 8.0.0, < 9)
       gretel
       rails (~> 7.0)
@@ -270,6 +270,14 @@ GEM
       net-protocol
     net-ssh (7.2.1)
     nio4r (2.7.0)
+    nokogiri (1.16.3-aarch64-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.3-arm-linux)
+      racc (~> 1.4)
+    nokogiri (1.16.3-arm64-darwin)
+      racc (~> 1.4)
+    nokogiri (1.16.3-x86-linux)
+      racc (~> 1.4)
     nokogiri (1.16.3-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.16.3-x86_64-linux)
@@ -349,14 +357,14 @@ GEM
     rspec-mocks (3.13.0)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-rails (6.1.1)
+    rspec-rails (6.1.2)
       actionpack (>= 6.1)
       activesupport (>= 6.1)
       railties (>= 6.1)
-      rspec-core (~> 3.12)
-      rspec-expectations (~> 3.12)
-      rspec-mocks (~> 3.12)
-      rspec-support (~> 3.12)
+      rspec-core (~> 3.13)
+      rspec-expectations (~> 3.13)
+      rspec-mocks (~> 3.13)
+      rspec-support (~> 3.13)
     rspec-support (3.13.1)
     rubocop (1.62.1)
       json (~> 2.3)
@@ -413,6 +421,10 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    sqlite3 (1.7.3-aarch64-linux)
+    sqlite3 (1.7.3-arm-linux)
+    sqlite3 (1.7.3-arm64-darwin)
+    sqlite3 (1.7.3-x86-linux)
     sqlite3 (1.7.3-x86_64-darwin)
     sqlite3 (1.7.3-x86_64-linux)
     sshkit (1.22.0)
@@ -480,11 +492,15 @@ GEM
     zeitwerk (2.6.13)
 
 PLATFORMS
-  x86_64-darwin-22
+  aarch64-linux
+  arm-linux
+  arm64-darwin
+  x86-linux
+  x86_64-darwin
   x86_64-linux
 
 DEPENDENCIES
-  arclight (~> 1.0.0)
+  arclight (>= 1.1.0, < 2)
   blacklight-locale_picker
   bootsnap
   capistrano (~> 3.0)
@@ -524,4 +540,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   2.4.7
+   2.5.3
