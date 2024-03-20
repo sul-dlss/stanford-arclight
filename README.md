@@ -21,8 +21,7 @@ rake seed
 
 This command will loop through all the directories under `spec/fixtures/ead`, for example `spec/fixtures/ead/ars` and `spec/fixtures/ead/uarc`, and index all the .xml files present. The names of these subdirectories must correspond with a top-level key in the `repositories.yml` file. For example, `uarc` is a top-level key in `respositories.yml`, as well as the title of a subdirectory under `spec/fixtures/ead`. A mis-match will cause indexing issues.
 
-
-#### Managing data
+### Managing data
 Data for the solr and redis services are persisted using docker named volumes. You can see what volumes are currently present with:
 
 ```shell
@@ -50,3 +49,14 @@ bundle exec sidekiq
 bin/rails runner 'DownloadEadJob.enqueue_one_by(aspace_repository_code: "ars", updated_after: "2024-03-01")'
 ```
 5. You can monitor job progress in the Sidekiq admin UI, which is available at: `http://localhost:3000/sidekiq`
+
+## Deleting a collection
+There is a rake task for deleting a single collection and all of its components from the Solr index.
+
+1. Find the Solr document id for the collection (which is the EAD ID)
+2. Run the rake task:
+```shell
+# Some shells (such as zsh) require that the brackets are escaped.
+bundle exec rake stanford_arclight:delete_by_ead_id\['ars0167'\]
+```
+3. Enter YES at the prompt to delete the collection and its components.
