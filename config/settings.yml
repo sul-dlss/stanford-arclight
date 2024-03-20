@@ -1,2 +1,7 @@
 aspace:
   url: <%= ENV['ASPACE_URL'] || 'http://archivesspace-stage.stanford.edu:8081' %>
+  harvestable_repository_codes:
+    - ars
+    - cubberley
+    - eal
+    - speccoll
