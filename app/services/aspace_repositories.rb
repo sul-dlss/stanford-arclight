@@ -2,8 +2,6 @@
 
 # Fetches and transforms repository information from archivesspace
 class AspaceRepositories
-  HARVESTABLE_REPOSITORIES = %w[ars cubberley eal speccoll].freeze
-
   class << self
     delegate :all, :all_harvestable, :find_by, to: :instance
   end
@@ -24,7 +22,7 @@ class AspaceRepositories
   end
 
   def all_harvestable
-    all.slice(*HARVESTABLE_REPOSITORIES)
+    all.slice(*Settings.aspace.harvestable_repository_codes)
   end
 
   def find_by(code:)
