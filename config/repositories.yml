@@ -10,7 +10,8 @@ ars:
   zip: '94305-3076'
   country: 'USA'
   phone: ''
-  contact_info: 'soundarchive@stanford.edu'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="mailto:soundarchive@stanford.edu">soundarchive@stanford.edu</a></div>
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_ars_202302_web_0055.jpg&w=1080&q=75'
 
 cubberley:
@@ -25,7 +26,8 @@ cubberley:
   zip: '94305-3076'
   country: 'USA'
   phone: ''
-  contact_info: 'cubberley@stanford.edu'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="cubberley@stanford.edu">cubberley@stanford.edu</a></div>
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/education.jpg&w=1080&q=75'
 
 # hoover:
@@ -38,7 +40,8 @@ cubberley:
 #   state: 'CA'
 #   zip: '94305-6003'
 #   phone: '650-723-1754'
-#   contact_info: ''
+#   contact_html: |
+#     ''
 #   thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/branch/image/hooverarchives_0.jpg'
 #   visit_note: 'Archival holdings are brought from the stacks to the reading room at 9:00 a.m., 10:30 a.m., 11:30 a.m., 1:30 p.m., and 3:00 p.m. Some of the archives’ collections are stored off-site.'
 
@@ -53,8 +56,8 @@ cubberley:
 #   zip: '94305-3076'
 #   country: 'USA'
 #   phone: ''
-#   contact_info: 'soundarchive@stanford.edu'
-#   thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/Pink%20tree.jpg'
+#   contact_html: |
+    # <div class="al-repository-contact-info"><a href="mailto:soundarchive@stanford.edu">soundarchive@stanford.edu</a></div>#   thumbnail_url: 'https://library.stanford.edu/sites/default/files/styles/150x150/public/Pink%20tree.jpg'
 
 eal:
   name: 'East Asia Library'
@@ -67,7 +70,8 @@ eal:
   zip: '94305'
   country: 'USA'
   phone: '(650) 725-3435'
-  contact_info: 'eastasialibrary@stanford.edu'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="eastasialibrary@stanford.edu">eastasialibrary@stanford.edu</a></div>  
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/placeholder_only_sul_eal_022123_0082-reduced_0.jpg&w=1080&q=75'
 
 manuscripts:
@@ -82,7 +86,8 @@ manuscripts:
   zip: '94305'
   country: 'USA'
   phone: '(650) 725-1022'
-  contact_info: 'specialcollections@stanford.edu'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>  
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_speccoll_archives_202302_web_0019.jpg&w=1080&q=75'
 
 uarc:
@@ -97,5 +102,6 @@ uarc:
   zip: '94305'
   country: 'USA'
   phone: '(650) 725-1022'
-  contact_info: 'specialcollections@stanford.edu'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div> 
   thumbnail_url: 'https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_speccoll_archives_202302_web_0033.jpg'
