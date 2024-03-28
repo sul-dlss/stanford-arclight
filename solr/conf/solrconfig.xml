@@ -103,6 +103,7 @@
          title_tesim^100
          normalized_title_teim^100
          unitid_identifier_match^40
+         ead_identifier_match^40
          name_teim^10
          place_teim^10
          subject_teim^2
@@ -119,6 +120,7 @@
          title_tesim^200
          normalized_title_teim^200
          unitid_identifier_match^80
+         ead_identifier_match^80
          name_teim^20
          place_teim^20
          subject_teim^5
@@ -140,14 +142,18 @@
        <str name="qf_identifier">
          id
          ead_ssi
+         ead_identifier_match
          ref_ssm
          unitid_ssm
+         unitid_identifier_match
        </str>
        <str name="pf_identifier">
          id^2
          ead_ssi^2
+         ead_identifier_match^2
          ref_ssm^2
          unitid_ssm^2
+         unitid_identifier_match^2
        </str>
        <str name="qf_name">
          name_teim
