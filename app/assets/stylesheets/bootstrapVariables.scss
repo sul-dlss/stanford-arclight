@@ -3,13 +3,24 @@ $primary: $stanford-cardinal;
 $danger: $stanford-digital-red;
 $info: $stanford-digital-blue;
 $success: $stanford-fog;
-$dark: $stanford-cardinal;
+$dark: $stanford-palo-alto-dark;
+
+$headings-color: $stanford-white;
+
+// Fonts
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
+$font-family-base: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font-family-serif: "Source Serif 4", serif;
+
+// Stanford Stripe
+$stanford-stripe-color: $stanford-black;
+
+// Masthead
+$masthead-color: $stanford-white;
 
 // Navbar
 $navbar-padding-y: 0;
 $navbar-dark-color: white;
+$navbar-background-color: $stanford-black;
 $nav-link-padding-y: 0.3rem;
-
-nav .navbar-nav {
-  --bs-nav-link-font-size: 0.938rem;
-}
