@@ -33,10 +33,10 @@ RSpec.describe AspaceClient do
 
   describe '#resource_description' do
     it 'sends an authenticated request with correct auth header to the resource_desriptions address' do
-      stub_request(:get, "#{url}/repositories/2/resource_descriptions/10208.xml?include_daos=true")
+      request_url = "#{url}/repositories/2/resource_descriptions/10208.xml?include_daos=true&numbered_cs=true"
+      stub_request(:get, request_url)
       client.resource_description('repositories/2/resources/10208')
-      expect(WebMock).to have_requested(:get,
-                                        "#{url}/repositories/2/resource_descriptions/10208.xml?include_daos=true")
+      expect(WebMock).to have_requested(:get, request_url)
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
     end
 
