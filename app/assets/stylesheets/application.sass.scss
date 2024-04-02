@@ -9,5 +9,8 @@ $logo-width: 200px;
 $logo-height: 35px;
 @import 'blacklight-frontend/app/assets/stylesheets/blacklight/blacklight';
 @import 'arclight/app/assets/stylesheets/arclight/application';
+@import 'stanfordStripe';
+@import 'sulBase';
+@import 'sulHeader';
 @import 'sulCollection';
 @import 'sulFooter';

@@ -1,0 +1,117 @@
+.navbar {
+  --bs-link-hover-decoration: underline;
+  --bs-navbar-hover-color: rgba(255, 255, 255, 1);
+  padding-top: 0.75rem;
+}
+
+.navbar-logo {
+  height: 41px;
+  width: 258px;
+  background-size: 258px 41px;
+}
+
+.al-masthead {
+  --bs-link-hover-decoration: underline;
+  color: $masthead-color;
+
+  .h1 {
+    display: inline;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1.5rem 1.5rem 1.5rem 0;
+
+    @include media-breakpoint-up(lg) {
+      font-size: 2rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      font-size: 2.25rem;
+    }
+  }
+ 
+  .beta-tag {
+    background-color: $stanford-illuminating-dark;
+    color: $stanford-black;
+    font-family: $font-family-serif;
+    font-size: 0.875rem;
+    padding: 0.15rem 0.75rem 0.15rem 0.75rem;
+  }
+
+  .navbar-nav {
+    margin-right: 0.5rem;
+
+    li.active a {
+      color: $navbar-dark-color;
+    }
+
+    li:not(:last-child) a::after {
+      content: "•";
+      display: inline-block;
+      margin-left: 1rem;
+    }
+  }
+}
+
+.al-masthead + .navbar-search {
+  border-top: none;
+  background-color: $navbar-background-color;
+
+  .input-group-text {
+    background-color: $navbar-background-color;
+    border: none;
+    color: $navbar-dark-color;
+    font-weight: 700;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .input-group {
+    .search-btn {
+      background-color: $navbar-dark-color;
+      border-color: #dee2e6; // Border color of Blacklight inputs
+      border-left: none;
+      padding: 0;
+      border-radius: 0;
+      color: $stanford-palo-alto-dark;
+
+      .blacklight-icons {
+        margin-top: 0.5rem;
+      }
+    }
+  }
+
+  .within-collection-dropdown {
+    padding-right: 0.25rem;
+
+    .input-group-text {
+      padding-left: 0;
+      padding-right: 1.25rem;
+    }
+  }
+
+  .form-select {
+    background-size: 1.125rem 1.125rem;
+    border-radius: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+
+    @include media-breakpoint-up(lg) {
+      padding-right: 5rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      padding-right: 8rem;
+    }
+  }
+
+  // Search field selector and full text search box input group
+  .input-group:nth-of-type(2) {
+    @include media-breakpoint-up(lg) {
+      min-width: 87%;
+    }
+  }
+
+  #search_field {
+    margin-right: .825rem;
+  }
+}
