@@ -3,6 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe SolrDocument do
+  describe 'custom accessors' do
+    let(:document) { described_class.new }
+
+    it { expect(document).to respond_to(:ead_filename) }
+  end
+
   describe 'digital objects' do
     let(:document) do
       described_class.new(
