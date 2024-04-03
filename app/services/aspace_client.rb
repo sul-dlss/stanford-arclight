@@ -48,7 +48,8 @@ class AspaceClient
             '/repositories/{REPOSITORY_ID}/resources/{RESOURCE_ID}'
     end
 
-    authenticated_get("#{resource_uri.gsub('/resources/', '/resource_descriptions/')}.xml?include_daos=true")
+    query_params = 'include_daos=true&numbered_cs=true'
+    authenticated_get("#{resource_uri.gsub('/resources/', '/resource_descriptions/')}.xml?#{query_params}")
   end
 
   # Returns an instance of AspaceQuery that response to :each returning
