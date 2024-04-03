@@ -237,7 +237,7 @@ class CatalogController < ApplicationController
         pf: '${pf_container}'
       }
     end
-    config.add_search_field 'identifier', label: 'Identifier' do |field|
+    config.add_search_field 'call_number', label: 'Call number' do |field|
       field.qt = 'search'
       field.solr_parameters = {
         qf: '${qf_identifier}',
