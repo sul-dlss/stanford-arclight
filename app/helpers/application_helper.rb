@@ -6,4 +6,10 @@ module ApplicationHelper
   def additional_locale_routing_scopes
     [blacklight, arclight_engine]
   end
+
+  # Disables display of icons from Dashlane password manager
+  # See https://github.com/sul-dlss/vt-arclight/issues/495
+  def dashlane_ignore
+    { 'form-type' => 'other' }
+  end
 end

@@ -10,6 +10,16 @@
   background-size: 258px 41px;
 }
 
+#feedback {
+  overflow: hidden;
+  transition: all .5s ease-in-out;
+  max-height: 0;
+
+  &.open {
+    max-height: 100vh;
+  }
+ }
+
 .al-masthead {
   --bs-link-hover-decoration: underline;
   color: $masthead-color;
