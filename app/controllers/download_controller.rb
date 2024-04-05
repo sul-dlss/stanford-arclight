@@ -5,7 +5,7 @@ class DownloadController < ApplicationController
   def show
     doc = SolrDocument.find(params[:id])
 
-    data_dir = ENV.fetch('DATA_DIR', Rails.root.join('data').to_s)
+    data_dir = Settings.data_dir
     repository_id = doc.repository_config.slug
 
     respond_to do |format|

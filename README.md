@@ -41,7 +41,7 @@ This command will loop through all the directories under `spec/fixtures/ead`, fo
 
 The easiest way to load data other than the fixtures is to use the `DownloadEadJob` and/or the `IndexEadJob`. See below for instructions about how to use Sidekiq to run these jobs in development. Under most circumstances it's fine to use the default `:async` adapter to run these jobs without Sidekiq in development. 
 
-By default the `DownloadEadJob` will store EAD files in the `./data` directory at the root of the application. You can choose a different location by setting the `DATA_DIR` environment variable or passing `data_dir:` argument to the job method.
+By default the `DownloadEadJob` will store EAD files in the directory set in `./config/settings.yml` as `Settings.data_dir`. You can choose a different location by setting the `DATA_DIR` environment variable, passing `data_dir:` argument to the job method, or by setting a different location for `data_dir` in `./config/settings.local.yml`
 
 The `DownloadEadJob` will attempt to use the ASpace API to download EADs. You will need to configure the API URL with username and password in order to connect to ASpace. To do this you will need to add the following to `config/settings.local.yml` with the correct URL, port, and account information:
 
