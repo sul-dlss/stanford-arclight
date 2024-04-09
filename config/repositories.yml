@@ -13,6 +13,10 @@ ars:
   contact_html: |
      <div class="al-repository-contact-info"><a href="mailto:soundarchive@stanford.edu">soundarchive@stanford.edu</a></div>
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_ars_202302_web_0055.jpg&w=1080&q=75'
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 cubberley:
   name: 'Cubberley Education Library'
@@ -73,6 +77,10 @@ eal:
   contact_html: |
      <div class="al-repository-contact-info"><a href="eastasialibrary@stanford.edu">eastasialibrary@stanford.edu</a></div>  
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/placeholder_only_sul_eal_022123_0082-reduced_0.jpg&w=1080&q=75'
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 manuscripts:
   name: 'Manuscripts'
@@ -89,6 +97,10 @@ manuscripts:
   contact_html: |
      <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>  
   thumbnail_url: 'https://library.stanford.edu/_next/image?url=https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_speccoll_archives_202302_web_0019.jpg&w=1080&q=75'
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 uarc:
   name: 'University Archives'
@@ -105,3 +117,7 @@ uarc:
   contact_html: |
      <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div> 
   thumbnail_url: 'https://library.sites-pro.stanford.edu/sites/library/files/media/image/sul_speccoll_archives_202302_web_0033.jpg'
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'

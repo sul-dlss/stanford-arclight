@@ -19,6 +19,12 @@ class SolrDocument
     end
   end
 
+  def ead_file_without_namespace_href
+    params = { without_namespace: true }
+
+    "#{ead_file.href}?#{params.to_query}"
+  end
+
   # NOTE: Override of method from ArcLight core to guard against cases where
   # lower level components are set to Collection and lack an EAD ID.
   # We have requested data remediation, but this is needed until that is complete.
