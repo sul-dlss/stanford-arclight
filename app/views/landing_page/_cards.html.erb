@@ -1,0 +1,35 @@
+<div class="row card-container">
+  <div class="col-lg-4 my-4 my-lg-0">
+    <div class="card h-100">
+      <%= image_tag 'locations.png', alt: '', class: 'card-img-top' %>
+      <div class="card-body px-1">
+        <h3 class="card-title"><%= t('.location.title') %></h3>
+        <ul>
+          <% @hours.each do |location_hours| %>
+            <li><%= render 'landing_page/location_hours', location_hours: %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 my-4 my-lg-0">
+    <div class="card h-100">
+      <%= image_tag 'requests.png', alt: '', class: 'card-img-top' %>
+      <div class="card-body d-flex flex-column px-1">
+        <h3 class="card-title"><%= t('.request.title') %></h3>
+        <%= t('.request.body_html') %>
+        <a href="https://library.stanford.edu/access-rare-and-distinctive-materials" class="btn btn-dark mt-auto mx-auto"><%= t('.request.button_text') %></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4 my-4 my-lg-0">
+    <div class="card h-100">
+      <%= image_tag 'contact.png', alt: '', class: 'card-img-top' %>
+      <div class="card-body d-flex flex-column px-1">
+        <h3 class="card-title"><%= t('.contact.title') %></h3>
+        <%= t('.contact.body_html') %>
+        <a href="https://library.stanford.edu/research-support/subject-specialists" class="btn btn-dark mt-auto mx-auto"><%= t('.contact.button_text') %></a>
+      </div>
+    </div>
+  </div>
+</div>

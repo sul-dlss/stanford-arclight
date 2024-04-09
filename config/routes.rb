@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   mount Arclight::Engine => '/'
   mount Sidekiq::Web => '/sidekiq'
 
-  root to: 'arclight/repositories#index'
+  root 'landing_page#index'
   concern :searchable, Blacklight::Routes::Searchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do

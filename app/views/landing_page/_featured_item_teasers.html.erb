@@ -1,0 +1,12 @@
+<div id="featured-items-carousel" class="carousel slide carousel-fade d-none d-lg-block" data-bs-ride="carousel" data-bs-interval="6000">
+  <div class="carousel-inner">
+    <% Settings.featured_items.each_with_index do |item, index| %>
+      <div class="carousel-item<%= ' active' if index == 0 %>" data-bs-interval="6000">
+        <img src="<%= item.image_url %>" class="d-block w-100" alt="<%= item.caption %>">
+        <div class="carousel-caption d-none d-md-block py-1 px-3">
+          <p class="mb-1"><%= item.caption %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

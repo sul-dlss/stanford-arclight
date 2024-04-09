@@ -10,3 +10,31 @@ a {
     text-decoration: var(--bs-link-hover-decoration);
   }
 }
+
+a {
+  color: $link-dark-color;
+  font-weight: 450;
+}
+
+.form-control:focus {
+  border-color: $link-dark-color;
+  box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
+}
+
+.bg-dark a {
+  color: $link-light-color;
+}
+
+.warning-icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: $stanford-digital-red;
+}
+
+.beta-tag {
+  background-color: $stanford-illuminating-dark;
+  color: $stanford-black;
+  font-family: $font-family-serif;
+  font-size: 0.875rem;
+  padding: 0.15rem 0.75rem 0.15rem 0.75rem;
+}

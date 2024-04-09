@@ -28,14 +28,6 @@
       font-size: 2.25rem;
     }
   }
- 
-  .beta-tag {
-    background-color: $stanford-illuminating-dark;
-    color: $stanford-black;
-    font-family: $font-family-serif;
-    font-size: 0.875rem;
-    padding: 0.15rem 0.75rem 0.15rem 0.75rem;
-  }
 
   .navbar-nav {
     margin-right: 0.5rem;
@@ -44,10 +36,14 @@
       color: $navbar-dark-color;
     }
 
-    li:not(:last-child) a::after {
-      content: "•";
-      display: inline-block;
-      margin-left: 1rem;
+    li {
+      float: left;
+      margin-right: 1rem;
+      list-style-type: disc;
+    }
+  
+    li:first-child::marker {
+      color: transparent;
     }
   }
 }
