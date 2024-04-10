@@ -5,3 +5,4 @@ aspace:
     - cubberley
     - eal
     - speccoll
+data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>

@@ -30,6 +30,9 @@ Rails.application.routes.draw do
       delete 'clear'
     end
   end
+
+  get '/download/:id' => 'download#show'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
