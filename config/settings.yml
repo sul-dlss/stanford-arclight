@@ -1,3 +1,33 @@
+hours_api: 'https://library-hours.stanford.edu/'
+
+featured_items:
+  - image_url: https://stacks.stanford.edu/image/iiif/qy843rv0944/qy843rv0944_0080/200,700,2000,2500/!800,800/0/default.jpg
+    caption: USA Exhibit 388, Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945‑46
+  - image_url: https://stacks.stanford.edu/image/iiif/gs873gr6640/gs873gr6640_0001/full/!800,800/0/default.jpg
+    caption: Crucifix, Fear, Lynn Beldner Punk Music Photograph Collection
+  - image_url: https://stacks.stanford.edu/image/iiif/xc332sx6392/xc332sx6392_0001/full/!800,800/0/default.jpg
+    caption: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
+
+# Locations with a 'closed_note' will display the note in lieu of fetching hours from the API.
+hours_locations:
+  - label: 'Green Library, 2nd Floor'
+    library: 'spc'
+    location: 'field-reading-room'
+    url: 'https://library.stanford.edu/libraries/cecil-h-green-library'
+  - label: 'Archive of Recorded Sound'
+    library: 'ars'
+    location: 'archive-recorded-sound'
+    url: 'https://library.stanford.edu/libraries/archive-recorded-sound'
+  - label: 'Cubberley Education Library'
+    library: 'cubberley'
+    location: 'library-circulation'
+    url: 'https://library.stanford.edu/libraries/cubberley-education-library'
+    closed_note: 'Closed until 2025'
+  - label: 'East Asia Library'
+    library: 'eal'
+    location: 'library-circulation'
+    url: 'https://library.stanford.edu/libraries/east-asia-library'
+
 aspace:
   url: <%= ENV['ASPACE_URL'] || 'http://archivesspace-stage.stanford.edu:8081' %>
   harvestable_repository_codes:

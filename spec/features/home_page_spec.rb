@@ -3,9 +3,33 @@
 require 'rails_helper'
 
 RSpec.describe 'Home Page', type: :feature do
-  it 'renders' do
-    visit root_path
+  let(:mock_library_hours) { instance_double(LibraryHours, label: 'Green Library', url: 'https://library.stanford.edu/libraries/cecil-h-green-library', closed_note: 'Closed') }
 
-    expect(page).to have_css('header .h1', text: 'Archival Collections at Stanford')
+  before do
+    allow(LibraryHours).to receive(:new).and_return(mock_library_hours)
+    visit root_path
+  end
+
+  it 'has the title and subtitle' do
+    expect(page).to have_css('.blacklight-landing_page h1', text: 'Find Archival Materials')
+    expect(page).to have_css('.blacklight-landing_page .collection-count', text: 'Detailed inventories of')
+  end
+
+  it 'has featured items' do
+    expect(page).to have_css('#featured-items-carousel')
+  end
+
+  it 'has the about section' do
+    expect(page).to have_css('h2', text: 'About this site')
+  end
+
+  it 'has the three descriptive cards' do
+    expect(page).to have_css('h3', text: 'Locations')
+    expect(page).to have_css('h3', text: 'Request materials')
+    expect(page).to have_css('h3', text: 'Ask a librarian')
+  end
+
+  it 'has the content warning' do
+    expect(page).to have_css('.content-warning')
   end
 end

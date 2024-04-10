@@ -2,10 +2,13 @@ $brand-color: $stanford-cardinal !default;
 $footer-color: $white !default;
 $pre-footer-background: $stanford-black !default;
 
+
+footer a {
+  color: $link-light-color;
+}
+
 #pre-footer {
   background-color: $pre-footer-background;
-  --bs-link-color-rgb: 255, 255, 255;
-  --bs-link-hover-color-rgb: 255, 255, 255;
   --bs-link-decoration: none;
   --bs-link-hover-decoration: underline;
 }
@@ -28,11 +31,9 @@ $pre-footer-background: $stanford-black !default;
 }
 
 #su-footer {
-  background-color: $brand-color;
-  --bs-link-color-rgb: $white;
-  --bs-link-hover-color-rgb: $white;
   --bs-link-decoration: none;
   --bs-link-hover-decoration: underline;
+  background-color: $brand-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 

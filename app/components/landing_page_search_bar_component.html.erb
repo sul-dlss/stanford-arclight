@@ -1,0 +1,18 @@
+<%= form_with url: @url, local: true, method: @method, class: @classes.join(' '), scope: @prefix, role: 'search', **@form_options do |f| %>
+  <%= render Blacklight::HiddenSearchStateComponent.new(params: @params) %>
+
+  <%= f.label @query_param, scoped_t('search.label'), class: 'sr-only visually-hidden' %>
+  
+  <div class="row">
+    <div class="input-group col-12">
+      <%= f.search_field @query_param, value: @q, placeholder: scoped_t('search.placeholder'), class: "search-q q form-control rounded-0 me-xl-3", autofocus: @autofocus, aria: { label: scoped_t('search.label') }  %>
+    </div>
+    <div class="search-links col-12">
+      <ul class="ps-md-0 pt-3">
+        <li><%= link_to 'Advanced Search', advanced_search_catalog_path %></li>
+        <li><%= link_to 'Browse all collections', helpers.arclight_engine.collections_path %></li>
+        <li><%= link_to 'Browse repositories', helpers.arclight_engine.repositories_path %></li>
+      </ul>
+    </div>
+  </div>
+<% end %>

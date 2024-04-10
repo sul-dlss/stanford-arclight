@@ -94,6 +94,9 @@ gem 'blacklight-locale_picker'
 
 gem 'config'
 
+gem 'faraday', '~> 2' # for library hours
+gem 'faraday-retry'
+
 gem 'honeybadger', '~> 5.2'
 
 gem 'okcomputer', '~> 1.18'

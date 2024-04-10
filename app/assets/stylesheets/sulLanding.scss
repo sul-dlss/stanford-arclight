@@ -1,0 +1,143 @@
+.blacklight-landing_page {
+  --bs-link-decoration: none;
+  --bs-link-hover-decoration: underline;
+
+  body a {
+    color: $link-dark-color;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-family: $font-family-serif;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-weight: 300;
+  }
+
+  #main-container .container {
+    @include media-breakpoint-up(lg) {
+      padding-left: 3rem;
+    }
+
+    @include media-breakpoint-up(xl) {
+      padding-left: 5rem;
+    }
+  }
+}
+
+.collection-count {
+  font-family: $font-family-serif;
+}
+
+
+.landing-page-container, .landing-page-container > .row {
+  width: 100%;
+  margin: auto;
+}
+
+.landing-page-container section {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+$featured-item-height: 22rem;
+$featured-teaser-overhang: 4rem;
+#featured-items-carousel {
+  .carousel-item {
+
+    @include media-breakpoint-up(lg) {
+      img {
+        height: $featured-item-height;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .carousel-caption {
+    font-style: italic;
+    text-align: left;
+  }
+}
+
+.featured-teasers {
+  position: relative;
+  z-index: 2;
+}
+
+#landing-page-search {
+  a, h1, li, p {
+    color: $link-light-color;
+  }
+
+  li a {
+    font-size: 1.125rem;
+    font-weight: 350;
+  }
+
+  @include media-breakpoint-up(md) {
+    li {
+      float: left;
+      margin-right: 2rem;
+    }
+
+    li:first-child::marker {
+      color: transparent;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    height: calc($featured-item-height - $featured-teaser-overhang);
+  }
+}
+
+.input-group > .search-autocomplete-wrapper, .input-group {
+  border-radius: 0;
+
+  input {
+    font-style: italic;
+  }
+}
+
+.card-container {
+  --bs-gutter-x: 0.75rem;
+}
+
+.blacklight-landing_page .card {
+  --bs-border-width: 0;
+  --bs-border-radius: 0;
+  $btn-border-radius: none;
+  margin-top: 2rem;
+  margin-bottom: -1.5rem;
+  background-color: $card-background-color;
+
+  a.btn {
+    --bs-border-radius: 0;
+    color: $link-light-color;
+    width: 12rem;
+  }
+
+  .card-img-top, .card-body {
+    width: 90%;
+    position: relative;
+    top: -2rem;
+    margin: auto;
+  }
+
+  .card-body {
+    margin-bottom: -1.5rem;
+  }
+
+  ul {
+    padding-left: 1.25rem;
+  }
+
+  li::marker {
+    color: $link-dark-color;
+  }
+
+  h3 {
+    font-weight: 300;
+  }
+}

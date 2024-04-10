@@ -32,3 +32,39 @@
 en:
   arclight:
     masthead_heading_html: 'Archival Collections at Stanford'
+  shared:
+    content_warning:
+      warning_html: Some materials and description may contain offensive content. <a href="https://library.stanford.edu/libraries/special-collections" class="fa fa-exclamation-circle">More info</a>
+  landing_page:
+    index:
+      title: 'Find Archival Materials'
+      collection_count: Detailed inventories of %{collection_count} collections
+    about:
+      heading: 'About this site'
+      description_html: >
+        <p>Use this portal to search and explore finding aids, also called collection guides. Search across all finding aids by keyword, subject, title, or browse by contributing repositories.</p>
+        <p>Finding aids describe collections of primary sources and other unique, original, or rare materials 
+        held across the special collections repositories at Stanford University Libraries. Materials may 
+        include personal papers of scientists, artists, performers, political activists, and writers; maps; 
+        photographs; manuscript drafts; rare books; artists' books; audiovisual materials; records of departments 
+        and organizations; and more. Some digitized archival materials may be present within finding aids, and 
+        digital collections may be found in <a href="https://searchworks.stanford.edu/">SearchWorks</a>.</p>
+      information_list:
+        title_html: <p>The finding aid provides information about:</p>
+        entries:
+          - The origin of the collection
+          - A brief biography or historical sketch of the individual or organization that created the collection
+          - A statement of the intellectual and physical organization of the collections
+          - A narrative "scope and content note" describing the intellectual content of the collection as a whole and of its major subdivisions
+          - A detailed "contents list" providing a hierarchical listing of the collections from the series down to the file, or possibly the item, level
+    cards:
+      location:
+        title: Locations
+      request:
+        title: Request materials
+        body_html: <p>Stanford University Libraries acquires, preserves, and makes available materials of enduring historic value to support the research needs of Stanford students and faculty and the larger scholarly community. Rare and distinctive materials exist in several locations across Stanford University Libraries. Click the Request button below to learn more.</p>
+        button_text: Request
+      contact:
+        title: Ask a librarian
+        body_html: <p>Have questions about Stanford University Libraries collections or accessing materials? Contact a librarian for help.</p>
+        button_text: Find a subject specialist
