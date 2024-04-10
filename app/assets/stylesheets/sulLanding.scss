@@ -77,13 +77,22 @@ $featured-teaser-overhang: 4rem;
   }
 
   @include media-breakpoint-up(md) {
-    li {
-      float: left;
-      margin-right: 2rem;
+    ul {
+      list-style-type: none;
+      padding-left: 0;
     }
-
-    li:first-child::marker {
-      color: transparent;
+    
+    ul li {
+      display: inline-block;
+      margin-right: 1.5rem;
+      position: relative;
+    }
+    
+    ul li:not(:first-child)::before {
+      content: '•';
+      position: absolute;
+      left: -1rem;
+      top: 0.05rem;
     }
   }
 

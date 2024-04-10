@@ -30,6 +30,8 @@
   }
 
   .navbar-nav {
+    list-style-type: none;
+    padding-left: 0;
     margin-right: 0.5rem;
 
     li.active a {
@@ -37,13 +39,19 @@
     }
 
     li {
-      float: left;
-      margin-right: 1rem;
-      list-style-type: disc;
+      display: inline-block;
+      position: relative;
     }
-  
-    li:first-child::marker {
-      color: transparent;
+
+    li:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    li:not(:first-child)::before {
+      content: '•';
+      position: absolute;
+      left: -1.165rem;
+      top: 0.25rem;
     }
   }
 }
