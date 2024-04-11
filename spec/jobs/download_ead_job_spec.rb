@@ -63,7 +63,7 @@ RSpec.describe DownloadEadJob do
         described_class.enqueue_all
       end.to enqueue_job(described_class).exactly(4).times
       expect(client).to have_received(:published_resource_uris).exactly(2).times
-      expect(FileUtils).to have_received(:mkdir_p).exactly(5).times
+      expect(FileUtils).to have_received(:mkdir_p).exactly(6).times
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
     end
   end
