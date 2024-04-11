@@ -7,6 +7,20 @@ RSpec.describe 'Download finding aid file' do
     get '/download/ARS-0043.xml'
 
     expect(response).to have_http_status(:ok)
+    expect(Nokogiri::XML::Document.parse(response.body).at_css('ead').namespaces).to(
+      eq({ 'xmlns' => 'urn:isbn:1-931666-22-9',
+           'xmlns:xlink' => 'http://www.w3.org/1999/xlink',
+           'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance' })
+    )
+  end
+
+  context 'when an EAD without namespaces is requested' do
+    it 'downloads an EAD without namespaces' do
+      get '/download/ARS-0043.xml?without_namespace=true'
+
+      expect(response).to have_http_status(:ok)
+      expect(Nokogiri::XML::Document.parse(response.body).at_css('ead').namespaces).to be_empty
+    end
   end
 
   context 'when the document does not exist in the Solr index' do
