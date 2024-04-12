@@ -57,9 +57,6 @@ class CatalogController < ApplicationController
     config.add_results_collection_tool(:per_page_widget)
     config.add_results_collection_tool(:view_type_group)
 
-    config.add_nav_action(:bookmark, partial: 'blacklight/nav/bookmark')
-    config.add_nav_action(:search_history, partial: 'blacklight/nav/search_history')
-
     # solr field configuration for search results/index views
     config.index.partials = %i[arclight_index_default]
     config.index.title_field = 'normalized_title_ssm'

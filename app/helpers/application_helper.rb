@@ -12,4 +12,8 @@ module ApplicationHelper
   def dashlane_ignore
     { 'form-type' => 'other' }
   end
+
+  def landing_page?
+    controller_name == 'landing_page' && action_name == 'index'
+  end
 end
