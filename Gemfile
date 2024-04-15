@@ -107,3 +107,5 @@ gem 'cssbundling-rails', '~> 1.1'
 gem 'sidekiq', '~> 7.0'
 
 gem 'whenever', require: false
+
+gem 'recaptcha', '~> 5.16'

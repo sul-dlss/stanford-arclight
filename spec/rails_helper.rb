@@ -66,4 +66,11 @@ RSpec.configure do |config|
 
   config.include ViewComponent::TestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
+
+  # The landing page makes multiple requests to the library-hours API.
+  # Stub them all here by default -- specific tests can override this behavior.
+  config.before do
+    stub_request(:any, %r{https://library-hours.stanford.edu/.*})
+      .to_return(status: 200, body: '', headers: {})
+  end
 end

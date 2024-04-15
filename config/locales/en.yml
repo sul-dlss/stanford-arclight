@@ -68,3 +68,18 @@ en:
         title: Ask a librarian
         body_html: <p>Have questions about Stanford University Libraries collections or accessing materials? Contact a librarian for help.</p>
         button_text: Find a subject specialist
+  feedbacks:
+    create:
+      success: Feedback submitted.
+      failure: Error submitting feedback.
+    reporting_from: 'Reporting from: %{url}'
+  feedback_mailer:
+    submit_feedback:
+      subject: Feedback from Archival Collections at Stanford (ArcLight)
+  helpers:
+    label:
+      email: Your email
+      message: Message
+      name: Your name
+    submit:
+      submit: Send

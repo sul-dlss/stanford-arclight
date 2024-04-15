@@ -1,6 +1,2 @@
 <%= render 'shared/stanford_stripe' %>
-<% if current_page?(root_path) %>
-  <%= render 'landing_page/landing_header' %>
-<% else %>
-  <%= render blacklight_config.header_component.new(blacklight_config: blacklight_config) %>
-<% end %>
+<%= render blacklight_config.header_component.new(blacklight_config: blacklight_config) %>
