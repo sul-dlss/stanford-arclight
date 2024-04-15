@@ -1,0 +1,14 @@
+/* Date Range Facet */
+
+#facet-date_range {
+  // Hide some features that don't work or we don't want
+  .distribution, .more_facets, .facet-values.missing, .facet-count {
+    display: none;
+  }
+  p.range.subsection {
+    .facet-limit-active & {
+      // Don't show the complete date range if one is already applied
+      display: none;
+    }
+  }
+}

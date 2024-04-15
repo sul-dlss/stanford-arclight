@@ -100,6 +100,10 @@ GEM
       view_component (>= 2.66, < 4)
     blacklight-locale_picker (1.1.0)
       rails (>= 5.2.3, < 7.2)
+    blacklight_range_limit (8.5.0)
+      blacklight (>= 7.25.2, < 9)
+      deprecation
+      view_component (>= 2.54, < 4)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -508,6 +512,7 @@ PLATFORMS
 DEPENDENCIES
   arclight (>= 1.1.0, < 2)
   blacklight-locale_picker
+  blacklight_range_limit (~> 8.5)
   bootsnap
   capistrano (~> 3.0)
   capistrano-bundler
