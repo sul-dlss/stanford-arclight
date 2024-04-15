@@ -13,7 +13,7 @@ hours_locations:
   - label: 'Green Library, 2nd Floor'
     library: 'spc'
     location: 'field-reading-room'
-    url: 'https://library.stanford.edu/libraries/cecil-h-green-library'
+    url: 'https://library.stanford.edu/libraries/special-collections'
   - label: 'Archive of Recorded Sound'
     library: 'ars'
     location: 'archive-recorded-sound'
