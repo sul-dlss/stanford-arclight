@@ -18,6 +18,11 @@
   &.open {
     max-height: 100vh;
   }
+
+  label {
+    text-align: right;
+    font-weight: bold;
+  }
  }
 
 .al-masthead {
