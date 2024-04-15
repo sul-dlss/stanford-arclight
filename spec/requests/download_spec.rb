@@ -9,9 +9,29 @@ RSpec.describe 'Download finding aid file' do
     expect(response).to have_http_status(:ok)
   end
 
-  context 'when the finding aid does not exist' do
+  context 'when the document does not exist in the Solr index' do
     it 'returns not found' do
       get '/download/does_not_exist.xml'
+
+      expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  context 'when the finding aid file does not exist on the file system' do
+    let(:blacklight_config) { CatalogController.blacklight_config }
+    let(:solr_conn) { blacklight_config.repository_class.new(blacklight_config).connection }
+
+    before do
+      solr_conn.add({
+                      id: 'abc123',
+                      ead_filename_ssi: 'abc123.xml',
+                      repository_ssm: 'Archive of Recorded Sound'
+                    })
+      solr_conn.commit
+    end
+
+    it 'returns not found' do
+      get '/download/abc123.xml'
 
       expect(response).to have_http_status(:not_found)
     end
