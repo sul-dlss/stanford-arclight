@@ -71,6 +71,31 @@
   }
 }
 
+.input-group {
+  .search-btn {
+    background-color: $navbar-dark-color;
+    border-color: #dee2e6; // Border color of Blacklight inputs
+    border-left: none;
+    padding: 0;
+    border-radius: 0;
+    color: $stanford-palo-alto-dark;
+
+    .blacklight-icons {
+      margin-top: 0.5rem;
+    }
+
+    &.btn:active {
+      background-color: $stanford-palo-alto-light;
+      border-color: $stanford-palo-alto-light;
+    }
+  }
+
+  > .search-autocomplete-wrapper ul li:active {
+    color: $stanford-black;
+    background-color: $grey-lighter;
+  }
+}
+
 .al-masthead + .navbar-search {
   border-top: none;
   background-color: $navbar-background-color;
@@ -82,21 +107,6 @@
     font-weight: 700;
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
-  }
-
-  .input-group {
-    .search-btn {
-      background-color: $navbar-dark-color;
-      border-color: #dee2e6; // Border color of Blacklight inputs
-      border-left: none;
-      padding: 0;
-      border-radius: 0;
-      color: $stanford-palo-alto-dark;
-
-      .blacklight-icons {
-        margin-top: 0.5rem;
-      }
-    }
   }
 
   .within-collection-dropdown {
