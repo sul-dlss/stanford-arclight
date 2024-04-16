@@ -42,6 +42,13 @@
     @include media-breakpoint-up(xl) {
       font-size: 2.25rem;
     }
+
+    a {
+      text-decoration: none;
+      &:hover { 
+        text-decoration: underline;
+      }
+    }
   }
 
   .navbar-nav {

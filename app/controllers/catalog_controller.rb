@@ -49,6 +49,7 @@ class CatalogController < ApplicationController
     }
 
     config.header_component = Arclight::HeaderComponent
+    config.logo_link = 'https://library.stanford.edu'
     config.add_results_document_tool(:online, component: Arclight::OnlineStatusIndicatorComponent)
     config.add_results_document_tool(:arclight_bookmark_control, component: Arclight::BookmarkComponent)
 
