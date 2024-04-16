@@ -4,13 +4,14 @@
 class DownloadController < ApplicationController
   def show
     doc = SolrDocument.find(params[:id])
-
-    data_dir = Settings.data_dir
-    repository_id = doc.repository_config.slug
+    ead_file = File.join(Settings.data_dir, doc.repository_config.slug, doc.ead_filename)
 
     respond_to do |format|
       format.xml do
-        send_file File.join(data_dir, repository_id, doc.ead_filename)
+        send_file ead_file
+      rescue ActionController::MissingFile => e
+        Honeybadger.notify e
+        raise ActionController::RoutingError, 'Not Found'
       end
     end
   end
