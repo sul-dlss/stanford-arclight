@@ -58,4 +58,16 @@ RSpec.describe SolrDocument do
       it { expect(document.collection?).to be false }
     end
   end
+
+  describe '#ead_file_without_namespace_href' do
+    let(:document) do
+      described_class.new(
+        id: 'ars0001'
+      )
+    end
+
+    it 'returns the href for the EAD file without a namespace' do
+      expect(document.ead_file_without_namespace_href).to eq '/download/ars0001.xml?without_namespace=true'
+    end
+  end
 end
