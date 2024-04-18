@@ -29,6 +29,12 @@ class SolrDocument
     level&.parameterize == 'collection' && component_level.zero?
   end
 
+  def ead_file_without_namespace_href
+    params = { without_namespace: true }
+
+    "#{ead_file.href}?#{params.to_query}"
+  end
+
   # self.unique_key = 'id'
 
   # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
