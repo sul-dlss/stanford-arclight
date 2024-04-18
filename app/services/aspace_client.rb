@@ -64,6 +64,19 @@ class AspaceClient
     AspaceQuery.new(client: self, repository_id:, updated_after:)
   end
 
+  # Returns an array of all published resource uris in ASpace for the specified repository
+  # e.g. ["/repositories/2/resources/5363", "/repositories/2/resources/3635"]
+  # @example client.all_published_resource_uris_by(repository_id: '2')
+  # @param repository_id [String] the repository id in ASpace
+  def all_published_resource_uris_by(repository_id:)
+    ead_ids = []
+    published_resource_uris(repository_id:).each do |uri|
+      ead_ids << uri['uri']
+    end
+
+    ead_ids
+  end
+
   # send an authenticated GET request to Aspace
   def authenticated_get(path, body = nil)
     raise ArgumentError, 'Please provide a path for the request' unless path
