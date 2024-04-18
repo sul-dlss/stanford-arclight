@@ -1,4 +1,9 @@
 en:
+  arclight:
+    views:
+      repositories:
+        show: "%{name} - Archival Collections at Stanford"
+        title: Repositories - Archival Collections at Stanford
   blacklight:
     search:
       fields:
