@@ -71,10 +71,10 @@ bin/rails runner 'DownloadEadJob.enqueue_one_by(aspace_repository_code: "ars", u
 ### Deleting a collection
 There is a rake task for deleting a single collection and all of its components from the Solr index.
 
-1. Find the Solr document id for the collection (which is the EAD ID)
+1. Find the Solr document id for the collection (which is a form of the EAD ID)
 2. Run the rake task:
 ```shell
 # Some shells (such as zsh) require that the brackets are escaped.
-bundle exec rake stanford_arclight:delete_by_ead_id\['ars0167'\]
+bundle exec rake stanford_arclight:delete_by_id\['ars0167'\]
 ```
 3. Enter YES at the prompt to delete the collection and its components.
