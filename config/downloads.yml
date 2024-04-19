@@ -12,5 +12,5 @@
 default:
   ead:
     template: '/download/%{id}.xml'
-  # pdf:
-  #   template: '/download/%{id}.pdf'
+  pdf:
+    template: '/download/%{id}.pdf'

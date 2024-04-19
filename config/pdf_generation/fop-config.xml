@@ -1,0 +1,73 @@
+<fop version="1.0">
+  <accessibility>true</accessibility>
+	<pdf-a-mode>PDF/A-1a</pdf-a-mode>
+	<font-base>/opt/app/arclight/archivesspace/stylesheets/fonts</font-base>
+	<complex-scripts disabled="true" />
+	<renderers>
+		<renderer mime="application/pdf">
+			<pdf-ua-mode>PDF/UA-1</pdf-ua-mode>
+		<fonts>
+			<font embed-url="KurintoText-Rg.ttf">
+				<font-triplet name="KurintoText" style="normal" weight="normal"/>
+			</font>
+			<font embed-url="KurintoText-Bd.ttf">
+				<font-triplet name="KurintoText" style="normal" weight="bold"/>
+			</font>
+			<font embed-url="KurintoText-BdIt.ttf">
+				<font-triplet name="KurintoText" style="italic" weight="bold"/>
+			</font>
+			<font embed-url="KurintoText-It.ttf">
+				<font-triplet name="KurintoText" style="italic" weight="normal"/>
+			</font>
+			<font embed-url="KurintoTextJP-Rg.ttf">
+				<font-triplet name="KurintoTextJP" style="normal" weight="normal"/>
+			</font>
+			<font embed-url="KurintoTextJP-Bd.ttf">
+				<font-triplet name="KurintoTextJP" style="normal" weight="bold"/>
+			</font>
+			<font embed-url="KurintoTextJP-BdIt.ttf">
+				<font-triplet name="KurintoTextJP" style="italic" weight="bold"/>
+			</font>
+			<font embed-url="KurintoTextJP-It.ttf">
+				<font-triplet name="KurintoTextJP" style="italic" weight="normal"/>
+			</font>
+			<font embed-url="KurintoTextKR-Rg.ttf">
+				<font-triplet name="KurintoTextKR" style="normal" weight="normal"/>
+			</font>
+			<font embed-url="KurintoTextKR-Bd.ttf">
+				<font-triplet name="KurintoTextKR" style="normal" weight="bold"/>
+			</font>
+			<font embed-url="KurintoTextKR-BdIt.ttf">
+				<font-triplet name="KurintoTextKR" style="italic" weight="bold"/>
+			</font>
+			<font embed-url="KurintoTextKR-It.ttf">
+				<font-triplet name="KurintoTextKR" style="italic" weight="normal"/>
+			</font>
+			<font embed-url="KurintoTextSC-Rg.ttf">
+				<font-triplet name="KurintoTextSC" style="normal" weight="normal"/>
+			</font>
+			<font embed-url="KurintoTextSC-Bd.ttf">
+				<font-triplet name="KurintoTextSC" style="normal" weight="bold"/>
+			</font>
+			<font embed-url="KurintoTextSC-BdIt.ttf">
+				<font-triplet name="KurintoTextSC" style="italic" weight="bold"/>
+			</font>
+			<font embed-url="KurintoTextSC-It.ttf">
+				<font-triplet name="KurintoTextSC" style="italic" weight="normal"/>
+			</font>
+			<font embed-url="NotoSerif-SemiCondensed.ttf">
+				<font-triplet name="NotoSerif" style="normal" weight="normal"/>
+			</font>
+			<font embed-url="NotoSerif-SemiCondensedBold.ttf">
+				<font-triplet name="NotoSerif" style="normal" weight="bold"/>
+			</font>
+			<font embed-url="NotoSerif-SemiCondensedBoldItalic.ttf">
+				<font-triplet name="NotoSerif" style="italic" weight="bold"/>
+			</font>
+			<font embed-url="NotoSerif-SemiCondensedItalic.ttf">
+				<font-triplet name="NotoSerif" style="italic" weight="normal"/>
+			</font>
+		</fonts>
+	</renderer>
+	</renderers>
+</fop>

@@ -42,6 +42,16 @@ RSpec.describe DownloadEadJob do
     end
   end
 
+  context 'when generate_pdf param value is true' do
+    it 'enqueues a generate pdf job for the EAD file' do
+      expect do
+        described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc123', data_dir: '/data/archive/',
+                                    generate_pdf: true)
+      end.to enqueue_job(GeneratePdfJob).once.with(file_path: '/data/archive/abc123.xml', file_name: 'abc123',
+                                                   data_dir: '/data/archive/')
+    end
+  end
+
   describe '.enqueue_all' do
     before do
       allow(client).to receive(:published_resource_uris).with(repository_id: '11',
