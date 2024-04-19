@@ -2,11 +2,14 @@ hours_api: 'https://library-hours.stanford.edu/'
 
 featured_items:
   - image_url: https://stacks.stanford.edu/image/iiif/qy843rv0944/qy843rv0944_0080/200,700,2000,2500/!800,800/0/default.jpg
-    caption: USA Exhibit 388, Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945‑46
+    image_alt: USA Exhibit 388, Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945-46
+    caption_html: USA Exhibit 388, Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945-46
   - image_url: https://stacks.stanford.edu/image/iiif/gs873gr6640/gs873gr6640_0001/full/!800,800/0/default.jpg
-    caption: Crucifix, Fear, Lynn Beldner Punk Music Photograph Collection
+    image_alt: Crucifix, Fear, from Lynn Beldner Punk Music Photograph Collection
+    caption_html: Crucifix, Fear, Lynn Beldner Punk Music Photograph Collection
   - image_url: https://stacks.stanford.edu/image/iiif/xc332sx6392/xc332sx6392_0001/full/!800,800/0/default.jpg
-    caption: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
+    image_alt: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
+    caption_html: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
 
 # Locations with a 'closed_note' will display the note in lieu of fetching hours from the API.
 hours_locations:
