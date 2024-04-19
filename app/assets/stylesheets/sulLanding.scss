@@ -6,14 +6,10 @@
     color: $link-dark-color;
   }
 
-  h1 {
+  h2 {
     font-size: 2.25rem;
     font-family: $font-family-serif;
-    font-weight: 500;
-  }
-
-  h2 {
-    font-weight: 300;
+    font-weight: bold;
   }
 
   #main-container .container {
@@ -37,7 +33,7 @@
 }
 
 $featured-item-height: 22rem;
-$featured-teaser-overhang: 4rem;
+$featured-teaser-overhang: 1rem;
 #featured-items-carousel {
   .carousel-item {
 
@@ -52,6 +48,7 @@ $featured-teaser-overhang: 4rem;
   .carousel-caption {
     font-style: italic;
     text-align: left;
+    background: rgba(0, 0, 0, 0.8);
   }
 }
 
@@ -61,9 +58,9 @@ $featured-teaser-overhang: 4rem;
 }
 
 #landing-page-search {
-  a, h1, li, p {
-    color: $link-light-color;
-  }
+  background-image: linear-gradient(to right, #EFEFEF, #D0D8D8);
+  // 30px matches height of stanford top white brand bar
+  padding-top: 30px;
 
   #autocomplete-popup li {
     color: $stanford-black;
@@ -99,9 +96,17 @@ $featured-teaser-overhang: 4rem;
   }
 }
 
-.input-group > .search-autocomplete-wrapper, .input-group {
-  border-radius: 0;
+.search-query-form > .input-group {
+  padding: 0;
+  border: 1px solid black;
+  height: 3rem;
+}
 
+.input-group > .search-autocomplete-wrapper, #autocomplete-popup {
+  border-radius: 0;
+}
+
+.input-group {
   input {
     font-style: italic;
   }
@@ -145,6 +150,6 @@ $featured-teaser-overhang: 4rem;
   }
 
   h3 {
-    font-weight: 300;
+    font-weight: bold;
   }
 }

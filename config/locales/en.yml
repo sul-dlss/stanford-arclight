@@ -37,7 +37,7 @@ en:
       warning_html: Some materials and description may contain offensive content. <a href="https://library.stanford.edu/libraries/special-collections" class="fa fa-exclamation-circle">More info</a>
   landing_page:
     index:
-      title: 'Find Archival Materials'
+      title: 'Find archival materials'
       collection_count: Detailed inventories of %{collection_count} collections
     about:
       heading: 'About this site'
