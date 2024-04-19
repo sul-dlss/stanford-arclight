@@ -17,7 +17,8 @@
   </div>
   <div class="search-links col-12">
     <ul class="ps-md-0 pt-3">
-      <li><%= link_to 'Advanced Search', advanced_search_catalog_path %></li>
+      <%# Temporarily removing Advanced Search link per https://github.com/sul-dlss/stanford-arclight/issues/554 %> 
+       <%# <li> link_to 'Advanced Search', advanced_search_catalog_path</li> %>
       <li><%= link_to 'Browse all collections', helpers.arclight_engine.collections_path %></li>
       <li><%= link_to 'Browse repositories', helpers.arclight_engine.repositories_path %></li>
     </ul>
