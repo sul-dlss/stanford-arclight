@@ -15,8 +15,8 @@ RSpec.describe 'Home Page', type: :feature do
     expect(page).to have_css('.blacklight-landing_page .collection-count', text: 'Detailed inventories of')
   end
 
-  it 'has featured items' do
-    expect(page).to have_css('#featured-items-carousel')
+  it 'has a featured item' do
+    expect(page).to have_css('#featured-item-wrapper')
   end
 
   it 'has the about section' do

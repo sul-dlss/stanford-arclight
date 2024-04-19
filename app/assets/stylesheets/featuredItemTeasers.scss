@@ -1,8 +1,14 @@
-.carousel-item {
+// this css copies from bootstrap's carousel component
+.featured-item {
   position: relative;
+  float: left;
+  width: 100%;
+  margin-right: -100%;
+  backface-visibility: hidden;
+  display: block;
 }
 
-.carousel-caption {
+.featured-item-caption {
   position: absolute;
   bottom: 0;
   left: 0;
