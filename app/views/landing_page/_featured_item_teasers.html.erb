@@ -2,9 +2,9 @@
   <div class="carousel-inner">
     <% Settings.featured_items.each_with_index do |item, index| %>
       <div class="carousel-item<%= ' active' if index == 0 %>" data-bs-interval="6000">
-        <img src="<%= item.image_url %>" class="d-block w-100" alt="<%= item.caption %>">
+        <img src="<%= item.image_url %>" class="d-block w-100" alt="<%= item.image_alt %>">
         <div class="carousel-caption d-none d-md-block py-1 px-3">
-          <p class="mb-1"><%= item.caption %></p>
+          <p class="mb-1"><%= item.caption_html.html_safe %></p>
         </div>
       </div>
     <% end %>
