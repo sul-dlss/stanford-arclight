@@ -34,8 +34,9 @@
 
 $featured-item-height: 22rem;
 $featured-teaser-overhang: 1rem;
-#featured-items-carousel {
-  .carousel-item {
+
+#featured-item-wrapper {
+  .featured-item {
 
     @include media-breakpoint-up(lg) {
       img {
@@ -45,7 +46,7 @@ $featured-teaser-overhang: 1rem;
     }
   }
 
-  .carousel-caption {
+  .featured-item-caption {
     font-style: italic;
     text-align: left;
     background: rgba(0, 0, 0, 0.8);
@@ -94,6 +95,12 @@ $featured-teaser-overhang: 1rem;
   @include media-breakpoint-up(lg) {
     height: calc($featured-item-height - $featured-teaser-overhang);
   }
+}
+
+#about-landing {
+  // 30px matches height of stanford top white brand bar
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .search-query-form > .input-group {
