@@ -97,6 +97,12 @@ $featured-teaser-overhang: 1rem;
   }
 }
 
+#about-landing {
+  // 30px matches height of stanford top white brand bar
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 .search-query-form > .input-group {
   padding: 0;
   border: 1px solid black;
