@@ -12,7 +12,7 @@ RSpec.describe IndexEadJob do
 
   it 'sends a command to index the EAD in Solr with traject' do
     described_class.perform_now(file_path: 'data/sample.xml',
-                                arclight_repo_code: 'ars',
+                                arclight_repository_code: 'ars',
                                 solr_url: 'http://localhost/solr/core',
                                 app_dir: '/some/directory')
     expect(Open3).to have_received(:capture2).with(
@@ -49,7 +49,7 @@ RSpec.describe IndexEadJob do
     it 'raises an error' do
       expect do
         described_class.perform_now(file_path: 'data/sample.xml',
-                                    arclight_repo_code: 'ars',
+                                    arclight_repository_code: 'ars',
                                     solr_url: 'http://localhost/solr/core',
                                     app_dir: '/some/directory')
       end.to raise_error(IndexEadJob::IndexEadError)
