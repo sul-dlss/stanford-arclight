@@ -13,10 +13,11 @@ RSpec.describe IndexEadJob do
   it 'sends a command to index the EAD in Solr with traject' do
     described_class.perform_now(file_path: 'data/sample.xml',
                                 arclight_repository_code: 'ars',
+                                resource_uri: '/repositories/2/resources/123',
                                 solr_url: 'http://localhost/solr/core',
                                 app_dir: '/some/directory')
     expect(Open3).to have_received(:capture2).with(
-      { 'REPOSITORY_ID' => 'ars' },
+      { 'REPOSITORY_ID' => 'ars', 'RESOURCE_URI' => '/repositories/2/resources/123' },
       ['bundle',
        'exec',
        'traject',
@@ -34,10 +35,13 @@ RSpec.describe IndexEadJob do
   context 'when the arclight repository code is not provided as an argument' do
     it 'infers the repository code from the file path' do
       described_class.perform_now(file_path: '/data/archive/sample.xml',
+                                  resource_uri: '/repositories/2/resources/123',
                                   solr_url: 'http://localhost/solr/core',
                                   app_dir: '/some/directory')
 
-      expect(Open3).to have_received(:capture2).with({ 'REPOSITORY_ID' => 'archive' }, anything, anything)
+      expect(Open3).to have_received(:capture2).with({ 'REPOSITORY_ID' => 'archive',
+                                                       'RESOURCE_URI' => '/repositories/2/resources/123' },
+                                                     anything, anything)
     end
   end
 
@@ -50,6 +54,7 @@ RSpec.describe IndexEadJob do
       expect do
         described_class.perform_now(file_path: 'data/sample.xml',
                                     arclight_repository_code: 'ars',
+                                    resource_uri: '/repositories/2/resources/123',
                                     solr_url: 'http://localhost/solr/core',
                                     app_dir: '/some/directory')
       end.to raise_error(IndexEadJob::IndexEadError)
