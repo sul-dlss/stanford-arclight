@@ -78,3 +78,27 @@ There is a rake task for deleting a single collection and all of its components 
 bundle exec rake stanford_arclight:delete_by_id\['ars0167'\]
 ```
 3. Enter YES at the prompt to delete the collection and its components.
+
+## PDF Generation
+### Requirements
+Finding aid PDFs can be automatically generated from EAD XML. The following are needed:
+- [Saxon](https://www.saxonica.com/welcome/welcome.xml)
+- [Apache FOP](https://xmlgraphics.apache.org/fop/)
+- Java
+
+### Configuration
+Paths to those tools must be configured in `./config/settings.yml`.
+- `Settings.pdf_generation.fop_path` to specify the path to the fop executable
+- `Settings.pdf_generation.saxon_path` to specify the path to the saxon jar
+
+The path to the referenced fonts must be set in `config/pdf_generation/fop-config.xml`. They are not bundled in this repository. They can be found in [ArchivesSpace](https://github.com/archivesspace/archivesspace).
+
+PDFs can be automatically generated as part of `DownloadEadJob` by setting `Settings.pdf_generation.create_on_ead_download`.
+
+### Running a PDF Generation Job
+The `GeneratePdfJob` can be used to generate PDFs not created automatically via `DownloadEadJob`.
+
+For example, the following generates all missing PDFs but does not regenerate existing PDFs:
+```shell
+bin/rails runner 'GeneratePdfJob.enqueue_all'
+```

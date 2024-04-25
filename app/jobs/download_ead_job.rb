@@ -13,10 +13,12 @@ class DownloadEadJob < ApplicationJob
   # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
-  def self.enqueue_all(updated_after: nil, data_dir: Settings.data_dir, index: true)
+  # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
+  def self.enqueue_all(updated_after: nil, data_dir: Settings.data_dir, index: true,
+                       generate_pdf: Settings.pdf_generation.create_on_ead_download)
     create_directories(data_dir:)
     AspaceRepositories.all_harvestable.each do |aspace_repository_code, aspace_repository_id|
-      enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
+      enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
     end
   end
 
@@ -25,24 +27,28 @@ class DownloadEadJob < ApplicationJob
   # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
+  # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
   def self.enqueue_one_by(aspace_repository_code:, updated_after: nil,
-                          data_dir: Settings.data_dir, index: true)
+                          data_dir: Settings.data_dir, index: true,
+                          generate_pdf: Settings.pdf_generation.create_on_ead_download)
     create_directories(data_dir:)
     aspace_repository_id = AspaceRepositories.find_by(code: aspace_repository_code)
-    enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
+    enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
   end
 
-  def self.enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:)
+  # rubocop:disable Metrics/ParameterLists
+  def self.enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
     resource_uris = AspaceClient.new.published_resource_uris(repository_id: aspace_repository_id, updated_after:)
     resource_uris.each do |resource|
       arclight_repository_code = ArclightRepositoryMapper.map_to_code(aspace_repository_code:,
                                                                       ead_id: resource['ead_id'])
       directory = "#{data_dir}/#{arclight_repository_code}"
       DownloadEadJob.perform_later(resource_uri: resource['uri'], file_name: resource['ead_id'], data_dir: directory,
-                                   index:)
+                                   index:, generate_pdf:)
     end
   end
   private_class_method :enqueue
+  # rubocop:enable Metrics/ParameterLists
 
   # Ensure all arclight repositories have a directory where EAD files can be stored
   def self.create_directories(data_dir:)
@@ -60,7 +66,9 @@ class DownloadEadJob < ApplicationJob
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   #        the directory specified must already exist
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
-  def perform(resource_uri:, file_name:, data_dir:, index: false)
+  # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
+  def perform(resource_uri:, file_name:, data_dir:, index: false,
+              generate_pdf: Settings.pdf_generation.create_on_ead_download)
     ead_xml = AspaceClient.new.resource_description(resource_uri)
 
     # Takes a supplied file name like 'abc 123/ABC.XML' and turns it into: 'abc-123-abc.xml'
@@ -73,5 +81,6 @@ class DownloadEadJob < ApplicationJob
     end
 
     IndexEadJob.perform_later(file_path:) if index
+    GeneratePdfJob.perform_later(file_path:, file_name:, data_dir:) if generate_pdf
   end
 end

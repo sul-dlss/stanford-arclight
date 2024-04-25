@@ -40,3 +40,11 @@ aspace:
     - mhc
     - speccoll
 data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>
+
+pdf_generation:
+  create_on_ead_download: true
+  ead_to_fo_xsl_path: './app/xslt/ead_to_fo.xsl'
+  fop_config_path: './config/pdf_generation/fop-config.xml'
+  fop_path: 'fop'
+  logo_path: './app/assets/images/sul-logo-bw_lightbackground.png'
+  saxon_path: '/opt/app/arclight/SaxonHE12-4J/saxon-he-12.4.jar'
