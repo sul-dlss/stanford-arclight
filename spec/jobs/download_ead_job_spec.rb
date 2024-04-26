@@ -15,19 +15,21 @@ RSpec.describe DownloadEadJob do
   end
 
   it 'fetches an EAD from the client service' do
-    described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc123', data_dir: '/data/archive/')
+    described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
+                                data_dir: '/data/archive/')
 
-    expect(client).to have_received(:resource_description).with('resource/abc123')
+    expect(client).to have_received(:resource_description).with('/repositories/1/resources/123')
   end
 
   it 'writes the formatted EAD XML to a file' do
-    described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc123', data_dir: '/data/archive/')
+    described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
+                                data_dir: '/data/archive/')
 
     expect(file).to have_received(:puts).with("<?xml version=\"1.0\"?>\n<a/>\n")
   end
 
   it 'cleans up the supplied file name' do
-    described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc 123/ABC.XML',
+    described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc 123/ABC.XML',
                                 data_dir: '/data/archive/')
 
     expect(File).to have_received(:open).with('/data/archive/abc-123-abc.xml', 'wb')
@@ -36,8 +38,8 @@ RSpec.describe DownloadEadJob do
   context 'when index param value is true' do
     it 'enqueues an indexing job with the EAD file' do
       expect do
-        described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc123', data_dir: '/data/archive/',
-                                    index: true)
+        described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
+                                    data_dir: '/data/archive/', index: true)
       end.to enqueue_job(IndexEadJob).once.with(file_path: '/data/archive/abc123.xml')
     end
   end
@@ -45,8 +47,8 @@ RSpec.describe DownloadEadJob do
   context 'when generate_pdf param value is true' do
     it 'enqueues a generate pdf job for the EAD file' do
       expect do
-        described_class.perform_now(resource_uri: 'resource/abc123', file_name: 'abc123', data_dir: '/data/archive/',
-                                    generate_pdf: true)
+        described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
+                                    data_dir: '/data/archive/', generate_pdf: true)
       end.to enqueue_job(GeneratePdfJob).once.with(file_path: '/data/archive/abc123.xml', file_name: 'abc123',
                                                    data_dir: '/data/archive/')
     end
