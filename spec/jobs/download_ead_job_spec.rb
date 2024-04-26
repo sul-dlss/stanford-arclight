@@ -40,7 +40,8 @@ RSpec.describe DownloadEadJob do
       expect do
         described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
                                     data_dir: '/data/archive/', index: true)
-      end.to enqueue_job(IndexEadJob).once.with(file_path: '/data/archive/abc123.xml')
+      end.to enqueue_job(IndexEadJob).once.with(file_path: '/data/archive/abc123.xml',
+                                                resource_uri: '/repositories/1/resources/123')
     end
   end
 
