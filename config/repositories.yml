@@ -102,25 +102,6 @@ manuscripts:
   #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'
   #     request_mappings: 'Action=10&Form=31&Value=ead_url'
 
-mhc:
-  name: 'Medical History Center'
-  description: 'The Stanford Medical History Center collects and maintains materials related to the history of health care, medical research, and medical education at Stanford and beyond.'
-  building: 'Lane Medical Library'
-  address1: '300 Pasteur Drive, Rm L109'
-  address2: ''
-  city: 'Stanford'
-  state: 'CA'
-  zip: '94305'
-  country: 'USA'
-  phone: ''
-  contact_html: |
-       <div class="al-repository-contact-info"><a href="https://lane.stanford.edu/contacts/index.html">Contact Lane Medical Library</a></div> 
-  thumbnail_url: 'repositories/medical.png'
-  # request_types:
-  #   aeon_web_ead:
-  #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'
-  #     request_mappings: 'Action=10&Form=31&Value=ead_url'
-
 uarc:
   name: 'University Archives'
   visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 36 hours in advance.'
