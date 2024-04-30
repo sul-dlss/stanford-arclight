@@ -84,6 +84,43 @@ RSpec.describe AspaceClient do
     end
   end
 
+  describe '#published_resource_with_updated_component_uris' do
+    let(:aspace_query) { instance_double(AspaceClient::AspaceQuery) }
+
+    before do
+      allow(AspaceClient::AspaceQuery).to receive(:new)
+        .with(client:, repository_id: 11, updated_after: '2024-05-06')
+        .and_return(aspace_query)
+      allow(AspaceClient::AspaceQuery).to receive(:new)
+        .with(client:, repository_id: 11).and_return(aspace_query)
+      allow(aspace_query).to receive(:query_components).and_return(aspace_query)
+      allow(aspace_query).to receive(:select_fields).and_return(aspace_query)
+      allow(aspace_query).to receive(:restrict_results_to_uris).and_return(aspace_query)
+      allow(aspace_query).to receive(:each).and_return([])
+    end
+
+    it 'returns an instance of AspaceQuery' do
+      expect(client.published_resource_with_updated_component_uris(repository_id: 11,
+                                                                   updated_after: '2024-05-06')).to eq aspace_query
+    end
+
+    context 'without a repository_id argument' do
+      it 'raises an error' do
+        expect do
+          client.published_resource_with_updated_component_uris(updated_after: '2024-05-06')
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'without an updated_after argument' do
+      it 'raises an error' do
+        expect do
+          client.published_resource_with_updated_component_uris(repository_id: 11)
+        end.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe '#authenticated_get' do
     it 'sends an authenticated request with correct auth header to the specified address' do
       stub_request(:get, "#{url}/some_request")
@@ -103,6 +140,29 @@ RSpec.describe AspaceClient do
       it 'raises an error' do
         stub_request(:get, "#{url}/some_request").to_raise(Net::HTTPBadResponse)
         expect { client.authenticated_get('some_request') }.to raise_error(StandardError)
+      end
+    end
+  end
+
+  describe '#authenticated_post' do
+    it 'sends an authenticated request with correct auth header to the specified address' do
+      stub_request(:post, "#{url}/some_request")
+      client.authenticated_post('some_request')
+      expect(WebMock).to have_requested(:post,
+                                        "#{url}/some_request")
+        .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
+    end
+
+    context 'without a path argument' do
+      it 'raises an error' do
+        expect { client.resource_description }.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when the HTTP response is bad' do
+      it 'raises an error' do
+        stub_request(:post, "#{url}/some_request").to_raise(Net::HTTPBadResponse)
+        expect { client.authenticated_post('some_request') }.to raise_error(StandardError)
       end
     end
   end
