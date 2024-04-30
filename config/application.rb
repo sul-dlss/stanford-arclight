@@ -32,5 +32,16 @@ module StanfordArclight
       config.site_key = ENV.fetch('RECAPTCHA_SITE_KEY', '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy')
       config.secret_key = ENV.fetch('RECAPTCHA_SECRET_KEY', '6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx')
     end
+
+    # This folder contains engine overrides
+    # Based on https://edgeguides.rubyonrails.org/engines.html#overriding-models-and-controllers
+    overrides = Rails.root.join("app/overrides").to_s
+    Rails.autoloaders.main.ignore(overrides)
+
+    config.to_prepare do
+      Dir.glob("#{overrides}/**/*_override.rb").sort.each do |override|
+        load override
+      end
+    end
   end
 end

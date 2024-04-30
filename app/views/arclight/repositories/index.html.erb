@@ -1,0 +1,16 @@
+<%# AL Core override %>
+<% breadcrumb :repositories %>
+
+<h1 class="sr-only visually-hidden"><%= t('arclight.repositories') %></h1>
+
+<div class="al-repositories container">
+    <%= render 'shared/breadcrumbs' %>
+    <h1><%= t('arclight.repositories') %></h1>
+    <% @repositories.each_slice(3) do |repositories_chunk| %>
+        <div class="row card-container">
+        <% repositories_chunk.each do |repository| %>
+            <%= render partial: 'repositories/browse_repositories', locals: { repository: repository } %>
+        <% end %>
+        </div>
+    <% end %>
+</div>
