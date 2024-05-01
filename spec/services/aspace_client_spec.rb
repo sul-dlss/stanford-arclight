@@ -66,6 +66,24 @@ RSpec.describe AspaceClient do
     end
   end
 
+  describe '#all_published_resource_uris_by' do
+    let(:published_resource_uris) do
+      [{ 'ead_id' => 'abc123', 'uri' => '/repositories/3/resources/2' },
+       { 'ead_id' => 'abc456', 'uri' => '/repositories/3/resources/4' }]
+    end
+
+    before do
+      allow(AspaceClient::AspaceQuery).to receive(:new).with(client:, repository_id: 3, updated_after: nil)
+                                                       .and_return(published_resource_uris)
+    end
+
+    it 'returns an array of published resource uris' do
+      expect(client.all_published_resource_uris_by(repository_id: 3)).to eq(
+        ['/repositories/3/resources/2', '/repositories/3/resources/4']
+      )
+    end
+  end
+
   describe '#authenticated_get' do
     it 'sends an authenticated request with correct auth header to the specified address' do
       stub_request(:get, "#{url}/some_request")
