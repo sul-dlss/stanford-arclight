@@ -67,6 +67,14 @@ $featured-teaser-overhang: 1rem;
     color: $stanford-black;
   }
 
+  .input-group > .search-autocomplete-wrapper input:focus {
+    box-shadow: none;
+  }
+
+  .search-query-form .input-group:focus-within {
+    box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
+  }
+
   li a {
     font-size: 1.125rem;
     font-weight: 350;
