@@ -2,7 +2,7 @@
 
 # Controller for the landing page
 class LandingPageController < ApplicationController
-  layout 'landing_page', only: [:index]
+  layout 'unwrapped', only: [:index]
 
   def index
     @hours = Settings.hours_locations.map { |hours_config| LibraryHours.from_config(hours_config) }

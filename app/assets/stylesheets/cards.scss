@@ -1,0 +1,90 @@
+/* Shared styles across pages for Bootstrap cards */
+
+.blacklight-landing_page .card,
+.al-repositories .card {
+  --bs-border-width: 0;
+  --bs-border-radius: 0;
+  $btn-border-radius: none;
+  margin-top: 2rem;
+  margin-bottom: -1.5rem;
+  background-color: $card-background-color;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  a.btn {
+    --bs-border-radius: 0;
+    color: $link-light-color;
+  }
+
+  .card-img-top,
+  .card-body {
+    width: 100%;
+    position: relative;
+    margin: auto;
+    top: -2rem;
+  }
+
+  .card-img-top {
+    // to make the image sizes consistent:
+    height: 230px;
+    // Crop the image to cover the specified height without changing aspect ratio
+    object-fit: cover;
+  }
+
+  .card-body {
+    margin-bottom: -1.5rem;
+
+    a.btn {
+      width: 100%;
+    }
+  }
+
+  ul {
+    padding-left: 1.25rem;
+  }
+
+  li::marker {
+    color: $link-dark-color;
+  }
+
+  h3 {
+    font-weight: bold;
+  }
+}
+
+.blacklight-landing_page .card-container,
+.al-repositories .card-container {
+  // this centers the cards if there are less than 3 in a row
+  justify-content: center;
+}
+
+/* specific to repositories page */
+.al-repositories .card-container {
+  // this margin counteracts the negative margin on the cards to create spacing between multiple rows of card-containers.
+  // On the landing page there is only one row of card-containers so this is not needed
+  margin-top: 2rem;
+
+  &:last-child {
+    margin-bottom: 4rem;
+  }
+
+  .card-col {
+    margin-bottom: 2rem;
+  }
+
+  // for single stacked cards on small screen
+  @include media-breakpoint-down(lg) {
+    margin-top: 0;
+    .card-col {
+      margin-top: 5rem;
+    }
+  }
+
+  .card-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+  }
+}

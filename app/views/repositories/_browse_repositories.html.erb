@@ -1,0 +1,16 @@
+  <%# custom SUL tempalte %>
+  <div class="col-lg-4 card-col">
+    <div class="card h-100">
+      <%= image_tag repository.thumbnail_url, alt: repository.name, class: 'card-img-top' %>
+      <div class="card-body d-flex flex-column px-1">
+        <h3 class="card-title">
+          <%= repository.name %>
+        </h3>
+        <p class="card-text"><%= repository.description %></p>
+        <% collection_text = repository.collection_count == 1 ? "collection" : "collections" %>
+        <%= link_to("Browse #{repository.collection_count} #{collection_text}", repository_collections_path(repository), class: "btn btn-dark mt-auto mx-auto") %>
+
+      </div>
+    </div>
+  </div>
+  

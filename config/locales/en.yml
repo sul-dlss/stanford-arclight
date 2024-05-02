@@ -32,6 +32,7 @@
 en:
   arclight:
     masthead_heading_html: <a href="/">Archival Collections at Stanford</a>
+    repositories: Browse repositories
   shared:
     content_warning:
       warning_html: Some materials and description may contain offensive content. <a href="https://library.stanford.edu/libraries/special-collections" class="fa fa-exclamation-circle">More info</a>
