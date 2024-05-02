@@ -272,6 +272,7 @@ class CatalogController < ApplicationController
     # Collection Show Page - Summary Section
     config.add_summary_field 'creators', field: 'creator_ssim', link_to_facet: true
     config.add_summary_field 'abstract', field: 'abstract_html_tesm', helper_method: :render_html_tags
+    config.add_summary_field 'unitid_ssm', label: 'Call number'
     config.add_summary_field 'extent', field: 'extent_ssm'
     config.add_summary_field 'language', field: 'language_ssim'
 
