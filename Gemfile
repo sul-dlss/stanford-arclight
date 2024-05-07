@@ -46,7 +46,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 group :production do
-  gem 'mysql2'
+  gem 'pg', '~> 1.5'
 end
 
 group :development do
