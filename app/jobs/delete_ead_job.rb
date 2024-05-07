@@ -37,10 +37,7 @@ class DeleteEadJob < ApplicationJob
     # returns a hash where each key is an aspace resource uri and each value is a Solr document id
     # e.g. {'/repositories/1/resources/123' => 'sc0908-xml', '/repositories/1/resources/456'' => 'm0001-xml'}
     def all
-      ids = []
-      each { |id| ids << id }
-
-      ids.to_h
+      each.to_h
     end
 
     private
