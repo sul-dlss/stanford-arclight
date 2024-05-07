@@ -69,12 +69,7 @@ class AspaceClient
   # @example client.all_published_resource_uris_by(repository_id: '2')
   # @param repository_id [String] the repository id in ASpace
   def all_published_resource_uris_by(repository_id:)
-    ead_ids = []
-    published_resource_uris(repository_id:).each do |uri|
-      ead_ids << uri['uri']
-    end
-
-    ead_ids
+    published_resource_uris(repository_id:).each.to_a.pluck('uri')
   end
 
   # send an authenticated GET request to Aspace
