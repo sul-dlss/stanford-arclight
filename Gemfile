@@ -46,8 +46,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 group :production do
-  gem 'mysql2' # TODO: remove when sul-arclight-demo and sul-arclight-prod are decommissioned
-  gem 'pg', '~> 1.5'
+  gem 'mysql2'
 end
 
 group :development do
