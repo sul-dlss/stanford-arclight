@@ -299,7 +299,6 @@ GEM
     parser (3.3.1.0)
       ast (~> 2.4.1)
       racc
-    pg (1.5.6)
     psych (5.1.2)
       stringio
     public_suffix (5.0.5)
@@ -538,7 +537,6 @@ DEPENDENCIES
   jbuilder
   mysql2
   okcomputer (~> 1.18)
-  pg (~> 1.5)
   puma (~> 6.0)
   rails (~> 7.1.2)
   recaptcha (~> 5.16)
