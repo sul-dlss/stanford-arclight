@@ -1,5 +1,115 @@
+/** AL Sidebar and Document area layout **/
+
+// make the wrapping .collection-sidebar full bleed, 
+.collection-sidebar {
+  padding: 0;
+
+  // and add padding within .collection-sidebar 
+  .al-show-actions-box,
+  #sidebar-scroll-wrapper {
+    // padding around the light-green section
+    padding: 2rem 1rem 2rem 3rem;
+  }
+
+  .al-sidebar-navigation-context {
+    // overriding this from AL Core allows it to hit the edge of #sidebar-scroll-wrapper above
+    margin-left: 0;
+  }
+
+  .al-show-actions-box {
+    background-color: #EBF5F1;
+  }
+
+  .al-collection-context-actions .btn-sm {
+    --bs-btn-border-radius: 0;
+  }
+
+  .al-show-actions-box-info .btn-secondary,
+  .al-collection-context-collapsible .btn-secondary {
+    // rather than overriding the entire components inherited from AL Core to change the .btn-secondary class to the more appropriate .btn-outline-secondary, just change the colors in these cases
+    background-color: white;
+    color: black;
+    border-radius: 0;
+    // override the icon from AL Core
+    svg.bi {
+      display: none;
+    }
+  }
+
+  // more padding for the "Expand" sidebar button
+  .al-collection-context-collapsible .btn-secondary {
+    margin: 0.5rem 0.5rem 1rem 0.5rem;
+    padding: 0.5rem 1rem;
+    &:hover {
+      background-color: $stanford-palo-alto-dark;
+      color: white;
+    }
+  }
+}
+
+// match padding in document area for even space across page top 
+.show-document {
+  padding-top: 2rem;
+  padding-right: 2rem;
+}
+
+// Overrides AL Core to style metadata section titles
+.show-document .al-show-sub-heading {
+  text-transform: none;
+  font-size: 28px;
+}
+
+// Overrides AL Core to change style and align the metadata label to the left
+#metadata .dl-invert dt,
+.show-document > * .dl-invert dt {
+  text-align: left;
+  font-size: 20px;
+  font-weight: 600;
+  color: black
+}
+
+#metadata .dl-invert {
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d1d1d1;
+}
+
+.al-search-breadcrumb {
+  padding-top: 1rem;
+}
+
+.breadcrumb a, 
+.breadcrumb-item {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.al-sidebar-navigation-context {
+  ul {
+    list-style-type: disc;
+    padding-left: 1.25rem;
+    color: $stanford-digital-blue;
+  }
+  a.nav-link  {
+   color: $stanford-digital-blue;
+  }
+}
+
+// These are the square badges in the heirarchy that show the number of items
+.documentHeader .bg-secondary {
+  // Bootstrap makes this !important, so we need to override it with !important
+  background-color: #EDEDED !important;
+  border: 1px solid #979797;
+  color: black;
+  font-weight: 400;
+}
+
+.al-hierarchy-highlight > .documentHeader {
+  background-color: #EBF5F1;
+}
+
 #sidebar {
   overflow-y: auto;
+  
 
   @include media-breakpoint-up(lg) {
     overflow: hidden;
@@ -13,4 +123,70 @@
     overflow-x: hidden;
     height: calc(100vh - 180px);
   }
+}
+
+/**  Search Tools **/
+#sortAndPerPage {
+  // makes it even with top of sidebar content
+  padding-top: 0.5rem;
+}
+
+.search-widgets {
+  margin-top: 1.25rem;
+}
+
+.btn-outline-secondary:not(:active):not(:focus) {
+  --bs-btn-color: black;
+}
+
+a.btn-outline-secondary:hover,
+a.btn-outline-secondary:focus {
+  background-color: $secondary;
+  border-color: $secondary;
+}
+
+.dropdown-item.active {
+  background-color: $secondary;
+}
+
+.documents-list article.document .document-title-heading .al-document-extent {
+  display: block;
+  width: fit-content;
+  margin-top: 1rem;
+  border-radius: 0;
+  color: black;
+}
+
+.al-repository-card .al-repository,
+.al-repository-description,
+.facets-toggleable-md {
+  border: none;
+}
+
+.truncator .view-more,
+.truncator .view-less {
+  color: $stanford-digital-blue;
+  font-weight: 600;
+}
+
+.truncator .btn-link {
+  color: $stanford-digital-blue;
+}
+
+.truncator .icon {
+  font-size: 10px;
+}
+
+.paginate-section .active > .page-link {
+  background-color: $stanford-palo-alto-dark;
+  border-color: $stanford-palo-alto-dark;
+  color: white;
+}
+
+.paginate-section .page-link {
+  color: $stanford-digital-blue;
+}
+
+.page-item.disabled .page-link {
+  color: black;
 }

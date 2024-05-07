@@ -13,12 +13,12 @@
   font-feature-settings: "liga";
   margin-top: 0.125rem;
   padding-left: 0.25rem;
-  text-decoration: none;
   white-space: nowrap;
 
   &:hover,
   &:active,
   &:focus {
     color: $stanford-stripe-color;
+    text-decoration: none;
   }
 }

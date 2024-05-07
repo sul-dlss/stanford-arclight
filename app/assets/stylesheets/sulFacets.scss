@@ -12,3 +12,35 @@
     }
   }
 }
+
+.facets-heading {
+  font-size: 2rem;
+}
+
+.facet-field-heading > button {
+  font-size: 1.25rem;
+}
+
+// many of these properties are !important in Blacklight Core, so it's needed here to override
+.facet-limit-active {
+  border-color: black !important;
+ 
+  .card-header {
+      background-color: #D4d1d1 !important;
+  }
+}
+
+.facet-values li .selected {
+  color: black !important;
+  font-weight: bold;;
+}
+
+.facets .card {
+  --bs-card-border-color: black;
+  --bs-border-width: 0.5px;
+}
+
+.facet-values a.remove,
+.applied-filter .filter-name:after {
+  color: black;
+}

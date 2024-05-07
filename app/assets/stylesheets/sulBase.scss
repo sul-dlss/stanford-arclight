@@ -3,17 +3,14 @@ body {
 }
 
 a {
-  text-decoration: var(--bs-link-decoration);
+  text-decoration: none;
+  color: $link-dark-color;
+  font-weight: 450;
 
   &:hover,
   &:focus-visible {
-    text-decoration: var(--bs-link-hover-decoration);
+    text-decoration: underline;
   }
-}
-
-a {
-  color: $link-dark-color;
-  font-weight: 450;
 }
 
 .form-control:focus {
