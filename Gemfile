@@ -75,7 +75,8 @@ group :test do
   gem 'webmock'
 end
 
-gem 'arclight', '>= 1.1.0', '< 2'
+# gem 'arclight', '>= 1.1.0', '< 2'
+gem 'arclight', path: '../arclight'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

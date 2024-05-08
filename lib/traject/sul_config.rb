@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require 'arclight'
+require_relative 'sul/normalized_id'
 
 settings do
   provide 'component_traject_config', File.join(__dir__, 'sul_component_config.rb')
   provide 'solr_writer.http_timeout', 1200
   provide 'resource_uri', ENV.fetch('RESOURCE_URI', nil)
+  provide 'id_normalizer', 'Sul::NormalizedId'
 end
 
 to_field 'ead_filename_ssi' do |_record, accumulator|
