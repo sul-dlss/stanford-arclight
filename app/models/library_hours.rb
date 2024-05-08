@@ -42,7 +42,7 @@ class LibraryHours
 
   def weekly_library_hours
     range = { from: Time.zone.today, to: Time.zone.today + 7.days }
-    @weekly_library_hours ||= LibraryHoursApi::Request.new(library_slug, location_slug, range).get.hours
+    @weekly_library_hours ||= LibraryHoursApi.get(library_slug, location_slug, range).hours
   end
 
   def now
