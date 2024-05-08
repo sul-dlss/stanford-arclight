@@ -7,18 +7,20 @@ class DownloadEadJob < ApplicationJob
   # Intended as a convenience method for use in a cron job
   # @param updated_after [String] YYYY-MM-DD limit the response to resources updated after a specific date
   def self.enqueue_all_updated(updated_after: (Time.zone.now - 2.days).strftime('%Y-%m-%d'))
-    enqueue_all(updated_after:)
+    enqueue_all(updated_after:, check_component_dates: true)
   end
 
   # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
+  # @param check_component_dates [Boolean] if true, component level modified dates will be checked
   def self.enqueue_all(updated_after: nil, data_dir: Settings.data_dir, index: true,
-                       generate_pdf: Settings.pdf_generation.create_on_ead_download)
+                       generate_pdf: Settings.pdf_generation.create_on_ead_download, check_component_dates: false)
     create_directories(data_dir:)
     AspaceRepositories.all_harvestable.each do |aspace_repository_code, aspace_repository_id|
-      enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
+      enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:,
+              check_component_dates:)
     end
   end
 
@@ -36,18 +38,38 @@ class DownloadEadJob < ApplicationJob
     enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
   end
 
-  # rubocop:disable Metrics/ParameterLists
-  def self.enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
-    resource_uris = AspaceClient.new.published_resource_uris(repository_id: aspace_repository_id, updated_after:)
+  # rubocop:disable Metrics/ParameterLists, Metrics/MethodLength
+  def self.enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:,
+                   check_component_dates: false)
+    aspace = AspaceClient.new
+    resource_uris = aspace.published_resource_uris(repository_id: aspace_repository_id, updated_after:)
+    uris_to_exclude = []
+
     resource_uris.each do |resource|
-      arclight_repository_code = ArclightRepositoryMapper.map_to_code(aspace_repository_code:,
-                                                                      ead_id: resource['ead_id'])
-      directory = "#{data_dir}/#{arclight_repository_code}"
-      DownloadEadJob.perform_later(resource_uri: resource['uri'], file_name: resource['ead_id'], data_dir: directory,
-                                   index:, generate_pdf:)
+      uris_to_exclude << resource['uri'] if check_component_dates
+      enqueue_resource(aspace_repository_code:, ead_id: resource['ead_id'], resource_uri: resource['uri'],
+                       data_dir:, index:, generate_pdf:)
+    end
+
+    return unless check_component_dates
+
+    aspace.published_resource_with_updated_component_uris(
+      repository_id: aspace_repository_id, updated_after:, uris_to_exclude:
+    ).each do |resource|
+      enqueue_resource(aspace_repository_code:, ead_id: resource['ead_id'],
+                       resource_uri: resource['uri'], index:, data_dir:, generate_pdf:)
     end
   end
   private_class_method :enqueue
+  # rubocop:enable Metrics/ParameterLists, Metrics/MethodLength
+
+  # rubocop:disable Metrics/ParameterLists
+  def self.enqueue_resource(aspace_repository_code:, ead_id:, resource_uri:, data_dir:, index:, generate_pdf:)
+    arclight_repository_code = ArclightRepositoryMapper.map_to_code(aspace_repository_code:, ead_id:)
+    directory = "#{data_dir}/#{arclight_repository_code}"
+    DownloadEadJob.perform_later(resource_uri:, file_name: ead_id, data_dir: directory, index:, generate_pdf:)
+  end
+  private_class_method :enqueue_resource
   # rubocop:enable Metrics/ParameterLists
 
   # Ensure all arclight repositories have a directory where EAD files can be stored

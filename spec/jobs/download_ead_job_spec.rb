@@ -83,20 +83,46 @@ RSpec.describe DownloadEadJob do
 
   describe '.enqueue_all_updated' do
     before do
-      allow(client).to receive(:published_resource_uris).and_return([{ 'uri' => '/repositories/11/resources/1',
-                                                                       'ead_id' => 'ars123' },
-                                                                     { 'uri' => '/repositories/11/resources/2',
-                                                                       'ead_id' => 'ars456' }])
-      allow(client).to receive(:published_resource_uris).and_return([{ 'uri' => '/repositories/4/resources/1',
-                                                                       'ead_id' => 'eal123' },
-                                                                     { 'uri' => '/repositories/4/resources/2',
-                                                                       'ead_id' => 'eal456' }])
+      allow(client).to receive(:published_resource_uris).with(
+        repository_id: '11', updated_after: '2023-12-12'
+      ).and_return(
+        [{ 'uri' => '/repositories/11/resources/1', 'ead_id' => 'ars123' },
+         { 'uri' => '/repositories/11/resources/2', 'ead_id' => 'ars456' }]
+      )
+      allow(client).to receive(:published_resource_with_updated_component_uris).with(
+        repository_id: '11', updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
+      ).and_return(
+        [{ 'uri' => '/repositories/11/resources/3', 'ead_id' => 'ars789' }]
+      )
+      allow(client).to receive(:published_resource_uris).with(
+        repository_id: '4', updated_after: '2023-12-12'
+      ).and_return(
+        [{ 'uri' => '/repositories/4/resources/1', 'ead_id' => 'eal123' },
+         { 'uri' => '/repositories/4/resources/2', 'ead_id' => 'eal456' }]
+      )
+      allow(client).to receive(:published_resource_with_updated_component_uris).with(
+        repository_id: '4', updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
+      ).and_return(
+        [{ 'uri' => '/repositories/4/resources/3', 'ead_id' => 'eal789' }]
+      )
     end
 
     it 'fetches all resource uris from aspace limited to a specified date' do
       described_class.enqueue_all_updated(updated_after: '2023-12-12')
       expect(client).to have_received(:published_resource_uris).with(repository_id: '11', updated_after: '2023-12-12')
+      expect(client).to have_received(:published_resource_with_updated_component_uris).with(
+        repository_id: '11',
+        updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
+      )
       expect(client).to have_received(:published_resource_uris).with(repository_id: '4', updated_after: '2023-12-12')
+      expect(client).to have_received(:published_resource_with_updated_component_uris).with(
+        repository_id: '4',
+        updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
+      )
     end
   end
 
