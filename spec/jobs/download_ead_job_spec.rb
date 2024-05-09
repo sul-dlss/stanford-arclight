@@ -5,7 +5,13 @@ require 'rails_helper'
 RSpec.describe DownloadEadJob do
   let(:client) { instance_double(AspaceClient, resource_description: '<a/>') }
   let(:file) { instance_double(File, puts: true) }
-  let(:aspace_repository) { instance_double(AspaceRepositories, all_harvestable: { 'ars' => '11', 'eal' => '4' }) }
+  let(:harvestable_repos) do
+    [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11'),
+     Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4')]
+  end
+  let(:aspace_repository) do
+    instance_double(AspaceRepositories, all_harvestable: harvestable_repos)
+  end
 
   before do
     allow(AspaceClient).to receive(:new).and_return(client)
@@ -128,7 +134,9 @@ RSpec.describe DownloadEadJob do
 
   describe '.enqueue_one_by' do
     before do
-      allow(aspace_repository).to receive(:find_by).with({ code: 'ars' })
+      allow(aspace_repository).to receive(:find_by).with({ code: 'ars' }).and_return(
+        Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11')
+      )
       allow(client).to receive(:published_resource_uris).and_return([{ 'uri' => '/repositories/11/resources/1',
                                                                        'ead_id' => 'ars123' },
                                                                      { 'uri' => '/repositories/11/resources/2',

@@ -5,8 +5,8 @@
 # if we find it is no longer published or no longer exists in ASpace
 class DeleteEadJob < ApplicationJob
   def self.enqueue_all
-    AspaceRepositories.all_harvestable.each_value do |repository_id|
-      perform_later(repository_id:)
+    AspaceRepositories.all_harvestable.each do |repository|
+      perform_later(repository_id: repository.id)
     end
   end
 

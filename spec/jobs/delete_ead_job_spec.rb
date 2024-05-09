@@ -28,8 +28,15 @@ RSpec.describe DeleteEadJob do
     expect(rsolr_client).to have_received(:commit)
   end
 
+  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '.enqueue_all' do
-    let(:aspace_repository) { instance_double(AspaceRepositories, all_harvestable: { 'ars' => '11', 'eal' => '2' }) }
+    let(:harvestable_repos) do
+      [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11'),
+       Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4')]
+    end
+    let(:aspace_repository) do
+      instance_double(AspaceRepositories, all_harvestable: harvestable_repos)
+    end
 
     before do
       allow(AspaceRepositories).to receive(:new).and_return(aspace_repository)
@@ -42,4 +49,5 @@ RSpec.describe DeleteEadJob do
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
     end
   end
+  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end

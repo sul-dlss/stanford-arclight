@@ -18,9 +18,9 @@ class DownloadEadJob < ApplicationJob
   def self.enqueue_all(updated_after: nil, data_dir: Settings.data_dir, index: true,
                        generate_pdf: Settings.pdf_generation.create_on_ead_download, check_component_dates: false)
     create_directories(data_dir:)
-    AspaceRepositories.all_harvestable.each do |aspace_repository_code, aspace_repository_id|
-      enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:,
-              check_component_dates:)
+    AspaceRepositories.all_harvestable.each do |repository|
+      enqueue(aspace_repository_id: repository.id, aspace_repository_code: repository.code, updated_after:,
+              data_dir:, index:, generate_pdf:, check_component_dates:)
     end
   end
 
@@ -34,7 +34,7 @@ class DownloadEadJob < ApplicationJob
                           data_dir: Settings.data_dir, index: true,
                           generate_pdf: Settings.pdf_generation.create_on_ead_download)
     create_directories(data_dir:)
-    aspace_repository_id = AspaceRepositories.find_by(code: aspace_repository_code)
+    aspace_repository_id = AspaceRepositories.find_by(code: aspace_repository_code).id
     enqueue(aspace_repository_id:, aspace_repository_code:, updated_after:, data_dir:, index:, generate_pdf:)
   end
 
