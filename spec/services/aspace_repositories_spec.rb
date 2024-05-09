@@ -17,19 +17,23 @@ RSpec.describe AspaceRepositories do
 
   describe '#all' do
     it 'returns array of all repositories from aspace' do
-      expect(aspace_repository.all).to eq({ 'ars' => '11', 'sul' => '1' })
+      expect(aspace_repository.all.count).to eq 2
+    end
+
+    it 'returns instances of Aspace::Repository' do
+      expect(aspace_repository.all.first).to be_a Aspace::Repository
     end
   end
 
   describe '#all_harvestable' do
     it 'returns an array of all the harvestable repositories from aspace' do
-      expect(aspace_repository.all_harvestable).to eq({ 'ars' => '11' })
+      expect(aspace_repository.all_harvestable.count).to eq 1
     end
   end
 
   describe '#find_by' do
     it 'given an aspace repository code it returns the aspace id for the repository' do
-      expect(aspace_repository.find_by(code: 'ars')).to eq '11'
+      expect(aspace_repository.find_by(code: 'ars').id).to eq '11'
     end
 
     context 'when the repository code does not exist' do
