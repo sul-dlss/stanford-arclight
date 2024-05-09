@@ -22,14 +22,14 @@ RSpec.describe DownloadEadJob do
 
   it 'fetches an EAD from the client service' do
     described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                file_dir: '/data/archive/')
+                                file_dir: '/data/archive/', index: false, generate_pdf: false)
 
     expect(client).to have_received(:resource_description).with('/repositories/1/resources/123')
   end
 
   it 'writes the formatted EAD XML to a file' do
     described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                file_dir: '/data/archive/')
+                                file_dir: '/data/archive/', index: false, generate_pdf: false)
 
     expect(file).to have_received(:puts).with("<?xml version=\"1.0\"?>\n<a/>\n")
   end
@@ -38,7 +38,7 @@ RSpec.describe DownloadEadJob do
     it 'enqueues an indexing job with the EAD file' do
       expect do
         described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                    file_dir: '/data/archive/', index: true)
+                                    file_dir: '/data/archive/', index: true, generate_pdf: false)
       end.to enqueue_job(IndexEadJob).once.with(file_path: '/data/archive/abc123.xml',
                                                 resource_uri: '/repositories/1/resources/123')
     end
@@ -48,7 +48,7 @@ RSpec.describe DownloadEadJob do
     it 'enqueues a generate pdf job for the EAD file' do
       expect do
         described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                    file_dir: '/data/archive/', generate_pdf: true)
+                                    file_dir: '/data/archive/', index: false, generate_pdf: true)
       end.to enqueue_job(GeneratePdfJob).once.with(file_path: '/data/archive/abc123.xml', file_name: 'abc123',
                                                    data_dir: '/data/archive/', skip_existing: false)
     end
