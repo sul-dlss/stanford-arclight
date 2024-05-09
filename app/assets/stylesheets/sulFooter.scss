@@ -9,12 +9,9 @@ footer a {
 
 #pre-footer {
   background-color: $pre-footer-background;
-  --bs-link-decoration: none;
-  --bs-link-hover-decoration: underline;
 }
 
 .su-logo {
-  --bs-link-hover-decoration: none;
   display: inline-block;
   font-family: Stanford, $font-family-serif;
   font-variant-ligatures: discretionary-ligatures;
@@ -31,8 +28,6 @@ footer a {
 }
 
 #su-footer {
-  --bs-link-decoration: none;
-  --bs-link-hover-decoration: underline;
   background-color: $brand-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

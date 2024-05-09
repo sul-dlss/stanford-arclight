@@ -1,6 +1,5 @@
 .blacklight-landing_page {
-  --bs-link-decoration: none;
-  --bs-link-hover-decoration: underline;
+  overflow-x: hidden;
 
   body a {
     color: $link-dark-color;
@@ -12,14 +11,9 @@
     font-weight: bold;
   }
 
-  #main-container .container {
-    @include media-breakpoint-up(lg) {
-      padding-left: 3rem;
-    }
-
-    @include media-breakpoint-up(xl) {
-      padding-left: 5rem;
-    }
+  // make the content area full bleed
+  #main-container {
+    padding: 0;
   }
 }
 
@@ -27,17 +21,11 @@
   font-family: $font-family-serif;
 }
 
-.landing-page-container section {
-  padding-left: 0;
-  padding-right: 0;
-}
-
 $featured-item-height: 22rem;
 $featured-teaser-overhang: 1rem;
 
 #featured-item-wrapper {
   .featured-item {
-
     @include media-breakpoint-up(lg) {
       img {
         height: $featured-item-height;

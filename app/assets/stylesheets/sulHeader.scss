@@ -1,5 +1,4 @@
 .navbar {
-  --bs-link-hover-decoration: underline;
   --bs-navbar-hover-color: rgba(255, 255, 255, 1);
   padding-top: 0.75rem;
 }
@@ -14,6 +13,7 @@
   overflow: hidden;
   transition: all .5s ease-in-out;
   max-height: 0;
+  background-color: white;
 
   &.open {
     max-height: 100vh;
@@ -23,10 +23,13 @@
     text-align: right;
     font-weight: bold;
   }
+
+  a {
+    color: $stanford-digital-blue
+  }
  }
 
 .al-masthead {
-  --bs-link-hover-decoration: underline;
   color: $masthead-color;
 
   .h1 {
@@ -41,13 +44,6 @@
 
     @include media-breakpoint-up(xl) {
       font-size: 2.25rem;
-    }
-
-    a {
-      text-decoration: none;
-      &:hover { 
-        text-decoration: underline;
-      }
     }
   }
 
@@ -84,7 +80,6 @@
     border-color: #dee2e6; // Border color of Blacklight inputs
     border-left: none;
     padding: 0;
-    border-radius: 0;
     color: $stanford-palo-alto-dark;
     padding-right: 5px;
 
@@ -107,6 +102,7 @@
 .al-masthead + .navbar-search {
   border-top: none;
   background-color: $navbar-background-color;
+  margin-bottom: 0;
 
   .input-group-text {
     background-color: $navbar-background-color;
@@ -128,7 +124,6 @@
 
   .form-select {
     background-size: 1.125rem 1.125rem;
-    border-radius: 0;
     padding-top: 0;
     padding-bottom: 0;
 
