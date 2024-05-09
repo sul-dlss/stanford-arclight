@@ -149,11 +149,15 @@ a.btn-outline-secondary:focus {
   background-color: $secondary;
 }
 
+.al-grouped-results .al-document-extent {
+  border-radius: 0;
+}
+
 .documents-list article.document .document-title-heading .al-document-extent {
+  border-radius: 0;
   display: block;
   width: fit-content;
   margin-top: 1rem;
-  border-radius: 0;
   color: black;
 }
 
