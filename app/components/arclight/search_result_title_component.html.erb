@@ -1,4 +1,5 @@
-<%# This file overrides AL Core for more control over the extents display %>
+<%# This file overrides AL Core for more control over the extents display 
+    and to add the digital content icon %>
 <header class="documentHeader row" data-document-id="<%= @document.id %>">
   <h3 class="index_title document-title-heading col">
     <%= helpers.link_to_document @document, counter: @counter %>
@@ -10,10 +11,14 @@
     <div class="d-flex">
       <% @document.extent.each do |extent| %>
         <%= tag.span extent, class: 'al-document-extent badge mx-1' unless compact? %>
-      <% end %> 
+      <% end %>
+      <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document) %>
+
     </div>
+
   </h3>
 
+  <%# these are set in the catalog_controller by add_results_document_tool %>
   <% actions.each do |action| %>
     <%= action %>
   <% end %>

@@ -1,0 +1,16 @@
+<%# Overrides AL Core to use custom icon/tooltip and layout %>
+<div class="card online-contents">
+  <div class="card-body d-flex align-items-center">
+    <div class="d-flex">
+      <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document)  %>  
+      <h2 class="d-none d-lg-inline">
+        <span class="visually-hidden">Filter</span>
+        Digital content -
+      </h2>
+    </div>
+    <div class="ms-1">
+      <%= t('arclight.views.show.online_content.description') %>
+      <%= link_to t('arclight.views.show.online_content.link_text'), helpers.search_action_path(f: { collection: [collection_name], access: ['online'] }) %>
+    </div>
+  </div>
+</div>
