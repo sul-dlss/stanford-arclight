@@ -1,17 +1,58 @@
 /** AL Sidebar and Document area layout **/
 
+
+#sidebar {
+  overflow-y: auto;
+  
+  @include media-breakpoint-up(lg) {
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+}
+
+#sidebar-scroll-wrapper {
+  @include media-breakpoint-up(lg) {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 180px);
+  }
+}
+
 // make the wrapping .collection-sidebar full bleed, 
 .collection-sidebar {
   padding: 0;
+
+  .sidebar-section {
+    border-bottom: 0;
+  }
 
   // and add padding within .collection-sidebar 
   .al-show-actions-box,
   #sidebar-scroll-wrapper {
     // padding around the light-green section
-    padding: 2rem 1rem 2rem 3rem;
+    padding: 2rem 2rem 2rem 3rem;
   }
 
-  .al-sidebar-navigation-context {
+  #sidebar {
+  overflow-y: auto;
+  
+
+  @include media-breakpoint-up(lg) {
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+}
+
+#sidebar-scroll-wrapper {
+  @include media-breakpoint-up(lg) {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100vh - 180px);
+  }
+}
+
+  .al-sidebar-navigation-context,
+  #collection-context {
     // overriding this from AL Core allows it to hit the edge of #sidebar-scroll-wrapper above
     margin-left: 0;
   }
@@ -20,8 +61,14 @@
     background-color: #EBF5F1;
   }
 
-  .al-collection-context-actions .btn-sm {
-    --bs-btn-border-radius: 0;
+  .al-collection-context-actions {
+    .btn-sm {
+        --bs-btn-border-radius: 0;
+      }
+      // this targets each button within the .al-collection-context-actions
+      > * {
+        margin-right: 0.5rem;
+      }
   }
 
   .al-show-actions-box-info .btn-secondary,
@@ -49,8 +96,8 @@
 
 // match padding in document area for even space across page top 
 .show-document {
-  padding-top: 2rem;
-  padding-right: 2rem;
+  // needs to be !important to override AL Core
+  padding: 2rem !important;
 }
 
 // Overrides AL Core to style metadata section titles
@@ -68,9 +115,15 @@
   color: black
 }
 
-#metadata .dl-invert {
+// AL Core overrides for metadata sections and the top title areas
+// Those borders should look the same but have different types of markup in AL Core
+#metadata .dl-invert,
+.title-container,
+#about-this-level,
+.al-show-breadcrumb {
   padding-bottom: 1rem;
   border-bottom: 1px solid #d1d1d1;
+  margin-bottom: 2rem;
 }
 
 .al-search-breadcrumb {
@@ -107,28 +160,16 @@
   background-color: #EBF5F1;
 }
 
-#sidebar {
-  overflow-y: auto;
-  
-
-  @include media-breakpoint-up(lg) {
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-}
-
-#sidebar-scroll-wrapper {
-  @include media-breakpoint-up(lg) {
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 180px);
-  }
-}
 
 /**  Search Tools **/
 #sortAndPerPage {
   // makes it even with top of sidebar content
   padding-top: 0.5rem;
+}
+
+// Spacing between each applied param button
+#appliedParams > a {
+  margin-right: 0.5rem;
 }
 
 .search-widgets {
