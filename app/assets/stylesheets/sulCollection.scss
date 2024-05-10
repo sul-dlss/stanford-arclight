@@ -243,12 +243,18 @@ a.btn-outline-secondary:focus {
 // Digital contents icons, alerts
 // AL Core overrides
 article.document .al-online-content-icon .blacklight-icons svg,
-.online-contents .al-online-content-icon .blacklight-icons svg {
+.online-contents .al-online-content-icon .blacklight-icons svg,
+#facet-digital_content .al-online-content-icon .blacklight-icons svg {
   fill: $stanford-palo-alto-light;
+}
+
+article.document .al-online-content-icon .blacklight-icons svg {
+  margin-left: 0.5rem;
 }
 
 .tooltip-inner {
   background-color: $stanford-palo-alto-light;
+  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
   color: white;
 }
 
@@ -265,10 +271,34 @@ article.document .al-online-content-icon .blacklight-icons svg,
 
 .online-contents.card {
   border: 0;
-  background-color: $green-white;
   padding: 0;
+  background-color: $green-white;
   .card-body {
     padding: 0.25rem 0.25rem 0.25rem 1rem;
     border-left: 8px solid $stanford-palo-alto-dark;
   }
+}
+
+#facet-digital_content.card {
+  border: 0;
+  margin-bottom: 1rem;
+  background-color: $green-white;  
+  .card-body {
+    padding: 1rem;
+    border-left: 8px solid $stanford-palo-alto-dark;
+  }
+  a {
+    color: $stanford-digital-blue;
+  }
+  .facet-label,
+  .facet-select {
+    font-weight: bold;
+  }
+  .facet-count {
+    font-weight: normal;
+  }
+}
+
+#facet-digital_content.card.facet-limit-active {
+  background-color: $whisper;
 }
