@@ -20,6 +20,15 @@ RSpec.describe ArclightRepositoryMapper do
       it 'uses the ead id to determine the arclight repository code' do
         expect(mapper.map_to_code).to eq 'uarc'
       end
+
+      context 'when the ead id is uppercase' do
+        let(:aspace_repository_code) { 'speccoll' }
+        let(:ead_id) { 'SCM1234.xml' }
+
+        it 'uses the ead id to determine the arclight repository code' do
+          expect(mapper.map_to_code).to eq 'uarc'
+        end
+      end
     end
 
     context 'when the supplied arguments cannot be mapped to an arclight repository' do
