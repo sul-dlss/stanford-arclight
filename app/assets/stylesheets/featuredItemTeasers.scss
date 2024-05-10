@@ -16,4 +16,9 @@
   background: rgba(0, 0, 0, 0.5);
   padding: 1rem;
   color: #fff;
+
+  a {
+    color: $white;
+    font-weight: 600;
+  }
 }
