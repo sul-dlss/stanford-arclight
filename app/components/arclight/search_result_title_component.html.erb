@@ -3,6 +3,8 @@
 <header class="documentHeader row" data-document-id="<%= @document.id %>">
   <h3 class="index_title document-title-heading col">
     <%= helpers.link_to_document @document, counter: @counter %>
+    
+    <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document) %>
 
     <%= tag.span class: 'al-document-container text-muted ml-auto' do %>
       <%= @document.containers.join(', ') %>
@@ -12,8 +14,6 @@
       <% @document.extent.each do |extent| %>
         <%= tag.span extent, class: 'al-document-extent badge mx-1' unless compact? %>
       <% end %>
-      <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document) %>
-
     </div>
 
   </h3>

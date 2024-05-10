@@ -139,9 +139,12 @@ class CatalogController < ApplicationController
     # :index_range can be an array or range of prefixes that will be used to create the navigation
     #  (note: It is case sensitive when searching values)
 
-    config.add_facet_field 'access', collapse: false, query: {
-      online: { label: 'Online access', fq: 'has_online_content_ssim:true' }
-    }
+    config.add_facet_field 'access', collapse: false,
+                                     query: {
+                                       digital_content: { label: 'Includes digital content', fq: 'has_online_content_ssim:true' }
+                                     },
+                                     label: 'Digital contents',
+                                     component: DigitalContentsFacetComponent
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
     config.add_facet_field 'creators', field: 'creator_ssim', limit: 10
     config.add_facet_field 'date_range', field: 'date_range_isim',

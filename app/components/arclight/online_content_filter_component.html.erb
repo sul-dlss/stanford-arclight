@@ -10,7 +10,7 @@
     </div>
     <div class="ms-1">
       <%= t('arclight.views.show.online_content.description') %>
-      <%= link_to t('arclight.views.show.online_content.link_text'), helpers.search_action_path(f: { collection: [collection_name], access: ['online'] }) %>
+      <%= link_to "View all with digital content", helpers.search_action_path(f: { collection: [collection_name], access: ['digital_content'] }) %>
     </div>
   </div>
 </div>
