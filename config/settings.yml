@@ -1,16 +1,5 @@
 hours_api: 'https://library-hours.stanford.edu/'
 
-featured_items:
-  - image_url: https://stacks.stanford.edu/image/iiif/qy843rv0944/qy843rv0944_0080/200,700,2000,2500/!800,800/0/default.jpg
-    image_alt: USA Exhibit 388, Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945-46
-    caption_html: USA Exhibit 388, Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945-46
-  - image_url: https://stacks.stanford.edu/image/iiif/gs873gr6640/gs873gr6640_0001/full/!800,800/0/default.jpg
-    image_alt: Crucifix, Fear, from Lynn Beldner Punk Music Photograph Collection
-    caption_html: Crucifix, Fear, Lynn Beldner Punk Music Photograph Collection
-  - image_url: https://stacks.stanford.edu/image/iiif/xc332sx6392/xc332sx6392_0001/full/!800,800/0/default.jpg
-    image_alt: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
-    caption_html: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
-
 # Locations with a 'closed_note' will display the note in lieu of fetching hours from the API.
 hours_locations:
   - label: 'Green Library, 2nd Floor'
@@ -48,3 +37,44 @@ pdf_generation:
   fop_path: 'fop'
   logo_path: './app/assets/images/sul-logo-bw_lightbackground.png'
   saxon_path: '/opt/app/arclight/SaxonHE12-4J/saxon-he-12.4.jar'
+
+featured_items:
+  - image_url: https://stacks.stanford.edu/image/iiif/gs873gr6640/gs873gr6640_0001/full/!800,800/0/default.jpg
+    image_alt: Crucifix, Fear, from Lynn Beldner Punk Music Photograph Collection
+    caption_html: <a href="https://purl.stanford.edu/gs873gr6640">Crucifix, Fear</a>, Lynn Beldner Punk Music Photograph Collection
+
+  - image_url: https://stacks.stanford.edu/image/iiif/xc332sx6392/xc332sx6392_0001/full/!800,800/0/default.jpg
+    image_alt: Monterey Jazz Festival Program. 1972, Programs, 1958-2019; 2021
+    caption_html: <a href="https://purl.stanford.edu/xc332sx6392">Monterey Jazz Festival Program. 1972</a>, Programs, 1958-2019; 2021
+
+  - image_url: https://stacks.stanford.edu/image/iiif/ms572gf5228/ms572gf5228_00_0001/73,561,2973,1900/!1200,800/0/default.jpg
+    image_alt: Homo for the Holidays, STOP AIDS Project
+    caption_html: <a href="https://purl.stanford.edu/ms572gf5228">Homo for the Holidays</a>, STOP AIDS Project
+
+  - image_url: https://stacks.stanford.edu/image/iiif/jy205pb1776/PC0002_100_yuba_cascade_and_hieroglyphic_rocks_on_yuba_river_near_crystal_lake/468,449,4651,2677/!1200,800/0/default.jpg
+    image_alt: Yuba Cascade And Hieroglyphic Rocks On Yuba River Near Crystal Lake, Hart (Alfred A.) Photographs
+    caption_html: <a href="https://purl.stanford.edu/jy205pb1776">Yuba Cascade And Hieroglyphic Rocks On Yuba River Near Crystal Lake</a>, Hart (Alfred A.) Photographs
+
+  - image_url: https://stacks.stanford.edu/image/iiif/qk693jn0574/PC0128_b01_f16_i001/67,231,2375,1418/!1200,800/0/default.jpg
+    image_alt: Memorial Church following earthquake, Stanford University Photographs
+    caption_html: <a href="https://purl.stanford.edu/qk693jn0574">Memorial Church following earthquake</a>, Stanford University Photographs
+
+  - image_url: https://stacks.stanford.edu/image/iiif/mr370fz8240/mr370fz8240_00_0001/159,143,10041,6540/!1200,800/0/default.jpg
+    image_alt: Master Plan of Circulation, Streets and Roads, Campus and Vicinity, 1972, Stanford University Map Collection
+    caption_html: <a href="https://purl.stanford.edu/mr370fz8240">Master Plan of Circulation, Streets and Roads, Campus and Vicinity, 1972</a>, Stanford University Map Collection
+
+  - image_url: https://stacks.stanford.edu/image/iiif/mx494gv8573/mx494gv8573_00_0001/309,5211,21754,11277/!1200,800/0/default.jpg
+    image_alt: Leland Stanford Junior University Library, Stanford University, 1917, Stanford University Architectural Collection
+    caption_html: <a href="https://purl.stanford.edu/mx494gv8573">Leland Stanford Junior University Library, Stanford University, 1917</a>, Stanford University Architectural Collection
+
+  - image_url: https://stacks.stanford.edu/image/iiif/qb283vr6322/SC0144_1982-027_b02_f06_i017/19,1296,4793,2712/!1200,800/0/default.jpg
+    image_alt: Modern Dance, Stanford University, Women's Physical Education Department, Records
+    caption_html: <a href="https://purl.stanford.edu/qb283vr6322">Modern Dance</a>, Stanford University, Women's Physical Education Department, Records
+
+  - image_url: https://stacks.stanford.edu/image/iiif/hg393nn1194/hg393nn1194_0001/125,884,2456,1562/!1200,800/0/default.jpg
+    image_alt: Certificate of Inoculation and Vaccination, 1948, George H. White papers, 1932-1970
+    caption_html: <a href="https://purl.stanford.edu/hg393nn1194">Certificate of Inoculation and Vaccination, 1948</a>, George H. White papers, 1932-1970
+
+  - image_url: https://stacks.stanford.edu/image/iiif/tj412dk2253/PC0002_236_cathedral_rocks_truckee_river/574,942,4797,2904/!1200,800/0/default.jpg
+    image_alt: Cathedral Rocks Truckee River, Alfred A. Hart photographs
+    caption_html: <a href="https://purl.stanford.edu/tj412dk2253">Cathedral Rocks Truckee River</a>, Alfred A. Hart photographs
