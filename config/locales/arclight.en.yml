@@ -6,6 +6,8 @@ en:
         title: Repositories - Archival Collections at Stanford
   blacklight:
     search:
+      show:
+        label: '%{label}' 
       fields:
         abstract: Abstract
         creators: Creator
