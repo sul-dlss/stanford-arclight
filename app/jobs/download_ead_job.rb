@@ -103,6 +103,6 @@ class DownloadEadJob < ApplicationJob
     end
 
     IndexEadJob.perform_later(file_path:, resource_uri:) if index
-    GeneratePdfJob.perform_later(file_path:, file_name:, data_dir:, skip_existing: false) if generate_pdf
+    GeneratePdfJob.perform_later(file_path:, file_name: xml_file_name, data_dir:, skip_existing: false) if generate_pdf
   end
 end
