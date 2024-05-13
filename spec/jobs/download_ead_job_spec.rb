@@ -57,7 +57,7 @@ RSpec.describe DownloadEadJob do
         described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
                                     data_dir: '/data/archive/', generate_pdf: true)
       end.to enqueue_job(GeneratePdfJob).once.with(file_path: '/data/archive/abc123.xml', file_name: 'abc123',
-                                                   data_dir: '/data/archive/')
+                                                   data_dir: '/data/archive/', skip_existing: false)
     end
   end
 
