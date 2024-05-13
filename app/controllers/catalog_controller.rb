@@ -144,7 +144,7 @@ class CatalogController < ApplicationController
                                        digital_content: { label: 'Includes digital content', fq: 'has_online_content_ssim:true' }
                                      },
                                      label: 'Digital contents',
-                                     component: DigitalContentsFacetComponent
+                                     component: DigitalContentFacetComponent
     config.add_facet_field 'collection', field: 'collection_ssim', limit: 10
     config.add_facet_field 'creators', field: 'creator_ssim', limit: 10
     config.add_facet_field 'date_range', field: 'date_range_isim',
