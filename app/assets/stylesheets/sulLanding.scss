@@ -74,17 +74,18 @@ $featured-teaser-overhang: 1rem;
       padding-left: 0;
     }
     
-    ul li {
+    .search-links ul li {
       display: inline-block;
       margin-right: 1.5rem;
       position: relative;
     }
-    
-    ul li:not(:first-child)::before {
+
+    .search-links ul li:not(:first-child)::before {
       content: '•';
       position: absolute;
       left: -1rem;
       top: 0.05rem;
+      color: $stanford-digital-blue;
     }
   }
 
