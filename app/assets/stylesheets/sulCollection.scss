@@ -184,6 +184,13 @@ a.btn-outline-secondary:hover,
 a.btn-outline-secondary:focus {
   background-color: $secondary;
   border-color: $secondary;
+  text-decoration: none;
+}
+
+span.constraint-value:hover, 
+span.constraint-value:focus {
+  background-color: white;
+  color: black;
 }
 
 .dropdown-item.active {
