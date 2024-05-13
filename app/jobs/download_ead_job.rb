@@ -3,63 +3,80 @@
 ##
 # Background job to download an EAD XML file from ArchiveSpace
 class DownloadEadJob < ApplicationJob
-  # By default this will enqueue all harvestable repositories updated since (and including) yesterday
-  # Intended as a convenience method for use in a cron job
+  # Configures a download.
+  class Config
+    attr_reader :updated_after, :data_directory, :generate_pdf, :index, :check_component_dates
+
+    # @example DownloadEadJob::Config.new(updated_after: '2024-05-10', check_component_dates: true)
+    # @param updated_after [String] YYYY-MM-DD optionally limit the downloads by updated date
+    # @param data_directory [String] sets the directory where the files will be saved
+    # @param generate_pdf [Boolean] if true a job to generate a PDF file will be enqueued
+    # @param index [Boolean] if true a job to index the EAD file will be enqueued
+    # @param check_component_dates [Boolean] if true the query will check whether components
+    #        have been published/unpublished. Probably only useful with the updated_after param.
+    def initialize(updated_after: nil,
+                   data_directory: Settings.data_dir,
+                   generate_pdf: Settings.pdf_generation.create_on_ead_download,
+                   index: true,
+                   check_component_dates: false)
+
+      @updated_after = updated_after
+      @data_directory = data_directory
+      @generate_pdf = generate_pdf
+      @index = index
+      @check_component_dates = check_component_dates
+    end
+  end
+
+  # By default this will enqueue all harvestable repositories updated since (and including) yesterday.
+  # Intended as a convenience method for use in a daily cron job.
+  # @example DownloadEadJob.enqueue_all_updated(updated_after: '2024-05-10')
   # @param updated_after [String] YYYY-MM-DD limit the response to resources updated after a specific date
   def self.enqueue_all_updated(updated_after: (Time.zone.now - 2.days).strftime('%Y-%m-%d'))
-    enqueue_all(updated_after:, check_component_dates: true)
+    enqueue_all(config: DownloadEadJob::Config.new(updated_after:, check_component_dates: true))
   end
 
-  # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
-  # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
-  # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
-  # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
-  # @param check_component_dates [Boolean] if true, component level modified dates will be checked
-  def self.enqueue_all(updated_after: nil, data_dir: Settings.data_dir, index: true,
-                       generate_pdf: Settings.pdf_generation.create_on_ead_download, check_component_dates: false)
-    create_directories(data_dir:)
-    AspaceRepositories.all_harvestable.each do |repository|
-      enqueue_repository(repository:, updated_after:, data_dir:, index:, generate_pdf:, check_component_dates:)
-    end
+  # This will enqueue all harvestable repositories.
+  # @example DownloadEadJob.enqueue_all
+  # @param config [DownloadEadJob::Config] holds configurations for the download
+  def self.enqueue_all(config: DownloadEadJob::Config.new)
+    create_directories(data_dir: config.data_directory)
+    AspaceRepositories.all_harvestable.each { |repository| enqueue_repository(repository:, config:) }
   end
 
+  # This will enqueue one repository selected by its aspace repository code.
   # @example DownloadEadJob.enqueue_one_by(aspace_repository_code: 'ars')
   # @param aspace_repository_code [String] the repository code in ArchivesSpace, such as 'ars'
-  # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
-  # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
-  # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
-  # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
-  def self.enqueue_one_by(aspace_repository_code:, updated_after: nil,
-                          data_dir: Settings.data_dir, index: true,
-                          generate_pdf: Settings.pdf_generation.create_on_ead_download)
-    create_directories(data_dir:)
+  # @param config [DownloadEadJob::Config] holds configurations for the download
+  def self.enqueue_one_by(aspace_repository_code:, config: DownloadEadJob::Config.new)
+    create_directories(data_dir: config.data_directory)
     repository = AspaceRepositories.find_by(code: aspace_repository_code)
-    enqueue_repository(repository:, updated_after:, data_dir:, index:, generate_pdf:)
+    enqueue_repository(repository:, config:)
   end
 
-  # rubocop:disable Metrics/ParameterLists
-  def self.enqueue_repository(repository:, updated_after:, data_dir:, index:, generate_pdf:,
-                              check_component_dates: false)
+  def self.enqueue_repository(repository:, config:)
     uris_to_exclude = []
 
-    repository.each_published_resource(updated_after:) do |resource|
-      uris_to_exclude << resource.uri if check_component_dates
-      enqueue_resource(resource:, data_dir:, index:, generate_pdf:)
+    repository.each_published_resource(updated_after: config.updated_after) do |resource|
+      uris_to_exclude << resource.uri if config.check_component_dates
+      enqueue_resource(resource:, config:)
     end
 
-    return unless check_component_dates
+    return unless config.check_component_dates
 
-    repository.each_published_resource_with_updated_components(updated_after:, uris_to_exclude:) do |resource|
-      enqueue_resource(resource:, index:, data_dir:, generate_pdf:)
+    repository.each_published_resource_with_updated_components(updated_after: config.updated_after,
+                                                               uris_to_exclude:) do |resource|
+      enqueue_resource(resource:, config:)
     end
   end
   private_class_method :enqueue_repository
-  # rubocop:enable Metrics/ParameterLists
 
-  def self.enqueue_resource(resource:, data_dir:, index:, generate_pdf:)
-    file_dir = "#{data_dir}/#{resource.arclight_repository_code}"
-    DownloadEadJob.perform_later(resource_uri: resource.uri, file_name: resource.file_name,
-                                 file_dir:, index:, generate_pdf:)
+  def self.enqueue_resource(resource:, config:)
+    file_dir = "#{config.data_directory}/#{resource.arclight_repository_code}"
+    DownloadEadJob.perform_later(resource_uri: resource.uri,
+                                 file_name: resource.file_name,
+                                 file_dir:, index: config.index,
+                                 generate_pdf: config.generate_pdf)
   end
   private_class_method :enqueue_resource
 
@@ -73,15 +90,16 @@ class DownloadEadJob < ApplicationJob
 
   # @example DownloadEadJob.perform_later(resource_uri: '/repositories/2/resources/5363',
   #                                       file_name: 'ars0018',
-  #                                       file_dir: '/opt/app/arclight/data/ars' )
+  #                                       file_dir: '/opt/app/arclight/data/ars'
+  #                                       index: true,
+  #                                       generate_pdf: false)
   # @param resource_uri [String] the URI of the resource in ArchivesSpace, such as '/repositories/2/resources/5363'
   # @param file_name [String] the name of the file to be created, such as 'ead1234'
   # @param file_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   #        the directory specified must already exist
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
-  def perform(resource_uri:, file_name:, file_dir:, index: false,
-              generate_pdf: Settings.pdf_generation.create_on_ead_download)
+  def perform(resource_uri:, file_name:, file_dir:, index:, generate_pdf:)
     ead_xml = AspaceClient.new.resource_description(resource_uri)
     file_path = File.join(file_dir, "#{file_name}.xml")
 
