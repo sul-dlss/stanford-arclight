@@ -48,11 +48,12 @@ RSpec.describe AspaceClient do
   end
 
   describe '#published_resource_uris' do
-    let(:aspace_query) { instance_double(AspaceClient::AspaceQuery) }
+    let(:aspace_query) { instance_double(AspaceQuery) }
 
     before do
-      allow(AspaceClient::AspaceQuery).to receive(:new).with(client:, repository_id: 11, updated_after: nil)
-                                                       .and_return(aspace_query)
+      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 11, updated_after: nil,
+                                               options: { published: true, suppressed: false })
+                                         .and_return(aspace_query)
     end
 
     it 'returns an instance of AspaceQuery' do
@@ -73,8 +74,9 @@ RSpec.describe AspaceClient do
     end
 
     before do
-      allow(AspaceClient::AspaceQuery).to receive(:new).with(client:, repository_id: 3, updated_after: nil)
-                                                       .and_return(published_resource_uris)
+      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 3, updated_after: nil,
+                                               options: { published: true, suppressed: false })
+                                         .and_return(published_resource_uris)
     end
 
     it 'returns an array of published resource uris' do
@@ -85,17 +87,17 @@ RSpec.describe AspaceClient do
   end
 
   describe '#published_resource_with_updated_component_uris' do
-    let(:aspace_query) { instance_double(AspaceClient::AspaceQuery) }
+    let(:aspace_query) { instance_double(AspaceQuery) }
 
     before do
-      allow(AspaceClient::AspaceQuery).to receive(:new)
-        .with(client:, repository_id: 11, updated_after: '2024-05-06')
+      allow(AspaceQuery).to receive(:new)
+        .with(client:, repository_id: 11, updated_after: '2024-05-06', primary_type: nil,
+              options: { contains_fields: ['resource'], select_fields: ['resource'],
+                         exclude_field_values: { 'resource' => nil } })
         .and_return(aspace_query)
-      allow(AspaceClient::AspaceQuery).to receive(:new)
-        .with(client:, repository_id: 11).and_return(aspace_query)
-      allow(aspace_query).to receive(:query_components).and_return(aspace_query)
-      allow(aspace_query).to receive(:select_fields).and_return(aspace_query)
-      allow(aspace_query).to receive(:restrict_results_to_uris).and_return(aspace_query)
+      allow(AspaceQuery).to receive(:new)
+        .with(client:, repository_id: 11,
+              options: { published: true, suppressed: false, limit_results_to_uris: [] }).and_return(aspace_query)
       allow(aspace_query).to receive(:each).and_return([])
     end
 

@@ -61,7 +61,7 @@ class AspaceClient
   def published_resource_uris(repository_id:, updated_after: nil)
     raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
 
-    AspaceQuery.new(client: self, repository_id:, updated_after:)
+    AspaceQuery.new(client: self, repository_id:, updated_after:, options: { published: true, suppressed: false })
   end
 
   # Returns an array of all published resource uris in ASpace for the specified repository
@@ -72,11 +72,31 @@ class AspaceClient
     published_resource_uris(repository_id:).each.to_a.pluck('uri')
   end
 
+  # Returns an instance of AspaceQuery that response to :each returning
+  # hashes containing an ead id and uri for resources of interest,
+  # e.g. {"ead_id"=>"sc0348.xml", "uri"=>"/repositories/2/resources/5363"}
+  # This query can be slow. It is recommended to pass the result of a faster query to 'uris_to_exclude'.
+  # See https://github.com/sul-dlss/stanford-arclight/issues/551.
+  # This may be able to be removed once on ArchivesSpace v3.5.0+.
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param updated_after [String] YYYY-MM-DD limits the response to resources updated after a specific date
+  # @param uris_to_exclude [Array] optionally limit the response, excluding the given resource uris
   def published_resource_with_updated_component_uris(repository_id:, updated_after:, uris_to_exclude: nil)
     raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
     raise ArgumentError, 'Please provide the updated after date' unless updated_after
 
-    published_resource_with_modified_components_query(repository_id:, updated_after:, uris_to_exclude:)
+    objects_with_resource_link = { contains_fields: ['resource'],
+                                   select_fields: ['resource'],
+                                   exclude_field_values: { 'resource' => uris_to_exclude } }
+    resources_with_modified_objects = AspaceQuery.new(client: self, repository_id:, primary_type: nil, updated_after:,
+                                                      options: objects_with_resource_link).each.to_a.uniq
+
+    uris = resources_with_modified_objects.map { |resource| resource['resource'] }
+
+    # Query ASpace to reduce to resources that are published/not suppressed/have eadids.
+    # Important to not pass updated_after here. ASpace doesn't think these are updated.
+    filter_to_resources = { published: true, suppressed: false, limit_results_to_uris: uris }
+    AspaceQuery.new(client: self, repository_id:, options: filter_to_resources)
   end
 
   # send an authenticated GET request to ASpace
@@ -129,209 +149,4 @@ class AspaceClient
       JSON.parse(res.body)['session']
     end
   end
-
-  # This is a potentially expensive query that checks for updates at the component
-  # (e.g., Archival Object) level, catching the resources ASpace might not report.
-  # See the following for context:
-  # https://github.com/sul-dlss/stanford-arclight/issues/551
-  # https://github.com/archivesspace/archivesspace/issues/856
-  # https://github.com/archivesspace/archivesspace/pull/1374
-  # Setting uris_to_exclude allows us to reduce the search size, which speeds up the query dramatically
-  def published_resource_with_modified_components_query(repository_id:, updated_after:, uris_to_exclude: nil)
-    # Get all resources, regardless of resource published/suppressed status, with modified components
-    query = AspaceQuery.new(client: self, repository_id:, updated_after:)
-                       .query_components
-                       .select_fields(['resource'])
-    query.excluding_resource_uris(uris_to_exclude) if uris_to_exclude.present?
-    result = query.each.to_a.uniq
-    uris = result.map { |resource| resource['resource'] }
-
-    # Query ASpace to reduce to resources that are published/not suppressed/have eadids.
-    # Important to not pass updated_after here. ASpace doesn't think these are updated.
-    AspaceQuery.new(client: self, repository_id:).restrict_results_to_uris(uris)
-  end
-
-  # Class that wraps logic needed to request resources from ArchivesSpace via
-  # a paged query: https://archivesspace.github.io/archivesspace/api/#search-this-repository
-  # rubocop:disable Metrics/ClassLength
-  class AspaceQuery
-    attr_reader :client, :fields, :query_type, :repository_id, :resource_uris_to_exclude,
-                :restrict_result_uris, :updated_after
-
-    PAGE_SIZE = 250
-
-    def initialize(client:, repository_id:, updated_after: nil)
-      @client = client
-      @repository_id = repository_id
-      @updated_after = updated_after
-
-      # Defaults that can be set by the chaining methods
-      @query_type = :resource
-      @fields = %w[ead_id uri]
-      @restrict_result_uris = nil
-      @resource_uris_to_exclude = nil
-    end
-
-    def excluding_resource_uris(uris)
-      @resource_uris_to_exclude = uris
-      self
-    end
-
-    def restrict_results_to_uris(uris)
-      @restrict_result_uris = uris
-      self
-    end
-
-    def query_components
-      @query_type = :component
-      self
-    end
-
-    def select_fields(fields)
-      @fields = fields
-      self
-    end
-
-    # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    def each(&block)
-      return enum_for(:each) unless block_given?
-
-      this_page = 0
-      last_page = nil
-      while last_page.nil? || this_page < last_page
-        this_page += 1
-
-        params = { page: this_page, page_size: PAGE_SIZE, aq: query.to_json }
-        path = "repositories/#{repository_id}/search"
-        response = client.authenticated_post(path, params)
-        response = JSON.parse(response)
-        last_page = response['last_page'].to_i
-
-        resources = response['results'].map { |result| result.slice(*fields) }
-        resources.each(&block)
-      end
-    end
-    # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
-
-    private
-
-    def query
-      { 'query' =>
-      { 'jsonmodel_type' => 'boolean_query',
-        'op' => 'AND',
-        'subqueries' => subqueries } }
-    end
-
-    def subqueries
-      return component_subqueries if query_type == :component
-
-      resource_subqueries
-    end
-
-    def resource_subqueries
-      subqueries = [with_eadid_query, not_suppressed_query, published_query, primary_type_is_resource_query]
-      subqueries.append(updated_after_query) if updated_after
-      subqueries.append(restrict_to_uris_query) if restrict_result_uris
-
-      subqueries
-    end
-
-    def component_subqueries
-      subqueries = [with_resource_query]
-      subqueries.append(updated_after_query) if updated_after
-      subqueries.append(exclude_known_resource_query) if resource_uris_to_exclude
-
-      subqueries
-    end
-
-    # Limit the response to resources that have an ead id
-    def with_eadid_query
-      { 'field' => 'ead_id',
-        'value' => '*',
-        'jsonmodel_type' => 'field_query',
-        'negated' => false,
-        'literal' => false }
-    end
-
-    # Limit the response to resources that are not suppressed
-    def not_suppressed_query
-      { 'field' => 'suppressed',
-        'value' => false,
-        'jsonmodel_type' => 'field_query',
-        'negated' => false,
-        'literal' => false }
-    end
-
-    # Limit the response to resources that are published
-    def published_query
-      { 'field' => 'publish',
-        'value' => true,
-        'jsonmodel_type' => 'field_query',
-        'negated' => false,
-        'literal' => false }
-    end
-
-    # Limit the response to resources (top container of the finding aid)
-    def primary_type_is_resource_query
-      { 'field' => 'primary_type',
-        'value' => 'resource',
-        'jsonmodel_type' => 'field_query',
-        'negated' => false,
-        'literal' => false }
-    end
-
-    # Optionally, limit the response to records updated after the
-    # date provided in the form of YYYY-MM-DD
-    def updated_after_query
-      { 'field' => 'system_mtime',
-        'value' => updated_after,
-        'comparator' => 'greater_than',
-        'precision' => 'DAY',
-        'jsonmodel_type' => 'date_field_query',
-        'negated' => false,
-        'literal' => false }
-    end
-
-    # Limit the response to records with resource values that are not in the exclusion list
-    def exclude_known_resource_query
-      { 'jsonmodel_type' => 'boolean_query',
-        'op' => 'AND',
-        'subqueries' =>
-        resource_uris_to_exclude.map { |resource| excluded_resource_field_query(resource) } }
-    end
-
-    def excluded_resource_field_query(resource_uri)
-      { 'field' => 'resource',
-        'value' => resource_uri,
-        'jsonmodel_type' => 'field_query',
-        'negated' => true,
-        'literal' => true }
-    end
-
-    # Limit the response to records with resource values
-    def with_resource_query
-      { 'field' => 'resource',
-        'value' => '[* TO *]',
-        'jsonmodel_type' => 'field_query',
-        'negated' => false,
-        'literal' => false }
-    end
-
-    # Limit the response to records with URIs found in an allowed list
-    def restrict_to_uris_query
-      { 'jsonmodel_type' => 'boolean_query',
-        'op' => 'OR',
-        'subqueries' =>
-        restrict_result_uris.map { |uri| restrict_uri_field_query(uri) } }
-    end
-
-    def restrict_uri_field_query(uri)
-      { 'field' => 'uri',
-        'value' => uri,
-        'jsonmodel_type' => 'field_query',
-        'negated' => false,
-        'literal' => true }
-    end
-  end
-  # rubocop:enable Metrics/ClassLength
 end
