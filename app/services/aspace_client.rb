@@ -4,6 +4,7 @@ require 'uri'
 require 'net/http'
 
 # Client for making requests via the ArchivesSpace API
+# rubocop:disable Metrics/ClassLength
 class AspaceClient
   attr_reader :base_url
 
@@ -93,10 +94,49 @@ class AspaceClient
 
     uris = resources_with_modified_objects.map { |resource| resource['resource'] }
 
-    # Query ASpace to reduce to resources that are published/not suppressed/have eadids.
-    # Important to not pass updated_after here. ASpace doesn't think these are updated.
-    filter_to_resources = { published: true, suppressed: false, limit_results_to_uris: uris }
-    AspaceQuery.new(client: self, repository_id:, options: filter_to_resources)
+    published_unsuppressed_resource_query(repository_id:, resource_uris: uris)
+  end
+
+  # Returns an instance of AspaceQuery that searches for resources with linked agents that have been updated after a
+  # specific date.
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param updated_after [String] YYYY-MM-DD limits the response to resources updated after a specific date
+  # @param uris_to_exclude [Array] optionally limit the response, excluding the given resource uris
+  def published_resource_with_linked_agent_uris(repository_id:, updated_after:, uris_to_exclude: nil)
+    raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
+    raise ArgumentError, 'Please provide the updated after date' unless updated_after
+
+    agent_uris = updated_agents(repository_id:, updated_after:).each.to_a.pluck('uri')
+    resources_with_linked_agents(repository_id:, agent_uris:, uris_to_exclude:)
+  end
+
+  # Returns an instance of AspaceQuery that searches for agents updated after the given date
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param updated_after [String] YYYY-MM-DD limit the response to resources updated after a specific date
+  def updated_agents(repository_id:, updated_after:)
+    raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
+    raise ArgumentError, 'Please provide the updated after date' unless updated_after
+
+    AspaceQuery.new(client: self, repository_id:, updated_after:, primary_type: nil,
+                    options: { contains_fields: [], contains_type: 'agent' })
+  end
+
+  # Returns an instance of AspaceQuery that returns resources linked with the given agent URIs
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param agent_uris [Array] the agent URIs in ArchivesSpace
+  # @param uris_to_exclude [Array] optionally limit the response, excluding the given resource uris
+  def resources_with_linked_agents(repository_id:, agent_uris:, uris_to_exclude: nil)
+    raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
+    raise ArgumentError, 'Please provide the agent URIs' unless agent_uris
+
+    all_uris = record_uris_from_linked_agent_uris(repository_id:, agent_uris:)
+    resource_uris = all_uris.filter { |uri| uri.start_with?("/repositories/#{repository_id}/resources") }
+    ao_uris = all_uris.filter { |uri| uri.start_with?("/repositories/#{repository_id}/archival_objects") }
+    ao_resource_uris = resource_uris_from_record_uris(repository_id:, record_uris: ao_uris)
+    all_resource_uris = resource_uris | ao_resource_uris
+    all_resource_uris.reject! { |uri| uris_to_exclude.include?(uri) } if uris_to_exclude.present?
+
+    published_unsuppressed_resource_query(repository_id:, resource_uris: all_resource_uris)
   end
 
   # send an authenticated GET request to ASpace
@@ -110,6 +150,27 @@ class AspaceClient
   end
 
   private
+
+  # Reduce a list of resource URIs to those that are published and unsuppressed
+  def published_unsuppressed_resource_query(repository_id:, resource_uris:)
+    filter_to_resources = { published: true, suppressed: false, limit_results_to_uris: resource_uris }
+    AspaceQuery.new(client: self, repository_id:, options: filter_to_resources)
+  end
+
+  # Get all record URIs that have links to one or more of the given agents
+  def record_uris_from_linked_agent_uris(repository_id:, agent_uris:)
+    query = agent_uris.map { |uri| "agent_uris:\"#{uri}\"" }.join(' OR ')
+    AspaceSearchQuery.new(client: self, repository_id:, query:).each.to_a.pluck('uri')
+  end
+
+  # Get all parent resource URIs for the given records
+  def resource_uris_from_record_uris(repository_id:, record_uris:)
+    resources_with_uri = { contains_fields: ['resource'],
+                           select_fields: ['resource'],
+                           limit_results_to_uris: record_uris }
+    result = AspaceQuery.new(client: self, repository_id:, primary_type: nil, options: resources_with_uri).each.to_a
+    result.pluck('resource')
+  end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def send_request(method, path, body = nil)
@@ -150,3 +211,4 @@ class AspaceClient
     end
   end
 end
+# rubocop:enable Metrics/ClassLength

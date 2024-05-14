@@ -94,6 +94,12 @@ RSpec.describe DownloadEadJob do
       ).and_return(
         [{ 'uri' => '/repositories/11/resources/3', 'ead_id' => 'ars789' }]
       )
+      allow(client).to receive(:published_resource_with_linked_agent_uris).with(
+        repository_id: '11', updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
+      ).and_return(
+        [{ 'uri' => '/repositories/11/resources/4', 'ead_id' => 'ars000' }]
+      )
       allow(client).to receive(:published_resource_uris).with(
         repository_id: '4', updated_after: '2023-12-12'
       ).and_return(
@@ -106,6 +112,12 @@ RSpec.describe DownloadEadJob do
       ).and_return(
         [{ 'uri' => '/repositories/4/resources/3', 'ead_id' => 'eal789' }]
       )
+      allow(client).to receive(:published_resource_with_linked_agent_uris).with(
+        repository_id: '4', updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
+      ).and_return(
+        [{ 'uri' => '/repositories/4/resources/4', 'ead_id' => 'eal000' }]
+      )
     end
 
     it 'fetches all resource uris from aspace limited to a specified date' do
@@ -116,8 +128,18 @@ RSpec.describe DownloadEadJob do
         updated_after: '2023-12-12',
         uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
       )
+      expect(client).to have_received(:published_resource_with_linked_agent_uris).with(
+        repository_id: '11',
+        updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
+      )
       expect(client).to have_received(:published_resource_uris).with(repository_id: '4', updated_after: '2023-12-12')
       expect(client).to have_received(:published_resource_with_updated_component_uris).with(
+        repository_id: '4',
+        updated_after: '2023-12-12',
+        uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
+      )
+      expect(client).to have_received(:published_resource_with_linked_agent_uris).with(
         repository_id: '4',
         updated_after: '2023-12-12',
         uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
