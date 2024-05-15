@@ -4,9 +4,9 @@
 # a paged query: https://archivesspace.github.io/archivesspace/api/#search-this-repository
 # rubocop:disable Metrics/ClassLength
 class AspaceQuery
-  attr_reader :client, :repository_id, :primary_type, :updated_after, :options
+  include AspacePaginatedQuery
 
-  PAGE_SIZE = 250
+  attr_reader :client, :repository_id, :primary_type, :updated_after, :options
 
   # @param client [AspaceClient] the client used to make requests
   # @param repository_id [Integer] the ID of the repository
@@ -19,7 +19,7 @@ class AspaceQuery
   #   - :contains_type [string] type that the records must contain
   #   - :select_fields [Array<String>] fields to be returned in the results, defaults to ['ead_id', 'uri']
   #   - :limit_results_to_uris [Array<String>] URIs to restrict the results to
-  #   - :exclude_field_values [Hash] field values to exclude from the results, e.g., { 'resource' => ['...']}
+  #   - :exclude_field_values [Hash] field values to exclude from the results, e.g., {'resource' => ['...']}
   def initialize(client:, repository_id:, primary_type: 'resource', updated_after: nil, options: {})
     @client = client
     @repository_id = repository_id
@@ -28,25 +28,13 @@ class AspaceQuery
     @options = options
   end
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  def each(&block)
-    return enum_for(:each) unless block_given?
-
-    this_page = 0
-    last_page = nil
-    while last_page.nil? || this_page < last_page
-      this_page += 1
-
-      params = { page: this_page, page_size: PAGE_SIZE, aq: query.to_json }
-      response = client.authenticated_post("repositories/#{repository_id}/search", params)
-      response = JSON.parse(response)
-      last_page = response['last_page'].to_i
-
-      resources = response['results'].map { |result| result.slice(*select_fields_option) } if select_fields_option
-      resources.each(&block)
-    end
+  def query_params
+    { aq: query.to_json }
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+  def keys_to_return
+    select_fields_option
+  end
 
   private
 

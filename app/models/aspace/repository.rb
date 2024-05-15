@@ -38,6 +38,17 @@ module Aspace
       end
     end
 
+    def each_published_resource_with_updated_agents(updated_after:, uris_to_exclude: nil)
+      unless block_given?
+        return enum_for(:each_published_resource_with_updated_agents, updated_after:, uris_to_exclude:)
+      end
+
+      client.published_resource_with_linked_agent_uris(repository_id: id, updated_after:,
+                                                       uris_to_exclude:).each do |resource|
+        yield Aspace::Resource.new(**resource.symbolize_keys.merge({ repository_code: code }))
+      end
+    end
+
     private
 
     def client

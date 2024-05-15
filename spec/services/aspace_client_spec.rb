@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe AspaceClient do
   let(:url) { 'http://example.com:8089' }
   let(:user) { 'aspace_user' }
@@ -123,6 +124,95 @@ RSpec.describe AspaceClient do
     end
   end
 
+  describe '#published_resource_with_linked_agent_uris' do
+    context 'without a repository_id argument' do
+      it 'raises an error' do
+        expect do
+          client.published_resource_with_linked_agent_uris(updated_after: '2024-05-10')
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'without an updated_after argument' do
+      it 'raises an error' do
+        expect do
+          client.published_resource_with_linked_agent_uris(repository_id: 11)
+        end.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe '#updated_agents' do
+    let(:aspace_query) { instance_double(AspaceQuery) }
+
+    before do
+      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 11, updated_after: '2024-05-06',
+                                               primary_type: nil,
+                                               options: { contains_fields: [], contains_type: 'agent' })
+                                         .and_return(aspace_query)
+    end
+
+    it 'returns an instance of AspaceQuery' do
+      expect(client.updated_agents(repository_id: 11, updated_after: '2024-05-06')).to eq aspace_query
+    end
+
+    context 'without a repository_id argument' do
+      it 'raises an error' do
+        expect do
+          client.updated_agents(updated_after: '2024-05-06')
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'without an updated_after argument' do
+      it 'raises an error' do
+        expect do
+          client.updated_agents(repository_id: 11)
+        end.to raise_error(ArgumentError)
+      end
+    end
+  end
+
+  describe '#resources_with_linked_agents' do
+    let(:agent_uris) { ['/agents/people/1', '/agents/corporate_entities/2'] }
+    let(:aspace_query) { instance_double(AspaceQuery) }
+    let(:repository_id) { 2 }
+
+    before do
+      allow(client).to receive(:record_uris_from_linked_agent_uris)
+        .with(repository_id:, agent_uris:)
+        .and_return(['/repositories/2/resources/4335', '/repositories/2/archival_objects/20'])
+      allow(client).to receive(:resource_uris_from_record_uris)
+        .with(repository_id:, record_uris: ['/repositories/2/archival_objects/20'])
+        .and_return(['/repositories/2/resources/101'])
+      allow(AspaceQuery).to receive(:new)
+        .with(client:, repository_id:,
+              options: { published: true, suppressed: false,
+                         limit_results_to_uris: ['/repositories/2/resources/4335', '/repositories/2/resources/101'] })
+        .and_return(aspace_query)
+    end
+
+    it 'returns an instance of AspaceQuery for resources linked with given agent URIs' do
+      expect(client.resources_with_linked_agents(repository_id:, agent_uris:)).to eq(aspace_query)
+    end
+
+    context 'without a repository_id argument' do
+      it 'raises an error' do
+        expect do
+          client.resources_with_linked_agents(agent_uris: ['/agents/people/1', '/agents/corporate_entities/2'])
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'without an agent_uris argument' do
+      it 'raises an error' do
+        expect do
+          client.resources_with_linked_agents(repository_id:)
+        end.to raise_error(ArgumentError)
+      end
+    end
+  end
+
   describe '#authenticated_get' do
     it 'sends an authenticated request with correct auth header to the specified address' do
       stub_request(:get, "#{url}/some_request")
@@ -169,3 +259,4 @@ RSpec.describe AspaceClient do
     end
   end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers

@@ -5,26 +5,27 @@
 class DownloadEadJob < ApplicationJob
   # Configures a download.
   class Config
-    attr_reader :updated_after, :data_directory, :generate_pdf, :index, :check_component_dates
+    attr_reader :updated_after, :data_directory, :generate_pdf, :index, :check_record_dates
 
-    # @example DownloadEadJob::Config.new(updated_after: '2024-05-10', check_component_dates: true)
+    # @example DownloadEadJob::Config.new(updated_after: '2024-05-10', check_record_dates: true)
     # @param updated_after [String] YYYY-MM-DD optionally limit the downloads by updated date
     # @param data_directory [String] sets the directory where the files will be saved
     # @param generate_pdf [Boolean] if true a job to generate a PDF file will be enqueued
     # @param index [Boolean] if true a job to index the EAD file will be enqueued
-    # @param check_component_dates [Boolean] if true the query will check whether components
-    #        have been published/unpublished. Probably only useful with the updated_after param.
+    # @param check_record_dates [Boolean] if true the query will check whether records
+    #        (e.g., archival objects, linked agents) have been published/unpublished.
+    #        Probably only useful with the updated_after param.
     def initialize(updated_after: nil,
                    data_directory: Settings.data_dir,
                    generate_pdf: Settings.pdf_generation.create_on_ead_download,
                    index: true,
-                   check_component_dates: false)
+                   check_record_dates: false)
 
       @updated_after = updated_after
       @data_directory = data_directory
       @generate_pdf = generate_pdf
       @index = index
-      @check_component_dates = check_component_dates
+      @check_record_dates = check_record_dates
     end
   end
 
@@ -33,7 +34,7 @@ class DownloadEadJob < ApplicationJob
   # @example DownloadEadJob.enqueue_all_updated(updated_after: '2024-05-10')
   # @param updated_after [String] YYYY-MM-DD limit the response to resources updated after a specific date
   def self.enqueue_all_updated(updated_after: (Time.zone.now - 2.days).strftime('%Y-%m-%d'))
-    enqueue_all(config: DownloadEadJob::Config.new(updated_after:, check_component_dates: true))
+    enqueue_all(config: DownloadEadJob::Config.new(updated_after:, check_record_dates: true))
   end
 
   # This will enqueue all harvestable repositories.
@@ -54,21 +55,28 @@ class DownloadEadJob < ApplicationJob
     enqueue_repository(repository:, config:)
   end
 
+  # rubocop:disable Metrics/MethodLength
   def self.enqueue_repository(repository:, config:)
     uris_to_exclude = []
 
     repository.each_published_resource(updated_after: config.updated_after) do |resource|
-      uris_to_exclude << resource.uri if config.check_component_dates
+      uris_to_exclude << resource.uri if config.check_record_dates
       enqueue_resource(resource:, config:)
     end
 
-    return unless config.check_component_dates
+    return unless config.check_record_dates
 
     repository.each_published_resource_with_updated_components(updated_after: config.updated_after,
                                                                uris_to_exclude:) do |resource|
       enqueue_resource(resource:, config:)
     end
+
+    repository.each_published_resource_with_updated_agents(updated_after: config.updated_after,
+                                                           uris_to_exclude:) do |resource|
+      enqueue_resource(resource:, config:)
+    end
   end
+  # rubocop:enable Metrics/MethodLength
   private_class_method :enqueue_repository
 
   def self.enqueue_resource(resource:, config:)
