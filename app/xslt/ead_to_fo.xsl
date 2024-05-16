@@ -108,6 +108,14 @@
         <xsl:attribute name="padding">2pt</xsl:attribute>
     </xsl:attribute-set>
 
+    <!-- Standard margin and padding for index entry elements -->
+    <xsl:attribute-set name="smpIndexEntry">
+        <xsl:attribute name="margin-left">4pt</xsl:attribute>
+        <xsl:attribute name="margin-right">4pt</xsl:attribute>
+        <xsl:attribute name="padding-left">4pt</xsl:attribute>
+        <xsl:attribute name="padding-right">4pt</xsl:attribute>
+    </xsl:attribute-set>
+
     <!-- Styles for main sections -->
     <xsl:attribute-set name="section">
         <xsl:attribute name="margin">4pt</xsl:attribute>
@@ -846,11 +854,14 @@
         <fo:block xsl:use-attribute-sets="section">
             <fo:block xsl:use-attribute-sets="h2ID"><xsl:value-of select="local:tagName(.)"/></fo:block>
             <fo:list-block xsl:use-attribute-sets="smp">
-                <xsl:apply-templates/>
+                <!-- Don't match child controlaccess elements or it'll improperly nest list elements -->
+                <xsl:apply-templates select="*[not(self::ead:controlaccess)]"/>
             </fo:list-block>
+            <!-- Handle child controlaccess elements -->
+            <xsl:apply-templates select="ead:controlaccess"/>
         </fo:block>
     </xsl:template>
-    <xsl:template match="ead:controlaccess/child::*">
+    <xsl:template match="ead:controlaccess/*[not(self::ead:controlaccess)]" priority="2">
         <fo:list-item>
             <fo:list-item-label end-indent="label-end()">
                 <fo:block>&#x2022;</fo:block>
@@ -868,22 +879,31 @@
         <fo:block xsl:use-attribute-sets="section">
             <fo:block xsl:use-attribute-sets="h2ID"><xsl:value-of select="local:tagName(.)"/></fo:block>
             <xsl:apply-templates select="child::*[not(self::ead:indexentry)]"/>
-            <fo:list-block xsl:use-attribute-sets="smp">
             <xsl:apply-templates select="ead:indexentry"/>
-            </fo:list-block>
         </fo:block>
     </xsl:template>
+
     <xsl:template match="ead:indexentry">
-        <fo:list-item>
-            <fo:list-item-label  end-indent="label-end()">
-                <fo:block>&#x2022;</fo:block>
-            </fo:list-item-label>
-            <fo:list-item-body start-indent="body-start()">
-                <fo:block>
-                    <xsl:apply-templates/>
-                </fo:block>
-            </fo:list-item-body>
-        </fo:list-item>
+        <xsl:variable name="nestingLevel" select="count(ancestor::ead:indexentry)"/>
+        <fo:list-block xsl:use-attribute-sets="smpIndexEntry">   
+            <fo:list-item>
+                <fo:list-item-label end-indent="label-end()">
+                    <fo:block>&#x2022;</fo:block>
+                </fo:list-item-label>
+                <fo:list-item-body start-indent="body-start()">
+                    <fo:block margin-left="{8 * $nestingLevel}pt">
+                        <xsl:apply-templates select="*[not(self::ead:indexentry)]"  mode="indexEntryItem"/>
+                    </fo:block>
+                </fo:list-item-body>
+            </fo:list-item>
+        </fo:list-block>
+        <xsl:apply-templates select="ead:indexentry"/>
+    </xsl:template>
+
+    <xsl:template match="*[not(self::ead:indexentry)]" mode="indexEntryItem">
+        <fo:inline padding-right="4pt">
+            <xsl:apply-templates/>
+        </fo:inline>
     </xsl:template>
 
     <!-- Formats a simple table. The width of each column is defined by the colwidth attribute in a colspec element. -->
@@ -982,7 +1002,7 @@
         <xsl:apply-templates select="ead:head"/>
         <fo:list-block xsl:use-attribute-sets="smp">
             <xsl:choose>
-                <xsl:when test="@type='deflist'">
+                <xsl:when test="@type='deflist' or ead:defitem">
                     <xsl:apply-templates select="ead:defitem"/>
                 </xsl:when>
                 <xsl:otherwise>
@@ -1170,13 +1190,20 @@
     <!-- General headings -->
     <!-- Children of the archdesc are handled by the local:tagName function -->
     <xsl:template match="ead:head[parent::*/parent::ead:archdesc]"/>
-    <!-- All other headings -->
-    <xsl:template match="ead:head">
-        <fo:block xsl:use-attribute-sets="h4" id="{local:buildID(parent::*)}"><xsl:apply-templates/></fo:block>
+
+    <!-- Arrangement headings: Don't give them the ID, like in the the general headings template, or it'll collide with the parent ID -->
+    <xsl:template match="ead:head[parent::ead:arrangement]">
+        <fo:block xsl:use-attribute-sets="h4"><xsl:apply-templates/></fo:block>
     </xsl:template>
 
-   <!-- Linking elmenets -->
-    <xsl:template match="ead:ref">
+    <!-- All other headings -->
+    <xsl:template match="ead:head">
+        <!-- This was local:buildID(parent::*), which seems wrong? Wouldn't this always result in a dupe if the parent had an ID? -->
+        <fo:block xsl:use-attribute-sets="h4" id="{local:buildID(.)}"><xsl:apply-templates/></fo:block>
+    </xsl:template>
+
+   <!-- Linking elements -->
+    <xsl:template match="ead:ref[@*:target]">
         <fo:basic-link internal-destination="{@*:target}" xsl:use-attribute-sets="ref">
             <xsl:choose>
                 <xsl:when test="text()">
@@ -1627,9 +1654,9 @@
     </xsl:template>
     <xsl:template match="ead:index" mode="dsc">
         <xsl:apply-templates select="child::*[not(self::ead:indexentry)]"/>
-        <fo:list-block xsl:use-attribute-sets="smpDsc">
+        <fo:block xsl:use-attribute-sets="smpDsc">
             <xsl:apply-templates select="ead:indexentry"/>
-        </fo:list-block>
+        </fo:block>
     </xsl:template>
     <xsl:template match="ead:controlaccess" mode="dsc">
         <fo:block xsl:use-attribute-sets="smpDsc" text-decoration="underline"><xsl:value-of select="local:tagName(.)"/>:</fo:block>
