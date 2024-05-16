@@ -102,6 +102,22 @@ manuscripts:
   #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'
   #     request_mappings: 'Action=10&Form=31&Value=ead_url'
 
+rarebooks:
+  name: 'Rare Books'
+  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 36 hours in advance.'
+  description: 'The Rare Books Division acquires rare, antiquarian, and modern books of enduring value both for intellectual content and as historical artifacts. In addition to our broad, general rare book collection, there are named collections that focus on specific subjects, such as book arts, religion, science, literature, music, and American history. These materials are open for research to all those interested.'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div> 
+  thumbnail_url: 'repositories/rarebooks.png'
+
 uarc:
   name: 'University Archives'
   visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 36 hours in advance.'

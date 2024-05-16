@@ -40,6 +40,8 @@ class ArclightRepositoryMapper
   # uarc and manuscripts are arclight repository codes
   def code_from_ead_id
     case ead_id[/^[A-Z]*/i].downcase
+    when 'amernews', 'comics', 'macweek', 'pn', 'sanitary'
+      'rarebooks'
     when 'a', 'f', 'pc', 'sc', 'scm', 'v'
       'uarc'
     else

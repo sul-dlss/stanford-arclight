@@ -29,6 +29,15 @@ RSpec.describe ArclightRepositoryMapper do
           expect(mapper.map_to_code).to eq 'uarc'
         end
       end
+
+      context 'when the ead should be mapped to rarebooks' do
+        let(:aspace_repository_code) { 'speccoll' }
+        let(:ead_id) { 'macweek.xml' }
+
+        it 'uses the ead id to determine the arclight repository code' do
+          expect(mapper.map_to_code).to eq 'rarebooks'
+        end
+      end
     end
 
     context 'when the supplied arguments cannot be mapped to an arclight repository' do
