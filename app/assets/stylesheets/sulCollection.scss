@@ -197,6 +197,13 @@ span.constraint-value:focus {
   background-color: $secondary;
 }
 
+.al-show-actions-box .dropdown-item:active {
+  background-color: $secondary;
+  svg.bi {
+    color: white;
+  }
+}
+
 .al-grouped-results .al-document-extent {
   border-radius: 0;
 }
