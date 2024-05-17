@@ -12,6 +12,7 @@ RSpec.describe GeneratePdfJob do
   let(:fake_ead) { '<?xml version="1.0"?><ead></ead></xml>' }
   let(:stdin_double) { instance_double('IO') }
   let(:stdout_double) { instance_double('IO') }
+  let(:stderr_double) { instance_double('IO') }
   let(:wait_thread) { instance_double('Thread', join: nil, value: p) }
   let(:process_status) { instance_double('Process::Status') }
 
@@ -21,7 +22,8 @@ RSpec.describe GeneratePdfJob do
     allow(stdin_double).to receive(:write)
     allow(stdin_double).to receive(:close)
     allow(stdout_double).to receive(:read)
-    allow(Open3).to receive(:pipeline_rw).and_return([stdin_double, stdout_double, [wait_thread]])
+    allow(stderr_double).to receive(:read)
+    allow(Open3).to receive(:popen3).and_yield(stdin_double, stdout_double, stderr_double)
   end
 
   describe '.enqueue_all' do
@@ -41,7 +43,7 @@ RSpec.describe GeneratePdfJob do
       it 'does not create a new PDF' do
         allow(File).to receive(:exist?).with(pdf_file_path).and_return(true)
         described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: true)
-        expect(Open3).not_to have_received(:pipeline_rw)
+        expect(Open3).not_to have_received(:popen3)
       end
     end
 
@@ -50,12 +52,12 @@ RSpec.describe GeneratePdfJob do
         allow(File).to receive(:exist?).with(pdf_file_path).and_return(true)
         described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: false)
 
-        expect(Open3).to have_received(:pipeline_rw).with(
+        expect(Open3).to have_received(:popen3).with(
           "java -jar #{Settings.pdf_generation.saxon_path} -s:- "\
           "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
-          "pdf_image=#{Settings.pdf_generation.logo_path}",
+          "pdf_image=#{Settings.pdf_generation.logo_path} | " \
           "#{Settings.pdf_generation.fop_path} -q -c #{Settings.pdf_generation.fop_config_path} " \
-          "- -pdf #{pdf_file_path} 2>&1"
+          "- -pdf #{pdf_file_path}"
         )
         expect(stdin_double).to have_received(:write).with(a_string_including('urn:isbn:1-931666-22-9'))
       end
@@ -64,7 +66,7 @@ RSpec.describe GeneratePdfJob do
     context 'when the PDF file is not generated' do
       it 'raises a GeneratePdfError with the EAD file path' do
         allow(File).to receive(:exist?).with(pdf_file_path).and_return(false)
-        allow(stdout_double).to receive(:read).and_return('')
+        allow(stderr_double).to receive(:read).and_return('')
         expect do
           described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: false)
         end.to raise_error(GeneratePdfJob::GeneratePdfError, /#{file_path}/)
