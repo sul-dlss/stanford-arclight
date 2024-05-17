@@ -33,14 +33,16 @@ class GeneratePdfJob < ApplicationJob
     pdf_file_path = pdf_path(data_dir:, file_name:)
     return if skip_existing && File.exist?(pdf_file_path)
 
-    stdin, stdout, wait_threads = Open3.pipeline_rw(xml_to_fo_cmd, fo_to_pdf_cmd(pdf_file_path:))
-    stdin.write(ead_xml(file_path:))
-    stdin.close
-    wait_threads.each(&:join)
+    stderr_output = nil
+    Open3.popen3("#{xml_to_fo_cmd} | #{fo_to_pdf_cmd(pdf_file_path:)}") do |stdin, _stdout, stderr|
+      stdin.write(ead_xml(file_path:))
+      stdin.close
+      stderr_output = stderr.read
+    end
 
     # Saxon and Apache FOP can exit with errors but the PDF might still be created successfully.
     # Only raise the error if the PDF was not created. Only severe errors from Apache FOP are included.
-    raise GeneratePdfError, error_message(file_path:, output: stdout.read) unless File.exist?(pdf_file_path)
+    raise GeneratePdfError, error_message(file_path:, output: stderr_output) unless File.exist?(pdf_file_path)
   end
 
   private
@@ -58,7 +60,7 @@ class GeneratePdfJob < ApplicationJob
 
   def fo_to_pdf_cmd(pdf_file_path:)
     "#{Settings.pdf_generation.fop_path} -q -c #{Settings.pdf_generation.fop_config_path} " \
-    "- -pdf #{pdf_file_path} 2>&1"
+    "- -pdf #{pdf_file_path}"
   end
 
   def ead_xml(file_path:)
