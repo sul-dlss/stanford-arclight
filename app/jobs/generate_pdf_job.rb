@@ -62,6 +62,8 @@ class GeneratePdfJob < ApplicationJob
 
     # OAC strips the default EAD namespace and our XSLT expects it
     doc.root.add_namespace_definition(nil, 'urn:isbn:1-931666-22-9') unless doc.root.namespace
+    # Some EADs from OAC use a ns2 namespace but the declaration has been stripped, which causes Saxon to fail.
+    doc.root.add_namespace_definition('ns2', 'http://example.com/ns2') unless doc.namespaces.include?('xmlns:ns2')
     doc.to_xml
   end
 
