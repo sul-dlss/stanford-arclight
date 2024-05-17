@@ -26,9 +26,9 @@ module Sul
       # E.g. don't return Université de Toulouse_universite-de-toulouse
       # Instead, return only universite-de-toulouse.
       # Otherwise return something like ars0009_belva-kibler-and-donald-morgan
-      normalized_id = [id, title].map do |string|
+      normalized_id = [id, title].compact.reject(&:empty?).map do |string|
         string&.truncate_words(5, omission: '')&.parameterize
-      end.compact.uniq.join('_')
+      end.uniq.join('_')
 
       raise Arclight::Exceptions::IDNotFound if normalized_id.blank?
 
