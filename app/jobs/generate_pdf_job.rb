@@ -29,33 +29,37 @@ class GeneratePdfJob < ApplicationJob
   # @param file_name [String] the name of the PDF file to be created, such as 'ead1234'
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   # @param skip_existing [Boolean] if true, an existing PDF will not be replaced
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def perform(file_path:, file_name:, data_dir:, skip_existing:)
     pdf_file_path = pdf_path(data_dir:, file_name:)
     return if skip_existing && File.exist?(pdf_file_path)
 
-    xml_to_fo_cmd = "java -jar #{Settings.pdf_generation.saxon_path} -s:- "\
-                    "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
-                    "pdf_image=#{Settings.pdf_generation.logo_path}"
-
-    fo_to_pdf_cmd = "#{Settings.pdf_generation.fop_path} -q -c #{Settings.pdf_generation.fop_config_path} " \
-                    "- -pdf #{pdf_file_path}"
-
-    stdin, wait_threads = Open3.pipeline_w(xml_to_fo_cmd, fo_to_pdf_cmd)
+    stdin, stdout, wait_threads = Open3.pipeline_rw(xml_to_fo_cmd, fo_to_pdf_cmd(pdf_file_path:))
     stdin.write(ead_xml(file_path:))
     stdin.close
     wait_threads.each(&:join)
 
-    # The errors coming out of Saxon are typically incomprehensible without
-    # inspecting the entire FO XML for context. Reporting only the source XML
-    # path for now, as errors will almost certainly need a change to the
-    # XSLT to resolve. It is also impossible to config Saxon or FOP to remain
-    # silent on success, so we check specifically for the existence of the PDF.
-    raise GeneratePdfError, file_path unless File.exist?(pdf_file_path)
+    # Saxon and Apache FOP can exit with errors but the PDF might still be created successfully.
+    # Only raise the error if the PDF was not created. Only severe errors from Apache FOP are included.
+    raise GeneratePdfError, error_message(file_path:, output: stdout.read) unless File.exist?(pdf_file_path)
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   private
+
+  def error_message(file_path:, output:)
+    severe_errors = output.split("\n").grep(/^SEVERE:/)
+    ["Failed to generate PDF for #{file_path}."].concat(severe_errors).join("\n")
+  end
+
+  def xml_to_fo_cmd
+    "java -jar #{Settings.pdf_generation.saxon_path} -s:- "\
+    "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
+    "pdf_image=#{Settings.pdf_generation.logo_path}"
+  end
+
+  def fo_to_pdf_cmd(pdf_file_path:)
+    "#{Settings.pdf_generation.fop_path} -q -c #{Settings.pdf_generation.fop_config_path} " \
+    "- -pdf #{pdf_file_path} 2>&1"
+  end
 
   def ead_xml(file_path:)
     doc = Nokogiri::XML(File.read(file_path))
