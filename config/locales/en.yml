@@ -33,6 +33,15 @@ en:
   arclight:
     masthead_heading_html: <a href="/">Archival Collections at Stanford</a>
     repositories: Browse repositories
+    views:
+      show:
+        sections:
+          using_these_materials_field: "Using these materials"
+  catalog:
+    using_these_materials:
+      info_for_visitors: "Info for visitors"
+      how_to_request: "How to request"
+      access_and_use: "Access and use"
   shared:
     content_warning:
       warning_html: Some materials and description may contain offensive content. <a href="https://library.stanford.edu/libraries/special-collections" class="fa fa-exclamation-circle">More info</a>
