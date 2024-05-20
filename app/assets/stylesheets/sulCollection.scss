@@ -126,6 +126,15 @@
   margin-bottom: 2rem;
 }
 
+#using-these-materials {
+  dt.blacklight-using_these_materials_links {
+    display: none;
+  }
+  ul {
+    color: $stanford-digital-blue;
+  }
+}
+
 .al-search-breadcrumb {
   padding-top: 1rem;
 }

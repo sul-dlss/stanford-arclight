@@ -31,6 +31,14 @@ RSpec.describe 'Collection Page', type: :feature do
       end
     end
 
+    it 'displays the Using these materials links' do
+      within('#using-these-materials') do
+        expect(page).to have_link('Info for visitors', href: Arclight::Repository.find_by(slug: 'ars').url)
+        expect(page).to have_link('How to request', href: 'https://library.stanford.edu/access-rare-and-distinctive-materials')
+        expect(page).to have_link('Access and use', href: '#access-and-use')
+      end
+    end
+
     it 'links to the repository search page in the breadcrumbs' do
       within('.al-show-breadcrumb') do
         expect(page).to have_link('Archive of Recorded Sound', href: 'http://www.example.com/catalog?f%5Blevel%5D%5B%5D=Collection&f%5Brepository%5D%5B%5D=Archive+of+Recorded+Sound')

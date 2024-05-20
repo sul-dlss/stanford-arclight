@@ -13,6 +13,7 @@ ars:
   contact_html: |
      <div class="al-repository-contact-info"><a href="mailto:soundarchive@stanford.edu">soundarchive@stanford.edu</a></div>
   thumbnail_url: 'repositories/ars.png'
+  url: https://library.stanford.edu/libraries/archive-recorded-sound
   # request_types:
   #   aeon_web_ead:
   #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'
@@ -33,6 +34,7 @@ cubberley:
   contact_html: |
      <div class="al-repository-contact-info"><a href="cubberley@stanford.edu">cubberley@stanford.edu</a></div>
   thumbnail_url: 'repositories/cubberley.png'
+  url: https://library.stanford.edu/libraries/cubberley-education-library
 
 # hoover:
 #   name: 'Hoover Institution Archives'
@@ -77,6 +79,7 @@ eal:
   contact_html: |
      <div class="al-repository-contact-info"><a href="eastasialibrary@stanford.edu">eastasialibrary@stanford.edu</a></div>  
   thumbnail_url: 'repositories/eal.png'
+  url: https://library.stanford.edu/libraries/east-asia-library
   # request_types:
   #   aeon_web_ead:
   #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'
@@ -97,6 +100,7 @@ manuscripts:
   contact_html: |
      <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>  
   thumbnail_url: 'repositories/manuscripts.png'
+  url: https://library.stanford.edu/libraries/special-collections
   # request_types:
   #   aeon_web_ead:
   #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'
@@ -117,6 +121,7 @@ rarebooks:
   contact_html: |
      <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div> 
   thumbnail_url: 'repositories/rarebooks.png'
+  url: https://library.stanford.edu/libraries/special-collections
 
 uarc:
   name: 'University Archives'
@@ -133,6 +138,7 @@ uarc:
   contact_html: |
      <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div> 
   thumbnail_url: 'repositories/uarc.png'
+  url: https://library.stanford.edu/libraries/special-collections
   # request_types:
   #   aeon_web_ead:
   #     request_url: 'https://stanford.aeon.atlas-sys.com/logon'

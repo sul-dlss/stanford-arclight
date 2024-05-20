@@ -6,6 +6,8 @@ class CatalogController < ApplicationController
   include BlacklightRangeLimit::ControllerOverride
   include Arclight::Catalog
 
+  Blacklight::Configuration.define_field_access :using_these_materials_field, Blacklight::Configuration::ShowField
+
   configure_blacklight do |config|
     ## Class for sending and receiving requests from a search index
     # config.repository_class = Blacklight::Solr::Repository
@@ -83,6 +85,7 @@ class CatalogController < ApplicationController
     # config.show.thumbnail_field = 'thumbnail_path_ss'
     config.show.document_presenter_class = Arclight::ShowPresenter
     config.show.metadata_partials = %i[
+      using_these_materials_field
       summary_field
       background_field
       related_field
@@ -273,6 +276,8 @@ class CatalogController < ApplicationController
     # ===========================
     # COLLECTION SHOW PAGE FIELDS
     # ===========================
+    # Collection Show Page - Using These Materials Section
+    config.add_using_these_materials_field 'using_these_materials_links', field: 'id', helper_method: :render_using_these_materials
 
     # Collection Show Page - Summary Section
     config.add_summary_field 'creators', field: 'creator_ssim', link_to_facet: true
