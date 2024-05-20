@@ -25,3 +25,7 @@ job_type :runner, "cd :path && RAILS_LOG_LEVEL=warn bin/rails runner -e :environ
 every :day do
   runner 'DownloadEadJob.enqueue_all_updated'
 end
+
+every 6.hours do
+  runner 'DeleteEadJob.enqueue_all'
+end
