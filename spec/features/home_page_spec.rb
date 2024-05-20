@@ -11,7 +11,7 @@ RSpec.describe 'Home Page', type: :feature do
   end
 
   it 'has the title and subtitle' do
-    expect(page).to have_css('.blacklight-landing_page h2', text: 'Find archival materials')
+    expect(page).to have_css('.blacklight-landing_page h1', text: 'Find archival materials')
     expect(page).to have_css('.blacklight-landing_page .collection-count', text: 'Detailed inventories of')
   end
 
