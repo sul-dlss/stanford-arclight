@@ -1,3 +1,6 @@
+beta_banner:
+  enabled: true
+
 hours_api: 'https://library-hours.stanford.edu/'
 
 # Locations with a 'closed_note' will display the note in lieu of fetching hours from the API.

@@ -43,6 +43,8 @@ en:
       how_to_request: "How to request"
       access_and_use: "Access and use"
   shared:
+    beta_banner:
+      beta_message_html: Please note this is a public beta version of this application. Visit the <a href="https://oac.cdlib.org/">Online Archive of California</a> for the most up to date information and to make a request.
     content_warning:
       warning_html: Some materials and description may contain offensive content. <a href="https://library.stanford.edu/libraries/special-collections" class="fa fa-exclamation-circle">More info</a>
   landing_page:
