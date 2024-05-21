@@ -31,6 +31,10 @@ RSpec.describe 'Collection Page', type: :feature do
       end
     end
 
+    it 'displays the collection contents in the sidebar' do
+      expect(page).to have_css('#collection-context')
+    end
+
     it 'displays the Using these materials links' do
       within('#using-these-materials') do
         expect(page).to have_link('Info for visitors', href: Arclight::Repository.find_by(slug: 'ars').url)
@@ -62,6 +66,16 @@ RSpec.describe 'Collection Page', type: :feature do
 
     it 'displays the normalized collection id in the URL' do
       expect(page.current_url).to eq('http://www.example.com/catalog/universite-de-toulouse')
+    end
+  end
+
+  context 'when visiting a collection page with no collection contents' do
+    before do
+      visit solr_document_path('Cubb1967.xml')
+    end
+
+    it 'does not display the collection contents in the sidebar' do
+      expect(page).not_to have_css('#collection-context')
     end
   end
 end
