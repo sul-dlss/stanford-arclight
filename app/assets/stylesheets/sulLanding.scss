@@ -5,6 +5,7 @@
     color: $link-dark-color;
   }
 
+  #main-container h1,
   h2 {
     font-size: 2.25rem;
     font-family: $font-family-serif;
@@ -35,7 +36,6 @@ $featured-teaser-overhang: 1rem;
   }
 
   .featured-item-caption {
-    font-style: italic;
     text-align: left;
     background: rgba(0, 0, 0, 0.8);
   }

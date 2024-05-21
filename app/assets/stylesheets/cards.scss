@@ -44,7 +44,14 @@
     color: $link-dark-color;
   }
 
-  h3 {
+  h2 {
+    font-size: calc(1.3rem + 0.6vw);
+    @include media-breakpoint-up(xxl) {
+      font-size: 1.75rem;
+    }
+  }
+
+  h2, h3 {
     font-weight: bold;
   }
 }
