@@ -2,15 +2,20 @@ body {
   --bs-heading-color: $primary;
 }
 
-a {
+@mixin sulLinkStyle {
   text-decoration: none;
   color: $link-dark-color;
   font-weight: 450;
 
   &:hover,
   &:focus-visible {
+    color: $link-dark-color;
     text-decoration: underline;
   }
+}
+
+a {
+  @include sulLinkStyle;
 }
 
 .form-control:focus {
@@ -30,4 +35,10 @@ a {
 
 .grecaptcha-badge {
   visibility: hidden;
+}
+
+.modal-header {
+  .btn-close:focus {
+    box-shadow: none;
+  }
 }
