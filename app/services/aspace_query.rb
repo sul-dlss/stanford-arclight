@@ -62,7 +62,7 @@ class AspaceQuery
   end
 
   def contains_fields_option
-    options[:contains_fields] || ['ead_id']
+    options[:contains_fields]
   end
 
   def contains_type_option
@@ -70,7 +70,7 @@ class AspaceQuery
   end
 
   def select_fields_option
-    options[:select_fields] || %w[ead_id uri]
+    options[:select_fields] || %w[ead_id identifier uri]
   end
 
   def limit_results_to_uris_option
