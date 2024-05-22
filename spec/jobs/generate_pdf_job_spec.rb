@@ -15,6 +15,8 @@ RSpec.describe GeneratePdfJob do
   let(:stderr_double) { instance_double('IO') }
   let(:wait_thread) { instance_double('Thread', join: nil, value: p) }
   let(:process_status) { instance_double('Process::Status') }
+  let(:pdf_reader) { instance_double(PDF::Reader) }
+  let(:pages) { instance_double(Enumerable) }
 
   before do
     allow(File).to receive(:exist?).and_call_original
@@ -39,17 +41,35 @@ RSpec.describe GeneratePdfJob do
   end
 
   describe '#perform' do
-    context 'when skip_existing is true and the PDF exists' do
+    context 'when skip_existing is true and a valid PDF exists' do
       it 'does not create a new PDF' do
         allow(File).to receive(:exist?).with(pdf_file_path).and_return(true)
+        allow(PDF::Reader).to receive(:new).with(pdf_file_path).and_return(pdf_reader)
+        allow(pdf_reader).to receive(:pages).and_return(pages)
+        allow(pages).to receive(:any?).and_return(true)
         described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: true)
         expect(Open3).not_to have_received(:popen3)
+      end
+    end
+
+    context 'when skip_existing is true and an invalid PDF exists' do
+      it 'does create a new PDF' do
+        allow(File).to receive(:exist?).with(pdf_file_path).and_return(true)
+        allow(PDF::Reader).to receive(:new).with(pdf_file_path).and_return(pdf_reader)
+        allow(pdf_reader).to receive(:pages).and_return(pages)
+        allow(pages).to receive(:any?).and_return(false, true)
+
+        described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: true)
+        expect(Open3).to have_received(:popen3)
       end
     end
 
     context 'when skip_existing is false and the PDF exists' do
       it 'creates a new PDF using properly namespaced XML' do
         allow(File).to receive(:exist?).with(pdf_file_path).and_return(true)
+        allow(PDF::Reader).to receive(:new).with(pdf_file_path).and_return(pdf_reader)
+        allow(pdf_reader).to receive(:pages).and_return(pages)
+        allow(pages).to receive(:any?).and_return(true)
         described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: false)
 
         expect(Open3).to have_received(:popen3).with(
@@ -65,7 +85,7 @@ RSpec.describe GeneratePdfJob do
 
     context 'when the PDF file is not generated' do
       it 'raises a GeneratePdfError with the EAD file path' do
-        allow(File).to receive(:exist?).with(pdf_file_path).and_return(false)
+        allow(PDF::Reader).to receive(:new).with(pdf_file_path).and_raise(PDF::Reader::MalformedPDFError)
         allow(stderr_double).to receive(:read).and_return('')
         expect do
           described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: false)

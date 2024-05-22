@@ -26,6 +26,10 @@ every :day do
   runner 'DownloadEadJob.enqueue_all_updated'
 end
 
+every :day, at: '3:00 am' do
+  runner 'GeneratePdfJob.enqueue_all_missing_and_invalid'
+end
+
 every 6.hours do
   runner 'DeleteEadJob.enqueue_all'
 end

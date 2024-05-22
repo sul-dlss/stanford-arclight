@@ -102,6 +102,8 @@ gem 'honeybadger', '~> 5.2'
 
 gem 'okcomputer', '~> 1.18'
 
+gem 'pdf-reader', '~> 2.12'
+
 gem 'cssbundling-rails', '~> 1.1'
 
 gem 'sidekiq', '~> 7.0'

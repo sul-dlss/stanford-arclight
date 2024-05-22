@@ -24,14 +24,19 @@ class GeneratePdfJob < ApplicationJob
     end
   end
 
+  # Enqueue a PDF generation job for all XML files in data_dir, skipping those having an existing valid PDF.
+  def self.enqueue_all_missing_and_invalid(data_dir: Settings.data_dir)
+    enqueue_all(data_dir:, skip_existing: true)
+  end
+
   # Generates a PDF for a given EAD XML file. Will overwrite any existing PDFs with the same name.
   # @param file_path [String] the path of the XML file, such as '/opt/app/arclight/data/ars/ars0001.xml'
   # @param file_name [String] the name of the PDF file to be created, such as 'ead1234'
   # @param data_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
-  # @param skip_existing [Boolean] if true, an existing PDF will not be replaced
+  # @param skip_existing [Boolean] if true, an existing valid PDF will not be replaced
   def perform(file_path:, file_name:, data_dir:, skip_existing:)
     pdf_file_path = pdf_path(data_dir:, file_name:)
-    return if skip_existing && File.exist?(pdf_file_path)
+    return if skip_existing && valid_pdf?(pdf_file_path:)
 
     stderr_output = nil
     Open3.popen3("#{xml_to_fo_cmd} | #{fo_to_pdf_cmd(pdf_file_path:)}") do |stdin, _stdout, stderr|
@@ -40,9 +45,7 @@ class GeneratePdfJob < ApplicationJob
       stderr_output = stderr.read
     end
 
-    # Saxon and Apache FOP can exit with errors but the PDF might still be created successfully.
-    # Only raise the error if the PDF was not created. Only severe errors from Apache FOP are included.
-    raise GeneratePdfError, error_message(file_path:, output: stderr_output) unless File.exist?(pdf_file_path)
+    raise GeneratePdfError, error_message(file_path:, output: stderr_output) unless valid_pdf?(pdf_file_path:)
   end
 
   private
@@ -79,5 +82,17 @@ class GeneratePdfJob < ApplicationJob
 
   def pdf_file_name(file_name:)
     file_name.sub(/(\.xml|\.pdf)?$/i, '').concat('.pdf').to_s
+  end
+
+  def valid_pdf?(pdf_file_path:)
+    return false unless File.exist?(pdf_file_path)
+
+    PDF::Reader.new(pdf_file_path).pages.any?
+  rescue PDF::Reader::MalformedPDFError, ArgumentError
+    false
+  rescue PDF::Reader::UnsupportedFeatureError
+    # If a feature is unsupported pdf-reader has still checked for the structure/EOF marker,
+    # which raises MalformedPDFError.
+    true
   end
 end
