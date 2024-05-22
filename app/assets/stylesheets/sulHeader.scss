@@ -9,6 +9,11 @@
   background-size: 258px 41px;
 }
 
+header .topbar > .container,
+header .topbar > .container-fluid {
+  padding-left: 0;
+}
+
 #feedback {
   overflow: hidden;
   transition: all .5s ease-in-out;
@@ -41,7 +46,7 @@
     display: inline;
     font-size: 1.5rem;
     font-weight: 600;
-    padding: 1.5rem 1.5rem 1.5rem 0;
+    padding-left: 0;
 
     @include media-breakpoint-up(lg) {
       font-size: 2rem;
@@ -104,7 +109,7 @@
   }
 }
 
-.al-masthead + .navbar-search {
+.al-masthead ~ .navbar-search {
   border-top: none;
   background-color: $navbar-background-color;
   margin-bottom: 0;
@@ -151,4 +156,8 @@
   #search_field {
     margin-right: .825rem;
   }
+}
+
+.beta-banner {
+  background-color: $stanford-illuminating;
 }
