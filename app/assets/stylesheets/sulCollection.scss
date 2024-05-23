@@ -126,6 +126,10 @@
   margin-bottom: 2rem;
 }
 
+#collection-source {
+  border-top: 1px solid #d1d1d1;
+}
+
 #using-these-materials {
   dt.blacklight-using_these_materials_links {
     display: none;
@@ -267,7 +271,8 @@ span.constraint-value:focus {
 // AL Core overrides
 article.document .al-online-content-icon .blacklight-icons svg,
 .online-contents .al-online-content-icon .blacklight-icons svg,
-#facet-digital_content .al-online-content-icon .blacklight-icons svg {
+#facet-digital_content .al-online-content-icon .blacklight-icons svg,
+.collection-source-icon svg {
   fill: $stanford-palo-alto-light;
 }
 
