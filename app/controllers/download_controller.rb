@@ -4,11 +4,10 @@
 class DownloadController < ApplicationController
   def show
     doc = SolrDocument.find(params[:id])
-    ead_file = File.join(Settings.data_dir, doc.repository_config.slug, doc.ead_filename)
 
     respond_to do |format|
-      format.xml { handle_download { send_ead(ead_file) } }
-      format.pdf { handle_download { send_pdf(ead_file) } }
+      format.xml { handle_download { send_ead(DocumentLocalFileMapper.new(document: doc, format: :xml).path) } }
+      format.pdf { handle_download { send_file(DocumentLocalFileMapper.new(document: doc, format: :pdf).path) } }
     end
   end
 
@@ -33,10 +32,5 @@ class DownloadController < ApplicationController
     doc = Nokogiri::XML(File.read(ead_file))
     xslt  = Nokogiri::XSLT(File.read(Rails.root.join('app/xslt/ead_remove_namespace.xsl').to_s))
     xslt.transform(doc).to_xml(indent: 2)
-  end
-
-  def send_pdf(ead_file)
-    pdf_file = ead_file.sub(/(xml)?$/i, 'pdf')
-    send_file pdf_file
   end
 end

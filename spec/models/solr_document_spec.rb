@@ -67,6 +67,12 @@ RSpec.describe SolrDocument do
     end
 
     it 'returns the href for the EAD file without a namespace' do
+      mapper = instance_double(DocumentLocalFileMapper)
+      allow(DocumentLocalFileMapper).to receive(:new).with(document:).and_return(mapper)
+      allow(mapper).to receive(:path).and_return('/data/ars0001.xml')
+      allow(mapper).to receive(:size).and_return(1000)
+      allow(DocumentLocalFileMapper).to receive(:new).with(document:, format: :pdf).and_return(mapper)
+      allow(mapper).to receive(:path).and_return(nil)
       expect(document.ead_file_without_namespace_href).to eq '/download/ars0001.xml?without_namespace=true'
     end
   end

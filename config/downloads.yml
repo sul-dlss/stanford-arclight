@@ -12,5 +12,7 @@
 default:
   ead:
     template: '/download/%{id}.xml'
+    size_accessor: 'local_ead_file_size'
   pdf:
     template: '/download/%{id}.pdf'
+    size_accessor: 'local_pdf_file_size'
