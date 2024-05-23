@@ -22,7 +22,7 @@ ars:
 cubberley:
   name: 'Cubberley Education Library'
   visit_note: ''
-  description: 'Cubberley Education Library supports the research and teaching needs of those interested in education at all levels with a collection of over 170,000 volumes and some 1100 journals. Part of this collection is stored off campus in SAL3 for preservation and must be paged to campus. We have a current curriculum collection (including children’s books), plus historical collections of textbooks and college catalogs.'
+  description: 'Cubberley Education Library supports the research and teaching needs of those interested in education at all levels. A large part of this collection is stored off campus in SAL3 for preservation and must be paged to campus.'
   building: 'Education Building'
   address1: '485 Lasuen Mall'
   address2: ''
@@ -67,7 +67,7 @@ cubberley:
 
 eal:
   name: 'East Asia Library'
-  description: 'The East Asia Library is the primary location for Stanford’s extensive Chinese, Japanese, and Korean collections. Stanford University offered its first courses on East Asia and related subjects in 1906. The Hoover Institution began collecting Chinese- and Japanese-language materials in 1945, and these materials were combined in 1961 to form the East Asian Collection. In 2001, the Hoover Institution’s East Asian Collection was integrated into Stanford Libraries’ holdings and the East Asia Library was established in the J. Henry Meyer Memorial Library building. The library began to collect Korean materials shortly afterward, in 2005. When Meyer Library was closed in 2014, the East Asia Library moved to its current location in the Lathrop Library building.'
+  description: 'The East Asia Library, the largest of Stanford’s branch libraries, collects materials in Chinese, Japanese and Korean and supports scholars who use materials in these languages.'
   building: 'Lathrop Library'
   address1: '518 Memorial Way'
   address2: ''
