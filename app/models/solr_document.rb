@@ -39,6 +39,14 @@ class SolrDocument
     "#{ead_file.href}?#{params.to_query}"
   end
 
+  def local_ead_file_size
+    DocumentLocalFileMapper.new(document: self).size
+  end
+
+  def local_pdf_file_size
+    DocumentLocalFileMapper.new(document: self, format: :pdf).size
+  end
+
   # self.unique_key = 'id'
 
   # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
