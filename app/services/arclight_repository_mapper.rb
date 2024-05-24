@@ -4,27 +4,27 @@
 class ArclightRepositoryMapper
   class ArclightRepositoryMapperError < StandardError; end
 
-  attr_reader :aspace_repository_code, :ead_id
+  attr_reader :aspace_repository_code, :file_identifier
 
-  def self.map_to_code(aspace_repository_code:, ead_id:)
-    new(aspace_repository_code:, ead_id:).map_to_code
+  def self.map_to_code(aspace_repository_code:, file_identifier:)
+    new(aspace_repository_code:, file_identifier:).map_to_code
   end
 
-  def initialize(aspace_repository_code:, ead_id:)
+  def initialize(aspace_repository_code:, file_identifier:)
     @aspace_repository_code = aspace_repository_code
-    @ead_id = ead_id
+    @file_identifier = file_identifier
   end
 
   def map_to_code
     code = if aspace_repository_code == 'speccoll'
-             code_from_ead_id
+             code_from_file_identifier
            else
              aspace_repository_code
            end
 
     unless repository_exists?(code)
       raise ArclightRepositoryMapperError,
-            "Repository ID #{aspace_repository_code} and EAD ID #{ead_id} could not be mapped."
+            "Repository ID #{aspace_repository_code} and EAD ID #{file_identifier} could not be mapped."
     end
 
     code
@@ -38,12 +38,14 @@ class ArclightRepositoryMapper
 
   # a, f, pc, etc. are call number prefixes used to form EAD IDs
   # uarc and manuscripts are arclight repository codes
-  def code_from_ead_id
-    case ead_id[/^[A-Z]*/i].downcase
+  def code_from_file_identifier
+    case file_identifier[/^[A-Z]*/i].downcase
     when 'amernews', 'comics', 'macweek', 'pn', 'sanitary'
       'rarebooks'
     when 'a', 'f', 'pc', 'sc', 'scm', 'v'
       'uarc'
+    # Fall back on manuscripts
+    # if we can't determine the sub-category of speccoll from the syntax of the file_identifier
     else
       'manuscripts'
     end

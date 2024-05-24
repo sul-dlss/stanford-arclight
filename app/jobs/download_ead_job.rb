@@ -82,9 +82,12 @@ class DownloadEadJob < ApplicationJob
   def self.enqueue_resource(resource:, config:)
     file_dir = "#{config.data_directory}/#{resource.arclight_repository_code}"
     DownloadEadJob.perform_later(resource_uri: resource.uri,
-                                 file_name: resource.file_name,
-                                 file_dir:, index: config.index,
-                                 generate_pdf: config.generate_pdf)
+                                 file_name: resource.file_name, file_dir:,
+                                 index: config.index, generate_pdf: config.generate_pdf)
+  rescue Aspace::AspaceResourceError => e
+    message = "Failed to create filename for #{resource.uri}: #{e.message}"
+    Rails.logger.warn(message)
+    Honeybadger.notify(message)
   end
   private_class_method :enqueue_resource
 
