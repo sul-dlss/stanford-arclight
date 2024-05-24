@@ -49,6 +49,7 @@ class CatalogController < ApplicationController
     }
 
     config.header_component = Arclight::HeaderComponent
+    config.user_util_links_component = UserUtilLinksComponent
     config.logo_link = 'https://library.stanford.edu'
     # add_results_document_tool effectively creates an Blacklight action
     # Then actions are interated over in search_results_document_component.html.erb

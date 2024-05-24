@@ -2,6 +2,13 @@
 
 # Controller for the landing page
 class LandingPageController < ApplicationController
+  include Blacklight::Configurable
+
+  configure_blacklight do |config|
+    config.header_component = LandingPage::HeaderComponent
+    config.user_util_links_component = LandingPage::UserUtilLinksComponent
+  end
+
   def index
     @hours = Settings.hours_locations.map { |hours_config| LibraryHours.from_config(hours_config) }
     @collection_count = site_collection_count
