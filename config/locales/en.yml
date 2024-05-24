@@ -36,6 +36,8 @@ en:
     views:
       show:
         sections:
+          contact_field: "Repository contact information"
+          in_person_field: "In person information"
           using_these_materials_field: "Using these materials"
   catalog:
     using_these_materials:
