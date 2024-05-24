@@ -16,8 +16,4 @@ module ApplicationHelper
   def landing_page?
     controller_name == 'landing_page' && action_name == 'index'
   end
-
-  def render_using_these_materials(args)
-    render partial: 'catalog/using_these_materials', locals: { repository: args[:document].repository_config }
-  end
 end

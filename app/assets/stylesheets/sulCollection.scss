@@ -117,6 +117,7 @@
 
 // AL Core overrides for metadata sections and the top title areas
 // Those borders should look the same but have different types of markup in AL Core
+#using-these-materials,
 #metadata .dl-invert,
 .title-container,
 #about-this-level,
@@ -131,9 +132,6 @@
 }
 
 #using-these-materials {
-  dt.blacklight-using_these_materials_links {
-    display: none;
-  }
   ul {
     color: $stanford-digital-blue;
   }
