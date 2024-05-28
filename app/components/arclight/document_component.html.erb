@@ -18,6 +18,8 @@
   <%= online_filter %>
 </div>
 
+<%= render UsingTheseMaterialsComponent.new(document:) %>
+
 <%= render Arclight::MetadataSectionComponent.with_collection(component_metadata_partials,
              metadata_attr: { layout: Arclight::UpperMetadataLayoutComponent },
              presenter: presenter) unless document.collection? %>

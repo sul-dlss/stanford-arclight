@@ -38,12 +38,6 @@ en:
         sections:
           contact_field: "Repository contact information"
           in_person_field: "In person information"
-          using_these_materials_field: "Using these materials"
-  catalog:
-    using_these_materials:
-      info_for_visitors: "Info for visitors"
-      how_to_request: "How to request"
-      access_and_use: "Access and use"
   shared:
     beta_banner:
       beta_message_html: Please note this is a public beta version of this application. Visit the <a href="https://oac.cdlib.org/">Online Archive of California</a> for the most up to date information and to make a request.
@@ -97,6 +91,11 @@ en:
       name: Your name
     submit:
       submit: Send
+  using_these_materials:
+    heading: "Using these materials"
+    info_for_visitors: "Info for visitors"
+    how_to_request: "How to request"
+    access_and_use: "Access and use"
   collection_source:
     aspace:
       prod: 'The data source for this collection is ArchivesSpace. The collection is up to date.'
