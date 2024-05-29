@@ -32,4 +32,8 @@ RSpec.describe 'Home Page', type: :feature do
   it 'has the content warning' do
     expect(page).to have_css('.content-warning')
   end
+
+  it 'has auto-complete enabled' do
+    expect(page).to have_css('.search-autocomplete-wrapper')
+  end
 end
