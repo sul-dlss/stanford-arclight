@@ -76,8 +76,8 @@ RSpec.describe GeneratePdfJob do
           "java -jar #{Settings.pdf_generation.saxon_path} -s:- "\
           "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
           "pdf_image=#{Settings.pdf_generation.logo_path} | " \
-          "#{Settings.pdf_generation.fop_path} -q -c #{Settings.pdf_generation.fop_config_path} " \
-          "- -pdf #{pdf_file_path}"
+          "FOP_OPTS=\"-Xmx2024m\" #{Settings.pdf_generation.fop_path} -q " \
+          "-c #{Settings.pdf_generation.fop_config_path} - -pdf #{pdf_file_path}"
         )
         expect(stdin_double).to have_received(:write).with(a_string_including('urn:isbn:1-931666-22-9'))
       end

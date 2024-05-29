@@ -1,1 +1,7 @@
 :concurrency: 3
+
+:capsules:
+  :non_concurrent:
+    :queues:
+      - non_concurrent
+    :concurrency: 1
