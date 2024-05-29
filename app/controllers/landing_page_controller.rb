@@ -7,6 +7,10 @@ class LandingPageController < ApplicationController
   configure_blacklight do |config|
     config.header_component = LandingPage::HeaderComponent
     config.user_util_links_component = LandingPage::UserUtilLinksComponent
+
+    # Configuration for autocomplete suggestor
+    config.autocomplete_enabled = true
+    config.autocomplete_path = 'suggest'
   end
 
   def index
