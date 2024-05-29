@@ -7,6 +7,7 @@ class LandingPageController < ApplicationController
   configure_blacklight do |config|
     config.header_component = LandingPage::HeaderComponent
     config.user_util_links_component = LandingPage::UserUtilLinksComponent
+    config.logo_link = 'https://library.stanford.edu'
 
     # Configuration for autocomplete suggestor
     config.autocomplete_enabled = true
