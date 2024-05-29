@@ -16,7 +16,12 @@ class LandingPageController < ApplicationController
   end
 
   def next_half_hour
-    Time.current.at_beginning_of_hour + (Time.current.min < 30 ? 30.minutes : 60.minutes)
+    now = Time.current
+    next30 = now.at_beginning_of_hour + (now.min < 30 ? 30.minutes : 60.minutes)
+
+    return next30 + 5.seconds if next30 - now < 5.seconds
+
+    next30
   end
 
   def site_collection_count
