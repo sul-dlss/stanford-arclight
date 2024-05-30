@@ -137,7 +137,7 @@ uarc:
   phone: '(650) 725-1022'
   contact_html: |
      <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div> 
-  thumbnail_url: 'repositories/uarc.png'
+  thumbnail_url: 'repositories/uarc.jpg'
   url: https://library.stanford.edu/libraries/special-collections
   # request_types:
   #   aeon_web_ead:
