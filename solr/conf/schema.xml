@@ -199,6 +199,24 @@
           catenateAll="1"
           />
         <filter class="solr.ICUFoldingFilterFactory" />
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_punctuation.txt" />
+      </analyzer>
+    </fieldType>
+
+    <!-- single token with punctuation terms removed so dismax doesn't look for punctuation terms in these fields -->
+    <!-- On client side, Lucene query parser breaks things up by whitespace *before* field analysis for dismax -->
+    <!-- so punctuation terms (& : ;) are stopwords to allow results from other fields when these chars are surrounded by spaces in query -->
+    <!--  do not lowercase -->
+    <fieldType name="string_punct_stop" class="solr.TextField" omitNorms="true">
+      <analyzer type="index">
+        <tokenizer class="solr.KeywordTokenizerFactory" />
+        <filter class="solr.ICUFoldingFilterFactory" />
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer class="solr.KeywordTokenizerFactory" />
+        <filter class="solr.ICUFoldingFilterFactory" />
+        <!-- removing punctuation for Lucene query parser issues -->
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords_punctuation.txt" />
       </analyzer>
     </fieldType>
 
@@ -292,6 +310,8 @@
    <field name="text" type="text" indexed="true" stored="true" multiValued="true"/>
    <field name="unitid_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
    <field name="ead_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
+   <field name="ref_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
+   <field name="id_search" type="string_punct_stop" indexed="true" stored="false" multiValued="false" />
 
    <field name="_root_" type="string" indexed="true" stored="true" docValues="false" />
    <field name="_nest_parent_" type="string" indexed="true" stored="true"/>
@@ -386,9 +406,12 @@
    <copyField source="separatedmaterial_tesim" dest="text" />
    <copyField source="userestrict_tesim" dest="text" />
    <!-- grab structured data that's important -->
+   <copyField source="id" dest="id_search" />
    <copyField source="unitid_ssm" dest="text" />
    <copyField source="unitid_ssm" dest="unitid_identifier_match" />
    <copyField source="ead_ssi" dest="ead_identifier_match" />
+   <copyField source="ref_ssm" dest="ref_identifier_match" />
+
 
    <!-- sort fields -->
    <copyField source="normalized_title_ssm" dest="title_sort"/> <!-- TODO: assumes single values -->
