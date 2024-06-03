@@ -255,6 +255,17 @@ span.constraint-value:focus {
 
 .paginate-section .page-link {
   color: $stanford-digital-blue;
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba($stanford-palo-alto-dark, 0.25);
+  }
+}
+
+.paginate-section .next-page:not(.disabled),
+.paginate-section .prev-page:not(.disabled) {
+  .page-link {
+    color: $stanford-white;
+    background-color: $stanford-palo-alto-dark;
+  }
 }
 
 .page-item.disabled .page-link {
