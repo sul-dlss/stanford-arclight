@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "arclight": "^1.0.0",
-    "blacklight-frontend": "^8",
+    "blacklight-frontend": "8.0.1",
     "bootstrap": "^5",
     "sass": "^1.59.3"
   },

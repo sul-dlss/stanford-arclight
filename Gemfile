@@ -75,6 +75,8 @@ group :test do
   gem 'webmock'
 end
 
+# Pin Blacklight to 8.1.0 until a fix is in for: https://github.com/projectblacklight/blacklight/commit/d8c0ec4435db34b85f83a2e4799bc15b0469ef27
+gem 'blacklight', '~> 8.1.0'
 gem 'arclight', '>= 1.1.0', '< 2'
 
 group :development, :test do
