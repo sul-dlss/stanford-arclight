@@ -11,6 +11,9 @@ class GeneratePdfJob < ApplicationJob
   # succeed in a subsequent retry.
   sidekiq_options retry: 1
 
+  # This job can be resource intensive. The non-concurrent queue is configured to be a single thread per worker process.
+  queue_as :non_concurrent
+
   # Generate PDFs for all XML files contained within a directory (deeply).
   # PDF files will be created in the same directory as the XML and will share the same name.
   # For example `ead123.xml` would result in `ead123.pdf`.
@@ -62,8 +65,8 @@ class GeneratePdfJob < ApplicationJob
   end
 
   def fo_to_pdf_cmd(pdf_file_path:)
-    "#{Settings.pdf_generation.fop_path} -q -c #{Settings.pdf_generation.fop_config_path} " \
-    "- -pdf #{pdf_file_path}"
+    "FOP_OPTS=\"-Xmx2024m\" #{Settings.pdf_generation.fop_path} -q " \
+    "-c #{Settings.pdf_generation.fop_config_path} - -pdf #{pdf_file_path}"
   end
 
   def ead_xml(file_path:)
