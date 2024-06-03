@@ -27,16 +27,19 @@ RSpec.describe DigitalObject do
   end
 
   describe "#{described_class}.normalize_href" do
-    it 'returns the href unchanged if it contains something other than a druid' do
+    it 'returns the href, without leading or trailing whitespace, if it contains something other than a druid' do
       expect(described_class.normalize_href('some-other-id')).to eq 'some-other-id'
+      expect(described_class.normalize_href(" some-other-id\t")).to eq 'some-other-id'
     end
 
-    it 'returns the href unchanged if it contains a URL that is not a Purl' do
+    it 'returns the href, without leading or trailing whitespace, if it contains a URL that is not a Purl' do
       expect(described_class.normalize_href('http://www.somewebsite/some-other-id')).to eq 'http://www.somewebsite/some-other-id'
+      expect(described_class.normalize_href(" http://www.somewebsite/some-other-id\t")).to eq 'http://www.somewebsite/some-other-id'
     end
 
-    it 'returns the href unchanged if it contains a complete Purl URL' do
+    it 'returns the href, without leading or trailing whitespace, if it contains a complete Purl URL' do
       expect(described_class.normalize_href('https://purl.stanford.edu/aa111bb2222')).to eq 'https://purl.stanford.edu/aa111bb2222'
+      expect(described_class.normalize_href(" https://purl.stanford.edu/aa111bb2222\t")).to eq 'https://purl.stanford.edu/aa111bb2222'
     end
 
     it 'returns the Purl URL but converts http to https' do
@@ -45,6 +48,7 @@ RSpec.describe DigitalObject do
 
     it 'returns a complete Purl URL if the href only contains a druid' do
       expect(described_class.normalize_href('aa111bb2222')).to eq 'https://purl.stanford.edu/aa111bb2222'
+      expect(described_class.normalize_href(" aa111bb2222\t")).to eq 'https://purl.stanford.edu/aa111bb2222'
     end
   end
 end

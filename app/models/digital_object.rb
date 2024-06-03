@@ -20,6 +20,7 @@ class DigitalObject
   # the DigitalObject href in the sample data.
   # Ideally, this value would be consistent, but it is not currently.
   def self.normalize_href(href)
+    href = href.strip
     # Some complete Purl URLs do not use https, convert them
     return href.gsub('http://', 'https://') if href.match?(%r{https?://purl.stanford.edu})
     # Some hrefs contain only a druid, convert them to a complete Purl URL
