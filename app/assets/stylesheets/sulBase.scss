@@ -18,6 +18,10 @@ a {
   @include sulLinkStyle;
 }
 
+.btn-sm {
+  --bs-btn-border-radius: 0;
+}
+
 .form-control:focus {
   border-color: $link-dark-color;
   box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
