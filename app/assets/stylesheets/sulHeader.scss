@@ -162,4 +162,11 @@ header .topbar > .container-fluid {
 
 .beta-banner {
   background-color: $stanford-illuminating;
+  // These aren't official stanford colors
+  // but no combination of official interactive colors
+  // meet accessibility contrast requirements on this background.
+  color: #000
+  a {
+    color: #0065AD;
+  }
 }
