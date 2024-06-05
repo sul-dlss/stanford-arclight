@@ -1,7 +1,7 @@
 /* Date Range Facet */
 
 #facet-date_range {
-  // Hide some features that don't work or we don't want
+  /* Hide some features that don't work or we don't want */
   .distribution,
   .more_facets,
   .facet-values.missing,
@@ -10,7 +10,7 @@
   }
   p.range.subsection {
     .facet-limit-active & {
-      // Don't show the complete date range if one is already applied
+      /* Don't show the complete date range if one is already applied */
       display: none;
     }
   }
@@ -24,7 +24,7 @@
   font-size: 1.25rem;
 }
 
-// many of these properties are !important in Blacklight Core, so it's needed here to override
+/* many of these properties are !important in Blacklight Core, so it's needed here to override */
 .facet-limit-active {
   border-color: black !important;
 

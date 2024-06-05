@@ -1,7 +1,3 @@
-body {
-  --bs-heading-color: $primary;
-}
-
 a {
   /* for some reason this doesn't work: */
   /* --bs-body-font-weight: var(--sul-link-font-weight) */
@@ -26,21 +22,21 @@ a,
 }
 
 .form-control:focus {
-  border-color: $link-dark-color;
-  box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
+  border-color: var(--stanford-digital-blue);
+  box-shadow: 0 0 0 0.25rem rgba(var(--sul-link-color-rgb), 0.25);
 }
 
 .bg-dark {
   --bs-dropdown-divider-bg: white;
   a {
-    color: $link-light-color;
+    --bs-link-color-rgb: 255, 255, 255;
   }
 }
 
 .warning-icon svg {
   height: 1.25rem;
   width: 1.25rem;
-  color: $stanford-digital-red;
+  color: var(--stanford-digital-red);
 }
 
 .grecaptcha-badge {

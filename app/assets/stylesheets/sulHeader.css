@@ -1,0 +1,159 @@
+.navbar {
+  --bs-navbar-hover-color: rgba(255, 255, 255, 1);
+}
+
+.navbar-logo {
+  height: 41px;
+  width: 258px;
+  background: transparent no-repeat url(StanfordLibraries-logo-whitetext.svg) 0
+    0 / 258px auto;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+}
+
+#feedback {
+  background-color: white;
+
+  label {
+    text-align: right;
+    font-weight: bold;
+  }
+
+  a {
+    --bs-link-color-rgb: var(--sul-link-color-rgb);
+  }
+}
+
+.al-masthead {
+  .h1 {
+    --al-masthead-title-size: 1.5rem;
+    display: inline;
+    font-weight: 600;
+    padding-left: 0;
+  }
+
+  .navbar-nav {
+    --bs-nav-link-padding-y: 0.3rem;
+    --bs-nav-link-color: white;
+    --bs-nav-link-hover-color: white;
+
+    /* This overrides Arclight. We can use --al-mastead-active-link-color once */
+    /* https://github.com/projectblacklight/arclight/pull/1539 is released */
+    li.active a {
+      color: var(--bs-nav-link-color);
+    }
+
+    li {
+      display: inline-block;
+      position: relative;
+    }
+
+    li:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    li:not(:first-child)::before {
+      color: var(--bs-nav-link-color);
+      content: "•";
+      position: absolute;
+      left: -1.165rem;
+      top: 0.25rem;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .al-masthead .h1 {
+    --al-masthead-title-size: 2rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .al-masthead .h1 {
+    --al-masthead-title-size: 2.5rem;
+  }
+}
+
+.input-group {
+  .search-btn {
+    --bs-btn-active-bg: var(--stanford-palo-alto-light);
+    --bs-btn-active-border-color: var(--stanford-palo-alto-light);
+    background-color: white;
+    border-color: #dee2e6; /* Border color of Blacklight inputs */
+    border-left: none;
+    padding: 0;
+    color: var(--stanford-palo-alto-dark);
+    padding-right: 5px;
+
+    .blacklight-icons {
+      margin-top: 0.5rem;
+    }
+  }
+
+  > .search-autocomplete-wrapper ul li:active {
+    color: var(--stanford-black);
+    background-color: var(--grey-lighter);
+  }
+}
+
+.al-masthead ~ .navbar-search {
+  border-top: none;
+  background-color: var(--stanford-black);
+  margin-bottom: 0;
+
+  .input-group-text {
+    --bs-body-color: white;
+    --bs-tertiary-bg: var(--stanford-black);
+    --bs-border-width: none;
+    font-weight: 700;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .within-collection-dropdown {
+    padding-right: 0.25rem;
+
+    .input-group-text {
+      padding-left: 0;
+      padding-right: 1.25rem;
+    }
+  }
+
+  .form-select {
+    background-size: 1.125rem 1.125rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  #search_field {
+    margin-right: 0.825rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .al-masthead ~ .navbar-search .form-select {
+    padding-right: 8rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .al-masthead ~ .navbar-search {
+    .form-select {
+      padding-right: 5rem;
+    }
+
+    /* Search field selector and full text search box input group */
+    .input-group:nth-of-type(2) {
+      min-width: 87%;
+    }
+  }
+}
+
+.beta-banner {
+  background-color: var(--stanford-illuminating);
+  /* These aren't official stanford colors */
+  /* but no combination of official interactive colors */
+  /* meet accessibility contrast requirements on this background. */
+  color: #000;
+}
