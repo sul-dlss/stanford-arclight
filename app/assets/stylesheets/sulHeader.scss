@@ -1,3 +1,5 @@
+$masthead-color: $stanford-white;
+
 .navbar {
   --bs-navbar-hover-color: rgba(255, 255, 255, 1);
   padding-top: 0.75rem;
@@ -107,7 +109,7 @@ header .topbar > .container-fluid {
 
   > .search-autocomplete-wrapper ul li:active {
     color: $stanford-black;
-    background-color: $grey-lighter;
+    background-color: var(--grey-lighter);
   }
 }
 
