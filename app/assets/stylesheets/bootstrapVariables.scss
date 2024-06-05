@@ -1,3 +1,5 @@
+// This file overrides variables set by Bootstrap (see https://github.com/twbs/bootstrap/blob/main/scss/_variables.scss)
+
 // Colors
 $primary: $stanford-cardinal;
 $danger: $stanford-digital-red;
@@ -6,30 +8,18 @@ $success: $stanford-fog;
 $dark: $stanford-palo-alto-dark;
 $secondary: $stanford-palo-alto-dark;
 
+// Components
+$border-radius: 0;
+
+// Typography
 $headings-color: $stanford-white;
-$link-light-color: $stanford-white;
-$link-dark-color: $stanford-digital-blue;
 
 // Fonts
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 $font-family-base: "Source Sans 3", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
-$font-family-serif: "Source Serif 4", serif;
-
-// Stanford Stripe
-$stanford-stripe-color: $stanford-black;
-
-// Masthead
-$masthead-color: $stanford-white;
 
 // Navbar
 $navbar-padding-y: 0;
 $navbar-dark-color: white;
 $navbar-background-color: $stanford-black;
 $nav-link-padding-y: 0.3rem;
-
-// Landing
-$card-background-color: $grey-lighter;
-
-// Buttons
-$border-radius: 0;
