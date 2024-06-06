@@ -23,9 +23,11 @@ header .topbar > .container-fluid {
   transition: all 0.5s ease-in-out;
   max-height: 0;
   background-color: white;
+  visibility: hidden;
 
   &.open {
     max-height: 100vh;
+    visibility: visible;
   }
 
   label {
