@@ -7,9 +7,9 @@ require:
 
 AllCops:
   Exclude:
-    - 'bin/**/*'
-    - 'db/**/*'
-    - 'vendor/**/*'
+    - "bin/**/*"
+    - "db/**/*"
+    - "vendor/**/*"
   TargetRubyVersion: 3.1
   DisplayCopNames: true
 
@@ -19,9 +19,9 @@ Rails:
 Layout/LineLength:
   Max: 120
   Exclude:
-    - 'Gemfile'
-    - 'app/controllers/catalog_controller.rb'
-    - 'config/initializers/devise.rb'
+    - "Gemfile"
+    - "app/controllers/catalog_controller.rb"
+    - "config/initializers/devise.rb"
 
 Metrics/ModuleLength:
   Max: 120
@@ -29,13 +29,14 @@ Metrics/ModuleLength:
 Metrics/ClassLength:
   Max: 120
   Exclude:
-    - 'app/controllers/catalog_controller.rb' # holds a long bl configuration
+    - "app/controllers/catalog_controller.rb" # holds a long bl configuration
 
 Metrics/BlockLength:
   Exclude:
     - !ruby/regexp /\.rake$/
-    - 'app/controllers/catalog_controller.rb' # holds a long bl configuration
-    - 'spec/**/*'
+    - "app/controllers/catalog_controller.rb" # holds a long bl configuration
+    - "config/environments/**/*"
+    - "spec/**/*"
 
 RSpec/ExampleLength:
   Enabled: false
@@ -46,17 +47,17 @@ RSpec/MultipleExpectations:
 # Exclude generated code and specs
 Style/Documentation:
   Exclude:
-    - 'app/mailers/application_mailer.rb'
-    - 'app/models/solr_document.rb'
-    - 'app/models/application_record.rb'
-    - 'app/models/search_builder.rb'
-    - 'app/models/user.rb'
-    - 'app/controllers/application_controller.rb'
-    - 'app/controllers/catalog_controller.rb'
-    - 'app/controllers/search_history_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'config/application.rb'
-    - 'spec/**/*'
+    - "app/mailers/application_mailer.rb"
+    - "app/models/solr_document.rb"
+    - "app/models/application_record.rb"
+    - "app/models/search_builder.rb"
+    - "app/models/user.rb"
+    - "app/controllers/application_controller.rb"
+    - "app/controllers/catalog_controller.rb"
+    - "app/controllers/search_history_controller.rb"
+    - "app/helpers/application_helper.rb"
+    - "config/application.rb"
+    - "spec/**/*"
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true

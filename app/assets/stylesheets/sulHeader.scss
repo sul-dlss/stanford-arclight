@@ -40,11 +40,6 @@ header .topbar > .container-fluid {
   }
 }
 
-#main-flashes {
-  // contain the width of the flashes to Bootstrap's container width
-  @extend .container;
-}
-
 .al-masthead {
   color: $masthead-color;
 
