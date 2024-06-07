@@ -17,17 +17,10 @@ class LandingPageController < ApplicationController
   def index
     @hours = Settings.hours_locations.map { |hours_config| LibraryHours.from_config(hours_config) }
     @collection_count = site_collection_count
-    @next_half_hour = next_half_hour
+    @next_half_hour = TimeService.next_half_hour
   end
 
-  def next_half_hour
-    now = Time.current
-    next30 = now.at_beginning_of_hour + (now.min < 30 ? 30.minutes : 60.minutes)
-
-    return next30 + 5.seconds if next30 - now < 5.seconds
-
-    next30
-  end
+  private
 
   def site_collection_count
     Rails.cache.fetch('site_collection_count', expires_in: 1.hour) do
