@@ -10,11 +10,11 @@ RSpec.describe GeneratePdfJob do
   let(:pdf_file_path) { '/repo/ARS.0043_ead.pdf' }
   let(:data_dir) { '/repo' }
   let(:fake_ead) { '<?xml version="1.0"?><ead></ead></xml>' }
-  let(:stdin_double) { instance_double('IO') }
-  let(:stdout_double) { instance_double('IO') }
-  let(:stderr_double) { instance_double('IO') }
-  let(:wait_thread) { instance_double('Thread', join: nil, value: p) }
-  let(:process_status) { instance_double('Process::Status') }
+  let(:stdin_double) { instance_double(IO) }
+  let(:stdout_double) { instance_double(IO) }
+  let(:stderr_double) { instance_double(IO) }
+  let(:wait_thread) { instance_double(Thread, join: nil, value: p) }
+  let(:process_status) { instance_double(Process::Status) }
   let(:pdf_reader) { instance_double(PDF::Reader) }
   let(:pages) { instance_double(Enumerable) }
 
@@ -73,7 +73,7 @@ RSpec.describe GeneratePdfJob do
         described_class.perform_now(file_path:, file_name:, data_dir:, skip_existing: false)
 
         expect(Open3).to have_received(:popen3).with(
-          "java -jar #{Settings.pdf_generation.saxon_path} -s:- "\
+          "java -jar #{Settings.pdf_generation.saxon_path} -s:- " \
           "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
           "pdf_image=#{Settings.pdf_generation.logo_path} | " \
           "FOP_OPTS=\"-Xmx2024m\" #{Settings.pdf_generation.fop_path} -q " \

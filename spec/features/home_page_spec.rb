@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Home Page', type: :feature do
+RSpec.describe 'Home Page' do
   let(:mock_library_hours) { instance_double(LibraryHours, label: 'Green Library', url: 'https://library.stanford.edu/libraries/cecil-h-green-library', closed_note: 'Closed') }
 
   before do

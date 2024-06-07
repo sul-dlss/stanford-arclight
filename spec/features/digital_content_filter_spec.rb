@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Digital content filter', type: :feature do
+RSpec.describe 'Digital content filter' do
   context 'when viewing the Catalog page' do
     before do
       visit search_catalog_path

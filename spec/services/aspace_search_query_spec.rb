@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AspaceSearchQuery, type: :service do
-  let(:aspace_client) { instance_double('AspaceClient') }
+  let(:aspace_client) { instance_double(AspaceClient) }
   let(:aspace_search_query) { described_class.new(client: aspace_client, repository_id: '1', query: 'test') }
 
   describe '#query_params' do

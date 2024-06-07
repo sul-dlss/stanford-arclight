@@ -28,7 +28,7 @@ module Sul
       # Otherwise return something like ars0009_belva-kibler-and-donald-morgan
       normalized_id = [id, title].compact.reject(&:empty?).map do |string|
         string.split.map(&:parameterize).reject(&:empty?).take(5).join('-')
-      end.reject(&:blank?).uniq.join('_')
+      end.compact_blank.uniq.join('_')
 
       raise Arclight::Exceptions::IDNotFound if normalized_id.blank?
 

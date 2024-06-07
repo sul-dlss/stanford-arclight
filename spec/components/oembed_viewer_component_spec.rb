@@ -12,7 +12,7 @@ RSpec.describe OembedViewerComponent, type: :component do
   end
 
   it 'renders the viewer' do
-    expect(page).to have_selector 'div[data-controller="sul-embed"]'
+    expect(page).to have_css 'div[data-controller="sul-embed"]'
   end
 
   it 'renders a link to the resource' do
@@ -20,6 +20,6 @@ RSpec.describe OembedViewerComponent, type: :component do
   end
 
   it 'passes the oembed URL to the viewer' do
-    expect(page).to have_selector 'div[data-sul-embed-url-value="example.com"]'
+    expect(page).to have_css 'div[data-sul-embed-url-value="example.com"]'
   end
 end

@@ -9,9 +9,9 @@ module Arclight
       disabled = data.delete('disabled')
       return [] if disabled
 
-      files ||= data.map do |file_type, file_data|
+      files ||= data.filter_map do |file_type, file_data|
         self.class.file_class.new(type: file_type, data: file_data, document:)
-      end.compact
+      end
 
       files.select! do |file|
         file.size&.positive?

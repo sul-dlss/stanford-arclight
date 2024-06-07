@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Searching', :js, type: :feature do
+RSpec.describe 'Searching', :js do
   context 'when not within a collection' do
     before do
       visit search_catalog_path
@@ -10,7 +10,7 @@ RSpec.describe 'Searching', :js, type: :feature do
       # Fill in the search input with some text
       fill_in 'q', with: 'Example search query'
 
-      click_button 'Search'
+      click_on 'Search'
     end
 
     it 'renders the search results page with default params' do
@@ -21,7 +21,7 @@ RSpec.describe 'Searching', :js, type: :feature do
     end
 
     it 'creates Start Over link with the group=true parameter' do
-      click_link('Start Over')
+      click_on('Start Over')
 
       expect(page).to have_current_path(search_catalog_path(group: true))
     end

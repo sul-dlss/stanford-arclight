@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Request', type: :feature do
+RSpec.describe 'Request' do
   before do
     visit '/catalog/ARS-0043_aspace_ref463_1bu'
   end

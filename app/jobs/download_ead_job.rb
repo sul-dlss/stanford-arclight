@@ -33,7 +33,7 @@ class DownloadEadJob < ApplicationJob
   # Intended as a convenience method for use in a daily cron job.
   # @example DownloadEadJob.enqueue_all_updated(updated_after: '2024-05-10')
   # @param updated_after [String] YYYY-MM-DD limit the response to resources updated after a specific date
-  def self.enqueue_all_updated(updated_after: (Time.zone.now - 2.days).strftime('%Y-%m-%d'))
+  def self.enqueue_all_updated(updated_after: 2.days.ago.strftime('%Y-%m-%d'))
     enqueue_all(config: DownloadEadJob::Config.new(updated_after:, check_record_dates: true))
   end
 

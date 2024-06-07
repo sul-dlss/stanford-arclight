@@ -15,7 +15,7 @@ module ApplicationHelper
 
   # This overrides a Blacklight provided method
   def container_classes
-    unless controller_name == 'catalog' && action_name == 'show' ||
+    unless (controller_name == 'catalog' && action_name == 'show') ||
            controller_name == 'landing_page'
       return 'container'
     end
