@@ -2,7 +2,10 @@
 
 #facet-date_range {
   // Hide some features that don't work or we don't want
-  .distribution, .more_facets, .facet-values.missing, .facet-count {
+  .distribution,
+  .more_facets,
+  .facet-values.missing,
+  .facet-count {
     display: none;
   }
   p.range.subsection {
@@ -24,15 +27,15 @@
 // many of these properties are !important in Blacklight Core, so it's needed here to override
 .facet-limit-active {
   border-color: black !important;
- 
+
   .card-header {
-      background-color: #D4d1d1 !important;
+    background-color: #d4d1d1 !important;
   }
 }
 
 .facet-values li .selected {
   color: black !important;
-  font-weight: bold;;
+  font-weight: bold;
 }
 
 .facets .card {
