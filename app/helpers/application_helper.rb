@@ -12,4 +12,15 @@ module ApplicationHelper
   def dashlane_ignore
     { 'form-type' => 'other' }
   end
+
+  # This overrides a Blacklight provided method
+  def container_classes
+    unless controller_name == 'catalog' && action_name == 'show' ||
+           controller_name == 'landing_page'
+      return 'container'
+    end
+
+    # Use full-width layout on catalog#show and landing page
+    super
+  end
 end
