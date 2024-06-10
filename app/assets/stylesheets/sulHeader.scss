@@ -26,7 +26,7 @@ header .topbar > .container-fluid {
   visibility: hidden;
 
   &.open {
-    max-height: 100vh;
+    max-height: none;
     visibility: visible;
   }
 
