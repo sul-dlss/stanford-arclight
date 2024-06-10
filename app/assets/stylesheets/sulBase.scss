@@ -2,20 +2,14 @@ body {
   --bs-heading-color: $primary;
 }
 
-@mixin sulLinkStyle {
-  text-decoration: none;
-  color: $link-dark-color;
+a,
+.btn-link {
+  text-decoration: var(--bs-link-decoration);
   font-weight: 450;
-
   &:hover,
   &:focus-visible {
-    color: $link-dark-color;
-    text-decoration: underline;
+    text-decoration: var(--bs-link-hover-decoration);
   }
-}
-
-a {
-  @include sulLinkStyle;
 }
 
 .btn-sm {

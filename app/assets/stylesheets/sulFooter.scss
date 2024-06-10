@@ -3,7 +3,8 @@ $footer-color: $white !default;
 $pre-footer-background: $stanford-black !default;
 
 footer a {
-  color: $link-light-color;
+  --bs-link-color-rgb: 255, 255, 255;
+  --bs-link-hover-color-rgb: 255, 255, 255;
 }
 
 #pre-footer {
