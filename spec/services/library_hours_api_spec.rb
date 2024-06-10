@@ -17,7 +17,7 @@ RSpec.describe LibraryHoursApi do
     # rubocop:enable RSpec/SubjectStub
 
     it 'returns an empty hash' do
-      expect(request.json).to(be {})
+      expect(request.json).to be_empty
     end
   end
 

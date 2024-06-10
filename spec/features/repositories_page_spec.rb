@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Repositories Page', type: :feature do
+RSpec.describe 'Repositories Page' do
   before do
     visit arclight_engine.repositories_path
   end

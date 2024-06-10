@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LibraryHours, type: :model do
+RSpec.describe LibraryHours do
   let(:an_open_time) { Time.zone.parse('2024-04-12T10:30:00.000-07:00') }
   let(:a_closed_time) { Time.zone.parse('2024-04-13T10:30:00.000-07:00') }
   let(:library_hours) do

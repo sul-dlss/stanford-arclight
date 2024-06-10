@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Collection Page', type: :feature do
+RSpec.describe 'Collection Page' do
   before do
     visit search_catalog_path
     within('#facet-level') do
-      click_link('Collection')
+      click_on('Collection')
     end
   end
 
@@ -14,10 +14,10 @@ RSpec.describe 'Collection Page', type: :feature do
     before do
       visit search_catalog_path
       within('#facet-level') do
-        click_link('Collection')
+        click_on('Collection')
       end
       within('#facet-repository') do
-        click_link('Archive of Recorded Sound')
+        click_on('Archive of Recorded Sound')
       end
       # Click on a specific collection
       collection_title_element = find('#documents .document-title-heading a',
@@ -57,7 +57,7 @@ RSpec.describe 'Collection Page', type: :feature do
   context 'when visiting a collection page with an id derived from its title' do
     before do
       within('#facet-repository') do
-        click_link('Cubberley Education Library')
+        click_on('Cubberley Education Library')
       end
       collection_title_element = find('#documents .document-title-heading a',
                                       text: 'Université de Toulouse')
@@ -75,7 +75,7 @@ RSpec.describe 'Collection Page', type: :feature do
     end
 
     it 'does not display the collection contents in the sidebar' do
-      expect(page).not_to have_css('#collection-context')
+      expect(page).to have_no_css('#collection-context')
     end
   end
 end

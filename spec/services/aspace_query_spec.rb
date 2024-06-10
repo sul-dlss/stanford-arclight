@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe AspaceQuery, type: :service do
-  let(:aspace_client) { instance_double('AspaceClient') }
+  let(:aspace_client) { instance_double(AspaceClient) }
   let(:options) do
     { published: true, suppressed: false, contains_fields: ['ead_id'], select_fields: %w[ead_id uri] }
   end
@@ -11,13 +11,15 @@ RSpec.describe AspaceQuery, type: :service do
 
   describe '#query_params' do
     it 'returns query params using the aq parameter using valid JSON' do
-      expect(aspace_query.query_params).to eq({ aq: '{'\
-        '"query":{"jsonmodel_type":"boolean_query","op":"AND","subqueries":['\
-          '{"field":"publish","value":true,"jsonmodel_type":"field_query","negated":false,"literal":false},'\
-          '{"field":"primary_type","value":"resource","jsonmodel_type":"field_query","negated":false,"literal":false},'\
-          '{"field":"ead_id","value":"*","jsonmodel_type":"field_query","negated":false,"literal":false}'\
-        ']}'\
-      '}' })
+      # rubocop:disable Layout/LineLength
+      expect(aspace_query.query_params).to eq({ aq: '{' \
+                                                    '"query":{"jsonmodel_type":"boolean_query","op":"AND","subqueries":[' \
+                                                    '{"field":"publish","value":true,"jsonmodel_type":"field_query","negated":false,"literal":false},' \
+                                                    '{"field":"primary_type","value":"resource","jsonmodel_type":"field_query","negated":false,"literal":false},' \
+                                                    '{"field":"ead_id","value":"*","jsonmodel_type":"field_query","negated":false,"literal":false}' \
+                                                    ']}' \
+                                                    '}' })
+      # rubocop:enable Layout/LineLength
     end
   end
 

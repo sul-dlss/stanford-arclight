@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Beta banner', type: :feature do
+RSpec.describe 'Beta banner' do
   context 'when the beta banner is enabled' do
     before do
       allow(Settings.beta_banner).to receive(:enabled).and_return(true)
@@ -31,7 +31,7 @@ RSpec.describe 'Beta banner', type: :feature do
     end
 
     it 'does not show the beta banner' do
-      expect(page).not_to have_css('.beta-banner')
+      expect(page).to have_no_css('.beta-banner')
     end
   end
 end

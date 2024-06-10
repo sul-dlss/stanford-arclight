@@ -24,7 +24,7 @@ RSpec.describe Sul::NormalizedId do
   context 'when the title has over 5 words' do
     let(:title) do
       'Lopez v. Monterey County : photocopies of court case research ' \
-      'documenting historical discrimination against Mexicans in Monterey County, California'
+        'documenting historical discrimination against Mexicans in Monterey County, California'
     end
 
     it 'returns a normalized id using the first 5 words' do

@@ -59,14 +59,14 @@ class GeneratePdfJob < ApplicationJob
   end
 
   def xml_to_fo_cmd
-    "java -jar #{Settings.pdf_generation.saxon_path} -s:- "\
-    "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
-    "pdf_image=#{Settings.pdf_generation.logo_path}"
+    "java -jar #{Settings.pdf_generation.saxon_path} -s:- " \
+      "-xsl:#{Settings.pdf_generation.ead_to_fo_xsl_path} " \
+      "pdf_image=#{Settings.pdf_generation.logo_path}"
   end
 
   def fo_to_pdf_cmd(pdf_file_path:)
     "FOP_OPTS=\"-Xmx2024m\" #{Settings.pdf_generation.fop_path} -q " \
-    "-c #{Settings.pdf_generation.fop_config_path} - -pdf #{pdf_file_path}"
+      "-c #{Settings.pdf_generation.fop_config_path} - -pdf #{pdf_file_path}"
   end
 
   def ead_xml(file_path:)

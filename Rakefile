@@ -47,7 +47,7 @@ end
 desc 'Seed ArcLight fixture data'
 task seed: :environment do
   # Read the repository configuration
-  repo_config = YAML.safe_load(File.read('./config/repositories.yml'))
+  repo_config = YAML.safe_load_file('./config/repositories.yml')
   repo_config.keys.map do |repository|
     # Index all EAD fixtures in directories matching the configured repository codes
     Dir.glob(Rails.root.join('spec', 'fixtures', 'ead', repository, '*.xml').to_s).each do |file|

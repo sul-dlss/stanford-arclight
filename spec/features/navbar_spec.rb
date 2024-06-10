@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Navbar', type: :feature do
+RSpec.describe 'Navbar' do
   context 'when not on the landing page' do
     before do
       visit search_catalog_path
@@ -26,8 +26,8 @@ RSpec.describe 'Navbar', type: :feature do
 
     it "does not render 'Bookmark' and 'Search History' navigation items" do
       expect(page).to have_css('.navbar-nav .nav-item', count: 1)
-      expect(page).not_to have_css('.navbar-nav .nav-item', text: 'Bookmarks')
-      expect(page).not_to have_css('.navbar-nav .nav-item', text: 'History')
+      expect(page).to have_no_css('.navbar-nav .nav-item', text: 'Bookmarks')
+      expect(page).to have_no_css('.navbar-nav .nav-item', text: 'History')
     end
 
     it "always renders the 'Feedback' navigation item" do

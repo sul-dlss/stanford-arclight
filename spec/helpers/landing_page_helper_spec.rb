@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe LandingPageHelper, type: :helper do
+RSpec.describe LandingPageHelper do
   describe '#format_hours' do
     context 'when given an empty time' do
       it 'returns the empty string' do

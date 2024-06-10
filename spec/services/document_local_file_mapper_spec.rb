@@ -67,7 +67,7 @@ RSpec.describe DocumentLocalFileMapper do
         let(:mapper) { described_class.new(document:, format: :xml) }
 
         it 'returns nil' do
-          expect(mapper.path).to eq(nil)
+          expect(mapper.path).to be_nil
         end
       end
 
@@ -75,7 +75,7 @@ RSpec.describe DocumentLocalFileMapper do
         let(:mapper) { described_class.new(document:, format: :pdf) }
 
         it 'returns nil' do
-          expect(mapper.path).to eq(nil)
+          expect(mapper.path).to be_nil
         end
       end
     end
@@ -94,8 +94,7 @@ RSpec.describe DocumentLocalFileMapper do
 
     context 'when the file path is present and the file exists' do
       it 'returns the size of the file' do
-        allow(File).to receive(:exist?).and_return(true)
-        allow(File).to receive(:size).and_return(1000)
+        allow(File).to receive_messages(exist?: true, size: 1000)
         expect(mapper.size).to eq(1000)
       end
     end
@@ -103,14 +102,14 @@ RSpec.describe DocumentLocalFileMapper do
     context 'when the file path is present but the file does not exist' do
       it 'returns nil' do
         allow(File).to receive(:exist?).and_return(false)
-        expect(mapper.size).to eq(nil)
+        expect(mapper.size).to be_nil
       end
     end
 
     context 'when the file path is missing' do
       it 'returns nil' do
         allow(mapper).to receive(:path).and_return(nil)
-        expect(mapper.size).to eq(nil)
+        expect(mapper.size).to be_nil
       end
     end
   end

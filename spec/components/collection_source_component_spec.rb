@@ -10,8 +10,7 @@ RSpec.describe CollectionSourceComponent, type: :component do
   let(:display_setting) { true }
 
   before do
-    allow(Settings).to receive(:aspace).and_return(aspace_settings)
-    allow(Settings).to receive(:display_collection_source).and_return(display_setting)
+    allow(Settings).to receive_messages(aspace: aspace_settings, display_collection_source: display_setting)
     render_inline(component)
   end
 

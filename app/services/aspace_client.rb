@@ -92,7 +92,7 @@ class AspaceClient
     resources_with_modified_objects = AspaceQuery.new(client: self, repository_id:, primary_type: nil, updated_after:,
                                                       options: objects_with_resource_link).each.to_a.uniq
 
-    uris = resources_with_modified_objects.map { |resource| resource['resource'] }
+    uris = resources_with_modified_objects.pluck('resource')
 
     published_unsuppressed_resource_query(repository_id:, resource_uris: uris)
   end
