@@ -20,7 +20,7 @@
   }
 }
 
-// make the wrapping .collection-sidebar full bleed, 
+// make the wrapping .collection-sidebar full bleed,
 .collection-sidebar {
   padding: 0;
 
@@ -28,7 +28,7 @@
     border-bottom: 0;
   }
 
-  // and add padding within .collection-sidebar 
+  // and add padding within .collection-sidebar
   .al-show-actions-box,
   #sidebar-scroll-wrapper {
     // padding around the light-green section
@@ -36,22 +36,21 @@
   }
 
   #sidebar {
-  overflow-y: auto;
-  
-
-  @include media-breakpoint-up(lg) {
-    overflow: hidden;
-    margin-bottom: 1rem;
-  }
-}
-
-#sidebar-scroll-wrapper {
-  @include media-breakpoint-up(lg) {
     overflow-y: auto;
-    overflow-x: hidden;
-    height: calc(100vh - 180px);
+
+    @include media-breakpoint-up(lg) {
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
   }
-}
+
+  #sidebar-scroll-wrapper {
+    @include media-breakpoint-up(lg) {
+      overflow-y: auto;
+      overflow-x: hidden;
+      height: calc(100vh - 180px);
+    }
+  }
 
   .al-sidebar-navigation-context,
   #collection-context {
@@ -91,7 +90,7 @@
   }
 }
 
-// match padding in document area for even space across page top 
+// match padding in document area for even space across page top
 .show-document {
   // needs to be !important to override AL Core
   padding: 2rem !important;
@@ -109,7 +108,7 @@
   text-align: left;
   font-size: 20px;
   font-weight: 600;
-  color: black
+  color: black;
 }
 
 // AL Core overrides for metadata sections and the top title areas
@@ -138,7 +137,7 @@
   padding-top: 1rem;
 }
 
-.breadcrumb a, 
+.breadcrumb a,
 .breadcrumb-item {
   font-size: 16px;
   font-weight: 400;
@@ -150,15 +149,15 @@
     padding-left: 1.25rem;
     color: $stanford-digital-blue;
   }
-  a.nav-link  {
-   color: $stanford-digital-blue;
+  a.nav-link {
+    color: $stanford-digital-blue;
   }
 }
 
 // These are the square badges in the heirarchy that show the number of items
 .documentHeader .bg-secondary {
   // Bootstrap makes this !important, so we need to override it with !important
-  background-color: #EDEDED !important;
+  background-color: #ededed !important;
   border: 1px solid #979797;
   color: black;
   font-weight: 400;
@@ -167,7 +166,6 @@
 .al-hierarchy-highlight > .documentHeader {
   background-color: $green-white;
 }
-
 
 /**  Search Tools **/
 #sortAndPerPage {
@@ -195,7 +193,7 @@ a.btn-outline-secondary:focus {
   text-decoration: none;
 }
 
-span.constraint-value:hover, 
+span.constraint-value:hover,
 span.constraint-value:focus {
   background-color: white;
   color: black;
@@ -316,7 +314,7 @@ article.document .al-online-content-icon .blacklight-icons svg {
 #facet-digital_content.card {
   border: 0;
   margin-bottom: 1rem;
-  background-color: $green-white;  
+  background-color: $green-white;
   .card-body {
     padding: 1rem;
     border-left: 8px solid $stanford-palo-alto-dark;

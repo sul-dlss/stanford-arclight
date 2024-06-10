@@ -47,7 +47,7 @@ $featured-teaser-overhang: 1rem;
 }
 
 #landing-page-search {
-  background-image: linear-gradient(to right, #EFEFEF, #D0D8D8);
+  background-image: linear-gradient(to right, #efefef, #d0d8d8);
   // 30px matches height of stanford top white brand bar
   padding-top: 30px;
 
@@ -73,7 +73,7 @@ $featured-teaser-overhang: 1rem;
       list-style-type: none;
       padding-left: 0;
     }
-    
+
     .search-links ul li {
       display: inline-block;
       margin-right: 1.5rem;
@@ -81,7 +81,7 @@ $featured-teaser-overhang: 1rem;
     }
 
     .search-links ul li:not(:first-child)::before {
-      content: '•';
+      content: "•";
       position: absolute;
       left: -1rem;
       top: 0.05rem;
@@ -105,7 +105,8 @@ $featured-teaser-overhang: 1rem;
   height: 3rem;
 }
 
-.input-group > .search-autocomplete-wrapper, #autocomplete-popup {
+.input-group > .search-autocomplete-wrapper,
+#autocomplete-popup {
   border-radius: 0;
 }
 
