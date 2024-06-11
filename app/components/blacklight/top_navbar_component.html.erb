@@ -14,8 +14,8 @@
     </nav>
   </div>
   
-  <div data-feedback-target="container" id="feedback" style="display:none;">
-    <div class="container mt-3">
+  <div data-feedback-target="container" id="feedback" class="collapse">
+    <div class="container pt-3">
       <div class="row justify-content-center">
         <%= form_with url: feedback_path, method: :post, class: 'col-md-8' do |f| %>
           <%= f.hidden_field :reporting_from, value: request.original_url %>
@@ -49,7 +49,7 @@
           <div class="mb-3 row">
             <div class="col-md-9 offset-md-3">
               <%= f.submit class: 'btn btn-secondary' %>
-              <%= button_tag "Cancel", type: :button, data: { action: 'feedback#cancel' }, class: 'btn btn-outline-secondary' %>
+              <%= button_tag "Cancel", type: :button, data: { bs_toggle: 'collapse', bs_target: '#feedback' }, class: 'btn btn-outline-secondary' %>
             </div>
           </div>
         <% end %>

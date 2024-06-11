@@ -17,17 +17,10 @@ header .topbar > .container-fluid {
 }
 
 #feedback {
-  // The feedback form is hidden, using inline style, to prevent it from being shown during slow page loads.
-  display: block !important;
-  overflow: hidden;
-  transition: all 0.5s ease-in-out;
-  max-height: 0;
   background-color: white;
-  visibility: hidden;
 
-  &.open {
-    max-height: none;
-    visibility: visible;
+  .collapse {
+    max-height: 0;
   }
 
   label {
