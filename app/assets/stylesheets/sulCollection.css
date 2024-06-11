@@ -1,6 +1,7 @@
 /** AL Sidebar and Document area layout **/
 :root {
   --al-toggle-icon-color: var(--stanford-digital-blue);
+  --al-content-icon-color: var(--stanford-palo-alto-dark);
 }
 
 #sidebar {

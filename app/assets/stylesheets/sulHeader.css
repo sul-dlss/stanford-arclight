@@ -37,12 +37,7 @@
     --bs-nav-link-padding-y: 0.3rem;
     --bs-nav-link-color: white;
     --bs-nav-link-hover-color: white;
-
-    /* This overrides Arclight. We can use --al-mastead-active-link-color once */
-    /* https://github.com/projectblacklight/arclight/pull/1539 is released */
-    li.active a {
-      color: var(--bs-nav-link-color);
-    }
+    --al-mastead-active-link-color: var(--bs-nav-link-color);
 
     li {
       display: inline-block;

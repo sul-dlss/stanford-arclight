@@ -29,6 +29,11 @@
   border-color: black !important;
 
   .card-header {
+    --bs-btn-color: black;
+    /* This is necessary until https://github.com/projectblacklight/blacklight/pull/3178 is released*/
+    .btn {
+      color: var(--bs-btn-color);
+    }
     background-color: #d4d1d1 !important;
   }
 }
