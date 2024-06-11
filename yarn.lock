@@ -90,6 +90,11 @@ arclight@^1.0.0:
   resolved "https://registry.yarnpkg.com/arclight/-/arclight-1.4.0.tgz#1eab61115bc320394247084512e3194fa0a969d1"
   integrity sha512-a8WGQHWTAg+CbR+1QL4GfDuEwlyEDeeesKe4HjDhaRS5uW3luMW+1FVLtnU79USxjepMkx/stOCQD4KPYVED+g==
 
+binary-extensions@^2.0.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.3.0.tgz#f6e14a97858d327252200242d4ccfe522c445522"
+  integrity sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==
+
 blacklight-frontend@^8.2.2:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/blacklight-frontend/-/blacklight-frontend-8.4.0.tgz#e7ac18411c98b6e3f3f7362eba828757b5a939c9"
