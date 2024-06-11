@@ -43,8 +43,8 @@ class DeleteEadJob < ApplicationJob
     private
 
     # rubocop:disable Metrics/MethodLength
-    def each(&block)
-      return enum_for(:each) unless block
+    def each(&)
+      return enum_for(:each) unless block_given?
 
       this_page = 0
       last_page = nil
@@ -60,7 +60,7 @@ class DeleteEadJob < ApplicationJob
         this_page += PAGE_SIZE
         last_page = response.dig('response', 'numFound')
 
-        response.dig('response', 'docs').map { |result| [result['resource_uri_ssi'], result['id']] }.each(&block)
+        response.dig('response', 'docs').map { |result| [result['resource_uri_ssi'], result['id']] }.each(&)
       end
     end
     # rubocop:enable Metrics/MethodLength
