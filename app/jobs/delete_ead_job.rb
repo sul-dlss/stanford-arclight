@@ -54,7 +54,8 @@ class DeleteEadJob < ApplicationJob
           rows: PAGE_SIZE,
           start: this_page,
           fl: 'id,resource_uri_ssi',
-          fq: "repository_uri_ssi:\"/repositories/#{repository_id}\""
+          fq: "repository_uri_ssi:\"/repositories/#{repository_id}\"",
+          sort: 'id ASC'
         )
 
         this_page += PAGE_SIZE
