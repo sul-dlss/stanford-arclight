@@ -31,7 +31,10 @@ $masthead-color: $stanford-white;
     --al-masthead-title-size: 1.5rem;
     display: inline;
     font-weight: 600;
-    padding-left: 0;
+    /* padding and margin can be removed once
+       https://github.com/projectblacklight/arclight/pull/1549 is merged */
+    padding: 0;
+    margin: 0;
 
     @include media-breakpoint-up(lg) {
       --al-masthead-title-size: 2rem;
