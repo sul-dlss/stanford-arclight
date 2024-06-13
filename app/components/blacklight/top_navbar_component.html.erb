@@ -1,4 +1,4 @@
-<div data-controller="feedback analytics" class="bg-dark">
+<div data-controller="analytics" class="bg-dark">
   <div class="container">
     <nav class="navbar navbar-expand-md navbar-dark topbar" role="navigation">
       <div class="<%= container_classes %>">
@@ -13,8 +13,8 @@
       </div>
     </nav>
   </div>
-  
-  <div data-feedback-target="container" id="feedback" class="collapse">
+
+  <div id="feedback" class="collapse">
     <div class="container pt-3">
       <div class="row justify-content-center">
         <%= form_with url: feedback_path, method: :post, class: 'col-md-8' do |f| %>
