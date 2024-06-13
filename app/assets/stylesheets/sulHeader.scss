@@ -1,8 +1,10 @@
 $masthead-color: $stanford-white;
+.topbar {
+  --bs-navbar-padding-y: 0.75rem;
+}
 
 .navbar {
   --bs-navbar-hover-color: rgba(255, 255, 255, 1);
-  padding-top: 0.75rem;
 }
 
 .navbar-logo {
@@ -40,10 +42,6 @@ $masthead-color: $stanford-white;
   }
 
   .navbar-nav {
-    list-style-type: none;
-    padding-left: 0;
-    margin-right: 0.5rem;
-
     li.active a {
       color: $navbar-dark-color;
     }
