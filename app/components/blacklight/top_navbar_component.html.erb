@@ -1,57 +1,55 @@
-<div data-controller="analytics" class="bg-dark">
-  <nav class="navbar navbar-expand-md navbar-dark topbar" role="navigation">
-    <div class="container">
-      <%= logo_link(title: 'Stanford Libraries') %>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#user-util-collapse" data-bs-target="#user-util-collapse" aria-controls="user-util-collapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<nav class="navbar navbar-expand-md navbar-dark topbar bg-dark" data-controller="analytics" role="navigation">
+  <div class="container">
+    <%= logo_link(title: 'Stanford Libraries') %>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-bs-toggle="collapse" data-target="#user-util-collapse" data-bs-target="#user-util-collapse" aria-controls="user-util-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse justify-content-md-end" id="user-util-collapse">
-        <%= render blacklight_config.user_util_links_component.new %>
-      </div>
+    <div class="collapse navbar-collapse justify-content-md-end" id="user-util-collapse">
+      <%= render blacklight_config.user_util_links_component.new %>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <div id="feedback" class="collapse">
-    <div class="container pt-3">
-      <div class="row justify-content-center">
-        <%= form_with url: feedback_path, method: :post, class: 'col-md-8' do |f| %>
-          <%= f.hidden_field :reporting_from, value: request.original_url %>
-          <div class="alert alert-info" role="alert">
-            <%= t('feedbacks.reporting_from', url: request.original_url) %>
+<div id="feedback" class="collapse">
+  <div class="container pt-3">
+    <div class="row justify-content-center">
+      <%= form_with url: feedback_path, method: :post, class: 'col-md-8' do |f| %>
+        <%= f.hidden_field :reporting_from, value: request.original_url %>
+        <div class="alert alert-info" role="alert">
+          <%= t('feedbacks.reporting_from', url: request.original_url) %>
+        </div>
+        <div class="mb-3 row">
+          <%= f.label :message, class: "col-md-3 col-form-label" %>
+          <div class="col-md-9">
+            <%= f.text_area :message, class: 'form-control', rows: 5, required: true, :data => helpers.dashlane_ignore %>
           </div>
-          <div class="mb-3 row">
-            <%= f.label :message, class: "col-md-3 col-form-label" %>
-            <div class="col-md-9">
-              <%= f.text_area :message, class: 'form-control', rows: 5, required: true, :data => helpers.dashlane_ignore %>
-            </div>
+        </div>
+        <div class="mb-3 row">
+          <%= f.label :name, class: "col-md-3 col-form-label" %>
+          <div class="col-md-9">
+            <%= f.text_field :name, class: 'form-control', required: true, :data => helpers.dashlane_ignore %>
           </div>
-          <div class="mb-3 row">
-            <%= f.label :name, class: "col-md-3 col-form-label" %>
-            <div class="col-md-9">
-              <%= f.text_field :name, class: 'form-control', required: true, :data => helpers.dashlane_ignore %>
-            </div>
+        </div>
+        <div class="mb-3 row">
+          <%= f.label :email, class: "col-md-3 col-form-label" %>
+          <div class="col-md-9">
+            <%= f.email_field :email, class: 'form-control', required: true, :data => helpers.dashlane_ignore %>
+            <p class="text-secondary mt-2 mb-0">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
           </div>
-          <div class="mb-3 row">
-            <%= f.label :email, class: "col-md-3 col-form-label" %>
-            <div class="col-md-9">
-              <%= f.email_field :email, class: 'form-control', required: true, :data => helpers.dashlane_ignore %>
-              <p class="text-secondary mt-2 mb-0">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
-            </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col-md-9 offset-md-3">
+            <%= recaptcha_v3(action: 'feedback', turbolinks: true) %>
           </div>
-          <div class="mb-3 row">
-            <div class="col-md-9 offset-md-3">
-              <%= recaptcha_v3(action: 'feedback', turbolinks: true) %>
-            </div>
+        </div>
+        <div class="mb-3 row">
+          <div class="col-md-9 offset-md-3">
+            <%= f.submit class: 'btn btn-secondary' %>
+            <%= button_tag "Cancel", type: :button, data: { bs_toggle: 'collapse', bs_target: '#feedback' }, class: 'btn btn-outline-secondary' %>
           </div>
-          <div class="mb-3 row">
-            <div class="col-md-9 offset-md-3">
-              <%= f.submit class: 'btn btn-secondary' %>
-              <%= button_tag "Cancel", type: :button, data: { bs_toggle: 'collapse', bs_target: '#feedback' }, class: 'btn btn-outline-secondary' %>
-            </div>
-          </div>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
