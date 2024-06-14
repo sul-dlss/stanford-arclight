@@ -14,6 +14,8 @@ $link-dark-color: $stanford-digital-blue;
 $font-family-serif: "Source Serif 4", serif;
 :root {
   --sul-link-color-rgb: 0, 108, 184; /* Digital blue #006CB8; */
+  --sul-link-font-weight: 450;
+
   --bs-link-color: #006cb8; /* for .btn-link */
   --bs-link-hover-color: #006cb8; /* for .btn-link */
   --bs-link-color-rgb: var(--sul-link-color-rgb);
