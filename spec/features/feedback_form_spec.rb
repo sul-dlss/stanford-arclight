@@ -10,7 +10,7 @@ RSpec.describe 'Feedback Form', :js do
 
     click_on 'Feedback'
     within '#feedback' do
-      expect(page).to have_css('form')
+      expect(page).to have_css('form[name="feedback_form"]')
     end
   end
 end
