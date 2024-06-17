@@ -1,12 +1,12 @@
-<%# This file overrides AL Core for more control over the extents display 
+<%# This file overrides AL Core for more control over the extents display
     and to add the digital content icon %>
 <header class="documentHeader row" data-document-id="<%= @document.id %>">
   <h3 class="index_title document-title-heading col">
     <%= helpers.link_to_document @document, counter: @counter %>
-    
+
     <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document) %>
 
-    <%= tag.span class: 'al-document-container text-muted ml-auto' do %>
+    <%= tag.span class: 'al-document-container text-muted' do %>
       <%= @document.containers.join(', ') %>
     <% end if @document.containers.present? %>
 
