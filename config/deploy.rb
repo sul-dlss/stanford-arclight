@@ -4,7 +4,6 @@ set :application, 'stanford-arclight'
 set :repo_url, 'https://github.com/sul-dlss/stanford-arclight.git'
 
 # Default branch is :master so we need to update to main
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call unless ENV['DEPLOY']
 if ENV['DEPLOY']
   set :branch, 'main'
 else
