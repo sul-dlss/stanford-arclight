@@ -9,9 +9,11 @@ RSpec.describe 'Navbar' do
     end
 
     it "renders the 'Bookmark' and 'Search History' navigation items" do
-      expect(page).to have_css('#user-util-collapse .nav-item', count: 3)
+      expect(page).to have_css('#user-util-collapse .nav-item', count: 6)
       expect(page).to have_css('#user-util-collapse .nav-item a', text: 'Bookmarks')
       expect(page).to have_css('#user-util-collapse .nav-item a', text: 'History')
+      expect(page).to have_css('#user-util-collapse .nav-item.d-md-none a', text: 'Repositories')
+      expect(page).to have_css('#user-util-collapse .nav-item.d-md-none a', text: 'Collections')
     end
 
     it "always renders the 'Feedback' navigation item" do

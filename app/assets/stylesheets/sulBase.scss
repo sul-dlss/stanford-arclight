@@ -30,8 +30,11 @@ a,
   box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
 }
 
-.bg-dark a {
-  color: $link-light-color;
+.bg-dark {
+  --bs-dropdown-divider-bg: white;
+  a {
+    color: $link-light-color;
+  }
 }
 
 .warning-icon svg {
