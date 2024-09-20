@@ -203,8 +203,8 @@ class AspaceClient
   # https://archivesspace.github.io/archivesspace/api/#log-in
   def session_token
     @session_token ||= begin
-      uri = URI.parse("#{@base_url}/users/#{@user}/login?password=#{@password}")
-      res = Net::HTTP.post_form(uri, {})
+      uri = URI.parse("#{@base_url}/users/#{@user}/login")
+      res = Net::HTTP.post_form(uri, { password: @password })
       raise StandardError, "Unexpected response code #{res.code}: #{res.read_body}" unless res.is_a?(Net::HTTPOK)
 
       JSON.parse(res.body)['session']
