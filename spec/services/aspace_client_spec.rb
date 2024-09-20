@@ -12,7 +12,7 @@ RSpec.describe AspaceClient do
   before do
     # Authentication request
     stub_request(:post,
-                 "#{url}/users/#{user}/login?password=#{password}").to_return(body: { session: 'token1' }.to_json)
+                 "#{url}/users/#{user}/login").to_return(body: { session: 'token1' }.to_json)
   end
 
   describe '#initialize' do
