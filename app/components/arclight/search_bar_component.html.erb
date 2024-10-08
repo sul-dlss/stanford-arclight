@@ -23,6 +23,6 @@
   <% end if append? %>
 
   <% c.with_search_button do %>
-    <%= search_button %>
-  <% end if respond_to?(:search_button?) && search_button? # only BL8 has this option %>
+    <%= render SearchButtonComponent.new(id: "#{@prefix}search", text: scoped_t('submit')) %>
+  <% end %>
 <% end %>
