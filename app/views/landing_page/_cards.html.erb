@@ -4,7 +4,7 @@
       <%= image_tag 'locations.png', alt: '', class: 'card-img-top' %>
       <div class="card-body px-1">
         <h3 class="card-title"><%= t('.location.title') %></h3>
-        <% cache('location_hours', expires_at: @next_half_hour) do %>
+        <% cache('location_hours', expires_in: @seconds_until_next_half_hour) do %>
           <ul>
             <% @hours.each do |location_hours| %>
               <li><%= render 'landing_page/location_hours', location_hours: %></li>
