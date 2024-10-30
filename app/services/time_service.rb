@@ -4,10 +4,15 @@
 class TimeService
   def self.next_half_hour
     now = Time.current
-    next30 = now.at_beginning_of_hour + (now.min < 30 ? 30.minutes : 60.minutes)
+    now.at_beginning_of_hour + (now.min < 30 ? 30.minutes : 60.minutes)
+  end
 
-    return next30 + 5.seconds if next30 - now < 5.seconds
+  def self.seconds_until_next_half_hour
+    delta = next_half_hour - Time.current
+    return 5.seconds if delta < 5.seconds
 
-    next30
+    return 30.minutes if delta > 30.minutes
+
+    delta
   end
 end
