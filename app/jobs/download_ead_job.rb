@@ -20,7 +20,6 @@ class DownloadEadJob < ApplicationJob
                    generate_pdf: Settings.pdf_generation.create_on_ead_download,
                    index: true,
                    check_record_dates: false)
-
       @updated_after = updated_after
       @data_directory = data_directory
       @generate_pdf = generate_pdf
