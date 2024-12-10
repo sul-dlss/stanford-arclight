@@ -1,5 +1,4 @@
-// Stanford Stripe
-$stanford-stripe-color: $stanford-black;
+/* Stanford Stripe */
 
 .su-brand-bar {
   width: 100%;
@@ -7,10 +6,11 @@ $stanford-stripe-color: $stanford-black;
 }
 
 .su-brand-bar__logo {
-  color: $stanford-stripe-color;
+  --stanford-stripe-color: var(--stanford-black);
+  color: var(--stanford-stripe-color);
   display: inline-block;
   font-size: 1rem;
-  font-family: $font-family-serif;
+  font-family: var(--font-family-serif);
   font-weight: 400;
   font-variant-ligatures: discretionary-ligatures;
   font-feature-settings: "liga";
@@ -20,7 +20,7 @@ $stanford-stripe-color: $stanford-black;
   &:hover,
   &:active,
   &:focus {
-    color: $stanford-stripe-color;
+    color: var(--stanford-stripe-color);
     text-decoration: none;
   }
 }
