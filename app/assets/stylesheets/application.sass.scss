@@ -1,36 +1,13 @@
 // Entry point for your Sass build
 
 @import "palette";
-@import "bootstrapVariables";
 @import "bootstrap/scss/bootstrap";
-
-$logo-image: url(StanfordLibraries-logo-whitetext.svg);
-$logo-width: 200px;
-$logo-height: 35px;
-
-$link-light-color: $stanford-white;
-$link-dark-color: $stanford-digital-blue;
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap");
-$font-family-serif: "Source Serif 4", serif;
-:root {
-  --sul-link-color-rgb: 0, 108, 184; /* Digital blue #006CB8; */
-  --sul-link-font-weight: 450;
-
-  --bs-link-color: #006cb8; /* for .btn-link */
-  --bs-link-hover-color: #006cb8; /* for .btn-link */
-  --bs-link-color-rgb: var(--sul-link-color-rgb);
-  --bs-link-hover-color-rgb: var(--sul-link-color-rgb);
-  --bs-link-decoration: none;
-  --bs-link-hover-decoration: underline;
-}
 @import "blacklight-frontend/app/assets/stylesheets/blacklight/blacklight";
 @import "arclight/app/assets/stylesheets/arclight/application";
-@import "stanfordStripe";
 @import "sulBase";
 @import "featuredItemTeasers";
 @import "sulHeader";
 @import "sulLanding";
 @import "sulCollection";
-@import "sulFooter";
 @import "sulFacets";
 @import "cards";

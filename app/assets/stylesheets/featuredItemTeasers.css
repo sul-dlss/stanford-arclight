@@ -1,4 +1,4 @@
-// this css copies from bootstrap's carousel component
+/* this css copies from bootstrap's carousel component */
 .featured-item {
   position: relative;
   float: left;
@@ -18,7 +18,7 @@
   color: #fff;
 
   a {
-    color: $white;
+    color: white;
     font-weight: 600;
   }
 }
