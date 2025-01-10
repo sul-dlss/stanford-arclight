@@ -1,14 +1,10 @@
 .blacklight-landing_page {
   overflow-x: hidden;
 
-  body a {
-    color: $link-dark-color;
-  }
-
   #main-container h1,
   h2 {
     font-size: 2.25rem;
-    font-family: $font-family-serif;
+    font-family: var(--font-family-serif);
     font-weight: bold;
   }
 
@@ -19,7 +15,7 @@
 }
 
 .collection-count {
-  font-family: $font-family-serif;
+  font-family: var(--font-family-serif);
 }
 
 $featured-item-height: 22rem;
@@ -47,12 +43,13 @@ $featured-teaser-overhang: 1rem;
 }
 
 #landing-page-search {
+  --bs-heading-color: var(--bs-body-color);
   background-image: linear-gradient(to right, #efefef, #d0d8d8);
   // 30px matches height of stanford top white brand bar
   padding-top: 30px;
 
   #autocomplete-popup li {
-    color: $stanford-black;
+    color: var(--stanford-black);
   }
 
   .input-group > .search-autocomplete-wrapper input:focus {
@@ -60,7 +57,7 @@ $featured-teaser-overhang: 1rem;
   }
 
   .search-query-form .input-group:focus-within {
-    box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(var(--stanford-digital-blue-rgb), 0.25);
   }
 
   li a {
@@ -85,7 +82,7 @@ $featured-teaser-overhang: 1rem;
       position: absolute;
       left: -1rem;
       top: 0.05rem;
-      color: $stanford-digital-blue;
+      color: var(--stanford-digital-blue);
     }
   }
 
