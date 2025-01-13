@@ -8,9 +8,8 @@
         </h2>
         <p class="card-text"><%= repository.description %></p>
         <% collection_text = repository.collection_count == 1 ? "collection" : "collections" %>
-        <%= link_to("Browse #{repository.collection_count} #{collection_text}", repository_collections_path(repository), class: "btn btn-dark mt-auto mx-auto") %>
+        <%= link_to("Browse #{repository.collection_count} #{collection_text}", repository_collections_path(repository), class: "btn btn-secondary mt-auto mx-auto") %>
 
       </div>
     </div>
   </div>
-  

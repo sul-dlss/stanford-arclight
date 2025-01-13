@@ -1,0 +1,32 @@
+:root {
+  --al-content-icon-color: rgb(var(--bs-secondary-rgb));
+}
+
+.al-masthead {
+  --al-mastead-active-link-color: white;
+}
+
+.blacklight-icons svg {
+  fill: var(--al-content-icon-color);
+}
+
+.form-control:focus {
+  border-color: var(--stanford-digital-blue);
+  box-shadow: 0 0 0 0.25rem rgba(var(--stanford-digital-blue-rgb), 0.25);
+}
+
+.warning-icon svg {
+  height: 1.25rem;
+  width: 1.25rem;
+  color: var(--stanford-digital-red);
+}
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
+
+.modal-header {
+  .btn-close:focus {
+    box-shadow: none;
+  }
+}
