@@ -1,28 +1,112 @@
 // Entry point for your Sass build
 
-@import "palette";
-@import "bootstrapVariables";
+@import url("palette");
 @import "bootstrap/scss/bootstrap";
 
-$logo-image: url(StanfordLibraries-logo-whitetext.svg);
-$logo-width: 200px;
-$logo-height: 35px;
-
-$link-light-color: $stanford-white;
-$link-dark-color: $stanford-digital-blue;
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap");
-$font-family-serif: "Source Serif 4", serif;
+
 :root {
+  --font-family-serif: "Source Serif 4", serif;
   --sul-link-color-rgb: 0, 108, 184; /* Digital blue #006CB8; */
   --sul-link-font-weight: 450;
 
-  --bs-link-color: #006cb8; /* for .btn-link */
-  --bs-link-hover-color: #006cb8; /* for .btn-link */
+  --stanford-palo-alto-dark: #014240;
+  --stanford-digital-blue: #006cb8;
+  --bs-dark-rgb: 1, 66, 64; // same as stanford-palo-alto-dark
+
+  --bs-border-radius: 0;
+  --bs-font-sans-serif: "Source Sans 3", "Source Sans Pro", "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+  --bs-link-color: var(--stanford-digital-blue); /* for .btn-link */
   --bs-link-color-rgb: var(--sul-link-color-rgb);
+  --bs-link-hover-color: var(--stanford-digital-blue); /* for .btn-link */
   --bs-link-hover-color-rgb: var(--sul-link-color-rgb);
   --bs-link-decoration: none;
   --bs-link-hover-decoration: underline;
+
+  --bs-dropdown-link-active-color: var(--stanford-palo-alto-dark);
+
+  --bs-info-text-emphasis: #002b4a;
+  --bs-info-bg-subtle: #cce2f1;
+  --bs-info-border-subtle: #99c4e3;
+
+  --bs-secondary-rgb: var(--bs-dark-rgb);
+  --btn-secondary-bg: var(--stanford-palo-alto-dark);
+  --btn-secondary-hover-bg: color-mix(
+    in srgb,
+    var(--stanford-palo-alto-dark) 85%,
+    white
+  );
+  --btn-secondary-hover-border-color: color-mix(
+    in srgb,
+    var(--stanford-palo-alto-dark) 90%,
+    white
+  );
+  --btn-secondary-active-bg: color-mix(
+    in srgb,
+    var(--stanford-palo-alto-dark) 80%,
+    white
+  );
 }
+
+.btn-dark,
+.btn-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--btn-secondary-bg);
+  --bs-btn-border-color: var(--btn-secondary-bg);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--btn-secondary-hover-bg);
+  --bs-btn-hover-border-color: var(--btn-secondary-hover-border-color);
+  --bs-btn-focus-shadow-rgb: 39, 94, 93;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--btn-secondary-hover-border-color);
+  --bs-btn-active-border-color: var(--btn-secondary-hover-border-color);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--stanford-palo-alto-dark);
+  --bs-btn-disabled-border-color: var(--stanford-palo-alto-dark);
+}
+
+.btn-secondary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--btn-secondary-bg);
+  --bs-btn-border-color: var(--btn-secondary-bg);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--btn-secondary-hover-bg);
+  --bs-btn-hover-border-color: var(--btn-secondary-hover-border-color);
+  --bs-btn-focus-shadow-rgb: 39, 94, 93;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--btn-secondary-hover-border-color);
+  --bs-btn-active-border-color: var(--btn-secondary-hover-border-color);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--stanford-palo-alto-dark);
+  --bs-btn-disabled-border-color: var(--stanford-palo-alto-dark);
+}
+
+.btn-outline-secondary,
+.applied-filter .remove:hover {
+  --bs-btn-color: var(--btn-secondary-bg);
+  --bs-btn-border-color: var(--btn-secondary-bg);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--btn-secondary-bg);
+  --bs-btn-hover-border-color: var(--btn-secondary-bg);
+  --bs-btn-focus-shadow-rgb: 1, 66, 64;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--btn-secondary-bg);
+  --bs-btn-active-border-color: var(--btn-secondary-bg);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: var(--btn-secondary-bg);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--btn-secondary-bg);
+  --bs-gradient: none;
+}
+.navbar-dark {
+  --bs-navbar-color: #fff;
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 @import "blacklight-frontend/app/assets/stylesheets/blacklight/blacklight";
 @import "arclight/app/assets/stylesheets/arclight/application";
 @import "stanfordStripe";

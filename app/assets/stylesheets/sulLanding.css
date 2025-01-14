@@ -1,40 +1,35 @@
 .blacklight-landing_page {
-  overflow-x: hidden;
+  --featured-item-height: 22rem;
+  --featured-teaser-overhang: 1rem;
 
-  body a {
-    color: $link-dark-color;
-  }
+  overflow-x: hidden;
 
   #main-container h1,
   h2 {
     font-size: 2.25rem;
-    font-family: $font-family-serif;
+    font-family: var(--font-family-serif);
     font-weight: bold;
   }
 
-  // make the content area full bleed
+  /* make the content area full bleed */
   #main-container {
     padding: 0;
   }
 }
 
 .collection-count {
-  font-family: $font-family-serif;
+  font-family: var(--font-family-serif);
 }
 
-$featured-item-height: 22rem;
-$featured-teaser-overhang: 1rem;
+@media (min-width: 992px) {
+  #featured-item-wrapper .featured-item img {
+    height: var(--featured-item-height);
+
+    object-fit: cover;
+  }
+}
 
 #featured-item-wrapper {
-  .featured-item {
-    @include media-breakpoint-up(lg) {
-      img {
-        height: $featured-item-height;
-        object-fit: cover;
-      }
-    }
-  }
-
   .featured-item-caption {
     text-align: left;
     background: rgba(0, 0, 0, 0.8);
@@ -48,11 +43,11 @@ $featured-teaser-overhang: 1rem;
 
 #landing-page-search {
   background-image: linear-gradient(to right, #efefef, #d0d8d8);
-  // 30px matches height of stanford top white brand bar
+  /* 30px matches height of stanford top white brand bar */
   padding-top: 30px;
 
   #autocomplete-popup li {
-    color: $stanford-black;
+    color: var(--stanford-black);
   }
 
   .input-group > .search-autocomplete-wrapper input:focus {
@@ -60,15 +55,17 @@ $featured-teaser-overhang: 1rem;
   }
 
   .search-query-form .input-group:focus-within {
-    box-shadow: 0 0 0 0.25rem rgba($link-dark-color, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(var(--bs-link-color-rgb), 0.25);
   }
 
   li a {
     font-size: 1.125rem;
     font-weight: 350;
   }
+}
 
-  @include media-breakpoint-up(md) {
+@media (min-width: 768px) {
+  #landing-page-search {
     ul {
       list-style-type: none;
       padding-left: 0;
@@ -85,17 +82,19 @@ $featured-teaser-overhang: 1rem;
       position: absolute;
       left: -1rem;
       top: 0.05rem;
-      color: $stanford-digital-blue;
+      color: var(--bs-link-color);
     }
   }
+}
 
-  @include media-breakpoint-up(lg) {
-    height: calc($featured-item-height - $featured-teaser-overhang);
+@media (min-width: 992px) {
+  #landing-page-search {
+    height: calc(var(--featured-item-height) - var(--featured-teaser-overhang));
   }
 }
 
 #about-landing {
-  // 30px matches height of stanford top white brand bar
+  /* 30px matches height of stanford top white brand bar */
   padding-top: 30px;
   padding-bottom: 30px;
 }
