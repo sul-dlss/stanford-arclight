@@ -9,10 +9,6 @@
   padding-right: 20px;
   border: none;
 
-  a.btn {
-    color: $link-light-color;
-  }
-
   .card-img-top,
   .card-body {
     width: 100%;
@@ -41,7 +37,7 @@
   }
 
   li::marker {
-    color: $link-dark-color;
+    color: var(--stanford-digital-blue);
   }
 
   h2 {
