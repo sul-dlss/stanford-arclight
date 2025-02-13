@@ -94,7 +94,7 @@ gem 'rsolr', '>= 1.0', '< 3'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
 gem 'blacklight-locale_picker'
-gem 'blacklight_range_limit', '~> 8.5'
+gem 'blacklight_range_limit', '~> 9'
 
 gem 'config'
 
