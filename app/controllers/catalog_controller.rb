@@ -151,8 +151,7 @@ class CatalogController < ApplicationController
     config.add_facet_field 'creators', field: 'creator_ssim', limit: 10
     config.add_facet_field 'date_range', field: 'date_range_isim',
                                          range: {
-                                           chart_js: false,
-                                           slider_js: false
+                                           chart_js: true
                                          }
     config.add_facet_field 'level', field: 'level_ssim', limit: 10
     config.add_facet_field 'names', field: 'names_ssim', limit: 10
