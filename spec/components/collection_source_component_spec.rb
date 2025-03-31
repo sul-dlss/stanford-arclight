@@ -6,7 +6,7 @@ RSpec.describe CollectionSourceComponent, type: :component do
   subject(:component) { described_class.new(document:) }
 
   let(:document) { SolrDocument.new(id: 'abc123', timestamp: '2024-05-17T14:56:22.751Z') }
-  let(:aspace_settings) { Config::Options.new(url: 'https://aspace-stage.sample.edu') }
+  let(:aspace_settings) { Config::Options.new(default: Config::Options.new(url: 'https://aspace-stage.sample.edu')) }
   let(:display_setting) { true }
 
   before do
@@ -33,7 +33,7 @@ RSpec.describe CollectionSourceComponent, type: :component do
     end
 
     context 'when the finding aid is from aspace prod' do
-      let(:aspace_settings) { Config::Options.new(url: 'https://aspace-prod.sample.edu') }
+      let(:aspace_settings) { Config::Options.new(default: Config::Options.new(url: 'https://aspace-prod.sample.edu')) }
       let(:document) { SolrDocument.new(id: 'abc123', repository_uri_ssi: '/repositories/11') }
 
       it 'renders the message' do

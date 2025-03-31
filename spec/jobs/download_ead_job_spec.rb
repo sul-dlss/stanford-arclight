@@ -6,8 +6,8 @@ RSpec.describe DownloadEadJob do
   let(:client) { instance_double(AspaceClient, resource_description: '<a/>') }
   let(:file) { instance_double(File, puts: true) }
   let(:harvestable_repos) do
-    [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11'),
-     Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4')]
+    [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11', aspace_config_set: 'default'),
+     Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4', aspace_config_set: 'default')]
   end
   let(:aspace_repository) do
     instance_double(AspaceRepositories, all_harvestable: harvestable_repos)
@@ -21,15 +21,15 @@ RSpec.describe DownloadEadJob do
   end
 
   it 'fetches an EAD from the client service' do
-    described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                file_dir: '/data/archive/', index: false, generate_pdf: false)
+    described_class.perform_now(resource_uri: '/repositories/1/resources/123', aspace_config_set: 'default',
+                                file_name: 'abc123', file_dir: '/data/archive/', index: false, generate_pdf: false)
 
     expect(client).to have_received(:resource_description).with('/repositories/1/resources/123')
   end
 
   it 'writes the formatted EAD XML to a file' do
-    described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                file_dir: '/data/archive/', index: false, generate_pdf: false)
+    described_class.perform_now(resource_uri: '/repositories/1/resources/123', aspace_config_set: 'default',
+                                file_name: 'abc123', file_dir: '/data/archive/', index: false, generate_pdf: false)
 
     expect(file).to have_received(:puts).with("<?xml version=\"1.0\"?>\n<a/>\n")
   end
@@ -37,9 +37,10 @@ RSpec.describe DownloadEadJob do
   context 'when index param value is true' do
     it 'enqueues an indexing job with the EAD file' do
       expect do
-        described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                    file_dir: '/data/archive/', index: true, generate_pdf: false)
+        described_class.perform_now(resource_uri: '/repositories/1/resources/123', aspace_config_set: 'default',
+                                    file_name: 'abc123', file_dir: '/data/archive/', index: true, generate_pdf: false)
       end.to enqueue_job(IndexEadJob).once.with(file_path: '/data/archive/abc123.xml',
+                                                aspace_config_set: 'default',
                                                 resource_uri: '/repositories/1/resources/123')
     end
   end
@@ -47,8 +48,8 @@ RSpec.describe DownloadEadJob do
   context 'when generate_pdf param value is true' do
     it 'enqueues a generate pdf job for the EAD file' do
       expect do
-        described_class.perform_now(resource_uri: '/repositories/1/resources/123', file_name: 'abc123',
-                                    file_dir: '/data/archive/', index: false, generate_pdf: true)
+        described_class.perform_now(resource_uri: '/repositories/1/resources/123', aspace_config_set: 'default',
+                                    file_name: 'abc123', file_dir: '/data/archive/', index: false, generate_pdf: true)
       end.to enqueue_job(GeneratePdfJob).once.with(file_path: '/data/archive/abc123.xml', file_name: 'abc123',
                                                    data_dir: '/data/archive/', skip_existing: false)
     end
@@ -84,7 +85,7 @@ RSpec.describe DownloadEadJob do
         described_class.enqueue_all
       end.to enqueue_job(described_class).exactly(4).times
       expect(client).to have_received(:published_resource_uris).exactly(2).times
-      expect(FileUtils).to have_received(:mkdir_p).exactly(6).times
+      expect(FileUtils).to have_received(:mkdir_p).exactly(7).times
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
 
       # Expect the resource with no ead_id or identifier to trigger a notification
@@ -162,7 +163,7 @@ RSpec.describe DownloadEadJob do
   describe '.enqueue_one_by' do
     before do
       allow(aspace_repository).to receive(:find_by).with({ code: 'ars' }).and_return(
-        Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11')
+        Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11', aspace_config_set: 'default')
       )
       allow(client).to receive(:published_resource_uris).and_return([{ 'uri' => '/repositories/11/resources/1',
                                                                        'ead_id' => 'ars123' },

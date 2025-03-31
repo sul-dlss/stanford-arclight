@@ -11,8 +11,10 @@ class AspaceRepositories
   end
 
   def all
-    @all ||= client.repositories.map do |repo|
-      Aspace::Repository.new(**repo.slice('repo_code', 'uri').symbolize_keys)
+    Settings.aspace.keys.flat_map do |aspace_config_set|
+      client(aspace_config_set).repositories.flat_map do |repo|
+        Aspace::Repository.new(**repo.slice('repo_code', 'uri').symbolize_keys, aspace_config_set:)
+      end
     end
   end
 
@@ -26,7 +28,7 @@ class AspaceRepositories
 
   private
 
-  def client
-    @client ||= AspaceClient.new
+  def client(aspace_config_set)
+    AspaceClient.new(aspace_config_set:)
   end
 end
