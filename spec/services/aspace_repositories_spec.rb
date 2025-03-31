@@ -12,7 +12,10 @@ RSpec.describe AspaceRepositories do
   end
 
   before do
-    allow(AspaceClient).to receive(:new).and_return(client)
+    allow(AspaceClient).to receive(:new).with(aspace_config_set: :default).and_return(client)
+    allow(Settings).to receive(:aspace).and_return(
+      { default: Config::Options.new(harvestable_repository_codes: ['ars']) }
+    )
   end
 
   describe '#all' do

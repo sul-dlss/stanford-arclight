@@ -8,27 +8,14 @@ require 'net/http'
 class AspaceClient
   attr_reader :base_url
 
-  # rubocop:disable Metrics/MethodLength
-  def initialize(url: Settings.aspace.url,
-                 user: ENV.fetch('ASPACE_USER', nil),
-                 password: ENV.fetch('ASPACE_PASSWORD', nil))
-    raise ArgumentError, 'Please provide the url for ArchivesSpace' unless url
-
-    uri = URI.parse(url)
-    @base_url = url
-    @user = user
-    @password = password
-
-    return unless uri.user
-
-    @user ||= uri.user
-    @password ||= uri.password
-    @base_url = uri.dup.tap do |u|
-      u.user = nil
-      u.password = nil
-    end.to_s
+  def initialize(aspace_config_set: :default, uri: nil)
+    if uri
+      load_config_from_uri(uri)
+    else
+      load_config_from_settings(aspace_config_set)
+    end
+    validate!
   end
-  # rubocop:enable Metrics/MethodLength
 
   # Get a list of repositories
   # See https://archivesspace.github.io/archivesspace/api/#get-a-list-of-repositories
@@ -150,6 +137,33 @@ class AspaceClient
   end
 
   private
+
+  def load_config_from_settings(aspace_config_set)
+    config = Settings.aspace[aspace_config_set]
+    raise ArgumentError, "ArchiveSpace configuration set '#{aspace_config_set}' not found in settings.yml" unless config
+
+    @base_url = config['url']
+    @user = config['user']
+    @password = config['password']
+  end
+
+  def load_config_from_uri(uri)
+    parsed_uri = URI.parse(uri)
+    @base_url = uri
+    @user = parsed_uri.user
+    @password = parsed_uri.password
+
+    @base_url = parsed_uri.dup.tap do |u|
+      u.user = nil
+      u.password = nil
+    end.to_s
+  end
+
+  def validate!
+    raise ArgumentError, 'ArchivesSpace URL missing from configuration' unless @base_url
+    raise ArgumentError, 'ArchivesSpace User missing from configuration' unless @user
+    raise ArgumentError, 'ArchivesSpace Password missing from configuration' unless @password
+  end
 
   # Reduce a list of resource URIs to those that are published and unsuppressed
   def published_unsuppressed_resource_query(repository_id:, resource_uris:)

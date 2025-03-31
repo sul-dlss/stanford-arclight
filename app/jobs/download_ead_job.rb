@@ -57,30 +57,32 @@ class DownloadEadJob < ApplicationJob
   # rubocop:disable Metrics/MethodLength
   def self.enqueue_repository(repository:, config:)
     uris_to_exclude = []
+    aspace_config_set = repository.aspace_config_set
 
     repository.each_published_resource(updated_after: config.updated_after) do |resource|
       uris_to_exclude << resource.uri if config.check_record_dates
-      enqueue_resource(resource:, config:)
+      enqueue_resource(resource:, config:, aspace_config_set:)
     end
 
     return unless config.check_record_dates
 
     repository.each_published_resource_with_updated_components(updated_after: config.updated_after,
                                                                uris_to_exclude:) do |resource|
-      enqueue_resource(resource:, config:)
+      enqueue_resource(resource:, config:, aspace_config_set:)
     end
 
     repository.each_published_resource_with_updated_agents(updated_after: config.updated_after,
                                                            uris_to_exclude:) do |resource|
-      enqueue_resource(resource:, config:)
+      enqueue_resource(resource:, config:, aspace_config_set:)
     end
   end
   # rubocop:enable Metrics/MethodLength
   private_class_method :enqueue_repository
 
-  def self.enqueue_resource(resource:, config:)
+  def self.enqueue_resource(resource:, config:, aspace_config_set:)
     file_dir = "#{config.data_directory}/#{resource.arclight_repository_code}"
-    DownloadEadJob.perform_later(resource_uri: resource.uri,
+    DownloadEadJob.perform_later(aspace_config_set:,
+                                 resource_uri: resource.uri,
                                  file_name: resource.file_name, file_dir:,
                                  index: config.index, generate_pdf: config.generate_pdf)
   rescue Aspace::AspaceResourceError => e
@@ -104,13 +106,14 @@ class DownloadEadJob < ApplicationJob
   #                                       index: true,
   #                                       generate_pdf: false)
   # @param resource_uri [String] the URI of the resource in ArchivesSpace, such as '/repositories/2/resources/5363'
+  # @param aspace_config_set [String] the configuration set for the ArchivesSpace repository, such as 'default'
   # @param file_name [String] the name of the file to be created, such as 'ead1234'
   # @param file_dir [String] the path where the file should be saved, such as '/opt/app/arclight/data/ars'
   #        the directory specified must already exist
   # @param index [Boolean] if true an IndexEadJob will be queued up with the downloaded file
   # @param generate_pdf [Boolean] if true a GeneratePdfJob will be queued up with the downloaded file
-  def perform(resource_uri:, file_name:, file_dir:, index:, generate_pdf:)
-    ead_xml = AspaceClient.new.resource_description(resource_uri)
+  def perform(resource_uri:, aspace_config_set:, file_name:, file_dir:, index:, generate_pdf:) # rubocop:disable Metrics/ParameterLists
+    ead_xml = AspaceClient.new(aspace_config_set:).resource_description(resource_uri)
     file_path = File.join(file_dir, "#{file_name}.xml")
 
     File.open(file_path, 'wb') do |f|
@@ -118,7 +121,7 @@ class DownloadEadJob < ApplicationJob
       f.puts ead.to_xml(indent: 2)
     end
 
-    IndexEadJob.perform_later(file_path:, resource_uri:) if index
+    IndexEadJob.perform_later(file_path:, resource_uri:, aspace_config_set:) if index
     GeneratePdfJob.perform_later(file_path:, file_name:, data_dir: file_dir, skip_existing: false) if generate_pdf
   end
 end

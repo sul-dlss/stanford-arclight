@@ -13,11 +13,12 @@ RSpec.describe IndexEadJob do
   it 'sends a command to index the EAD in Solr with traject' do
     described_class.perform_now(file_path: 'data/sample.xml',
                                 arclight_repository_code: 'ars',
+                                aspace_config_set: 'default',
                                 resource_uri: '/repositories/2/resources/123',
                                 solr_url: 'http://localhost/solr/core',
                                 app_dir: '/some/directory')
     expect(Open3).to have_received(:capture2).with(
-      { 'REPOSITORY_ID' => 'ars', 'RESOURCE_URI' => '/repositories/2/resources/123' },
+      { 'ASPACE_CONFIG_SET' => 'default', 'REPOSITORY_ID' => 'ars', 'RESOURCE_URI' => '/repositories/2/resources/123' },
       ['bundle',
        'exec',
        'traject',
@@ -36,10 +37,12 @@ RSpec.describe IndexEadJob do
     it 'infers the repository code from the file path' do
       described_class.perform_now(file_path: '/data/archive/sample.xml',
                                   resource_uri: '/repositories/2/resources/123',
+                                  aspace_config_set: 'default',
                                   solr_url: 'http://localhost/solr/core',
                                   app_dir: '/some/directory')
 
-      expect(Open3).to have_received(:capture2).with({ 'REPOSITORY_ID' => 'archive',
+      expect(Open3).to have_received(:capture2).with({ 'ASPACE_CONFIG_SET' => 'default',
+                                                       'REPOSITORY_ID' => 'archive',
                                                        'RESOURCE_URI' => '/repositories/2/resources/123' },
                                                      anything, anything)
     end

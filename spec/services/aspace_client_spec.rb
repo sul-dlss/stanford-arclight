@@ -2,39 +2,36 @@
 
 require 'rails_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 RSpec.describe AspaceClient do
-  let(:url) { 'http://example.com:8089' }
-  let(:user) { 'aspace_user' }
-  let(:password) { 'aspace_password' }
-  let(:client) { described_class.new(url:, user:, password:) }
+  let(:uri) { 'http://aspace_user:aspace_password@example.com:8089' }
+  let(:client) { described_class.new(uri:) }
 
   before do
     # Authentication request
     stub_request(:post,
-                 "#{url}/users/#{user}/login").to_return(body: { session: 'token1' }.to_json)
+                 'http://example.com:8089/users/aspace_user/login').to_return(body: { session: 'token1' }.to_json)
   end
 
   describe '#initialize' do
-    context 'without a url argument' do
+    context 'without a complete uri argument' do
       it 'raises an error' do
-        expect { described_class.new(url: nil, user: 'user', password: 'password') }.to raise_error(ArgumentError)
+        expect { described_class.new(uri: 'http://example.com:8089') }.to raise_error(ArgumentError)
       end
     end
   end
 
   describe '#repositories' do
     it 'sends an authenticated request with correct auth header to the repositories address' do
-      stub_request(:get, "#{url}/repositories").to_return(body: {}.to_json)
+      stub_request(:get, 'http://example.com:8089/repositories').to_return(body: {}.to_json)
       client.repositories
-      expect(WebMock).to have_requested(:get, "#{url}/repositories")
+      expect(WebMock).to have_requested(:get, 'http://example.com:8089/repositories')
                      .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
     end
   end
 
   describe '#resource_description' do
     it 'sends an authenticated request with correct auth header to the resource_desriptions address' do
-      request_url = "#{url}/repositories/2/resource_descriptions/10208.xml?include_daos=true&numbered_cs=true"
+      request_url = 'http://example.com:8089/repositories/2/resource_descriptions/10208.xml?include_daos=true&numbered_cs=true'
       stub_request(:get, request_url)
       client.resource_description('repositories/2/resources/10208')
       expect(WebMock).to have_requested(:get, request_url)
@@ -215,10 +212,10 @@ RSpec.describe AspaceClient do
 
   describe '#authenticated_get' do
     it 'sends an authenticated request with correct auth header to the specified address' do
-      stub_request(:get, "#{url}/some_request")
+      stub_request(:get, 'http://example.com:8089/some_request')
       client.authenticated_get('some_request')
       expect(WebMock).to have_requested(:get,
-                                        "#{url}/some_request")
+                                        'http://example.com:8089/some_request')
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
     end
 
@@ -230,7 +227,7 @@ RSpec.describe AspaceClient do
 
     context 'when the HTTP response is bad' do
       it 'raises an error' do
-        stub_request(:get, "#{url}/some_request").to_raise(Net::HTTPBadResponse)
+        stub_request(:get, 'http://example.com:8089/some_request').to_raise(Net::HTTPBadResponse)
         expect { client.authenticated_get('some_request') }.to raise_error(StandardError)
       end
     end
@@ -238,10 +235,10 @@ RSpec.describe AspaceClient do
 
   describe '#authenticated_post' do
     it 'sends an authenticated request with correct auth header to the specified address' do
-      stub_request(:post, "#{url}/some_request")
+      stub_request(:post, 'http://example.com:8089/some_request')
       client.authenticated_post('some_request')
       expect(WebMock).to have_requested(:post,
-                                        "#{url}/some_request")
+                                        'http://example.com:8089/some_request')
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
     end
 
@@ -253,10 +250,9 @@ RSpec.describe AspaceClient do
 
     context 'when the HTTP response is bad' do
       it 'raises an error' do
-        stub_request(:post, "#{url}/some_request").to_raise(Net::HTTPBadResponse)
+        stub_request(:post, 'http://example.com:8089/some_request').to_raise(Net::HTTPBadResponse)
         expect { client.authenticated_post('some_request') }.to raise_error(StandardError)
       end
     end
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

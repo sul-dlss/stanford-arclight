@@ -22,7 +22,7 @@ class CollectionSourceComponent < ViewComponent::Base
   def source_translation_key
     return 'oac_html' unless from_aspace?
 
-    Settings.aspace.url.include?('prod') ? 'aspace.prod' : 'aspace.stage'
+    Settings.aspace[:default].url.include?('prod') ? 'aspace.prod' : 'aspace.stage'
   end
 
   def last_indexed
