@@ -47,4 +47,16 @@ RSpec.describe 'Searching', :js do
       expect(page.current_url).to include('group=true')
     end
   end
+
+  context 'when a query contains a dash surrounded by spaces' do
+    before do
+      visit search_catalog_path
+      fill_in 'q', with: 'Academy of Ancient Music - Broadway Celebration'
+      click_on 'Search'
+    end
+
+    it 'returns the expected number of results' do
+      expect(page).to have_content(/1 collections found/)
+    end
+  end
 end
