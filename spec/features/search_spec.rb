@@ -14,10 +14,8 @@ RSpec.describe 'Searching', :js do
     end
 
     it 'renders the search results page with default params' do
-      expect(page.current_url).to include('search_field=keyword&q=Example+search+query')
-      expect(page.current_url).to include('group=true')
-
       expect(page).to have_content(/You searched for:\s*Keyword Example search query/)
+      expect(page.current_url).to include('group=true&search_field=keyword&q=Example+search+query')
     end
 
     it 'creates Start Over link with the group=true parameter' do
@@ -32,6 +30,8 @@ RSpec.describe 'Searching', :js do
       visit solr_document_path(id: 'ars-0043_ambassador-auditorium-collection')
       fill_in 'q', with: 'jazz'
       click_on 'search'
+
+      expect(page).to have_content(/You searched for:\s*Keyword jazz/)
       expect(page.current_url).not_to include('group=true')
     end
   end
@@ -42,6 +42,8 @@ RSpec.describe 'Searching', :js do
       fill_in 'q', with: 'jazz'
       select('all collections', from: 'within_collection')
       click_on 'search'
+
+      expect(page).to have_content(/You searched for:\s*Keyword jazz/)
       expect(page.current_url).to include('group=true')
     end
   end
