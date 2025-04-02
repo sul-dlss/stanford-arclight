@@ -33,3 +33,11 @@ end
 every 6.hours do
   runner 'DeleteEadJob.enqueue_all'
 end
+
+every :day, at: '4:00 am' do
+  rake 'stanford_arclight:prune_guest_user_data[12]'
+end
+
+every :day, at: '5:00 am' do
+  rake 'stanford_arclight:prune_search_data[6]'
+end
