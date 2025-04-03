@@ -24,5 +24,6 @@
 
   <% c.with_search_button do %>
     <%= render SearchButtonComponent.new(id: "#{@prefix}search", text: scoped_t('submit')) %>
+    <%= render SearchTipsLinkComponent.new %>
   <% end %>
 <% end %>

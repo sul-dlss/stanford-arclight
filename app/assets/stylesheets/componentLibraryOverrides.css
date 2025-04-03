@@ -1,6 +1,4 @@
 :root {
-  --bs-border-radius: 0;
-  --bs-border-radius-sm: 0;
   --bs-secondary-rgb: var(--stanford-palo-alto-dark-rgb);
 }
 

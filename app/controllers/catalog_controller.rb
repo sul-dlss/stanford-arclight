@@ -419,4 +419,8 @@ class CatalogController < ApplicationController
     # Group header values
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
   end
+
+  def search_tips
+    render SearchTipsComponent.new
+  end
 end
