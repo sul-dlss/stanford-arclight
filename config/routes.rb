@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
   get '/download/:id' => 'download#show'
 
+  get '/search_tips' => 'catalog#search_tips'
+
   resource :feedback, only: :create
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

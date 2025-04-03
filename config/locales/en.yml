@@ -101,3 +101,7 @@ en:
       prod: 'The data source for this collection is ArchivesSpace. The collection is up to date.'
       stage: 'The data source for this collection is ArchivesSpace stage. The collection is up to date.'
     oac_html: 'The data source for this collection is <a href="https://oac.cdlib.org/">Online Archive of California</a>. The collection was updated on %{last_indexed}.'
+  search_tips: 
+    title: 'Search tips'
+    subtitle: 'Refine your search'
+    close: 'Close'
