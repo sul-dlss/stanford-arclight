@@ -225,31 +225,6 @@ span.constraint-value:focus {
   font-size: 10px;
 }
 
-.paginate-section .active > .page-link {
-  background-color: var(--stanford-palo-alto-dark);
-  border-color: var(--stanford-palo-alto-dark);
-  color: white;
-}
-
-.paginate-section .page-link {
-  color: var(--stanford-digital-blue);
-  &:focus {
-    box-shadow: 0 0 0 0.25rem rgba(var(--stanford-palo-alto-dark), 0.25);
-  }
-}
-
-.paginate-section .next-page:not(.disabled),
-.paginate-section .prev-page:not(.disabled) {
-  .page-link {
-    color: white;
-    background-color: var(--stanford-palo-alto-dark);
-  }
-}
-
-.page-item.disabled .page-link {
-  color: black;
-}
-
 .al-online-content-icon {
   align-content: center;
 }

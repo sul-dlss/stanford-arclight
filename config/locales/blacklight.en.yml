@@ -1,3 +1,12 @@
 en:
   blacklight:
     application_name: 'Archival Collections at Stanford'
+    search:
+      entry_pagination_info:
+        one: "1 of 1"
+        other: "%{current} of %{total}"
+      pagination_info:
+        pages:
+          one: "%{start_num} - %{end_num} of %{total_num}"
+          other: "%{start_num} - %{end_num} of %{total_num}"
+        single_item_found: "1 %{entry_name} found"
