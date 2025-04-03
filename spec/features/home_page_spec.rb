@@ -26,7 +26,7 @@ RSpec.describe 'Home Page' do
   it 'has the three descriptive cards' do
     expect(page).to have_css('h3', text: 'Locations')
     expect(page).to have_css('h3', text: 'Request materials')
-    expect(page).to have_css('h3', text: 'Ask a librarian')
+    expect(page).to have_css('h3', text: 'Ask a subject specialist')
   end
 
   it 'has the content warning' do

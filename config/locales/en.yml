@@ -73,7 +73,7 @@ en:
         body_html: <p>Stanford University Libraries acquires, preserves, and makes available materials of enduring historic value to support the research needs of Stanford students and faculty and the larger scholarly community. Rare and distinctive materials exist in several locations across Stanford University Libraries. Click the Request button below to learn more.</p>
         button_text: Request
       contact:
-        title: Ask a librarian
+        title: Ask a subject specialist
         body_html: <p>Have questions about Stanford University Libraries collections or accessing materials? Contact a librarian for help.</p>
         button_text: Find a subject specialist
   feedbacks:
