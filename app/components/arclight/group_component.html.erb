@@ -6,10 +6,11 @@
           <%= link_to(document.repository_config.name, helpers.search_action_url(f: { repository: [document.repository_config.name], level: ['Collection'] })) %>
         </div>
       <% end %>
-      <h3><%= helpers.link_to_document document %></h3>
-      <% document.extent.each do |extent| %>
-        <%= tag.span extent, class: 'al-document-extent badge' unless compact? %>
-      <% end %>
+      <h3>
+        <%= helpers.link_to_document document %>
+        <%= render CollectionUnitidPillComponent.new(document: document) %>
+      </h3>
+      <%= render ExtentPillComponent.new(document: document, compact: compact?) %>
       <dl>
         <%= render Arclight::IndexMetadataFieldComponent.with_collection(presenter.field_presenters.select { |field| !compact? || field.field_config.compact }) %>
       </dl>
