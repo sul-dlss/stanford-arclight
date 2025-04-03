@@ -4,6 +4,7 @@ import "controllers"
 import bootstrap from "bootstrap"
 import githubAutoCompleteElement from "@github/auto-complete-element"
 import Blacklight from "blacklight"
+import initializeAutocompleteToggle from "autocomplete_toggle"
 
 import "arclight"
 
@@ -11,6 +12,8 @@ Blacklight.onLoad(() => {
     // Initialize Bootstrap tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
     const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
+    initializeAutocompleteToggle();
 })
 import BlacklightRangeLimit from "blacklight-range-limit";
 BlacklightRangeLimit.init({onLoadHandler: Blacklight.onLoad });

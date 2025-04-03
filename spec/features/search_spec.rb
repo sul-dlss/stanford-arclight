@@ -47,4 +47,39 @@ RSpec.describe 'Searching', :js do
       expect(page.current_url).to include('group=true')
     end
   end
+
+  context 'with keyword search' do
+    it 'displays the autocomplete dropdown suggetsions' do
+      visit search_catalog_path
+      select('Keyword', from: 'search_field')
+      fill_in 'q', with: 'france'
+
+      # use xpath because <auto-complete> is a custom web component that capybara can't otherwise find
+      src_value = find(:xpath, './/auto-complete')[:src]
+      expect(src_value).to eq('/catalog/suggest')
+
+      expect(page).to have_css('#autocomplete-popup', visible: :visible)
+    end
+  end
+
+  context 'with a non-keyword search' do
+    it 'can toggle the autocomplete functionality from off to on' do
+      visit search_catalog_path
+      select('Place', from: 'search_field')
+      fill_in 'q', with: 'france'
+
+      # use xpath because <auto-complete> is a custom web component that capybara can't otherwise find
+      src_value = find(:xpath, './/auto-complete')[:src]
+      expect(src_value).to be_empty
+      expect(page).to have_css('#autocomplete-popup', visible: :hidden)
+
+      # Autocomplete should work again
+      select('Keyword', from: 'search_field')
+      fill_in 'q', with: 'france'
+
+      src_value = find(:xpath, './/auto-complete')[:src]
+      expect(src_value).to eq('/catalog/suggest')
+      expect(page).to have_css('#autocomplete-popup', visible: :visible)
+    end
+  end
 end
