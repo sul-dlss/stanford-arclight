@@ -1,5 +1,6 @@
 :root {
-  --al-content-icon-color: rgb(var(--bs-secondary-rgb));
+  /* arclight override */
+  --al-content-icon-color: var(--stanford-digital-blue)
 }
 
 .al-masthead {
@@ -7,7 +8,7 @@
 }
 
 .blacklight-icons svg {
-  fill: var(--al-content-icon-color);
+  fill: var(--stanford-digital-blue);
 }
 
 .form-control:focus {
