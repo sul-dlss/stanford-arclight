@@ -30,3 +30,15 @@
     box-shadow: none;
   }
 }
+
+.collection-info-pill {
+  background-color: var(--greyish-cyan-light);
+  border: 1px solid var(--stanford-palo-alto-dark);
+  color: var(--stanford-palo-alto-dark);
+}
+
+.document-info-pill {
+  background-color: white;
+  border: 1px solid var(--stanford-30-black);
+  color: black;
+}
