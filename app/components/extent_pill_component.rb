@@ -4,6 +4,7 @@
 class ExtentPillComponent < ViewComponent::Base
   def initialize(document:, compact: false)
     @document = document
+    @compact = compact
     super
   end
 
