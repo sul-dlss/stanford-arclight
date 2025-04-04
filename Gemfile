@@ -116,7 +116,3 @@ gem 'whenever', require: false
 gem 'recaptcha', '~> 5.16'
 
 gem 'redis', '~> 5.2'
-
-# Pin view_component to 3.14.0 until the fix in Blacklight is released
-# https://github.com/projectblacklight/blacklight/commit/26651bfc038a4f6f0aba035bc5fc4e5a0678eb20
-gem 'view_component', '~> 3.14.0'
