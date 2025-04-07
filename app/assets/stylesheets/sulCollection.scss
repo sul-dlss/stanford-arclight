@@ -154,12 +154,15 @@
   }
 }
 
-// These are the square badges in the heirarchy that show the number of items
+// These are the badges in the heirarchy that show the number of items
 .documentHeader .bg-secondary {
-  --bs-secondary-rgb: 237, 237, 237;
-  --bs-badge-color: black;
+  --bs-secondary-rgb: var(--stanford-70-black-rgb);
   --bs-badge-font-weight: 400;
-  border: 1px solid #979797;
+  --bs-border-radius: 0.625rem;
+  --bs-badge-font-size: 0.875rem;
+  --bs-badge-padding-x: 0.375rem;
+  --bs-badge-padding-y: 0.125em;
+  margin-left: 0.25rem;
 }
 
 .al-hierarchy-highlight > .documentHeader {
