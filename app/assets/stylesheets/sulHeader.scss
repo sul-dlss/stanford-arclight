@@ -63,8 +63,16 @@
   // Search field selector and full text search box input group
   .input-group:nth-of-type(2) {
     @include media-breakpoint-up(lg) {
-      min-width: 87%;
+      min-width:100%;
     }
+  }
+
+  .searchtips-link a {
+    color: white;
+  }
+
+  .blacklight-icons-outline_info svg {
+    fill: white;  
   }
 
   #search_field {
