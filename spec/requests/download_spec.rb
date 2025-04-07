@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Download finding aid file' do
   it 'downloads the file' do
-    get '/download/ars-0043_ambassador-auditorium-collection.xml'
+    get '/download/ars-0043.xml'
 
     expect(response).to have_http_status(:ok)
     expect(Nokogiri::XML::Document.parse(response.body).at_css('ead').namespaces).to(
@@ -16,7 +16,7 @@ RSpec.describe 'Download finding aid file' do
 
   context 'when an EAD without namespaces is requested' do
     it 'downloads an EAD without namespaces' do
-      get '/download/ars-0043_ambassador-auditorium-collection.xml?without_namespace=true'
+      get '/download/ars-0043.xml?without_namespace=true'
 
       expect(response).to have_http_status(:ok)
       expect(Nokogiri::XML::Document.parse(response.body).at_css('ead').namespaces).to be_empty

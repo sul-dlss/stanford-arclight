@@ -22,13 +22,11 @@ module Sul
     attr_reader :id, :title
 
     def normalize
-      # De-duplicate edge cases where id has been generated from title due to missing EAD ID
-      # E.g. don't return Université de Toulouse_universite-de-toulouse
-      # Instead, return only universite-de-toulouse.
-      # Otherwise return something like ars0009_belva-kibler-and-donald-morgan
+      # If the id is nil or empty, we use the title to form the id
+      # If the id is a string with a file extension, we remove the file extension
       normalized_id = [id, title].compact.reject(&:empty?).map do |string|
-        string.split.map(&:parameterize).reject(&:empty?).take(5).join('-')
-      end.compact_blank.uniq.join('_')
+        string.sub(/(\.xml)?$/i, '').split.map(&:parameterize).reject(&:empty?).take(5).join('-')
+      end.compact_blank.uniq.first
 
       raise Arclight::Exceptions::IDNotFound if normalized_id.blank?
 
