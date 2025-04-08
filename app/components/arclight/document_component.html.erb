@@ -11,6 +11,7 @@
 <div class="title-container">
   <%= content_tag :h1 do %>
     <%= document.normalized_title %>
+    <%= render CollectionUnitidPillComponent.new(document: document) %>
   <% end %>
   <%= render 'arclight/requests', document: document %>
   <%= render Arclight::BookmarkComponent.new document: document, action: bookmark_config %>

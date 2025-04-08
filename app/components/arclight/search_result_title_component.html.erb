@@ -5,17 +5,13 @@
     <%= helpers.link_to_document @document, counter: @counter %>
 
     <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document) %>
+    <%= render CollectionUnitidPillComponent.new(document: @document) %>
 
     <%= tag.span class: 'al-document-container text-muted' do %>
       <%= @document.containers.join(', ') %>
     <% end if @document.containers.present? %>
 
-    <div class="d-flex">
-      <% @document.extent.each do |extent| %>
-        <%= tag.span extent, class: 'al-document-extent badge mx-1' unless compact? %>
-      <% end %>
-    </div>
-
+    <%= render ExtentPillComponent.new(document: @document, compact: compact?) %>
   </h3>
 
   <%# these are set in the catalog_controller by add_results_document_tool %>
