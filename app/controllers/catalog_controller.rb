@@ -143,7 +143,7 @@ class CatalogController < ApplicationController
 
     config.add_facet_field 'access', collapse: false,
                                      query: {
-                                       digital_content: { label: 'Includes digital content', fq: 'has_online_content_ssim:true' }
+                                       digital_content: { label: 'View only digital content', fq: 'has_online_content_ssim:true' }
                                      },
                                      label: 'Digital contents',
                                      component: DigitalContentFacetComponent

@@ -244,6 +244,8 @@ span.constraint-value:focus {
 article.document .al-online-content-icon .blacklight-icons svg,
 .al-online-content-icon .blacklight-icons svg {
   fill: var(--stanford-digital-blue);
+  height: 24px;
+  width: 24px;
 }
 
 article.document .al-online-content-icon .blacklight-icons svg {
@@ -280,10 +282,12 @@ article.document .al-online-content-icon .blacklight-icons svg {
 #facet-digital_content.card {
   border: 0;
   margin-bottom: 1rem;
-  background-color: var(--green-white);
-  .card-body {
+  background-color: var(--stanford-fog-light);
+  filter: drop-shadow(1px 4px 3px rgba(0, 0, 0, 0.25))
+  drop-shadow(-2px 2px 6px rgba(255, 255, 255, 0.2)); 
+    .card-body {
     padding: 1rem;
-    border-left: 8px solid var(--stanford-digital-blue);
+    border-left: 8px solid var(--stanford-palo-alto-dark);
   }
   a {
     color: var(--stanford-digital-blue);
