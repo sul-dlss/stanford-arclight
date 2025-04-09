@@ -43,3 +43,7 @@
   border: 1px solid var(--stanford-30-black);
   color: black;
 }
+
+label.toggle-bookmark {
+  color: var(--stanford-digital-blue);
+}
