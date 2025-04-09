@@ -38,6 +38,9 @@ en:
         sections:
           contact_field: "Repository contact information"
           in_person_field: "In person information"
+  blacklight:
+    search:
+      start_over: 'Clear all'
   shared:
     beta_banner:
       beta_message_html: Please note this is a public beta version of this application. Visit the <a href="https://oac.cdlib.org/">Online Archive of California</a> for the most up to date information and to make a request.
@@ -101,7 +104,9 @@ en:
       prod: 'The data source for this collection is ArchivesSpace. The collection is up to date.'
       stage: 'The data source for this collection is ArchivesSpace stage. The collection is up to date.'
     oac_html: 'The data source for this collection is <a href="https://oac.cdlib.org/">Online Archive of California</a>. The collection was updated on %{last_indexed}.'
-  search_tips: 
+  search_tips:
     title: 'Search tips'
     subtitle: 'Refine your search'
     close: 'Close'
+  search:
+    constraints_title: 'Your selections: '
