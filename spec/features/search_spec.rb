@@ -18,8 +18,8 @@ RSpec.describe 'Searching', :js do
       expect(page.current_url).to include('group=true&search_field=keyword&q=Example+search+query')
     end
 
-    it 'creates Start Over link with the group=true parameter' do
-      click_on('Start Over')
+    it 'creates Clear all link with the group=true parameter' do
+      click_on('Clear all')
 
       expect(page).to have_current_path(search_catalog_path(group: true))
     end
