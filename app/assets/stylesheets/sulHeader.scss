@@ -1,18 +1,35 @@
-.input-group {
-  .search-btn {
-    background-color: var(--bs-body-bg);
-    border-color: #dee2e6; // Border color of Blacklight inputs
-    border-left: none;
-    padding: 0;
-    padding-right: 5px;
-
-    .blacklight-icons {
-      margin-top: 0.5rem;
+.navbar-search {
+  .search-query-form {
+    gap: 0;
+    .input-group {
+      height: 2.75rem;
     }
+  }
+}
 
-    &.btn:active {
-      background-color: var(--stanford-palo-alto-light);
-      border-color: var(--stanford-palo-alto-light);
+.blacklight-icons-search {
+  background-color: var(--bs-body-bg); 
+  align-self: center;
+  svg {
+    margin: 0 0 0 0.5rem;
+    fill: var(--stanford-black);
+  }
+}
+
+.input-group {
+  .search-autocomplete-wrapper {
+    border: none;
+  
+    // Make border 80% height to match designs
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      height: 80%;
+      width: 1px;
+      background-color: var(--stanford-40-black);
     }
   }
 
@@ -22,9 +39,26 @@
   }
 }
 
+.search-btn-wrapper {
+  background-color: var(--bs-body-bg);
+  border: none;
+  height: 100%;
+  .search-btn {
+    border-radius: var(--bs-btn-border-radius);
+    margin: 0.5rem;
+    padding: 0.15rem var(--bs-btn-padding-x);
+  }
+}
+
+// Arclight override
+.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) { 
+  border-top-right-radius: var(--bs-border-radius);
+  border-bottom-right-radius: var(--bs-border-radius);
+}
+
 .al-masthead ~ .navbar-search {
-  border-top: none;
   background-color: var(--stanford-black);
+  border-top: none;
   margin-bottom: 0;
 
   .input-group-text {
@@ -37,7 +71,26 @@
   }
 
   .within-collection-dropdown {
-    padding-right: 0.25rem;
+    background-color: var(--bs-body-bg);
+    border-top-left-radius: var(--bs-border-radius);
+    border-bottom-left-radius: var(--bs-border-radius);
+
+    select {
+      border: none;
+    }
+
+    // Make border about 80% height to match designs
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      height: 80%;
+      width: 1px;
+      background-color: var(--stanford-40-black);
+      pointer-events: none;
+    }
 
     .input-group-text {
       padding-left: 0;
@@ -45,24 +98,24 @@
     }
   }
 
+  .custom-select.form-select {
+    width: auto;
+    flex: 0 0 auto;
+    border: none;
+    border-right: var(--stanford-black) 1px solid;
+  }
+
   .form-select {
     background-size: 1.125rem 1.125rem;
     padding-top: 0;
     padding-bottom: 0;
-
-    @include media-breakpoint-up(lg) {
-      padding-right: 5rem;
-    }
-
-    @include media-breakpoint-up(xl) {
-      padding-right: 8rem;
-    }
+    border-radius: 0;
   }
 
   // Search field selector and full text search box input group
   .input-group:nth-of-type(2) {
     @include media-breakpoint-up(lg) {
-      min-width:100%;
+      min-width: 100%;
     }
   }
 
@@ -73,9 +126,12 @@
   .blacklight-icons-outline_info svg {
     fill: white;  
   }
+}
 
-  #search_field {
-    margin-right: 0.825rem;
+// Arclight override
+.al-masthead ~ .navbar-search .input-group:nth-of-type(2) {
+  @include media-breakpoint-up(lg) {
+    min-width: 90%;
   }
 }
 

@@ -10,7 +10,9 @@ RSpec.describe 'Searching', :js do
       # Fill in the search input with some text
       fill_in 'q', with: 'Example search query'
 
-      click_on 'Search'
+      within '.search-btn-wrapper' do
+        click_on 'Search'
+      end
     end
 
     it 'renders the search results page with default params' do
@@ -29,8 +31,9 @@ RSpec.describe 'Searching', :js do
     it 'does not group by collection' do
       visit solr_document_path(id: 'ars-0043_ambassador-auditorium-collection')
       fill_in 'q', with: 'jazz'
-      click_on 'search'
-
+      within '.search-btn-wrapper' do
+        click_on 'Search'
+      end
       expect(page).to have_content(/You searched for:\s*Keyword jazz/)
       expect(page.current_url).not_to include('group=true')
     end
@@ -40,9 +43,10 @@ RSpec.describe 'Searching', :js do
     it 'groups by collection' do
       visit solr_document_path(id: 'ars-0043_ambassador-auditorium-collection')
       fill_in 'q', with: 'jazz'
-      select('all collections', from: 'within_collection')
-      click_on 'search'
-
+      select('All collections', from: 'within_collection')
+      within '.search-btn-wrapper' do
+        click_on 'Search'
+      end
       expect(page).to have_content(/You searched for:\s*Keyword jazz/)
       expect(page.current_url).to include('group=true')
     end
@@ -52,7 +56,9 @@ RSpec.describe 'Searching', :js do
     before do
       visit search_catalog_path
       fill_in 'q', with: 'Academy of Ancient Music - Broadway Celebration'
-      click_on 'Search'
+      within '.search-btn-wrapper' do
+        click_on 'Search'
+      end
     end
 
     it 'returns the expected number of results' do

@@ -7,9 +7,8 @@
 
   <% c.with_before_input_group do %>
     <div class="input-group within-collection-dropdown">
-      <label class="input-group-text" for="within_collection">
-        <%= t('arclight.within_collection_dropdown.label_html') %>
-      </label>
+      <%= render(Blacklight::Icons::SearchComponent.new) %>
+
       <%= select_tag ('f[collection][]' if collection_name.present?), within_collection_options, id: 'within_collection', class: 'form-select search-field' %>
     </div>
   <% end %>
