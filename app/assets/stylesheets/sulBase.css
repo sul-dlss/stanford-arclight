@@ -44,6 +44,12 @@ label.toggle-bookmark {
   color: var(--stanford-digital-blue);
 }
 
+.view-type .btn {
+  --bs-btn-font-size: 0.875rem;
+  --bs-btn-border-radius: var(--bs-border-radius-sm);
+  padding: 0.25rem;
+}
+
 /* TODO: may be able to remove this after */
 /* https://github.com/sul-dlss/stanford-arclight/issues/913 */
 .search-btn .blacklight-icons svg {
