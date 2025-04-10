@@ -1,6 +1,4 @@
 /* Shared styles across pages for Bootstrap cards */
-
-.blacklight-landing_page .card,
 .al-repositories .card {
   margin-top: 2rem;
   margin-bottom: -1.5rem;
@@ -53,7 +51,6 @@
   }
 }
 
-.blacklight-landing_page .card-container,
 .al-repositories .card-container {
   // this centers the cards if there are less than 3 in a row
   justify-content: center;

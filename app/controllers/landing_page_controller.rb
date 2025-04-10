@@ -16,9 +16,7 @@ class LandingPageController < ApplicationController
   end
 
   def index
-    @hours = Settings.hours_locations.map { |hours_config| LibraryHours.from_config(hours_config) }
     @collection_count = site_collection_count
-    @seconds_until_next_half_hour = TimeService.seconds_until_next_half_hour
   end
 
   private

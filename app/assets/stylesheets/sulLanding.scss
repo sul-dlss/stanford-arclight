@@ -112,3 +112,39 @@ $featured-teaser-overhang: 1rem;
     font-style: italic;
   }
 }
+
+.landing-page-access,
+.landing-page-info {
+  --bs-border-color: var(--stanford-70-black);
+
+  .row {
+    --bs-gutter-x: 2.875rem;
+    --bs-gutter-y: 2.875rem;
+  }
+
+  .card-body {
+    .row {
+      --bs-gutter-x: 1.25rem;
+      --bs-gutter-y: 1.25rem;
+    }
+  }
+
+  .card {
+    --bs-card-border-width: 0;
+  }
+}
+
+.landing-page-access {
+  .card {
+    --bs-card-border-radius: 0;
+    --bs-card-bg: var(--grey-lighter);
+  }
+
+  .blacklight-icons svg {
+    fill: var(--stanford-digital-green);
+  }
+
+  .blacklight-icons.library-closed svg {
+    fill: var(--stanford-black);
+  }
+}

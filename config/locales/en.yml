@@ -50,35 +50,42 @@ en:
     index:
       title: 'Find archival materials'
       collection_count: Detailed inventories of %{collection_count} collections
-    about:
-      heading: 'About this site'
-      description_html: >
-        <p>Use this portal to search and explore finding aids, also called collection guides. Search across all finding aids by keyword, subject, title, or browse by contributing repositories.</p>
-        <p>Finding aids describe collections of primary sources and other unique, original, or rare materials 
-        held across the special collections repositories at Stanford University Libraries. Materials may 
-        include personal papers of scientists, artists, performers, political activists, and writers; maps; 
-        photographs; manuscript drafts; rare books; artists' books; audiovisual materials; records of departments 
-        and organizations; and more. Some digitized archival materials may be present within finding aids, and 
-        digital collections may be found in <a href="https://searchworks.stanford.edu/">SearchWorks</a>.</p>
-      information_list:
-        title_html: <p>The finding aid provides information about:</p>
+    access_heading: 'Accessing Special Collections'
+    access_cards:
+      spc:
+        heading: Field Reading Room
         entries:
-          - The origin of the collection
-          - A brief biography or historical sketch of the individual or organization that created the collection
-          - A statement of the intellectual and physical organization of the collections
-          - A narrative "scope and content note" describing the intellectual content of the collection as a whole and of its major subdivisions
-          - A detailed "contents list" providing a hierarchical listing of the collections from the series down to the file, or possibly the item, level
-    cards:
-      location:
-        title: Locations
-      request:
-        title: Request materials
-        body_html: <p>Stanford University Libraries acquires, preserves, and makes available materials of enduring historic value to support the research needs of Stanford students and faculty and the larger scholarly community. Rare and distinctive materials exist in several locations across Stanford University Libraries. Click the Request button below to learn more.</p>
-        button_text: Request
-      contact:
-        title: Ask a subject specialist
-        body_html: <p>Have questions about Stanford University Libraries collections or accessing materials? Contact a librarian for help.</p>
-        button_text: Find a subject specialist
+          - Located on the second floor of Green Library West.
+          - Manuscripts, Rare books, University Archives, and the California Historical Society Collection can be accessed here.
+        request_html: <a href="https://guides.library.stanford.edu/c.php?g=1173230&p=8571528" class="btn btn-outline-primary">How to request materials</a>
+      ars:
+        heading: Archive of Recorded Sound
+        entries:
+          - Located in the basement of the Music Library.
+          - Archive of Recorded Sound collections can be accessed here.
+        request_html: <a href="https://www.youtube.com/watch?v=WEFN45PYdik" class="btn btn-outline-primary">How to request materials</a>
+      eal:
+        heading: East Asia Library
+        entries:
+          - Located on the second floor of Lathrop building.
+          - East Asia Library collections can be accessed here.
+        request_html: <a href="https://library.stanford.edu/special-collections-east-asia" class="btn btn-outline-primary">How to request materials</a>
+      cubberley:
+        heading: Cubberley Education Library
+        entries:
+          - When reopened, it will be located on the second floor of the Cubberley building.
+          - Education Library collections can be accessed here.
+    info_cards:
+      subject_specialist:
+        heading: Find a subject specialist
+        description: Have questions about Stanford University Libraries collections or accessing materials?
+        button_html: <a href="https://library.stanford.edu/research-support/subject-specialists" class="btn btn-primary">Contact us for help</a>
+      about:
+        heading: Using this site
+        description: Use this portal to search and explore finding aids, also called collection guides. 
+        # button_html: <a href="" class="btn btn-outline-primary">Learn more about using this site</a>
+
+
   feedbacks:
     create:
       success: Feedback submitted.
