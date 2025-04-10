@@ -7,10 +7,6 @@
   --al-mastead-active-link-color: white;
 }
 
-.blacklight-icons svg {
-  fill: var(--stanford-digital-blue);
-}
-
 .form-control:focus {
   border-color: var(--stanford-digital-blue);
   box-shadow: 0 0 0 0.25rem rgba(var(--stanford-digital-blue-rgb), 0.25);
@@ -46,4 +42,25 @@
 
 label.toggle-bookmark {
   color: var(--stanford-digital-blue);
+}
+
+/* TODO: may be able to remove this after */
+/* https://github.com/sul-dlss/stanford-arclight/issues/913 */
+.search-btn .blacklight-icons svg {
+  fill: var(--stanford-digital-blue);
+}
+
+/* NOTE: Component library is competing with some styles from Arclight. */
+/* May be able to avoid these svg styles if we address: */
+/* https://github.com/projectblacklight/arclight/issues/1595 */
+.btn-outline-secondary svg {
+  fill: var(--stanford-digital-blue);
+}
+
+.btn-outline-secondary.remove svg {
+  fill: var(--stanford-70-black);
+}
+
+.btn-outline-secondary.remove:hover svg {
+  fill: var(--stanford-digital-red);
 }
