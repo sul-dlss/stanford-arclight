@@ -2,12 +2,19 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-8 d-flex justify-content-center justify-content-md-start">
-        <span class="h1 my-3"><%= heading %></span>
+      <span class="align-self-center"><%= image_tag 'rosette.png', height: '42', width: '42' %></span>
+      <span class="h1"><%= heading %></span>
       </div>
       <div class="col-md-4 d-none d-md-block">
         <nav class="navbar navbar-expand d-flex justify-content-md-end justify-content-center" aria-label="browse">
           <ul class="navbar-nav">
-            <%= render 'shared/main_menu_links' %>
+            <li class="nav-item <%= helpers.repositories_active_class %>">
+              <%= link_to t('arclight.routes.repositories'), helpers.arclight_engine.repositories_path, class: 'nav-link' %>
+            </li>
+            <li class="nav-item divider-dot d-md-flex align-items-center px-2">•</li>          
+            <li class="nav-item <%= helpers.collection_active_class %>">
+              <%= link_to t('arclight.routes.collections'), helpers.arclight_engine.collections_path, class: 'nav-link' %>
+          </li>
           </ul>
         </nav>
       </div>

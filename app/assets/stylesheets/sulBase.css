@@ -3,8 +3,16 @@
   --al-content-icon-color: var(--stanford-digital-blue)
 }
 
+.navbar {
+  --bs-navbar-nav-link-padding-y: 1rem;
+  --bs-navbar-nav-link-padding-x: 1rem;  
+}
+
 .al-masthead {
   --al-mastead-active-link-color: white;
+  h1 {
+    padding: 1rem;
+  }
 }
 
 .form-control:focus {
@@ -69,4 +77,9 @@ label.toggle-bookmark {
 
 .btn-outline-secondary.remove:hover svg {
   fill: var(--stanford-digital-red);
+}
+.divider-dot {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: normal;
 }
