@@ -14,7 +14,7 @@
     <%= render CollectionUnitidPillComponent.new(document: document) %>
   <% end %>
   <%= render 'arclight/requests', document: document %>
-  <%= render Arclight::BookmarkComponent.new document: document, action: bookmark_config %>
+  <%= render Blacklight::Document::BookmarkComponent.new document: document, action: bookmark_config %>
   <%= toggle_sidebar %>
   <%= online_filter %>
 </div>
