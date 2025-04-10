@@ -15,7 +15,7 @@ module Arclight
 
     def icon_with_tooltip
       icon = <<~HTML
-        <span class="al-online-content-icon" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="Includes digital content">
+        <span class="al-online-content-icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="Includes digital content">
             #{helpers.blacklight_icon(:online)}
         </span>
       HTML

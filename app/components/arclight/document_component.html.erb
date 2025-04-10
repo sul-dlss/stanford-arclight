@@ -10,7 +10,7 @@
 
 <div class="title-container">
   <%= content_tag :h1 do %>
-    <%= document.normalized_title %>
+    <span class="me-2"><%= document.normalized_title %></span>
     <%= render CollectionUnitidPillComponent.new(document: document) %>
   <% end %>
   <%= render 'arclight/requests', document: document %>
