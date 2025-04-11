@@ -38,6 +38,9 @@ en:
         sections:
           contact_field: "Repository contact information"
           in_person_field: "In person information"
+    within_collection_dropdown:
+      all_collections: All collections
+      this_collection: This collection
   blacklight:
     search:
       start_over: 'Clear all'
@@ -117,3 +120,4 @@ en:
     close: 'Close'
   search:
     constraints_title: 'Your selections: '
+    search_bar_button: 'Search'
