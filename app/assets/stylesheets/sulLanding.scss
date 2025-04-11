@@ -163,3 +163,21 @@ $featured-teaser-overhang: 1rem;
     fill: var(--stanford-black);
   }
 }
+
+.landing-page-info {
+  // Add vertical line between cards when side by side
+  .info-card:nth-child(even) {
+    .card:before  {
+      @include media-breakpoint-up(lg) {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -1.438rem;
+        transform: translateY(-50%);
+        height: 80%;
+        width: 1px;
+        background-color: var(--stanford-70-black);
+      }
+    }
+  }
+}
