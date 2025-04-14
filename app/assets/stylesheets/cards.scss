@@ -1,5 +1,7 @@
 /* Shared styles across pages for Bootstrap cards */
 .al-repositories .card {
+  --bs-card-inner-border-radius: 0;
+  --bs-card-border-radius: 0;
   margin-top: 2rem;
   margin-bottom: -1.5rem;
   background-color: var(--grey-lighter);
