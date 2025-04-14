@@ -3,6 +3,8 @@ beta_banner:
 
 display_collection_source: true
 
+global_alert: <%= ENV['GLOBAL_ALERT'] || false %>
+
 hours_api: 'https://library-hours.stanford.edu/'
 
 # Locations with a 'closed_note' will display the note in lieu of fetching hours from the API.

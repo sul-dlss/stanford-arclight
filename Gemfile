@@ -101,6 +101,8 @@ gem 'config'
 gem 'faraday', '~> 2' # for library hours
 gem 'faraday-retry'
 
+gem 'global_alerts'
+
 gem 'honeybadger', '~> 5.2'
 
 gem 'okcomputer', '~> 1.18'
