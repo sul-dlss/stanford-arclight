@@ -1,4 +1,4 @@
-<div class='al-grouped-title-bar'>
+<div class='al-grouped-title-bar me-2'>
   <div class='row'>
     <div class='col-md-12'>
       <% if document.repository_config.present? %>
@@ -20,18 +20,23 @@
   </div>
 </div>
 
-<div class="grouped-documents">
-  <div class="al-grouped-more">
+<div class="grouped-documents ms-3">
+  <div class="grouped-results-count mb-3">
     <% if @group.total > 3 %>
-      <%= t('arclight.views.index.top_group_results', count: 3) %>
-      <%= link_to(
-        t('arclight.views.index.all_group_results', count: @group.total),
-        search_within_collection_url)
-      %>
+      <%= t('arclight.views.index.group_results_count_more') %>
     <% else %>
       <%= t('arclight.views.index.group_results_count', count: @group.total) %>
     <% end %>
   </div>
-
-  <%= helpers.render_document_index @group.docs %>
+  <div class="ms-0 ms-sm-4">
+    <%= helpers.render_document_index @group.docs %>
+  </div>
+  <div class="al-grouped-more mb-4">
+    <% if @group.total > 3 %>
+      <%= link_to(
+        t('arclight.views.index.all_group_results', count: helpers.number_with_delimiter(@group.total)),
+        search_within_collection_url, class: 'btn btn-secondary')
+      %>
+    <% end %>
+  </div>
 </div>
