@@ -18,9 +18,9 @@
   }
 
   .card-img-top {
-    // to make the image sizes consistent:
+    /* to make the image sizes consistent: */
     height: 230px;
-    // Crop the image to cover the specified height without changing aspect ratio
+    /* Crop the image to cover the specified height without changing aspect ratio */
     object-fit: cover;
   }
 
@@ -42,9 +42,6 @@
 
   h2 {
     font-size: calc(1.3rem + 0.6vw);
-    @include media-breakpoint-up(xxl) {
-      font-size: 1.75rem;
-    }
   }
 
   h2,
@@ -53,15 +50,21 @@
   }
 }
 
+@media (min-width: 1400px) {
+  .al-repositories .card h2 {
+    font-size: 1.75rem;
+  }
+}
+
 .al-repositories .card-container {
-  // this centers the cards if there are less than 3 in a row
+  /* this centers the cards if there are less than 3 in a row */
   justify-content: center;
 }
 
 /* specific to repositories page */
 .al-repositories .card-container {
-  // this margin counteracts the negative margin on the cards to create spacing between multiple rows of card-containers.
-  // On the landing page there is only one row of card-containers so this is not needed
+  /* this margin counteracts the negative margin on the cards to create spacing between multiple rows of card-containers.
+  On the landing page there is only one row of card-containers so this is not needed */
   margin-top: 2rem;
 
   &:last-child {
@@ -72,19 +75,21 @@
     margin-bottom: 2rem;
   }
 
-  // for single stacked cards on small screen
-  @include media-breakpoint-down(lg) {
-    margin-top: 0;
-    .card-col {
-      margin-top: 5rem;
-    }
-  }
-
   .card-text {
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 10;
     -webkit-box-orient: vertical;
+  }
+}
+
+/* For single stacked cards at narrow screen widths */
+@media (max-width: 992px) {
+  .al-repositories .card-container {
+    margin-top: 0;
+    .card-col {
+      margin-top: 4rem;
+    }
   }
 }

@@ -1,4 +1,7 @@
 .blacklight-landing_page {
+  --featured-item-height: 22rem;
+  --featured-teaser-overhang: 1rem;
+
   #main-container h1,
   h2 {
     font-size: 1.75rem;
@@ -6,25 +9,13 @@
   }
 }
 
-// make the content area full bleed
+/* make the content area full bleed */
 #main-container {
   padding: 0;
   overflow-x: hidden;
 }
 
-$featured-item-height: 22rem;
-$featured-teaser-overhang: 1rem;
-
 #featured-item-wrapper {
-  .featured-item {
-    @include media-breakpoint-up(lg) {
-      img {
-        height: $featured-item-height;
-        object-fit: cover;
-      }
-    }
-  }
-
   .featured-item-caption {
     text-align: left;
     background: rgba(0, 0, 0, 0.8);
@@ -39,7 +30,7 @@ $featured-teaser-overhang: 1rem;
 #landing-page-search {
   --bs-heading-color: var(--bs-body-color);
   background-image: linear-gradient(to right, #efefef, #d0d8d8);
-  // 30px matches height of stanford top white brand bar
+  /* 30px matches height of stanford top white brand bar */
   padding-top: 30px;
 
   #autocomplete-popup li {
@@ -59,7 +50,7 @@ $featured-teaser-overhang: 1rem;
     border-bottom-left-radius: var(--bs-border-radius);
   }
 
-  // Remove left border from the search input on the landing page
+  /* Remove left border from the search input on the landing page */
   .input-group .search-autocomplete-wrapper::before {
     width: 0px;
   }
@@ -75,8 +66,20 @@ $featured-teaser-overhang: 1rem;
     font-size: 1.125rem;
     font-weight: 350;
   }
+}
 
-  @include media-breakpoint-up(md) {
+@media (min-width: 992px) {
+  #featured-item-wrapper img{
+    height: var(--featured-item-height);
+    object-fit: cover;
+  }
+  #landing-page-search {
+    height: calc(var(--featured-item-height) - var(--featured-teaser-overhang));
+  }
+}
+
+@media (min-width: 768px) {
+  #landing-page-search {
     ul {
       list-style-type: none;
       padding-left: 0;
@@ -96,14 +99,10 @@ $featured-teaser-overhang: 1rem;
       color: var(--stanford-digital-blue);
     }
   }
-
-  @include media-breakpoint-up(lg) {
-    height: calc($featured-item-height - $featured-teaser-overhang);
-  }
 }
 
 #about-landing {
-  // 30px matches height of stanford top white brand bar
+  /* 30px matches height of stanford top white brand bar */
   padding-top: 30px;
   padding-bottom: 30px;
 }
@@ -159,20 +158,17 @@ $featured-teaser-overhang: 1rem;
   }
 }
 
-.landing-page-info {
-  // Add vertical line between cards when side by side
-  .info-card:nth-child(even) {
+@media (min-width: 992px) {
+  .landing-page-info .info-card:nth-child(even) {
     .card:before  {
-      @include media-breakpoint-up(lg) {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: -1.438rem;
-        transform: translateY(-50%);
-        height: 80%;
-        width: 1px;
-        background-color: var(--stanford-70-black);
-      }
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -1.438rem;
+      transform: translateY(-50%);
+      height: 80%;
+      width: 1px;
+      background-color: var(--stanford-70-black);
     }
   }
 }
