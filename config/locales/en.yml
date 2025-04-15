@@ -41,7 +41,7 @@ en:
       index:
         all_group_results: View all %{count} results in this collection
         group_results_count:
-          one: One result in this collection
+          one: 1 result in this collection
           other: "%{count} results in this collection"
         group_results_count_more: Top 3 results in this collection
     within_collection_dropdown:
