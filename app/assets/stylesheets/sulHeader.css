@@ -19,24 +19,25 @@
 .input-group {
   .search-autocomplete-wrapper {
     border: none;
-  
-    // Make border 80% height to match designs
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      transform: translateY(-50%);
-      height: 80%;
-      width: 1px;
-      background-color: var(--stanford-40-black);
-    }
   }
 
   > .search-autocomplete-wrapper ul li:active {
     color: var(--stanford-black);
     background-color: var(--grey-lighter);
   }
+}
+
+/* Make border 80% height to match designs */
+.input-group .search-autocomplete-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 80%;
+  width: 1px;
+  background-color: var(--stanford-40-black);
+
 }
 
 .search-btn-wrapper {
@@ -50,7 +51,7 @@
   }
 }
 
-// Arclight override
+/* Arclight override */
 .input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) { 
   border-top-right-radius: var(--bs-border-radius);
   border-bottom-right-radius: var(--bs-border-radius);
@@ -79,23 +80,24 @@
       border: none;
     }
 
-    // Make border about 80% height to match designs
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      height: 80%;
-      width: 1px;
-      background-color: var(--stanford-40-black);
-      pointer-events: none;
-    }
-
     .input-group-text {
       padding-left: 0;
       padding-right: 1.25rem;
     }
+  }
+
+  /* Make border about 80% height to match designs */
+  .within-collection-dropdown::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    height: 80%;
+    width: 1px;
+    background-color: var(--stanford-40-black);
+    pointer-events: none;
+
   }
 
   .custom-select.form-select {
@@ -112,13 +114,6 @@
     border-radius: 0;
   }
 
-  // Search field selector and full text search box input group
-  .input-group:nth-of-type(2) {
-    @include media-breakpoint-up(lg) {
-      min-width: 100%;
-    }
-  }
-
   .searchtips-link a {
     color: white;
   }
@@ -128,18 +123,17 @@
   }
 }
 
-// Arclight override
-.al-masthead ~ .navbar-search .input-group:nth-of-type(2) {
-  @include media-breakpoint-up(lg) {
+@media (min-width: 992px) {
+  .al-masthead ~ .navbar-search .input-group:nth-of-type(2) {
     min-width: 90%;
   }
 }
 
 .beta-banner {
   background-color: var(--stanford-illuminating);
-  // These aren't official stanford colors
-  // but no combination of official interactive colors
-  // meet accessibility contrast requirements on this background.
+  /* These aren't official stanford colors
+  but no combination of official interactive colors
+  meet accessibility contrast requirements on this background. */
   color: #000;
   a {
     color: #0065ad;
