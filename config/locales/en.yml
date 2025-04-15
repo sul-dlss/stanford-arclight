@@ -38,6 +38,12 @@ en:
         sections:
           contact_field: "Repository contact information"
           in_person_field: "In person information"
+      index:
+        all_group_results: View all %{count} results in this collection
+        group_results_count:
+          one: One result in this collection
+          other: "%{count} results in this collection"
+        group_results_count_more: Top 3 results in this collection
     within_collection_dropdown:
       all_collections: All collections
       this_collection: This collection
