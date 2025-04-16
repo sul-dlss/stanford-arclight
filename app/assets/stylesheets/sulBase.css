@@ -83,3 +83,10 @@ label.toggle-bookmark {
   font-size: 1.25rem;
   font-weight: normal;
 }
+
+#bookmarks_nav .badge-secondary {
+  --bs-badge-color: black;
+  --bs-secondary-rgb: 255, 255, 255;
+  --bs-bg-opacity: 1;
+  margin-left: 0.25rem;
+}
