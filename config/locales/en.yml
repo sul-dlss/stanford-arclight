@@ -38,6 +38,14 @@ en:
         sections:
           contact_field: "Repository contact information"
           in_person_field: "In person information"
+        download:
+          default: Finding aid / EAD
+          multiple:
+            ead: Download EAD
+            pdf: Download finding aid
+          single:
+            ead: Download EAD
+            pdf: Download finding aid
       index:
         all_group_results: View all %{count} results in this collection
         group_results_count:
