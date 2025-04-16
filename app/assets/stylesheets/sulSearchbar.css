@@ -1,0 +1,120 @@
+/* Input group styles -- make sure to only impact input-groups within .navbar-search */
+.search-query-form {
+    .input-group {
+        height: 2.75rem;
+        border-radius: var(--bs-border-radius);
+    }
+
+    .input-group .search-autocomplete-wrapper {
+        border: none;
+    }
+
+    .input-group .search-autocomplete-wrapper ul li:active {
+        color: var(--stanford-black);
+        background-color: var(--grey-lighter);
+    }
+
+    /* make dividers 80% of height to match designs */
+    .input-group .search-autocomplete-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        height: 80%;
+        width: 1px;
+        background-color: var(--stanford-40-black);
+    }
+
+    .input-group.within-collection-dropdown {
+        background-color: var(--bs-body-bg);
+        border-radius: var(--bs-border-radius);
+        position: relative;
+    }
+
+    .input-group.within-collection-dropdown select {
+        border: none;
+    }
+
+    .input-group.within-collection-dropdown .input-group-text {
+        padding-left: 0;
+        padding-right: 1.25rem;
+        background-color: var(--stanford-black);
+        border: none;
+        color: white;
+        font-weight: 700;
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+
+    /* make dividers 80% of height to match designs */
+    .input-group.within-collection-dropdown::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        height: 80%;
+        width: 1px;
+        background-color: var(--stanford-40-black);
+        pointer-events: none;
+    }
+
+    /* Bootstrap overrides -- needs to be this specific in order to work */
+    .input-group.within-collection-dropdown> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+        border-top-left-radius: var(--bs-border-radius);
+        border-bottom-left-radius: var(--bs-border-radius);
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    /* Search button -- says "Search" or displays magnifying glass icon depending on size
+      See SearchButtonComponent
+    */
+    .search-btn-wrapper {
+        background-color: var(--bs-body-bg);
+        border: none;
+        height: 100%;
+        border-top-right-radius: var(--bs-border-radius);
+        border-bottom-right-radius: var(--bs-border-radius);
+        align-items: center;
+        align-self: center;
+    }
+
+    .search-btn-wrapper .search-btn {
+        border-radius: var(--bs-btn-border-radius);
+        margin: 0.5rem;
+        padding: 0.25rem 0.5rem;
+        max-height: 2.25rem;
+        align-items: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .search-btn-wrapper .search-btn {
+        padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+    }
+}
+
+/* Search icon -- the magnifying glass on left side of bar */
+.blacklight-icons-search {
+    background-color: transparent;
+}
+
+.blacklight-icons-search svg {
+    margin: 0;
+    fill: var(--grey-lighter);
+    width: 1.5rem;
+}
+
+@media (min-width: 786px) {
+    .blacklight-icons-search {
+        align-self: center;
+        background-color: var(--bs-body-bg);
+    }
+    
+    .blacklight-icons-search svg {
+        margin: 0 0 0 0.5rem;
+        fill: var(--stanford-80-black);
+    }
+}

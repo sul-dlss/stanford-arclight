@@ -3,6 +3,12 @@
   --al-content-icon-color: var(--stanford-digital-blue)
 }
 
+/* make the content area full bleed */
+#main-container {
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .navbar {
   --bs-navbar-nav-link-padding-y: 1rem;
   --bs-navbar-nav-link-padding-x: 1rem;  
@@ -56,12 +62,6 @@ label.toggle-bookmark {
   --bs-btn-font-size: 0.875rem;
   --bs-btn-border-radius: var(--bs-border-radius-sm);
   padding: 0.25rem;
-}
-
-/* TODO: may be able to remove this after */
-/* https://github.com/sul-dlss/stanford-arclight/issues/913 */
-.search-btn .blacklight-icons svg {
-  fill: var(--stanford-digital-blue);
 }
 
 /* NOTE: Component library is competing with some styles from Arclight. */

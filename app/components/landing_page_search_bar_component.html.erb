@@ -13,7 +13,7 @@
       <%= f.search_field @query_param, value: @q, placeholder: scoped_t('search.placeholder'), class: "search-q q form-control me-xl-3", autofocus: @autofocus, aria: { label: scoped_t('search.label') }  %>
     <% end %>
     <%= append %>
-    <%= search_button || render(Blacklight::SearchButtonComponent.new(id: "#{@prefix}search", text: scoped_t('submit'))) %>
+    <%= with_search_button %>
   </div>
   <div class="search-links col-12">
     <ul class="ps-md-0 pt-3">

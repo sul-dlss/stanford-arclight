@@ -1,141 +1,73 @@
+/* Search bar in header -- interior pages */
 .navbar-search {
-  .search-query-form {
-    gap: 0;
-    .input-group {
-      height: 2.75rem;
-    }
-  }
-}
-
-.blacklight-icons-search {
-  background-color: var(--bs-body-bg); 
-  align-self: center;
-  svg {
-    margin: 0 0 0 0.5rem;
-    fill: var(--stanford-80-black);
-  }
-}
-
-.input-group {
-  .search-autocomplete-wrapper {
-    border: none;
-  }
-
-  > .search-autocomplete-wrapper ul li:active {
-    color: var(--stanford-black);
-    background-color: var(--grey-lighter);
-  }
-}
-
-/* Make border 80% height to match designs */
-.input-group .search-autocomplete-wrapper::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  height: 80%;
-  width: 1px;
-  background-color: var(--stanford-40-black);
-
-}
-
-.search-btn-wrapper {
-  background-color: var(--bs-body-bg);
-  border: none;
-  height: 100%;
-  .search-btn {
-    border-radius: var(--bs-btn-border-radius);
-    margin: 0.5rem;
-    padding: 0.15rem var(--bs-btn-padding-x);
-  }
-}
-
-/* Arclight override */
-.input-group > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) { 
-  border-top-right-radius: var(--bs-border-radius);
-  border-bottom-right-radius: var(--bs-border-radius);
-}
-
-.al-masthead ~ .navbar-search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--stanford-black);
   border-top: none;
   margin-bottom: 0;
-
-  .input-group-text {
-    background-color: var(--stanford-black);
-    border: none;
-    color: white;
-    font-weight: 700;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-  }
-
-  .within-collection-dropdown {
-    background-color: var(--bs-body-bg);
-    border-top-left-radius: var(--bs-border-radius);
-    border-bottom-left-radius: var(--bs-border-radius);
-
-    select {
-      border: none;
-    }
-
-    .input-group-text {
-      padding-left: 0;
-      padding-right: 1.25rem;
-    }
-  }
-
-  /* Make border about 80% height to match designs */
-  .within-collection-dropdown::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
-    height: 80%;
-    width: 1px;
-    background-color: var(--stanford-40-black);
-    pointer-events: none;
-
-  }
-
-  .custom-select.form-select {
-    width: auto;
-    flex: 0 0 auto;
-    border: none;
-    border-right: var(--stanford-black) 1px solid;
-  }
-
+   
   .form-select {
     background-size: 1.125rem 1.125rem;
     padding-top: 0;
     padding-bottom: 0;
-    border-radius: 0;
   }
 
-  .searchtips-link a {
-    color: white;
+  /* fill entire width on small screens, 75% when larger */
+  .search-query-form {
+    gap: 0;
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 
-  .blacklight-icons-outline_info svg {
-    fill: white;  
+  .searchtips-links {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 }
 
 @media (min-width: 992px) {
-  .al-masthead ~ .navbar-search .input-group:nth-of-type(2) {
-    min-width: 90%;
+  .navbar-search .search-query-form {
+    flex: 0 0 75%;
+    max-width: 75%;
   }
+}
+
+/* custom-select aka the fielded search (keyword, place, etc.) styles 
+   display only on larger screens
+*/
+.custom-select {
+  border-radius: 0;
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .custom-select {
+    display: block;
+  }
+}
+
+.al-masthead ~ .navbar-search .custom-select.form-select {
+  width: auto;
+  flex: 0 0 auto;
+  border: none;
+  border-right: var(--stanford-black) 1px solid;
+}
+
+/* Misc other styles */
+.searchtips-link a {
+  color: white;
+}
+
+.blacklight-icons-outline_info svg {
+  fill: white;
 }
 
 .beta-banner {
   background-color: var(--stanford-illuminating);
-  /* These aren't official stanford colors
-  but no combination of official interactive colors
-  meet accessibility contrast requirements on this background. */
   color: #000;
-  a {
-    color: #0065ad;
-  }
+}
+
+.beta-banner a {
+  color: #0065ad;
 }
