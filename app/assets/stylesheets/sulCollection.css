@@ -161,8 +161,10 @@ Those borders should look the same but have different types of markup in AL Core
   }
 }
 
-/* These are the badges in the heirarchy that show the number of items */
-.documentHeader .bg-secondary {
+/* These are the badges in the heirarchy and content list
+that show the number of items */
+.documentHeader .bg-secondary,
+.al-collection-context .bg-secondary {
   --bs-secondary-rgb: var(--stanford-70-black-rgb);
   --bs-badge-font-weight: 400;
   --bs-border-radius: 0.625rem;
