@@ -58,12 +58,6 @@ label.toggle-bookmark {
   padding: 0.25rem;
 }
 
-/* TODO: may be able to remove this after */
-/* https://github.com/sul-dlss/stanford-arclight/issues/913 */
-.search-btn .blacklight-icons svg {
-  fill: var(--stanford-digital-blue);
-}
-
 /* NOTE: Component library is competing with some styles from Arclight. */
 /* May be able to avoid these svg styles if we address: */
 /* https://github.com/projectblacklight/arclight/issues/1595 */
