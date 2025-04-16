@@ -1,0 +1,6 @@
+<div class='d-flex justify-content-end pe-1'>
+  <%= link_to url_for(params: Blacklight::Parameters.sanitize(params.to_unsafe_h), format: 'csv'),
+                      download: CsvService.filename(prefix: 'bookmarks') do %>
+    <%= blacklight_icon('export') %><%= t('bookmarks.export_csv') %>
+  <% end %>
+</div>
