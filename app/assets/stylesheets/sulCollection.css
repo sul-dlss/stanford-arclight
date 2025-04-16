@@ -47,9 +47,36 @@
     margin-left: 0;
   }
 
-  /* this targets each button within the .al-collection-context-actions */
-  .al-collection-context-actions > * {
-    margin-right: 0.5rem;
+  .collection-info-section {
+    padding-bottom: 0;
+  }
+
+  #collection-nav {
+    /* h2 size and weight */
+    --bs-btn-font-size: 1.6rem;
+    font-weight: 500;
+    padding: 0;
+  }
+  
+  #collection-nav:hover {
+    text-decoration: underline;
+  }
+
+  /* Remove Bootstrap's focus ring from the button */
+  #collection-nav:focus,
+  #collection-nav:focus-visible,
+  #collection-nav:active {
+    outline: none;
+    box-shadow: none;
+  }
+
+  #collection-nav .bi-chevron-down {
+    margin-left: 0.75rem;
+    color: var(--stanford-digital-blue)
+  }
+
+  #collection-nav[aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(180deg);
   }
 
   .al-show-actions-box-info .btn-secondary,

@@ -1,0 +1,28 @@
+<nav class="al-sidebar-navigation-context sidebar-section collection-info-section" aria-labelledby="collection-nav">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+  <h2 class="mb-0 w-100 d-flex justify-content-between align-items-center">
+    <button class="btn btn-link d-flex align-items-center w-100"
+            id="collection-nav"
+            data-bs-toggle="collapse"
+            data-bs-target="#collection-info"
+            aria-expanded="false"
+            aria-controls="collection-info">
+      <span><%= t('arclight.views.show.context_nav.title') %></span>
+      <%= helpers.blacklight_icon('chevron_down') %>
+      </button>
+    </h2>
+  </div>
+
+  <ul class="nav collapse" id="collection-info" aria-labelledby="collection-nav">
+    <% partials.each do |section| %>
+      <% next unless has_section?(section) %>
+      <li class="nav-item w-100">
+        <%= link_to section_label(section),
+          document_section_path(section),
+          class: 'nav-link pl-0 ps-0 py-1',
+          data: { turbolinks: 'false' }
+        %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
