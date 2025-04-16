@@ -198,10 +198,6 @@ Those borders should look the same but have different types of markup in AL Core
   font-size: 10px;
 }
 
-.al-online-content-icon {
-  align-content: center;
-}
-
 /* arclight overrides */
 article.document .al-online-content-icon .blacklight-icons svg,
 .al-online-content-icon .blacklight-icons svg {

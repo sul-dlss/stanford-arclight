@@ -4,7 +4,6 @@
   <h3 class="index_title document-title-heading col">
     <span class="d-inline-block me-2 mb-2"><%= helpers.link_to_document @document, counter: @counter %></span>
 
-    <%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document) %>
     <%= render CollectionUnitidPillComponent.new(document: @document) %>
 
     <%= tag.span class: 'al-document-container text-muted' do %>
