@@ -52,6 +52,10 @@ label.toggle-bookmark {
   color: var(--stanford-digital-blue);
 }
 
+.bookmark-toggle {
+  margin-left: 0.5rem;
+}
+
 .view-type .btn {
   --bs-btn-font-size: 0.875rem;
   --bs-btn-border-radius: var(--bs-border-radius-sm);
