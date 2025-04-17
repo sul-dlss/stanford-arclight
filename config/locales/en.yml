@@ -58,6 +58,9 @@ en:
   blacklight:
     search:
       start_over: 'Clear all'
+    email:
+      form:
+        to: 'Email to'
   bookmarks:
     export_csv: 'Export to CSV'
     disclaimer_html: '<strong>Saved bookmarks are not permanent.</strong> They are stored in your browser and will be lost if you clear your session.'
@@ -66,6 +69,7 @@ en:
         page</strong>. Exporting them will only include the current page of
         bookmarks. You can export each page separately or increase the number shown per
         page (up to 100).
+    email_link: 'Email bookmarks'
   shared:
     beta_banner:
       beta_message_html: Please note this is a public beta version of this application. Visit the <a href="https://oac.cdlib.org/">Online Archive of California</a> for the most up to date information and to make a request.

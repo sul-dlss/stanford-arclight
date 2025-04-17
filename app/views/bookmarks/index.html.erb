@@ -11,9 +11,10 @@
     <h2 class='section-heading'><%= t('blacklight.bookmarks.no_bookmarks') %></h2>
   <% else %>
     <%= render 'sort_and_per_page' %>
-    <%= render partial: 'tools', locals: { document_list: @response.documents } %>
     <h2 class='section-heading visually-hidden'><%= t('blacklight.bookmarks.list_title') %></h2>
     <%= render_document_index @response.documents %>
     <%= render 'results_pagination' %>
   <% end %>
 </div>
+
+<%= render 'email_modal' %>

@@ -29,6 +29,12 @@ class BookmarkToolsComponent < ViewComponent::Base
     end
   end
 
+  def email_link
+    link_to '#modal-bookmarks-email', data: { bs_toggle: 'modal', bs_target: '#modal-bookmarks-email' } do
+      helpers.blacklight_icon('email') + t('bookmarks.email_link')
+    end
+  end
+
   def render?
     bookmarks_total_count.positive?
   end
