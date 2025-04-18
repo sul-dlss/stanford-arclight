@@ -1,0 +1,33 @@
+<div class="breadcrumb-container">
+    <span id="breadcrumb-home">
+        <a href="<%= root_path %>">Home</a>
+    </span>
+
+  <span class="breadcrumb-item">
+    <%= blacklight_icon :repository, classes: 'al-repository-content-icon' %>
+    <%= repository %>
+  </span>
+
+  <% if collection %>
+    <span class="breadcrumb-item">
+      <%= blacklight_icon :collection, classes: 'al-collection-content-icon' %>
+      <%= link_to collection.label, solr_document_path(collection.id) %>
+    </span>
+
+    <% parents_under_collection.each do |parent| %>
+      <span class="breadcrumb-item">
+        <%= link_to parent.label, solr_document_path(parent.id) %>
+      </span>
+    <% end %>
+
+    <span class="breadcrumb-item">
+      <%= @presenter.heading %>
+    </span>
+
+  <% else %>
+    <span class="breadcrumb-item">
+      <%= blacklight_icon :collection, classes: 'al-collection-content-icon' %>
+      <%= @presenter.heading %>
+    </span>
+  <% end %>
+</div>

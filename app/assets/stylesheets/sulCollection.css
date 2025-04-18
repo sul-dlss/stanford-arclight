@@ -123,8 +123,7 @@ Those borders should look the same but have different types of markup in AL Core
 #using-these-materials,
 #metadata .dl-invert,
 .title-container,
-#about-this-level,
-.al-show-breadcrumb {
+#about-this-level {
   padding-bottom: 1rem;
   border-bottom: 1px solid #d1d1d1;
   margin-bottom: 2rem;
@@ -138,16 +137,6 @@ Those borders should look the same but have different types of markup in AL Core
   ul {
     color: var(--stanford-digital-blue);
   }
-}
-
-.al-search-breadcrumb {
-  padding-top: 1rem;
-}
-
-.breadcrumb a,
-.breadcrumb-item {
-  font-size: 16px;
-  font-weight: 400;
 }
 
 .al-sidebar-navigation-context {
