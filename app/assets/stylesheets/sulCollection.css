@@ -276,9 +276,6 @@ article.document .al-online-content-icon .blacklight-icons svg {
     padding: 1rem;
     border-left: 8px solid var(--stanford-palo-alto-dark);
   }
-  a {
-    color: var(--stanford-digital-blue);
-  }
   .facet-label,
   .facet-select {
     font-weight: bold;
