@@ -13,7 +13,6 @@
     <span class="me-2"><%= document.normalized_title %></span>
     <%= render CollectionUnitidPillComponent.new(document: document) %>
   <% end %>
-  <%= render 'arclight/requests', document: document %>
   <%= render Blacklight::Document::BookmarkComponent.new document: document, action: bookmark_config %>
   <%= toggle_sidebar %>
   <%= online_filter %>
