@@ -1,5 +1,6 @@
 <%= tag.div class: 'navbar-search navbar py-3', role: 'navigation', aria: { label: t('blacklight.search.header') } do %>
   <div class="container d-flex flex-wrap justify-content-start">
     <%= search_bar %>
+    <%= render SearchTipsLinkComponent.new %>
   </div>
 <% end %>

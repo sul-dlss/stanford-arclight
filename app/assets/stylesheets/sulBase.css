@@ -3,6 +3,12 @@
   --al-content-icon-color: var(--stanford-digital-blue)
 }
 
+/* make the content area full bleed */
+#main-container {
+  padding: 0;
+  overflow-x: hidden;
+}
+
 .navbar {
   --bs-navbar-nav-link-padding-y: 1rem;
   --bs-navbar-nav-link-padding-x: 1rem;  
