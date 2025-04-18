@@ -292,6 +292,22 @@ article.document .al-online-content-icon .blacklight-icons svg {
   background-color: var(--stanford-10-black);
 }
 
+.digital-object-list {
+  background-color: var(--stanford-fog-light);
+  filter: drop-shadow(1px 4px 3px rgba(0, 0, 0, 0.25))
+  drop-shadow(-2px 2px 6px rgba(255, 255, 255, 0.2)); 
+  .card-body {
+    padding: 0.5rem;
+    border-left: 8px solid var(--stanford-palo-alto-dark);
+  }
+  .blacklight-icons-external_link svg {
+    fill: var(--stanford-digital-blue);
+  }
+  ul {
+    margin: 0;
+  }
+}
+
 .view-type-group .btn:hover svg {
   fill: var(--stanford-digital-blue);
 }
