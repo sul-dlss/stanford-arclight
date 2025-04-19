@@ -29,7 +29,7 @@ RSpec.describe 'Searching', :js do
 
   context 'when within a collection' do
     it 'does not group by collection' do
-      visit solr_document_path(id: 'ars-0043_ambassador-auditorium-collection')
+      visit solr_document_path(id: 'ars-0043')
       fill_in 'q', with: 'jazz'
       within '.search-btn-wrapper' do
         click_on 'Search'
@@ -41,7 +41,7 @@ RSpec.describe 'Searching', :js do
 
   context 'when within a collection and user selects group by all collections' do
     it 'groups by collection' do
-      visit solr_document_path(id: 'ars-0043_ambassador-auditorium-collection')
+      visit solr_document_path(id: 'ars-0043')
       fill_in 'q', with: 'jazz'
       select('All collections', from: 'within_collection')
       within '.search-btn-wrapper' do

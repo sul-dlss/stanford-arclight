@@ -50,7 +50,7 @@ RSpec.describe 'Collection Page' do
     end
 
     it 'displays the normalized collection id in the URL' do
-      expect(page.current_url).to eq('http://www.example.com/catalog/ars-0043_ambassador-auditorium-collection')
+      expect(page.current_url).to eq('http://www.example.com/catalog/ars-0043')
     end
   end
 
