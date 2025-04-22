@@ -71,6 +71,10 @@ label.toggle-bookmark {
   fill: var(--stanford-digital-blue);
 }
 
+.btn-outline-secondary:hover svg {
+  fill: var(--stanford-digital-blue);
+}
+
 .btn-outline-secondary.remove svg {
   fill: var(--stanford-70-black);
 }

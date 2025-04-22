@@ -1,16 +1,26 @@
 <div class='al-show-actions-box mb-3'>
   <div class="al-actions-box-container">
     <button type="button" class="btn-close d-lg-none float-end mt-1 me-1" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close"></button>
-    <h2>Collection</h2>
-    <h3>
-      <span class="me-2 mb-2 d-inline-block"><%= title %></span>
-      <%= unitid %>
-    </h3>
+    <div class="container">
+      <div class="row gx-0">
+        <div class="col-xl-1 pt-1 visually-hidden-xl">
+          <%= helpers.blacklight_icon(:collection) %>
+        </div>
+        <div class="col-12 col-xl-11">
+          <h2 class="visually-hidden">Collection</h2>
 
-    <div class="al-collection-context-actions d-flex flex-wrap gap-1">
-      <%= render 'arclight/requests', document: collection %>
-      <%= document_download %>
-      <%= collection_info %>
+          <h3 class="h2 ps-2 mb-4">
+            <span class="me-2"><%= title %></span>
+            <%= unitid %>
+          </h3>
+
+          <div class="al-collection-context-actions d-flex flex-wrap gap-1 ps-2">
+            <%= render 'arclight/requests', document: collection %>
+            <%= document_download %>
+            <%= collection_info %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
