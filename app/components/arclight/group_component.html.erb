@@ -12,7 +12,9 @@
         </span>
         <%= render CollectionUnitidPillComponent.new(document: document) %>
       </h3>
-      <%= render ExtentPillComponent.new(document: document, compact: compact?) %>
+      <div class="d-flex">
+        <%= render ExtentPillComponent.new(document: document, compact: compact?) %>
+      </div>
       <dl>
         <%= render Arclight::IndexMetadataFieldComponent.with_collection(presenter.field_presenters.select { |field| !compact? || field.field_config.compact }) %>
       </dl>
