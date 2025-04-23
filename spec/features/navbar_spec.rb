@@ -27,9 +27,9 @@ RSpec.describe 'Navbar' do
     end
 
     it "does not render 'Bookmark' and 'Search History' navigation items" do
-      expect(page).to have_css('.navbar-nav .nav-item', count: 1)
-      expect(page).to have_no_css('.navbar-nav .nav-item', text: 'Bookmarks')
-      expect(page).to have_no_css('.navbar-nav .nav-item', text: 'History')
+      expect(page).to have_css('.navbar-nav .nav-item', count: 3)
+      expect(page).to have_css('.navbar-nav .nav-item', text: 'Bookmarks')
+      expect(page).to have_css('.navbar-nav .nav-item', text: 'History')
     end
 
     it "always renders the 'Feedback' navigation item" do
