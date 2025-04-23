@@ -1,5 +1,5 @@
 <div class="offcanvas-lg offcanvas-start sticky-lg-top" tabindex="-1" id="sidebar">
-  <%= render CollectionContextComponent.new(presenter: document_presenter(document), download_component: Arclight::DocumentDownloadComponent) %>
+  <%= render CollectionContextComponent.new(presenter: document_presenter(document), download_component: DocumentDownloadComponent) %>
   <div id="sidebar-scroll-wrapper">
     <%= render 'show_tools', document: document %>
     <%= render CollectionOverviewComponent.new(document: document,
