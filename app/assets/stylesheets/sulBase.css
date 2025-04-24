@@ -3,10 +3,17 @@
   --al-content-icon-color: var(--stanford-digital-blue)
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* make the content area full bleed */
 #main-container {
   padding: 0;
   overflow-x: hidden;
+  flex: 1;
 }
 
 .navbar {
