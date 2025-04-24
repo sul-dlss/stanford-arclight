@@ -15,13 +15,9 @@ module LandingPage
     end
 
     def formatted_hours
-      return hours.closed_note if hours.closed_note
+      return link_to(hours_text, hours_link) if hours_link
 
-      return "Open until #{format_time(hours.hours_today.closes_at_time)}" if hours.open_now?
-
-      return "Closed until #{format_time(hours.next_open_hours.opens_at_time)}" if hours.next_open_hours
-
-      'Closed'
+      hours_text
     end
 
     delegate :seconds_until_next_half_hour, to: :TimeService
@@ -31,6 +27,20 @@ module LandingPage
     end
 
     private
+
+    def hours_text
+      return hours.closed_note if hours.closed_note
+
+      return "Open until #{format_time(hours.hours_today.closes_at_time)}" if hours.open_now?
+
+      return "Closed until #{format_time(hours.next_open_hours.opens_at_time)}" if hours.next_open_hours
+
+      'Closed'
+    end
+
+    def hours_link
+      hours_location_config&.url
+    end
 
     def hours
       @hours ||= LibraryHours.from_config(hours_location_config)

@@ -29,7 +29,7 @@ RSpec.describe LandingPage::LibraryHoursComponent, type: :component do
 
     it 'renders the closed icon and message' do
       expect(page).to have_css('.library-closed')
-      expect(page).to have_text('Closed until 12pm')
+      expect(page).to have_link('Closed until 12pm', href: 'https://library-hours.stanford.edu/')
     end
 
     context 'when the library has a custom closed message' do

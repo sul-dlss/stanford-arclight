@@ -12,20 +12,19 @@ hours_locations:
   - label: 'Green Library, 2nd Floor'
     library: 'spc'
     location: 'field-reading-room'
-    url: 'https://library.stanford.edu/libraries/special-collections'
+    url: 'https://library-hours.stanford.edu/'
   - label: 'Archive of Recorded Sound'
     library: 'ars'
     location: 'archive-recorded-sound'
-    url: 'https://library.stanford.edu/libraries/archive-recorded-sound'
+    url: 'https://library-hours.stanford.edu/'
   - label: 'Cubberley Education Library'
     library: 'cubberley'
     location: 'library-circulation'
-    url: 'https://library.stanford.edu/libraries/cubberley-education-library'
     closed_note: 'Closed for construction until 2025'
   - label: 'East Asia Library'
     library: 'eal'
     location: 'library-circulation'
-    url: 'https://library.stanford.edu/libraries/east-asia-library'
+    url: 'https://library-hours.stanford.edu/'
 
 aspace:
   url: <%= ENV['ASPACE_URL'] || 'http://archivesspace-stage.stanford.edu:8081' %>
