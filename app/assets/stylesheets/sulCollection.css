@@ -32,6 +32,7 @@
 
   .al-show-actions-box {
     border: 0;
+    background-color: var(--stanford-fog-light);
   }
 
   /* and add padding within .collection-sidebar */
