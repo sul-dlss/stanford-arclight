@@ -1,6 +1,8 @@
 :root {
   /* arclight override */
-  --al-content-icon-color: var(--stanford-digital-blue)
+  --al-content-icon-color: var(--stanford-digital-blue);
+  --drop-shadow-filter: drop-shadow(1px 4px 3px rgba(0, 0, 0, 0.25))
+                        drop-shadow(-2px 2px 6px rgba(255, 255, 255, 0.2));
 }
 
 /* make the content area full bleed */
