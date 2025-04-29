@@ -52,6 +52,10 @@ RSpec.describe 'Collection Page' do
     it 'displays the normalized collection id in the URL' do
       expect(page.current_url).to eq('http://www.example.com/catalog/ars-0043_ambassador-auditorium-collection')
     end
+
+    it 'displays the Access and Use collapsible section in an expanded state' do
+      expect(page).to have_css('div#access-use-content.show')
+    end
   end
 
   context 'when visiting a collection page with an id derived from its title' do
