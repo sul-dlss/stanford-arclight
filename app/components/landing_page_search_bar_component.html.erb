@@ -10,7 +10,7 @@
         <ul id="autocomplete-popup" class="dropdown-menu" role="listbox" aria-label="<%= scoped_t('search.label') %>"></ul>
       </auto-complete>
     <% else %>
-      <%= f.search_field @query_param, value: @q, placeholder: scoped_t('search.placeholder'), class: "search-q q form-control me-xl-3", autofocus: @autofocus, aria: { label: scoped_t('search.label') }  %>
+      <%= f.search_field @query_param, value: @q, placeholder: scoped_t('search.placeholder'), class: "search-q q form-control", autofocus: @autofocus, aria: { label: scoped_t('search.label') }  %>
     <% end %>
     <%= append %>
     <%= with_search_button %>

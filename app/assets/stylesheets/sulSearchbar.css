@@ -3,27 +3,13 @@
     .input-group {
         height: 2.75rem;
         border-radius: var(--bs-border-radius);
-    }
-
-    .input-group .search-autocomplete-wrapper {
-        border: none;
-    }
-
-    .input-group .search-autocomplete-wrapper ul li:active {
-        color: var(--stanford-black);
-        background-color: var(--grey-lighter);
-    }
-
-    /* make dividers 80% of height to match designs */
-    .input-group .search-autocomplete-wrapper::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
-        height: 80%;
-        width: 1px;
-        background-color: var(--stanford-40-black);
+        .search-autocomplete-wrapper, input, select {
+            border: none;
+        }
+        .search-autocomplete-wrapper ul li:active {
+            color: var(--stanford-black);
+            background-color: var(--grey-lighter);
+        }
     }
 
     .input-group.within-collection-dropdown {
@@ -48,16 +34,30 @@
     }
 
     /* make dividers 80% of height to match designs */
-    .input-group.within-collection-dropdown::after {
+    .input-group.within-collection-dropdown::after,
+    .input-group:has(.custom-select)::after {
         content: "";
         position: absolute;
         top: 50%;
-        right: 0;
         transform: translateY(-50%);
         height: 80%;
         width: 1px;
         background-color: var(--stanford-40-black);
         pointer-events: none;
+    }
+
+    .input-group.within-collection-dropdown::after {
+        right: 0;
+    }
+
+    .input-group:has(.custom-select)::after {
+        left: 0;
+    }
+
+    @media(min-width: 768px) {
+        .input-group:has(.custom-select)::after {
+            left: 8rem;
+        }
     }
 
     /* Bootstrap overrides -- needs to be this specific in order to work */
@@ -107,7 +107,7 @@
     width: 1.5rem;
 }
 
-@media (min-width: 786px) {
+@media (min-width: 768px) {
     .blacklight-icons-search {
         align-self: center;
         background-color: var(--bs-body-bg);

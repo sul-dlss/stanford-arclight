@@ -11,7 +11,7 @@ class LandingPageController < ApplicationController
     config.full_width_layout = true
 
     # Configuration for autocomplete suggestor
-    config.autocomplete_enabled = true
+    config.autocomplete_enabled = false
     config.autocomplete_path = 'suggest'
   end
 
