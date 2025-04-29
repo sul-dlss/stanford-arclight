@@ -101,3 +101,8 @@ label.toggle-bookmark {
   --bs-bg-opacity: 1;
   margin-left: 0.25rem;
 }
+
+#main-flashes .alert {
+  /* Make the top margin equal to the bottom margin */
+  margin-top: var(--bs-alert-margin-bottom)
+}
