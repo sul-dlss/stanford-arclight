@@ -20,9 +20,9 @@ RSpec.describe DeleteEadJob do
   end
 
   it 'deletes any eads not published in ASpace' do
-    described_class.perform_now(repository_id: 1)
+    described_class.perform_now(repository_id: 1, aspace_config_set: 'default')
 
-    expect(DeleteEadJob::IndexedEads).to have_received(:new).with(repository_id: 1)
+    expect(DeleteEadJob::IndexedEads).to have_received(:new).with(repository_id: 1, aspace_config_set: 'default')
     expect(client).to have_received(:all_published_resource_uris_by).with(repository_id: 1)
     expect(rsolr_client).to have_received(:delete_by_id).with(['ead456'])
     expect(rsolr_client).to have_received(:commit)
@@ -31,8 +31,8 @@ RSpec.describe DeleteEadJob do
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '.enqueue_all' do
     let(:harvestable_repos) do
-      [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11'),
-       Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4')]
+      [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11', aspace_config_set: 'default'),
+       Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4', aspace_config_set: 'default')]
     end
     let(:aspace_repository) do
       instance_double(AspaceRepositories, all_harvestable: harvestable_repos)

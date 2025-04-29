@@ -27,11 +27,21 @@ hours_locations:
     url: 'https://library-hours.stanford.edu/'
 
 aspace:
-  url: <%= ENV['ASPACE_URL'] || 'http://archivesspace-stage.stanford.edu:8081' %>
-  harvestable_repository_codes:
-    - ars
-    - cubberley
-    - eal
+  default:
+    user: <%= ENV['ASPACE_USER'] %>
+    password: <%= ENV['ASPACE_PASSWORD'] %>
+    url: <%= ENV['ASPACE_URL'] %>
+    harvestable_repository_codes:
+      - ars
+      - cubberley
+      - eal
+  chs:
+    user: <%= ENV['ASPACE_CHS_USER'] %>
+    password: <%= ENV['ASPACE_CHS_PASSWORD'] %>
+    url: <%= ENV['ASPACE_CHS_URL'] %>
+    harvestable_repository_codes:
+      - chs
+
 data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>
 
 pdf_generation:

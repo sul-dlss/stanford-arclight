@@ -6,14 +6,15 @@
 class DeleteEadJob < ApplicationJob
   def self.enqueue_all
     AspaceRepositories.all_harvestable.each do |repository|
-      perform_later(repository_id: repository.id)
+      perform_later(repository_id: repository.id, aspace_config_set: repository.aspace_config_set)
     end
   end
 
   # @param repository_id [String] the ASpace repository id, such as '11'
-  def perform(repository_id:)
-    indexed_eads = IndexedEads.new(repository_id:).all
-    published_eads = AspaceClient.new.all_published_resource_uris_by(repository_id:)
+  # @param aspace_config_set [String] the ASpace instance configuration set, such as 'default'
+  def perform(repository_id:, aspace_config_set:)
+    indexed_eads = IndexedEads.new(repository_id:, aspace_config_set:).all
+    published_eads = AspaceClient.new(aspace_config_set:).all_published_resource_uris_by(repository_id:)
 
     eads_to_delete = indexed_eads.keys - published_eads
     ids_to_delete = indexed_eads.slice(*eads_to_delete).values
@@ -26,12 +27,13 @@ class DeleteEadJob < ApplicationJob
 
   # Fetches all the indexed EAD files for an aspace repository
   class IndexedEads
-    attr_reader :repository_id
+    attr_reader :repository_id, :aspace_config_set
 
     PAGE_SIZE = 250
 
-    def initialize(repository_id:)
+    def initialize(repository_id:, aspace_config_set:)
       @repository_id = repository_id
+      @aspace_config_set = aspace_config_set
     end
 
     # returns a hash where each key is an aspace resource uri and each value is a Solr document id
@@ -54,7 +56,8 @@ class DeleteEadJob < ApplicationJob
           rows: PAGE_SIZE,
           start: this_page,
           fl: 'id,resource_uri_ssi',
-          fq: "repository_uri_ssi:\"/repositories/#{repository_id}\"",
+          fq: ["repository_uri_ssi:\"/repositories/#{repository_id}\"",
+               "aspace_config_set_ssi:#{aspace_config_set}"],
           sort: 'id ASC',
           facet: false
         )

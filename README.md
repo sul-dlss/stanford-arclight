@@ -47,7 +47,14 @@ The `DownloadEadJob` will attempt to use the ASpace API to download EADs. You wi
 
 ```
 aspace:
-  url: "http://USERNAME:PASSWORD@ARCHIVESPACE_URL:PORT"
+  default:
+    user: USERNAME
+    password: PASSWORD
+    url: "http://ARCHIVESPACE_URL:PORT"
+  chs:
+    user: USERNAME
+    password: PASSWORD
+    url: "http://ARCHIVESPACE_URL:PORT"
 ```
 
 _**Important Note:**_ ArcLight core includes a number of rake tasks for loading data into Solr, such `rake arclight:index`, `rake arclight:index_dir`, `rake arclight:index_url`, and `rake arclight:index_url_batch`. Using these rake tasks will use the default Traject indexing rules from ArcLight core only and WILL NOT apply any of the local Traject indexing rules. It's important to use either the local app's `IndexEadJob` or the Traject command (`REPOSITORY_ID={REPO_ID} bundle exec traject -u {SOLR_URL} -i xml -c ./lib/traject/sul_config.rb {FILE_PATH}`) to index data that will work correctly with stanford-arclight.

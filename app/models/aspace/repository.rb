@@ -4,11 +4,12 @@ module Aspace
   # Model for an Aspace repository to manage information
   # needed for downloading and updating a repository's resources
   class Repository
-    attr_reader :uri, :code
+    attr_reader :uri, :code, :aspace_config_set
 
-    def initialize(repo_code:, uri:)
+    def initialize(repo_code:, uri:, aspace_config_set:)
       @code = repo_code.downcase
       @uri = uri
+      @aspace_config_set = aspace_config_set
     end
 
     def id
@@ -16,7 +17,7 @@ module Aspace
     end
 
     def harvestable?
-      @harvestable ||= Settings.aspace.harvestable_repository_codes.include?(code)
+      @harvestable ||= (Settings.aspace[aspace_config_set].harvestable_repository_codes || []).include?(code)
     end
 
     def each_published_resource(updated_after: nil)
@@ -52,7 +53,7 @@ module Aspace
     private
 
     def client
-      @client ||= AspaceClient.new
+      @client ||= AspaceClient.new(aspace_config_set:)
     end
   end
 end
