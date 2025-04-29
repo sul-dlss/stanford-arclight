@@ -44,5 +44,22 @@ RSpec.describe AspaceRepositories do
         expect(aspace_repository.find_by(code: 'code')).to be_nil
       end
     end
+
+    context 'when a non-default aspace_config_set is provided' do
+      let(:repositories) do
+        [{ 'repo_code' => 'chs', 'uri' => '/repositories/5', 'key' => 'value' }]
+      end
+
+      before do
+        allow(AspaceClient).to receive(:new).with(aspace_config_set: :chs).and_return(client)
+        allow(Settings).to receive(:aspace).and_return(
+          { chs: Config::Options.new(harvestable_repository_codes: ['chs']) }
+        )
+      end
+
+      it 'returns the aspace id for the repository' do
+        expect(aspace_repository.find_by(code: 'chs', aspace_config_set: :chs).id).to eq '5'
+      end
+    end
   end
 end
