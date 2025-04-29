@@ -1,4 +1,50 @@
 /* Shared styles across pages for Bootstrap cards */
+
+/* Digital Content and Access Restriction cards share styles */
+#facet-digital_content,
+.online-contents,
+.digital-object-list {
+  --bs-card-border-width: 0;
+  --bs-card-border-radius: 0;
+  background-color: var(--stanford-fog-light);
+  filter: var(--drop-shadow-filter);
+  .card-body {
+    padding: 1rem;
+    border-left: 8px solid var(--stanford-palo-alto-dark);
+  }
+}
+
+#facet-digital_content {
+  margin-bottom: 1rem;
+  .facet-label,
+  .facet-select {
+    font-weight: bold;
+  }
+  .facet-count {
+    font-weight: normal;
+  }
+  .facet-limit-active {
+    background-color: var(--stanford-10-black);
+  }
+}
+
+.online-contents {
+  padding: 0;
+}
+
+.digital-object-list {
+  .card-body {
+    padding: 0.5rem;
+  }
+  .blacklight-icons-external_link svg {
+    fill: var(--stanford-digital-blue);
+  }
+  ul {
+    margin: 0;
+  }
+}
+
+/* Repository page cards have their own styles */
 .al-repositories .card {
   --bs-card-inner-border-radius: 0;
   --bs-card-border-radius: 0;
