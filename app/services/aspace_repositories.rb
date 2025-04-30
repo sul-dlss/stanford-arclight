@@ -22,8 +22,8 @@ class AspaceRepositories
     all.select(&:harvestable?)
   end
 
-  def find_by(code:)
-    all.find { |repo| repo.code == code }
+  def find_by(code:, aspace_config_set: :default)
+    all.find { |repo| repo.code == code && repo.aspace_config_set == aspace_config_set }
   end
 
   private

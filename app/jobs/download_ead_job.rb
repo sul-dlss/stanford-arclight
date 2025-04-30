@@ -47,10 +47,11 @@ class DownloadEadJob < ApplicationJob
   # This will enqueue one repository selected by its aspace repository code.
   # @example DownloadEadJob.enqueue_one_by(aspace_repository_code: 'ars')
   # @param aspace_repository_code [String] the repository code in ArchivesSpace, such as 'ars'
+  # @param aspace_config_set [Symbol] the configuration set for the ArchivesSpace repository, such as :default
   # @param config [DownloadEadJob::Config] holds configurations for the download
-  def self.enqueue_one_by(aspace_repository_code:, config: DownloadEadJob::Config.new)
+  def self.enqueue_one_by(aspace_repository_code:, aspace_config_set: :default, config: DownloadEadJob::Config.new)
     create_directories(data_dir: config.data_directory)
-    repository = AspaceRepositories.find_by(code: aspace_repository_code)
+    repository = AspaceRepositories.find_by(code: aspace_repository_code, aspace_config_set:)
     enqueue_repository(repository:, config:)
   end
 

@@ -162,7 +162,7 @@ RSpec.describe DownloadEadJob do
 
   describe '.enqueue_one_by' do
     before do
-      allow(aspace_repository).to receive(:find_by).with({ code: 'ars' }).and_return(
+      allow(aspace_repository).to receive(:find_by).with({ code: 'ars', aspace_config_set: :default }).and_return(
         Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11', aspace_config_set: 'default')
       )
       allow(client).to receive(:published_resource_uris).and_return([{ 'uri' => '/repositories/11/resources/1',
