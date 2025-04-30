@@ -2,6 +2,7 @@
 
 /* Digital Content and Access Restriction cards share styles */
 #facet-digital_content,
+#access-and-use,
 .online-contents,
 .digital-object-list {
   --bs-card-border-width: 0;
@@ -25,6 +26,16 @@
   }
   .facet-limit-active {
     background-color: var(--stanford-10-black);
+  }
+}
+
+#access-and-use {
+  .card-body {
+    border-left: none;
+    border-top: 8px solid var(--stanford-palo-alto-dark);
+  }
+  address, dl, p {
+    margin-bottom: 0;
   }
 }
 
