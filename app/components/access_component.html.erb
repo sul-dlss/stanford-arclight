@@ -3,11 +3,25 @@
               metadata_attr: { layout: AccessMetadataLayoutComponent },
               presenter: presenter) %>
 <% end %>
-<% if access_content.present? %>
-  <div id="<%= t('arclight.views.show.sections.access_field').parameterize %>" class="card">
-    <div class="card-body">
-      <h2 class="al-show-sub-heading"><%= t 'arclight.views.show.sections.access_field' %></h2>
-      <%= access_content%>
+  
+  <% if access_content.present? %>
+    <div id="<%= t('arclight.views.show.sections.access_field').parameterize %>" class="card">
+      <div class="card-body">  
+        <h2 class="al-show-sub-heading mb-0">
+          <button class="btn btn-link d-flex align-items-center w-100"
+              id="access-use"
+              data-bs-toggle="collapse"
+              data-bs-target="#access-use-content"
+              aria-expanded="<%= collection? %>"
+              aria-controls="access-use">
+              <span><%= t 'arclight.views.show.sections.access_field' %></span>
+              <%= helpers.blacklight_icon('chevron_down') %>
+          </button>
+        </h2>
+    
+        <div class="nav collapse mt-2 <%= 'show' if collection? %>" id="access-use-content" aria-labelledby="access-use">
+          <%= access_content %>
+        </div>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
