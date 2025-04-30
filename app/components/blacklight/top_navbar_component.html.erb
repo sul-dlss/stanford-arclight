@@ -16,8 +16,11 @@
     <div class="row justify-content-center">
       <%= form_with url: feedback_path, method: :post, class: 'col-md-8', html: { name: 'feedback_form' } do |f| %>
         <%= f.hidden_field :reporting_from, value: request.original_url %>
-        <div class="alert alert-info" role="alert">
-          <%= t('feedbacks.reporting_from', url: request.original_url) %>
+        <div role="alert" class="alert alert-info d-flex shadow-sm align-items-center">
+          <%= render(Blacklight::Icons::BootstrapInfoCircleFillComponent.new) %>
+          <div class="ps-2 text-body">
+            <div><%= t('feedbacks.reporting_from', url: request.original_url) %></div>
+          </div>
         </div>
         <div class="mb-3 row">
           <%= f.label :message, class: "col-md-3 col-form-label" %>
