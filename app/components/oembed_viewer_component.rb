@@ -6,7 +6,6 @@ class OembedViewerComponent < Arclight::OembedViewerComponent
   def viewer_attrs
     {
       controller: 'sul-embed',
-      sul_embed_hide_title_value: true,
       sul_embed_url_value: @resource.href
     }
   end
