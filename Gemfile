@@ -98,6 +98,8 @@ gem 'blacklight_range_limit', '~> 9'
 
 gem 'config'
 
+gem 'csv', '~> 3.3'
+
 gem 'faraday', '~> 2' # for library hours
 gem 'faraday-retry'
 
