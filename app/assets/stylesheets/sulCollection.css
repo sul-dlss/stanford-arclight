@@ -129,9 +129,13 @@
   color: black;
 }
 
+#contents {
+  border-top: none;
+}
+
 /* AL Core overrides for metadata sections and the top title areas
 Those borders should look the same but have different types of markup in AL Core */
-#using-these-materials,
+#summary .dl-invert,
 #metadata .dl-invert,
 .title-container,
 #about-this-level {
@@ -144,11 +148,7 @@ Those borders should look the same but have different types of markup in AL Core
   border-top: 1px solid #d1d1d1;
 }
 
-#using-these-materials {
-  ul {
-    color: var(--stanford-digital-blue);
-  }
-}
+
 
 .al-sidebar-navigation-context {
   ul {
