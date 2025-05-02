@@ -120,3 +120,5 @@ gem 'whenever', require: false
 gem 'recaptcha', '~> 5.16'
 
 gem 'redis', '~> 5.2'
+
+gem 'rack-cors', '~> 2.0'
