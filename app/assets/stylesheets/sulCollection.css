@@ -9,6 +9,7 @@
 
 @media (min-width: 992px) {
   .collection-sidebar {
+    padding-right: 0;
     #sidebar {
       overflow: hidden;
       margin-bottom: 1rem;
@@ -22,30 +23,17 @@
   }
 }
 
-/* make the wrapping .collection-sidebar full bleed, */
 .collection-sidebar {
-  padding: 0;
+  border-right: 1px solid #dee2e6;
 
   .sidebar-section {
     border-bottom: 0;
+    margin-left: 0;
   }
 
   .al-show-actions-box {
     border: 0;
     background-color: var(--stanford-fog-light);
-  }
-
-  /* and add padding within .collection-sidebar */
-  .al-show-actions-box,
-  #sidebar-scroll-wrapper {
-    /* padding around the light-green section */
-    padding: 2rem 2rem 2rem 3rem;
-  }
-
-  .al-sidebar-navigation-context,
-  #collection-context {
-    /* overriding this from AL Core allows it to hit the edge of #sidebar-scroll-wrapper above */
-    margin-left: 0;
   }
 
   .collection-info-section {
@@ -67,6 +55,12 @@
   .al-collection-context-collapsible .btn-secondary {
     margin: 0.5rem 0.5rem 1rem 0.5rem;
     padding: 0.5rem 1rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .collection-sidebar  .al-show-actions-box {
+    padding: 2rem;
   }
 }
 
