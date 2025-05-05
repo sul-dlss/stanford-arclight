@@ -12,7 +12,7 @@ class CollectionContextComponent < ViewComponent::Base
   attr_reader :collection
 
   def title
-    collection.normalized_title
+    helpers.link_to_document(collection)
   end
 
   def unitid
