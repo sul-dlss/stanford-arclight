@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe CollectionContextComponent, type: :component do # rubocop:disable RSpec/MultipleMemoizedHelpers
-  subject(:component) { described_class.new(presenter:, download_component: Arclight::DocumentDownloadComponent) }
+  subject(:component) { described_class.new(presenter:, download_component: DocumentDownloadComponent) }
 
   let(:presenter) { instance_double(Blacklight::DocumentPresenter, document:) }
   let(:document) { instance_double(SolrDocument, collection:) }
@@ -13,24 +13,25 @@ RSpec.describe CollectionContextComponent, type: :component do # rubocop:disable
                                           request_config_for_type: {})
   end
   let(:collection) do
-    instance_double(SolrDocument, normalized_title: 'Collection Title',
-                                  unitid: 'ARS123',
-                                  collection_unitid: 'ARS123',
-                                  total_component_count: '10',
-                                  online_item_count: '4',
-                                  last_indexed: Time.zone.parse('2025-04-07'),
-                                  downloads: downloads,
-                                  collection?: true,
-                                  requestable?: true,
-                                  repository_config:,
-                                  ead_file: 'ars123.xml',
-                                  ead_file_without_namespace_href: 'https://example.com/ars123.xml')
+    SolrDocument.new(id: 'ars123',
+                     normalized_title_ssm: 'Collection Title',
+                     unitid_ssm: 'ARS123',
+                     level_ssm: ['collection'],
+                     component_level_isim: [0],
+                     timestamp: '2025-05-03T12:18:58.114Z')
   end
   let(:downloads) { instance_double(Arclight::DocumentDownloads, files: [file]) }
   let(:file) { instance_double(Arclight::DocumentDownloads::File, href: 'https://example.com/file.txt', size: 1234, type: 'pdf') }
 
   before do
-    render_inline(component)
+    allow(collection).to receive_messages(repository_config:,
+                                          downloads: downloads,
+                                          requestable?: true,
+                                          ead_file: 'ars123.xml',
+                                          ead_file_without_namespace_href: 'https://example.com/ars123.xml')
+    with_controller_class(CatalogController) do
+      render_inline(component)
+    end
   end
 
   it 'renders a download link' do
@@ -41,8 +42,8 @@ RSpec.describe CollectionContextComponent, type: :component do # rubocop:disable
     expect(page).to have_text('ARS123')
   end
 
-  it 'renders the title' do
-    expect(page).to have_text('Collection Title')
+  it 'renders the title as a link' do
+    expect(page).to have_link(text: 'Collection Title', href: '/catalog/ars123')
   end
 
   it 'renders the request link' do
