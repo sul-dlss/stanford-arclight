@@ -21,7 +21,7 @@ RSpec.describe 'Searching', :js do
     end
 
     it 'creates Clear all link with the group=true parameter' do
-      click_on('Clear all')
+      find('a.catalog_startOverLink').click.call(x: 1, y: 1)
 
       expect(page).to have_current_path(search_catalog_path(group: true))
     end

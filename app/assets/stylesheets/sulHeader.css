@@ -1,3 +1,27 @@
+header {
+  position: sticky;
+  top: 0;
+  z-index: 500; /* brute force, but doesn't work otherwise */
+  background-color: white;
+}
+
+/* reset for the sticky header on lg screens */
+@media screen and (min-width: 992px) {
+  header {
+    position: relative;
+  } 
+}
+
+.sidebar-toggle {
+  margin-left: -1.5rem;
+  margin-bottom: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  font-weight: 500;
+  font-size: 1rem;
+  background-color: var(--stanford-palo-alto-dark);
+}
+
 /* Search bar in header -- interior pages */
 .navbar-search {
   display: flex;

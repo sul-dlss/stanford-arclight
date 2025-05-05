@@ -35,13 +35,6 @@
     background-color: var(--stanford-fog-light);
   }
 
-  /* and add padding within .collection-sidebar */
-  .al-show-actions-box,
-  #sidebar-scroll-wrapper {
-    /* padding around the light-green section */
-    padding: 2rem 2rem 2rem 3rem;
-  }
-
   .al-sidebar-navigation-context,
   #collection-context {
     /* overriding this from AL Core allows it to hit the edge of #sidebar-scroll-wrapper above */
@@ -69,6 +62,22 @@
     padding: 0.5rem 1rem;
   }
 }
+
+
+/* mobile padding */
+.collection-sidebar .al-show-actions-box,
+.collection-sidebar #sidebar-scroll-wrapper {
+  padding: 1rem;
+}
+
+/* lg padding */
+@media screen and (min-width: 992px) {
+  .collection-sidebar .al-show-actions-box,
+  .collection-sidebar #sidebar-scroll-wrapper {
+      padding: 2rem 2rem 2rem 3rem;
+    }
+}
+
 
 /* 
   ** expand/collapse h2 buttons with shared styles ** 
