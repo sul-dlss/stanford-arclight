@@ -58,6 +58,7 @@ class CatalogController < ApplicationController
     config.add_results_document_tool(:online, component: Arclight::OnlineStatusIndicatorComponent)
     config.add_results_document_tool(:arclight_bookmark_control, component: Blacklight::Document::BookmarkComponent)
     config.bookmark_icon_component = Blacklight::Icons::BookmarkIconComponent
+    config.track_search_session.applied_params_component = SearchContext::NullServerAppliedParamsComponent
 
     config.add_results_collection_tool(:group_toggle)
     config.add_results_collection_tool(:sort_widget)
