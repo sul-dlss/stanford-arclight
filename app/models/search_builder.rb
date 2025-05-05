@@ -5,7 +5,7 @@ class SearchBuilder < Blacklight::SearchBuilder
   include BlacklightRangeLimit::RangeLimitBuilder
   include Arclight::SearchBehavior
 
-  self.default_processor_chain += [:apply_group_sort_parameter]
+  self.default_processor_chain += [:apply_group_sort_parameter, :min_match_for_boolean]
 
   # If no query is supplied when results are grouped and sorted by relevance,
   # we adjust the sort order so that each group is sorted in component order
@@ -18,5 +18,17 @@ class SearchBuilder < Blacklight::SearchBuilder
     # the collection last but leave the remaining components in order we divide 1 by
     # sort_isi values other than 0 and change the sort to DESC.
     solr_parameters['group.sort'] = 'if(eq(sort_isi,0),0,div(1,field(sort_isi))) desc'
+  end
+
+  # Sets `mm` (minimum should match) to 1 based on presence of boolean operators, overriding default set in Solr.
+  # The default value in the request handler (`4<90%`) allows for some non-matching clauses in
+  # full-text queries, but leads to unexpected behavior when a user expects to use boolean operators for
+  # more advanced search queries. Setting `mm=1` means only 1 clause needs to match, but the lucene query parser (in
+  # edismax) will precompose the query strings so everything works out.
+  def min_match_for_boolean(solr_parameters)
+    return unless search_state.query_param.respond_to?(:match?) &&
+                  search_state.query_param&.match?(/\s(AND|OR|NOT)\s/)
+
+    solr_parameters[:mm] = '1'
   end
 end
