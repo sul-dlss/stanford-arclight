@@ -24,6 +24,7 @@ RSpec.describe BookmarkToolsComponent, type: :component do
 
   it 'renders the bookmark tools' do
     expect(page).to have_link(text: 'Export to CSV', href: '/bookmarks.csv')
+    expect(page).to have_link(text: 'Email bookmarks', href: '#modal-bookmarks-email')
     expect(page).to have_text('Saved bookmarks are not permanent.')
     expect(page).to have_text('Exporting them will only include the current page')
   end

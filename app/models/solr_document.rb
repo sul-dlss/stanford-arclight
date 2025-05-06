@@ -19,6 +19,12 @@ class SolrDocument
     end
   end
 
+  # A short version of the abstract or scope with HTML tags removed
+  # and truncated to 400 characters for sending records via email.
+  def short_description
+    (ActionView::Base.full_sanitizer.sanitize(abstract_or_scope) || '').truncate(400, separator: ' ')
+  end
+
   # NOTE: Override of method from ArcLight core to guard against cases where
   # lower level components are set to Collection and lack an EAD ID.
   # We have requested data remediation, but this is needed until that is complete.

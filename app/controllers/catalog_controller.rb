@@ -419,6 +419,28 @@ class CatalogController < ApplicationController
     # Collection and Component Show Page Access Tab - Contact Section
     config.add_contact_field 'repository_contact', values: ->(_, document, _) { document.repository_config&.contact }
 
+    # =================
+    # EMAIL RECORD FIELDS
+    # =================
+
+    config.add_email_field 'normalized_title', accessor: true, label: 'Title'
+    config.add_email_field 'short_description', accessor: true, label: 'Description',
+                                                if: lambda { |_context, _field_config, document|
+                                                      document.short_description.present?
+                                                    }
+    config.add_email_field 'extent', accessor: true, label: 'Extent',
+                                     if: lambda { |_context, _field_config, document|
+                                           document.extent.present?
+                                         }
+    config.add_email_field 'collection_name', accessor: true, label: 'In',
+                                              if: lambda { |_context, _field_config, document|
+                                                document.collection_name.present?
+                                              }
+    config.add_email_field 'containers', accessor: true, label: 'Containers',
+                                         if: lambda { |_context, _field_config, document|
+                                               document.containers.present?
+                                             }
+
     # Group header values
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
   end
