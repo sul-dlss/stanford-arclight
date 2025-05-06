@@ -117,6 +117,8 @@ gem 'sidekiq', '~> 7.0'
 
 gem 'whenever', require: false
 
+gem 'rack-attack'
+
 gem 'recaptcha', '~> 5.16'
 
 gem 'redis', '~> 5.2'
