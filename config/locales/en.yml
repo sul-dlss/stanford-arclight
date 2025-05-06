@@ -38,6 +38,7 @@ en:
         sections:
           contact_field: "Repository contact information"
           in_person_field: "In person information"
+        toggle_sidebar: Collection contents
         download:
           default: Finding aid / EAD
           multiple:
