@@ -136,6 +136,12 @@ class AspaceClient
     send_request(:post, path, body)
   end
 
+  def ping
+    session_token.present?
+  rescue StandardError
+    false
+  end
+
   private
 
   def load_config_from_settings(aspace_config_set)
