@@ -440,6 +440,10 @@ class CatalogController < ApplicationController
                                          if: lambda { |_context, _field_config, document|
                                                document.containers.present?
                                              }
+    config.add_email_field 'repository', accessor: true, label: 'Repository',
+                                         if: lambda { |_context, _field_config, document|
+                                           document.repository.present?
+                                         }
 
     # Group header values
     config.add_group_header_field 'abstract_or_scope', accessor: true, truncate: true, helper_method: :render_html_tags
