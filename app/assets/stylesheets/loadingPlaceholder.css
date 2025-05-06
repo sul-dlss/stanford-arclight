@@ -1,0 +1,28 @@
+/* Remove Arclight's default loading animation */
+.al-sidebar-navigation-context,
+#collection-context {
+  turbo-frame[busy] {
+    &::before {
+      content: '';
+    }
+  }
+}
+
+turbo-frame[busy] + .loading-placeholder {
+  display: flex;
+}
+
+.loading-placeholder {
+  display: none;
+  background: linear-gradient(to right, var(--stanford-fog-light) 40%, #fff 50%, var(--stanford-fog-light) 60%);
+  animation: shimmer 1s infinite linear;
+  background-size: 300%;
+  background-position-x: 100%;
+  border-radius: 0.25rem;
+}
+
+@keyframes shimmer {
+  to {
+     background-position-x: 0%
+  }
+}

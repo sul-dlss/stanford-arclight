@@ -147,3 +147,4 @@ en:
   search:
     constraints_title: 'Your selections: '
     search_bar_button: 'Search'
+  loading_placeholder: 'Loading contents...'
