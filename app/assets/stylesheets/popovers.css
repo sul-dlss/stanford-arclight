@@ -1,0 +1,30 @@
+article.document .al-online-content-icon .blacklight-icons svg,
+.al-online-content-icon .blacklight-icons svg {
+  fill: var(--stanford-digital-blue);
+  height: 24px;
+  width: 24px;
+}
+
+button.al-online-content-icon {
+  height: 23px;
+  width: 32px;
+  padding: 0;
+  border: none;
+}
+
+article.document .al-online-content-icon .blacklight-icons svg {
+  margin-left: 0.5rem;
+}
+
+.popover {
+  --bs-popover-bg: var(--stanford-black);
+  --bs-popover-border-radius: 0.25rem;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5));
+  font-weight: 600;
+}
+
+.popover-body {
+  --bs-popover-body-color: white;
+  --bs-popover-body-padding-y: 0.25rem;
+  --bs-popover-body-padding-x: 0.5rem;
+}
