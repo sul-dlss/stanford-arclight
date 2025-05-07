@@ -94,7 +94,8 @@
 #collection-nav .bi-chevron-down,
 #access-use .bi-chevron-down {
   margin-left: 0.75rem;
-  color: var(--stanford-digital-blue)
+  stroke-width: 1;
+  stroke: var(--stanford-digital-blue);
 }
 
 #collection-nav[aria-expanded="true"] .bi-chevron-down,
