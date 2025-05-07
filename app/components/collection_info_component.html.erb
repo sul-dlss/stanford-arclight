@@ -1,0 +1,29 @@
+<%# Override from Arclight to move the digital content icon %>
+<div class='al-show-actions-box-info'>
+
+  <div class="dropdown">
+    <button class="dropdown-toggle btn btn-secondary btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <%= info_icon %> <%= t('.more_info') %>
+    </button>
+    <div class="dropdown-menu shadow-lg p-2" style="min-width: 300px;" >
+      <table style="width: 100%">
+        <tr>
+          <th scope="row"><%= t('arclight.collection_info_component.collection_id') %></th>
+          <td><%= collection_unitid %></td>
+        </tr>
+        <tr>
+          <th scope="row"><%= t('arclight.collection_info_component.total_components') %></th>
+          <td><%= total_component_count %></td>
+        </tr>
+        <tr>
+          <th scope="row"><%= t('arclight.collection_info_component.online_items') %><%= tag.span blacklight_icon(:online), class: 'al-online-content-icon ps-1' %></th>
+          <td><%= online_item_count %></td>
+        </tr>
+        <tr>
+          <th scope="row"><%= t('arclight.collection_info_component.last_indexed') %></th>
+          <td><%= last_indexed.strftime('%F') %></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
