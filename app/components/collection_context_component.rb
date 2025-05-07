@@ -25,6 +25,6 @@ class CollectionContextComponent < ViewComponent::Base
   end
 
   def collection_info
-    render Arclight::CollectionInfoComponent.new(collection: collection)
+    render CollectionInfoComponent.new(collection: collection)
   end
 end
