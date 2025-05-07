@@ -91,6 +91,21 @@ label.toggle-bookmark {
 .btn-outline-secondary.remove:hover svg {
   fill: var(--stanford-digital-red);
 }
+
+.btn-outline-danger {
+  --bs-btn-border-color: var(--stanford-cardinal);
+  --bs-btn-color: var(--stanford-cardinal);
+  --bs-btn-hover-color: var(--stanford-digital-red-dark);
+  --bs-btn-hover-border-color: var(--stanford-digital-red-dark);
+  --bs-btn-active-border-color: var(--stanford-digital-red-darker);
+  --bs-btn-active-color: var(--stanford-digital-red-darker);
+  --bs-btn-disabled-bg: white;
+  --bs-btn-hover-bg: white;
+  --bs-btn-active-bg: white;
+  --bs-btn-bg: white;
+  --bs-dropdown-link-active-bg: var(--stanford-cardinal);
+}
+
 .divider-dot {
   color: white;
   font-size: 1.25rem;
