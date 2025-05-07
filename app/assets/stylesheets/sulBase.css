@@ -76,21 +76,24 @@ label.toggle-bookmark {
 /* NOTE: Component library is competing with some styles from Arclight. */
 /* May be able to avoid these svg styles if we address: */
 /* https://github.com/projectblacklight/arclight/issues/1595 */
-.btn-outline-secondary svg {
-  fill: var(--stanford-digital-blue);
-}
-
-.btn-outline-secondary:hover svg {
-  fill: var(--stanford-digital-blue);
-}
-
-.btn-outline-secondary.remove svg {
-  fill: var(--stanford-70-black);
-}
-
 .btn-outline-secondary.remove:hover svg {
   fill: var(--stanford-digital-red);
 }
+
+/* TODO: Does this belong in the component library? */
+.btn-outline-primary {
+  svg {
+    fill: var(--stanford-digital-blue);
+  }
+  &.active {
+    color: white;
+    background-color: var(--stanford-digital-blue-darker);
+    svg {
+      fill: white;
+    }
+  }
+}
+
 .divider-dot {
   color: white;
   font-size: 1.25rem;
