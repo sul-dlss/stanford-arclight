@@ -2,7 +2,7 @@
     and to add the digital content icon %>
 <header class="documentHeader row" data-document-id="<%= @document.id %>">
   <h3 class="index_title document-title-heading col">
-    <span class="d-inline-block me-2 mb-2"><%= helpers.link_to_document @document, counter: @counter %></span>
+    <span class="d-inline-block me-2 mb-2 lh-base"><%= helpers.link_to_document @document, counter: @counter %></span>
 
     <%= render CollectionUnitidPillComponent.new(document: @document) %>
     
