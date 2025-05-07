@@ -16,7 +16,7 @@ module Arclight
       files.select! do |file|
         file.size&.positive?
       end
-      @files = files
+      @files = files.in_order_of(:type, %w[pdf ead])
     end
     # rubocop:enable Metrics/AbcSize
   end
