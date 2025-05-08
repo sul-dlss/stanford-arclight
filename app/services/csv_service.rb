@@ -3,6 +3,7 @@
 # Service to generate a CSV from documents in a Solr response
 class CsvService
   COLUMN_HEADERS = %w[id
+                      repository
                       collection_id
                       ead_id
                       level
@@ -30,6 +31,7 @@ class CsvService
       @response.documents.each do |doc|
         csv << [
           doc.id,
+          doc.repository,
           doc.collection_unitid,
           doc.eadid,
           doc.level,

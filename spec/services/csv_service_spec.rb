@@ -19,6 +19,7 @@ RSpec.describe CsvService do
             normalized_title: 'Title 1',
             normalized_date: 'Date 1',
             containers: ['Container 1', 'Container 2'],
+            repository: 'A repository',
             abstract_or_scope: 'Description 1',
             extent: ['Extent 1']
           )
@@ -28,8 +29,8 @@ RSpec.describe CsvService do
 
     it 'generates a CSV string from the response' do
       expect(described_class.response_to_csv(response: response)).to eq(
-        "id,collection_id,ead_id,level,title,date,containers,description,extent\n" \
-        "1,collection_1,ead_1,level_1,Title 1,Date 1,Container 1|Container 2,Description 1,Extent 1\n"
+        "id,repository,collection_id,ead_id,level,title,date,containers,description,extent\n" \
+        "1,A repository,collection_1,ead_1,level_1,Title 1,Date 1,Container 1|Container 2,Description 1,Extent 1\n"
       )
     end
   end
