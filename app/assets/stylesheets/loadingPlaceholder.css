@@ -1,0 +1,29 @@
+.al-sidebar-navigation-context,
+#collection-context,
+#contents {
+  turbo-frame[busy] {
+    &::before {
+      align-items: center;
+      animation: shimmer 1s infinite linear;
+      background: linear-gradient(to right, var(--stanford-fog-light) 40%, #fff 50%, var(--stanford-fog-light) 60%);
+      background-position-x: 100%;
+      background-size: 300%;
+      border-radius: 0.25rem;
+      content: "Loading contents...";
+      display: flex;
+      font-size: 1.25rem;
+      font-weight: 500;
+      justify-content: center;
+      margin: 0.5rem 0;
+      min-height: 3.3rem;
+      opacity: 1;
+      padding: 0.75rem;
+    }
+  }
+}
+
+@keyframes shimmer {
+  to {
+     background-position-x: 0%
+  }
+}
