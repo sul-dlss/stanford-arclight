@@ -256,3 +256,9 @@ article.document .al-online-content-icon .blacklight-icons svg {
 .view-type-group .btn:hover svg {
   fill: var(--stanford-digital-blue);
 }
+
+.show-document .pagination-search-widgets {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
