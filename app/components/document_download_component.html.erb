@@ -8,8 +8,8 @@
       </button>
       <ul class="dropdown-menu">
         <% files.each do |file| %>
-          <li><%= link_to(file.href, class: "dropdown-item", **@link_options) do %>
-            <%= icon_for(file.type) %> <%= dropdown_label(file) %>
+          <li><%= link_to(file.href, class: "dropdown-item d-flex align-items-center", **@link_options) do %>
+            <%= icon_for(file.type) %><span class="ms-1"><%= dropdown_label(file) %></span>
           <% end %>
           </li>
         <% end %>
