@@ -133,7 +133,8 @@ Those borders should look the same but have different types of markup in AL Core
 #summary .dl-invert,
 #metadata .dl-invert,
 .title-container,
-#about-this-level {
+#about-this-level,
+#embed {
   padding-bottom: 1rem;
   border-bottom: 1px solid #d1d1d1;
   margin-bottom: 2rem;
