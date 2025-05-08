@@ -69,4 +69,26 @@ RSpec.describe SearchBuilder do
       end
     end
   end
+
+  describe '#apply_digital_content_sort' do
+    subject(:solr_parameters) do
+      search_builder.with(query).processed_parameters
+    end
+
+    context 'when browsing digital content from a collection page' do
+      let(:query) { { q: '', f: { access: ['digital_content'], collection: ['collection_id'] }, sort: 'relevance' } }
+
+      it 'sets the sort order to put the collection last' do
+        expect(solr_parameters['sort']).to eq('if(eq(sort_isi,0),0,div(1,field(sort_isi))) desc')
+      end
+    end
+
+    context 'when not browsing digital content from a collection page' do
+      let(:query) { { q: '', f: { access: ['digital_content'], sort: 'relevance' } } }
+
+      it 'sets the sort order to put the collection last' do
+        expect(solr_parameters['sort']).to be_nil
+      end
+    end
+  end
 end
