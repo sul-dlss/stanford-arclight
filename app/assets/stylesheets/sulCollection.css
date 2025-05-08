@@ -223,28 +223,6 @@ that show the number of items */
   font-size: 10px;
 }
 
-/* arclight overrides */
-article.document .al-online-content-icon .blacklight-icons svg,
-.al-online-content-icon .blacklight-icons svg {
-  fill: var(--stanford-digital-blue);
-  height: 24px;
-  width: 24px;
-}
-
-article.document .al-online-content-icon .blacklight-icons svg {
-  margin-left: 0.5rem;
-}
-
-.tooltip-inner {
-  background-color: var(--stanford-digital-blue);
-  filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
-  color: white;
-}
-
-.tooltip.bs-tooltip-top .tooltip-arrow::before {
-  border-top-color: var(--stanford-digital-blue);
-}
-
 .title-container .online-contents h2 {
   text-transform: none;
   margin-bottom: 0;
