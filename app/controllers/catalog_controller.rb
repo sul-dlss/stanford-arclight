@@ -372,6 +372,7 @@ class CatalogController < ApplicationController
     config.add_component_field 'separatedmaterial', field: 'separatedmaterial_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'originalsloc', field: 'originalsloc_html_tesm', helper_method: :render_html_tags
     config.add_component_field 'note', field: 'note_html_tesm', helper_method: :render_html_tags
+    config.add_component_field 'unitid_ssm', label: 'Component ID'
 
     # Component Show Page - Indexed Terms Section
     config.add_component_indexed_terms_field 'access_subjects', field: 'access_subjects_ssim', link_to_facet: true, separator_options: {
