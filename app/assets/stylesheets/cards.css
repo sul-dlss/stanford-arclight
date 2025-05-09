@@ -5,7 +5,8 @@
 #access-and-use,
 #using-these-materials,
 .online-contents,
-.digital-object-list {
+.digital-object-list,
+#using-this-site .card {
   --bs-card-border-width: 0;
   --bs-card-border-radius: 0;
   background-color: var(--stanford-fog-light);
