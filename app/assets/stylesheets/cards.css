@@ -3,7 +3,7 @@
 /* Digital Content and Access Restriction cards share styles */
 #facet-digital_content,
 #access-and-use,
-#using-these-materials,
+#using-these-materials .card,
 .online-contents,
 .digital-object-list {
   --bs-card-border-width: 0;
@@ -36,23 +36,9 @@
   }
 }
 
-#using-these-materials {
+ #using-these-materials {
   margin-top: -2rem;
-  margin-bottom: 2rem;
-  width: 100%;
-  @media (min-width: 576px) {
-    width: 35%;
-  }
-  @media (min-width: 992px) {
-    width: 40%;
-  }
-  @media (min-width: 1200px) {
-    width: 35%;
-  }
-  @media(min-width: 1400px) {
-    width: 28%;
-  }
-}
+ }
 
 .online-contents {
   padding: 0;

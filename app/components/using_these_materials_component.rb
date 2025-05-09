@@ -16,8 +16,4 @@ class UsingTheseMaterialsComponent < ViewComponent::Base
   def restrictions
     document.collection.fetch('accessrestrict_html_tesm', ['']).first.html_safe # rubocop:disable Rails/OutputSafety
   end
-
-  def render?
-    document.collection?
-  end
 end

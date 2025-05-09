@@ -116,7 +116,7 @@
 }
 
 /* Overrides AL Core to change style and align the metadata label to the left */
-#metadata .dl-invert dt,
+.metadata .dl-invert dt,
 .show-document > * .dl-invert dt {
   text-align: left;
   font-size: 20px;
@@ -130,14 +130,18 @@
 
 /* AL Core overrides for metadata sections and the top title areas
 Those borders should look the same but have different types of markup in AL Core */
-#summary .dl-invert,
-#metadata .dl-invert,
+#summary-container,
+.metadata .dl-invert,
 .title-container,
 #about-this-level,
 #embed {
   padding-bottom: 1rem;
   border-bottom: 1px solid #d1d1d1;
   margin-bottom: 2rem;
+}
+
+#summary .dl-invert {
+  border: none;
 }
 
 #collection-source {
