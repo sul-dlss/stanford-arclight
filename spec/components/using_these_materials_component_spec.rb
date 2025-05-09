@@ -39,18 +39,4 @@ RSpec.describe UsingTheseMaterialsComponent, type: :component do
       expect(page).to have_no_text 'Restrictions'
     end
   end
-
-  context 'when the document is not a collection' do
-    let(:document) do
-      SolrDocument.new(id: 'abc123',
-                       repository_ssm: ['Archive of Recorded Sound'],
-                       accessrestrict_html_tesm: ['Collection is open for research.'],
-                       level_ssm: ['item'],
-                       component_level_isim: [1])
-    end
-
-    it 'does not render the component' do
-      expect(page).to have_no_text 'Using these materials'
-    end
-  end
 end

@@ -1,0 +1,20 @@
+<%# Override document_component.html.erb from ArcLight core to add our own layout %>
+<div class='d-md-flex justify-content-between al-show'>
+  <div class='al-show-breadcrumb border-0'>
+    <nav aria-label="breadcrumb">
+      <%= render breadcrumb_component.new(presenter: presenter) %>
+    </nav>
+  </div>
+</div>
+<div class="title-container">
+  <%= content_tag :h1 do %>
+    <span class="me-2"><%= document.normalized_title %></span>
+    <%= render CollectionUnitidPillComponent.new(document: document) %>
+  <% end %>
+  <%= render Blacklight::Document::BookmarkComponent.new document: document, action: bookmark_config %>
+  <%= toggle_sidebar %>
+  <%= online_filter %>
+</div>
+<%= document_body_component %>
+<%= access %>
+<%= render CollectionSourceComponent.new(document:) %>
