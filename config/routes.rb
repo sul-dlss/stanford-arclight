@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sidekiq/web'
-
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   mount Blacklight::Engine => '/'
@@ -37,6 +37,8 @@ Rails.application.routes.draw do
 
   get '/search_tips' => 'catalog#search_tips'
 
+  get '/using-this-site' => 'using_this_site#index'
+
   resource :feedback, only: :create
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -44,3 +46,4 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 end
+# rubocop:enable Metrics/BlockLength
