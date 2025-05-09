@@ -113,7 +113,7 @@ en:
       about:
         heading: Using this site
         description: Use this portal to search and explore finding aids, also called collection guides. 
-        # button_html: <a href="" class="btn btn-outline-primary">Learn more about using this site</a>
+        button_html: <a href="/using-this-site" class="btn btn-outline-primary">Learn more about using this site</a>
 
 
   feedbacks:
