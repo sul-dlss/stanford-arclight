@@ -8,7 +8,18 @@ class EmbedComponent < Arclight::EmbedComponent
     resources.select { |object| embeddable?(object) }.first(1)
   end
 
+  def linked_resources
+    (resources - embeddable_resources).select { |object| linkable?(object) }
+  end
+
   def embeddable?(object)
     object.href.match?(EMBEDDABLE_RESOURCE_PATTERN)
+  end
+
+  def linkable?(object)
+    uri = URI.parse(object.href)
+    uri.is_a?(URI::HTTP) && uri.host.present?
+  rescue URI::InvalidURIError
+    false
   end
 end
