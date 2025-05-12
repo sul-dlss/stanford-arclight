@@ -1,0 +1,67 @@
+<div class="d-flex">
+  <div id="using-this-site">
+    <nav aria-label="breadcrumb" class="w-100 my-4">
+      <ol class="breadcrumb-container list-unstyled d-flex">
+        <li id="breadcrumb-home">
+          <%= link_to 'Home', root_path %>
+        </li>
+        <li class="ms-1 breadcrumb-item active" aria-current="page">Using this site</li>
+      </ol>
+    </nav>
+    <div class="title-container mb-lg-4 mb-1 p-0 border-0">
+      <h1 class="title">Using this site</h1>
+    </div>
+    <div class="mb-4">
+      <h2>About Archival Collections at Stanford</h2>
+      <p>Use this portal to search and explore finding aids, also called collection guides. Search across all finding aids by keyword, subject, title, or browse by containing repositories.</p>
+    </div>
+    <div class="container p-0 m-0 mb-4">
+      <div class="row">
+        <div class="col-12 col-lg-3 align-self-center mb-3 mb-lg-0">
+          <p class="fst-italic">
+            Finding aids describe collections of primary sources and other unique, original, or rare materials held across the special collections repositories at Stanford University Libraries.
+          </p>
+        </div>
+        <!-- Spacer Column -->
+        <div class="col-12 col-lg-1"></div>
+        <div class="col-12 col-lg-8">
+          <div class="card">
+            <div class="card-body p-4">
+              <p class="mb-0">The finding aid provides information about:</p>
+              <ul>
+                <li>The origin of the collection</li>
+                <li>A brief biography or historical sketch of the individual or organization that created the collection</li>
+                <li>A statement of the intellectual and physical organization of the collection</li>
+                <li>A narrative "scope and content note" describing the intellectual content of the collection as a whole and of its major subdivisions</li>
+                <li>A detailed "contents list" providing a hierarchical listing of the collection from the series down to the file, or possibly the item, level</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h3>How to search <%= render(Blacklight::Icons::SearchComponent.new) %></h3>
+      <p>To begin your search, use the search box on the landing page to enter in a keyword, phrase, individual, or organization to find collection material related to your search term. Click the search tips icon to help craft your query.</p>
+      <p>If you would like to browse all collections, from all repositories, click the "Browse all collections" link beneath the search box on the landing page. If you would like to first see each contributing repository and then their collections, click the "Browse repositories" link beneath the search box.</p>
+      <p>After performing a search, the results will be grouped by collection by default. What displays will be the components of an archival collection with a match to the search term, with the option to view all the matching results within a collection. If you would like to see all results, without the collection grouping, toggle to "all results" at the top of the page. 
+      </p>
+      <p class="mb-0">To further refine search results, use the facets on the right side of the page. </p>
+      <p class="pb-0">To browse a collection, use the Collection contents section on the right side of the page. Click the plus icon to expand the collection's hierarchy, and click on a linked component to see the Contents on the main section of the page. To search within the collection, use the search bar at the top of the page.</p>
+      <p>Digital content is signified by the <%= tag.span blacklight_icon(:online), class: 'al-online-content-icon px-1' %> icon.</p>
+      <p>Some digital objects will display in Archival Collections at Stanford, while others will link out to aggregate digital collections in SearchWorks or other access systems used by Stanford University Libraries. Please use the Feedback button to report access issues with digital collections.
+      </p>
+    </div>
+    <div class="card my-5">
+      <div class="card-body">
+        <h3>
+          <%= image_tag 'rosette.png', height: '42', width: '42', class: 'me-2', role: 'presentation' %>
+          Stanford University Libraries Open Metadata Policy
+        </h3>
+        <p>
+          Stanford University Libraries has an <a href="https://library.stanford.edu/stanford-university-libraries-open-metadata-policy">open metadata policy</a>. All finding aids in Archival Collections at Stanford fall under this policy and are released with a CC0 license. 
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

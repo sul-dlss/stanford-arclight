@@ -36,6 +36,13 @@ RSpec.describe 'Home Page' do
     expect(page).to have_css('h3', text: 'Cubberley Education Library')
   end
 
+  it 'links to the Using this site page' do
+    expect(page).to have_link('Learn more about using this site')
+    click_on 'Learn more about using this site'
+    expect(page).to have_current_path('/using-this-site')
+    expect(page).to have_css('h1', text: 'Using this site')
+  end
+
   it 'has the content warning' do
     expect(page).to have_css('.content-warning')
   end
