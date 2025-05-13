@@ -3,12 +3,12 @@
   <h2 class="al-show-sub-heading"><%= t('arclight.views.show.embedded_content') %></h2>
   <%= render OembedViewerComponent.with_collection(embeddable_resources, document: @document) %>
 
-  <% if linked_resources.any? %>
-    <div class="card digital-object-list mt-3">
+  <% if resources.any? %>
+    <%= tag.div(class: 'card digital-object-list mt-3', data: { controller: 'online-content' }) do %>
       <div class="card-body d-flex align-items-center">
         <ul>
-          <% linked_resources.each do |resource| %>
-            <li class="al-digital-object">
+          <% resources.each do |resource| %>
+            <li class="al-digital-object" data-online-content-target="link" data-href-value="<%= resource.href %>">
               <%= link_to(resource.label, resource.href) %>
               <span class="ps-1"><%= render Arclight::OnlineStatusIndicatorComponent.new(document: @document)  %></span>
               <span class="ps-1"><%= helpers.blacklight_icon('external_link') %></span>
@@ -16,6 +16,6 @@
           <% end %>
           </ul>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

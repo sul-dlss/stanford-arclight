@@ -4416,6 +4416,11 @@ Stanford University School of Engineering Hero Award, 2011 </p>
                 <p>Comments on student answers (2): 10/19/1987</p>
               </daodesc>
             </dao>
+            <dao xlink:actuate="onRequest" xlink:href="zc892pd6364" xlink:show="new" xlink:title="A non-embedded online content link" xlink:type="simple">
+              <daodesc>
+                <p>A non-embedded online content link</p>
+              </daodesc>
+            </dao>
           </did>
         </c>
         <c id="aspace_ref35_hw3" level="file">
