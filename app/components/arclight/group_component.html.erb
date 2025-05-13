@@ -11,6 +11,7 @@
           <%= helpers.link_to_document document %>
         </span>
         <%= render CollectionUnitidPillComponent.new(document: document) %>
+        <%= render Arclight::OnlineStatusIndicatorComponent.new(document: document)  %>  
       </h3>
       <div class="d-flex">
         <%= render ExtentPillComponent.new(document: document, compact: compact?) %>
