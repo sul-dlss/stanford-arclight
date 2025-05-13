@@ -174,8 +174,8 @@
                         <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
                             <dc:title>
                                 <xsl:choose>
-                                    <xsl:when test="/ead:ead/ead:eadheader/ead:filedesc/ead:titlestmt/ead:titleproper[@type='filing']">
-                                        <xsl:apply-templates select="/ead:ead/ead:eadheader/ead:filedesc/ead:titlestmt/ead:titleproper[@type='filing']"/>
+                                    <xsl:when test="/ead:ead/ead:eadheader/ead:filedesc/ead:titlestmt/ead:titleproper[not(@type='filing')]">
+                                        <xsl:apply-templates select="/ead:ead/ead:eadheader/ead:filedesc/ead:titlestmt/ead:titleproper[not(@type='filing')][1]"/>
                                     </xsl:when>
                                     <xsl:otherwise>
                                         <xsl:apply-templates select="/ead:ead/ead:eadheader/ead:filedesc/ead:titlestmt/ead:titleproper[1]"/>
@@ -257,10 +257,10 @@
     <!-- Cover page templates -->
     <!-- Builds title -->
     <xsl:template match="ead:titlestmt" mode="pageHeader">
-        <!-- Uses filing type title if present -->
+        <!-- Uses non-filing type title if present -->
         <xsl:choose>
-            <xsl:when test="ead:titleproper[@type='filing']">
-                <xsl:apply-templates select="ead:titleproper[@type='filing']"/>
+            <xsl:when test="ead:titleproper[not(@type='filing')]">
+                <xsl:apply-templates select="ead:titleproper[not(@type='filing')][1]"/>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:apply-templates select="ead:titleproper[1]"/>
@@ -273,8 +273,8 @@
         <fo:block border-bottom="1pt solid #666" margin-top="1in" id="cover-page">
             <fo:block xsl:use-attribute-sets="h1">
                 <xsl:choose>
-                    <xsl:when test="ead:titleproper[@type='filing']">
-                        <xsl:apply-templates select="ead:titleproper[@type='filing']"/>
+                    <xsl:when test="ead:titleproper[not(@type='filing')]">
+                        <xsl:apply-templates select="ead:titleproper[not(@type='filing')][1]"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:apply-templates select="ead:titleproper[1]"/>
