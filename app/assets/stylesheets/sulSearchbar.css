@@ -3,9 +3,13 @@
     .input-group {
         height: 2.75rem;
         border-radius: var(--bs-border-radius);
-        .search-autocomplete-wrapper, input, select {
+
+        .search-autocomplete-wrapper,
+        input,
+        select {
             border: none;
         }
+
         .search-autocomplete-wrapper ul li:active {
             color: var(--stanford-black);
             background-color: var(--grey-lighter);
@@ -59,39 +63,37 @@
             left: 8rem;
         }
     }
+}
 
-    /* Bootstrap overrides -- needs to be this specific in order to work */
-    .input-group.within-collection-dropdown> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
-        border-top-left-radius: var(--bs-border-radius);
-        border-bottom-left-radius: var(--bs-border-radius);
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
+ /* Bootstrap overrides -- needs to be this specific in order to work */
+.input-group.within-collection-dropdown> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+    border-top-left-radius: var(--bs-border-radius);
+    border-bottom-left-radius: var(--bs-border-radius);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
 
-    /* Search button -- says "Search" or displays magnifying glass icon depending on size
+/* Search button -- says "Search" or displays magnifying glass icon depending on size
       See SearchButtonComponent
     */
-    .search-btn-wrapper {
-        background-color: var(--bs-body-bg);
-        border: none;
-        height: 100%;
-        border-top-right-radius: var(--bs-border-radius);
-        border-bottom-right-radius: var(--bs-border-radius);
-        align-items: center;
-        align-self: center;
-    }
+.input-group>.search-btn-wrapper {
+    background-color: var(--bs-body-bg);
+    border: none;
+    height: 100%;
+    align-items: center;
+    align-self: center;
+}
 
-    .search-btn-wrapper .search-btn {
-        border-radius: var(--bs-btn-border-radius);
-        margin: 0.5rem;
-        padding: 0.25rem 0.5rem;
-        max-height: 2.25rem;
-        align-items: center;
-    }
+.input-group>.search-btn-wrapper .search-btn {
+    border-radius: var(--bs-btn-border-radius);
+    margin: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    max-height: 2.25rem;
+    align-items: center;
 }
 
 @media (min-width: 768px) {
-    .search-btn-wrapper .search-btn {
+    .input-group .search-btn-wrapper .search-btn {
         padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
     }
 }
@@ -112,7 +114,7 @@
         align-self: center;
         background-color: var(--bs-body-bg);
     }
-    
+
     .blacklight-icons-search svg {
         margin: 0 0 0 0.5rem;
         fill: var(--stanford-80-black);

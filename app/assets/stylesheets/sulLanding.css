@@ -34,6 +34,15 @@
     color: var(--stanford-black);
   }
 
+  .searchtips-link {
+    a {
+    color: var(--stanford-black)
+    }
+    svg {
+      fill: var(--stanford-black);
+    }
+  }
+
   .input-group > .search-autocomplete-wrapper input:focus {
     box-shadow: none;
   }
