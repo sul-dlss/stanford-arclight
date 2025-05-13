@@ -12,12 +12,17 @@ RSpec.describe DownloadEadJob do
   let(:aspace_repository) do
     instance_double(AspaceRepositories, all_harvestable: harvestable_repos)
   end
+  let(:arclight_repositories) do
+    [Arclight::Repository.new(slug: 'ars'),
+     Arclight::Repository.new(slug: 'eal')]
+  end
 
   before do
     allow(AspaceClient).to receive(:new).and_return(client)
     allow(File).to receive(:open).and_yield(file)
     allow(FileUtils).to receive(:mkdir_p)
     allow(AspaceRepositories).to receive(:new).and_return(aspace_repository)
+    allow(Arclight::Repository).to receive(:all).and_return(arclight_repositories)
   end
 
   it 'fetches an EAD from the client service' do
@@ -85,7 +90,7 @@ RSpec.describe DownloadEadJob do
         described_class.enqueue_all
       end.to enqueue_job(described_class).exactly(4).times
       expect(client).to have_received(:published_resource_uris).exactly(2).times
-      expect(FileUtils).to have_received(:mkdir_p).exactly(7).times
+      expect(FileUtils).to have_received(:mkdir_p).exactly(2).times
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
 
       # Expect the resource with no ead_id or identifier to trigger a notification

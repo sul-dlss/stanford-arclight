@@ -92,9 +92,9 @@
     "@parcel/watcher-win32-x64" "2.5.1"
 
 arclight@^1.0.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/arclight/-/arclight-1.4.0.tgz#1eab61115bc320394247084512e3194fa0a969d1"
-  integrity sha512-a8WGQHWTAg+CbR+1QL4GfDuEwlyEDeeesKe4HjDhaRS5uW3luMW+1FVLtnU79USxjepMkx/stOCQD4KPYVED+g==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/arclight/-/arclight-1.5.0.tgz#e48f373f2a2a862db8139de7cce03861860c4b58"
+  integrity sha512-ndmC+T4719Zt0F1n4si7DWxuHT337ksf9G4R/Dd08/mBCaS/TrEwDhTF3DlGKZP3nMLTI9i3Qczc1hokEQFD7w==
 
 blacklight-frontend@^8.2.2:
   version "8.10.1"
