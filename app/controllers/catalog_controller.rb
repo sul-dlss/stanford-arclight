@@ -57,7 +57,8 @@ class CatalogController < ApplicationController
     # See https://github.com/projectblacklight/blacklight/blob/6c6a72066a6330a815603e839b316958f6321dd7/lib/blacklight/configuration.rb#L560
     config.add_results_document_tool(:online, component: Arclight::OnlineStatusIndicatorComponent)
     config.add_results_document_tool(:arclight_bookmark_control, component: Blacklight::Document::BookmarkComponent)
-    config.bookmark_icon_component = Blacklight::Icons::BookmarkIconComponent
+    # TODO: Use the BookmarkIconComponent once keyboard navigation for this control is fixed
+    # config.bookmark_icon_component = Blacklight::Icons::BookmarkIconComponent
     config.track_search_session.applied_params_component = SearchContext::NullServerAppliedParamsComponent
 
     config.add_results_collection_tool(:group_toggle)
