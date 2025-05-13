@@ -20,4 +20,8 @@ RSpec.describe 'Collection sidebar' do
     expect(page).to have_css('#collection-info.collapse:not(.show)')
     expect(expand_button['aria-expanded']).to eq('false')
   end
+
+  it 'displays the using these materials section' do
+    expect(page).to have_text 'Using these materials'
+  end
 end

@@ -1,0 +1,21 @@
+<%= embed_html %>
+<%# Extract the first item %>
+<% first_partial, *rest_partials = metadata_partials %>
+<div id="summary-container" class="metadata row">
+  <h2 class="sr-only visually-hidden"><%= t 'arclight.views.show.context' %></h2>
+  <div class="col-12 col-lg-8 order-2 order-lg-1 border-0">
+    <%= render Arclight::MetadataSectionComponent.with_collection([first_partial],
+                metadata_attr: { layout: Arclight::UpperMetadataLayoutComponent },
+                presenter: presenter, heading: true) %>
+  </div>
+  <div class="col-12 col-lg-4 order-1 order-lg-2 mb-4 mb-lg-0 border-0">
+    <%= render UsingTheseMaterialsComponent.new(document:) %>
+  </div>
+</div>
+<% rest_partials.each do |partial| %>
+  <div class="metadata">
+    <%= render Arclight::MetadataSectionComponent.with_collection([partial],
+                  metadata_attr: { layout: Arclight::UpperMetadataLayoutComponent },
+                  presenter: presenter, heading: true) %>
+  </div>
+<% end %>
