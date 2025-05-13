@@ -1556,6 +1556,7 @@
 				            <xsl:text>, </xsl:text>
               </xsl:if>
             </xsl:for-each>
+            <xsl:if test="ead:dao"><xsl:text> (online item available)</xsl:text></xsl:if>
         </fo:block>
     </xsl:template>
 
@@ -1587,6 +1588,7 @@
 				            <xsl:text>, </xsl:text>
               </xsl:if>
             </xsl:for-each>
+            <xsl:if test="ead:dao"><xsl:text> (online item available)</xsl:text></xsl:if>
         </fo:inline>
     </xsl:template>
 
