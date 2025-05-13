@@ -19,4 +19,16 @@ export default class SulEmbedController extends OembedController {
       ...(this.hideTitleValue && { hide_title: this.hideTitleValue })
     };
   }
+
+  // Override the loadEndPoint method to dispatch an event when the oEmbed is loaded
+  loadEndPoint(oEmbedEndPoint) {
+    super.loadEndPoint(oEmbedEndPoint)
+    this.sendOembedLoadedEvent(this.data.get('urlValue'))
+  }
+
+  sendOembedLoadedEvent(embedUrl) {
+    const event = new CustomEvent('oembed-loaded', { detail: { embedUrl: embedUrl } })
+    window.dispatchEvent(event)
+    console.log(event)
+  }
 }
