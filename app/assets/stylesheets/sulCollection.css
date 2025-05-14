@@ -40,17 +40,6 @@
     padding-bottom: 0;
   }
 
-  .al-show-actions-box-info .btn-secondary,
-  .al-collection-context-collapsible .btn-secondary {
-    /* rather than overriding the entire components inherited from AL Core to change the .btn-secondary class to the more appropriate .btn-outline-secondary, just change the colors in these cases */
-    background-color: white;
-    color: var(--stanford-digital-blue);
-    /* override the icon from AL Core */
-    svg.bi {
-      display: none;
-    }
-  }
-
   /* more padding for the "Expand" sidebar button */
   .al-collection-context-collapsible .btn-secondary {
     margin: 0.5rem 0.5rem 1rem 0.5rem;
@@ -193,10 +182,9 @@ that show the number of items */
   margin-top: 1.25rem;
 }
 
-.al-show-actions-box .dropdown-item:active {
-  svg.bi {
-    color: white;
-  }
+.al-show-actions-box svg.bi {
+  vertical-align: middle;
+  color: var(--stanford-digital-blue);
 }
 
 .documents-list article.document .document-title-heading .al-document-extent {
@@ -233,10 +221,6 @@ that show the number of items */
   align-self: center;
   margin-left: 1rem;
   font-weight: 600;
-}
-
-.view-type-group .btn:hover svg {
-  fill: var(--stanford-digital-blue);
 }
 
 .show-document .pagination-search-widgets {

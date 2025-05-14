@@ -75,6 +75,7 @@ class CatalogController < ApplicationController
     config.index.constraints_component = Arclight::ConstraintsComponent
     config.index.document_presenter_class = Arclight::IndexPresenter
     config.index.search_bar_component = Arclight::SearchBarComponent
+    config.index.dropdown_component = DropdownComponent
     # config.index.thumbnail_field = 'thumbnail_path_ss'
 
     # solr field configuration for document/show views
@@ -85,6 +86,7 @@ class CatalogController < ApplicationController
     config.show.embed_component = EmbedComponent
     config.show.access_component = AccessComponent
     config.show.online_status_component = Arclight::OnlineStatusIndicatorComponent
+    config.show.expand_hierarchy_component = ExpandHierarchyButtonComponent
     config.show.display_type_field = 'level_ssm'
     # config.show.thumbnail_field = 'thumbnail_path_ss'
     config.show.document_presenter_class = Arclight::ShowPresenter

@@ -3,7 +3,7 @@
   <% case files.size %>
   <% when 2 %>
     <div class="dropdown">
-      <button class="btn btn-outline-secondary btn-sm dropdown-toggle me-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <button class="btn btn-outline-primary btn-sm dropdown-toggle me-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
         <%= t("arclight.views.show.download.default") %>
       </button>
       <ul class="dropdown-menu">
@@ -17,7 +17,7 @@
     </div>
   <% when 1 %>
     <% files.each do |file| %>
-      <%= link_to(file.href, class: "btn btn-outline-secondary btn-sm me-1", **@link_options) do %>
+      <%= link_to(file.href, class: "btn btn-outline-primary btn-sm me-1", **@link_options) do %>
         <%= download_icon %> <%= label(file) %>
       <% end %>
     <% end %>

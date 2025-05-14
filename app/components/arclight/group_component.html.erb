@@ -38,7 +38,7 @@
     <% if @group.total > 3 %>
       <%= link_to(
         t('arclight.views.index.all_group_results', count: helpers.number_with_delimiter(@group.total)),
-        search_within_collection_url, class: 'btn btn-secondary')
+        search_within_collection_url, class: 'btn btn-primary')
       %>
     <% end %>
   </div>
