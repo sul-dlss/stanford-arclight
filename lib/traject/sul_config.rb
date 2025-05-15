@@ -11,9 +11,9 @@ settings do
   provide 'id_normalizer', 'Sul::NormalizedId'
 end
 
-to_field 'ead_filename_ssi' do |_record, accumulator|
-  accumulator << File.basename(settings['command_line.filename'])
-end
+# to_field 'ead_filename_ssi' do |_record, accumulator|
+#   accumulator << File.basename(settings['command_line.filename'])
+# end
 
 to_field 'repository_uri_ssi' do |_record, accumulator|
   accumulator << settings['resource_uri'].to_s[%r{/repositories/\d*}]
@@ -33,4 +33,11 @@ load_config_file(File.expand_path("#{Arclight::Engine.root}/lib/arclight/traject
 # We want to remove these. This is not an issue with finding aids produced by ArchivesSpace.
 each_record do |_record, context|
   context.output_hash['creator_ssim']&.reject!(&:blank?)
+  context.output_hash['ead_filename_ssi'] = ead_filename(context)
+end
+
+def ead_filename(context)
+  return unless context.output_hash['ead_ssi'].any? || context.output_hash['unitid_ssm'].any?
+
+  (context.output_hash['ead_ssi'].first || context.output_hash['unitid_ssm'].first).sub(/(\.xml)?$/i, '').parameterize << '.xml'
 end
