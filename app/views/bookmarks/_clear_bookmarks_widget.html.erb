@@ -1,0 +1,7 @@
+<%# Override from Blacklight to set button classes %>
+<%= link_to t('blacklight.bookmarks.clear.action_title'), clear_bookmarks_path,
+    data: {
+      turbo_method: :delete,
+      turbo_confirm: t('blacklight.bookmarks.clear.action_confirm')
+    },
+    class: 'clear-bookmarks btn btn-outline-secondary' %>
