@@ -1,4 +1,5 @@
 <div class="<%= @classes %>">
-  <a class="" data-blacklight-modal="trigger" href="/search_tips">
-  <%= helpers.blacklight_icon('outline_info', classes: 'me-1 pt-0 d-inline-block') %><%= t('search_tips.title') %></a>
+  <%= link_to helpers.blacklight_icon('outline_info', classes: 'me-1 pt-0 d-inline-block') + t('search_tips.title'),
+              helpers.search_tips_path,
+              data: { blacklight_modal: 'trigger' }  %>
 </div>
