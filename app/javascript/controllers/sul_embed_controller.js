@@ -19,4 +19,16 @@ export default class SulEmbedController extends OembedController {
       ...(this.hideTitleValue && { hide_title: this.hideTitleValue })
     };
   }
+
+  // This gets called once we know the oembed endpoint is valid so
+  // we disptach an event to let us know we can remove the fallback purl link
+  loadEndPoint(oEmbedEndPoint) {
+    this.sendOembedLoadedEvent(this.data.get('urlValue'))
+    super.loadEndPoint(oEmbedEndPoint)
+  }
+
+  sendOembedLoadedEvent(embedUrl) {
+    const event = new CustomEvent('oembed-loaded', { detail: { embedUrl: embedUrl } })
+    window.dispatchEvent(event)
+  }
 }
