@@ -4,7 +4,7 @@
 # button text to visually-hidden at all screen sizes
 class SearchButtonComponent < Blacklight::SearchButtonComponent
   def call
-    tag.div(class: 'search-btn-wrapper d-flex') do
+    tag.div(class: 'search-btn-wrapper rounded-end d-flex') do
       tag.button(class: 'btn btn-primary search-btn', type: 'submit', id: @id) do
         # Text visible only on md and larger screens
         tag.span(t('search.search_bar_button'), class: 'd-none d-md-flex') +
