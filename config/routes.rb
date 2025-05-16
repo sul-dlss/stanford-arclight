@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sidekiq/web'
+
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
@@ -38,6 +39,17 @@ Rails.application.routes.draw do
   get '/search_tips' => 'catalog#search_tips'
 
   get '/using-this-site' => 'using_this_site#index'
+
+  # Match ARKs that contain:
+  # - a respistory shoulder (one letter followed by one digit)
+  # - a UUID (with or without hyphens)
+  # In the ARK spec, strings that differ only by hyphens are considered identical
+  # rubocop :disable Layout/LineLength
+  get '/findingaid/*ark_id', to: 'finding_aids#resolve', as: :findingaid,
+                             constraints: lambda { |req|
+                               req.params[:ark_id] =~ %r{\Aark:/#{Settings.ark_naan}/[a-z]\d(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\z}i
+                             }
+  # rubocop :enable Layout/LineLength
 
   resource :feedback, only: :create
 

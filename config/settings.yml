@@ -7,6 +7,8 @@ global_alert: <%= ENV['GLOBAL_ALERT'] || false %>
 
 hours_api: 'https://library-hours.stanford.edu/'
 
+ark_naan: '22236'
+
 # Locations with a 'closed_note' will display the note in lieu of fetching hours from the API.
 hours_locations:
   - label: 'Green Library, 2nd Floor'
