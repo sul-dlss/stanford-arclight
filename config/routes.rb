@@ -39,6 +39,14 @@ Rails.application.routes.draw do
 
   get '/using-this-site' => 'using_this_site#index'
 
+  # rubocop:disable Layout/LineLength
+  get '/findingaid/*ark_id', to: 'finding_aids#resolve', as: :findingaid,
+                             constraints: lambda { |req|
+                               # Could place 22336 in a config file but it is Stanford's permanent ARK NAAN and won't change
+                               req.params[:ark_id] =~ %r{\Aark:/22236/[a-z]\d[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z}
+                             }
+  # rubocop:enable Layout/LineLength
+
   resource :feedback, only: :create
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

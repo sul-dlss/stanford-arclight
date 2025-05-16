@@ -27,6 +27,21 @@ to_field 'aspace_config_set_ssi' do |_record, accumulator|
   accumulator << settings['aspace_config_set']
 end
 
+to_field 'sul_ark_link_ssi, sul_ark_id_ssi' do |record, _accumulator, context|
+  ark_node = record.at_xpath(
+    '/ead/archdesc/did/unitid[@type="ark"]/extref',
+    'ead' => 'urn:isbn:1-931666-22-9',
+    'xlink' => 'http://www.w3.org/1999/xlink'
+  )
+
+  if ark_node
+    href = ark_node['href']
+    context.output_hash['sul_ark_link_ssi'] = href
+    ark_id = href[%r{ark:/\S+}] # captures everything after 'ark:/'
+    context.output_hash['sul_ark_id_ssi'] = ark_id if ark_id
+  end
+end
+
 load_config_file(File.expand_path("#{Arclight::Engine.root}/lib/arclight/traject/ead2_config.rb"))
 
 # Some finding aids in OAC have empty elements that are indexed as empty strings in Solr.
