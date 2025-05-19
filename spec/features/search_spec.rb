@@ -39,6 +39,19 @@ RSpec.describe 'Searching', :js do
     end
   end
 
+  context 'when the level facet is limited to collections' do
+    it 'does not group by collection' do
+      visit arclight_engine.collections_path
+      fill_in 'q', with: 'knuth'
+      within '.search-btn-wrapper' do
+        click_on 'Search'
+      end
+
+      expect(page).to have_content(/You searched for:\s*Keyword knuth/)
+      expect(page.current_url).not_to include('group=true')
+    end
+  end
+
   context 'when within a collection and user selects group by all collections' do
     it 'groups by collection' do
       visit solr_document_path(id: 'ars-0043')
