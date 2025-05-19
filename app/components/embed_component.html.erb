@@ -4,7 +4,7 @@
   <%= render OembedViewerComponent.with_collection(embeddable_resources, document: @document) %>
 
   <% if resources.any? %>
-    <%= tag.div(class: 'card digital-object-list mt-3', data: { controller: 'online-content' }) do %>
+    <%= tag.div(class: 'card digital-object-list mt-3 mb-2', data: { controller: 'online-content' }) do %>
       <div class="card-body d-flex align-items-center">
         <ul>
           <% resources.each do |resource| %>
