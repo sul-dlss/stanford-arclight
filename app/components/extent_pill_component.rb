@@ -9,10 +9,10 @@ class ExtentPillComponent < ViewComponent::Base
   end
 
   def extents
-    @document.extent.map { |e| e.truncate_words(6, separator: /[\s,;]/) }
+    @document.extent.join('; ').truncate_words(6, separator: /[\s,;]/)
   end
 
   def render?
-    !@compact && extents.any?
+    !@compact && @document.extent.any?
   end
 end

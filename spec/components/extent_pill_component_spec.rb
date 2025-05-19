@@ -16,8 +16,7 @@ RSpec.describe ExtentPillComponent, type: :component do
   end
 
   it 'renders the extents' do
-    expect(page).to have_text '1 Box'
-    expect(page).to have_text 'This is an extensive extent so...'
+    expect(page).to have_text '1 Box; This is an extensive...'
   end
 
   context 'when compact is true' do
