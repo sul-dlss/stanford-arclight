@@ -41,6 +41,12 @@
       </repository>
       <unittitle>Donald E. Knuth papers</unittitle>
       <unitid>SC0097</unitid>
+      <unitid type="ark">
+        <extref xlink:actuate="onLoad" xlink:href="https://archives.stanford.edu/ark:/22236/s19f562efc-dc7f-4ca7-bc10-d8456c3451a0" xlink:show="new">Archival Resource Key</extref>
+      </unitid>
+      <unitid type="ark-superseded">
+        <extref xlink:actuate="onLoad" xlink:href="https://oac.cdlib.org/findaid/ark:/13030/testark/" xlink:show="new">Previous Archival Resource Key</extref>
+      </unitid>
       <physdesc altrender="part">
         <extent altrender="materialtype spaceoccupied">39.75 Linear Feet</extent>
       </physdesc>
