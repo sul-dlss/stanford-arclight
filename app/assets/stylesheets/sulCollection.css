@@ -17,7 +17,15 @@
       #sidebar-scroll-wrapper {
         overflow-y: auto;
         overflow-x: hidden;
-        height: calc(100vh - 180px);
+        height: calc(100vh);
+        background:
+        linear-gradient(rgb(255,255,255) 30%, rgba(255, 255, 255, 0)), 
+        linear-gradient(rgba(255, 255, 255, 0), rgb(255,255,255) 70%) 0 100%,
+        radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
+        radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+        background-attachment: local, local, scroll, scroll;
+        background-repeat: no-repeat;
+        background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
       }
     }
   }
