@@ -73,6 +73,8 @@ class AspaceClient
     raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
     raise ArgumentError, 'Please provide the updated after date' unless updated_after
 
+    check_for_too_many_uris(uris_to_exclude)
+
     objects_with_resource_link = { contains_fields: ['resource'],
                                    select_fields: ['resource'],
                                    exclude_field_values: { 'resource' => uris_to_exclude } }
@@ -171,20 +173,33 @@ class AspaceClient
     raise ArgumentError, 'ArchivesSpace Password missing from configuration' unless @password
   end
 
+  def check_for_too_many_uris(uris)
+    return unless uris && uris.length >= Settings.max_aspace_boolean_clauses
+
+    raise ArgumentError, "Too many URIs in ASpace query (#{uris.length} URIs); " \
+                         "max #{Settings.max_aspace_boolean_clauses}"
+  end
+
   # Reduce a list of resource URIs to those that are published and unsuppressed
   def published_unsuppressed_resource_query(repository_id:, resource_uris:)
+    check_for_too_many_uris(resource_uris)
+
     filter_to_resources = { published: true, suppressed: false, limit_results_to_uris: resource_uris }
     AspaceQuery.new(client: self, repository_id:, options: filter_to_resources)
   end
 
   # Get all record URIs that have links to one or more of the given agents
   def record_uris_from_linked_agent_uris(repository_id:, agent_uris:)
+    check_for_too_many_uris(agent_uris)
+
     query = agent_uris.map { |uri| "agent_uris:\"#{uri}\"" }.join(' OR ')
     AspaceSearchQuery.new(client: self, repository_id:, query:).each.to_a.pluck('uri')
   end
 
   # Get all parent resource URIs for the given records
   def resource_uris_from_record_uris(repository_id:, record_uris:)
+    check_for_too_many_uris(record_uris)
+
     resources_with_uri = { contains_fields: ['resource'],
                            select_fields: ['resource'],
                            limit_results_to_uris: record_uris }

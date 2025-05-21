@@ -119,6 +119,26 @@ RSpec.describe AspaceClient do
         end.to raise_error(ArgumentError)
       end
     end
+
+    context 'with too many exclude uris' do
+      it 'raises an error' do
+        expect do
+          client.published_resource_with_updated_component_uris(repository_id: 11, uris_to_exclude: (0..500).to_a)
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when too many resources have updated components' do
+      before do
+        allow(aspace_query).to receive(:each).and_return((0..500).to_a.map { |v| { resource: v } })
+      end
+
+      it 'raises an error' do
+        expect do
+          client.published_resource_with_updated_component_uris(repository_id: 11)
+        end.to raise_error(ArgumentError)
+      end
+    end
   end
 
   describe '#published_resource_with_linked_agent_uris' do
@@ -202,6 +222,20 @@ RSpec.describe AspaceClient do
     end
 
     context 'without an agent_uris argument' do
+      it 'raises an error' do
+        expect do
+          client.resources_with_linked_agents(repository_id:)
+        end.to raise_error(ArgumentError)
+      end
+    end
+
+    context 'when too many resources have updated agents' do
+      before do
+        allow(client).to receive(:record_uris_from_linked_agent_uris)
+          .with(repository_id:, agent_uris:)
+          .and_return((0..500).to_a)
+      end
+
       it 'raises an error' do
         expect do
           client.resources_with_linked_agents(repository_id:)
