@@ -19,6 +19,11 @@ RSpec.describe 'ARK indexing and routing' do
     it 'redirects to the catalog page when ARK ID is found' do
       expect(page).to have_current_path('/catalog/sc0097')
     end
+
+    it 'does not index extra ARK fields in the unitid' do
+      expect(page).to have_no_content('Archival Resource Key')
+      expect(page).to have_no_content('Previous Archival Resource Key')
+    end
   end
 
   context 'when the route requests an ARK with no hyphens' do
