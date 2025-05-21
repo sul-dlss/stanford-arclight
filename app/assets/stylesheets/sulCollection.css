@@ -228,3 +228,21 @@ that show the number of items */
   padding: 0;
   margin: 0;
 }
+
+@media screen and (max-width: 992px) {
+  #appliedParams {
+    /* this is the same padding as .container; aligns with header  */
+    padding: 0 calc(var(--bs-gutter-x)* 0.5);
+  }
+  #appliedParams > a {
+    margin-right: 0;
+  }
+  .page-links, .al-search-breadcrumb {
+    padding-left: calc(var(--bs-gutter-x)* 0.5)
+  }
+
+  .search-widgets > * {
+    /* !important is needed to override an !important in AL Core */
+    margin-left: calc(var(--bs-gutter-x)* 0.5) !important;
+  }
+}
