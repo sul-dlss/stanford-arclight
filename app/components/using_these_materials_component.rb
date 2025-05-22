@@ -14,6 +14,14 @@ class UsingTheseMaterialsComponent < ViewComponent::Base
   end
 
   def restrictions
-    document.collection.fetch('accessrestrict_html_tesm', ['']).first.html_safe # rubocop:disable Rails/OutputSafety
+    text = document.collection.fetch('accessrestrict_tesim', ['']).join(' ')
+
+    if text.length > 250
+      truncated = truncate(text, length: 250, omission: '', separator: ' ')
+      text_with_link = "#{truncated} #{link_to('[...]', '#access-and-use')}"
+      text_with_link.html_safe # rubocop:disable Rails/OutputSafety
+    else
+      text
+    end
   end
 end
