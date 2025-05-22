@@ -4,6 +4,8 @@
 # Background job that deletes an indexed collection from Solr
 # if we find it is no longer published or no longer exists in ASpace
 class DeleteEadJob < ApplicationJob
+  class DeleteEadJobError < StandardError; end
+
   def self.enqueue_all
     AspaceRepositories.all_harvestable.each do |repository|
       perform_later(repository_id: repository.id, aspace_config_set: repository.aspace_config_set)
@@ -12,7 +14,9 @@ class DeleteEadJob < ApplicationJob
 
   # @param repository_id [String] the ASpace repository id, such as '11'
   # @param aspace_config_set [String] the ASpace instance configuration set, such as 'default'
-  def perform(repository_id:, aspace_config_set:)
+  # @param override_excessive_deletes_guard [Boolean] if true, the job will not raise an error if the number of records
+  #        to delete exceeds Settings.max_automated_deletes
+  def perform(repository_id:, aspace_config_set:, override_excessive_deletes_guard: false)
     indexed_eads = IndexedEads.new(repository_id:, aspace_config_set:).all
     published_eads = AspaceClient.new(aspace_config_set:).all_published_resource_uris_by(repository_id:)
 
@@ -21,8 +25,21 @@ class DeleteEadJob < ApplicationJob
 
     return if ids_to_delete.none?
 
+    excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard:)
+
     Blacklight.default_index.connection.delete_by_id(ids_to_delete)
     Blacklight.default_index.connection.commit
+  end
+
+  # This is a safeguard to prevent deleting too many records at once (indicating something could be wrong).
+  # If the number of records to delete exceeds Settings.max_automated_deletes, raise an error instead of proceeding.
+  def excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard: false)
+    return if override_excessive_deletes_guard
+
+    return unless ids_to_delete.size > Settings.max_automated_deletes
+
+    raise DeleteEadJobError, "Attempting to delete #{ids_to_delete.size} records. " \
+                             "This exceeds the limit of #{Settings.max_automated_deletes}."
   end
 
   # Fetches all the indexed EAD files for an aspace repository
