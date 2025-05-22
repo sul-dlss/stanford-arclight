@@ -173,6 +173,11 @@ class AspaceClient
     raise ArgumentError, 'ArchivesSpace Password missing from configuration' unless @password
   end
 
+  # We build boolean queries from URIs that are sent to ASpace/Solr. If there are too many clauses
+  # in the API query, ASpace/Solr will throw an error. The error occurs when the number of clauses exceeds
+  # the max boolean clauses setting in Solr (default of 1024). We throw an error at a lower threshold
+  # because if more than 500 or so URIs are in the query it likely means we should be re-indexing everything
+  # instead of trying to find exactly which records have changed.
   def check_for_too_many_uris(uris)
     return unless uris && uris.length >= Settings.max_aspace_boolean_clauses
 
