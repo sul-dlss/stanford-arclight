@@ -15,3 +15,12 @@
     }
   }
 }
+
+@media screen and (max-width: 992px) {
+  .facets {
+    padding: 0 calc(var(--bs-gutter-x)* 0.5);
+    h2.facets-heading {
+      padding: 0;
+    }
+  }
+}
