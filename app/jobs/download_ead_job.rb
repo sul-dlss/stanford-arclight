@@ -41,7 +41,7 @@ class DownloadEadJob < ApplicationJob
   # @param config [DownloadEadJob::Config] holds configurations for the download
   def self.enqueue_all(config: DownloadEadJob::Config.new)
     create_directories(data_dir: config.data_directory)
-    AspaceRepositories.all_harvestable.each { |repository| enqueue_repository(repository:, config:) }
+    AspaceRepositories.all_harvestable.each { |repository| EnqueueRepositoryDownload.call(repository:, config:) }
   end
 
   # This will enqueue one repository selected by its aspace repository code.
@@ -52,46 +52,8 @@ class DownloadEadJob < ApplicationJob
   def self.enqueue_one_by(aspace_repository_code:, aspace_config_set: :default, config: DownloadEadJob::Config.new)
     create_directories(data_dir: config.data_directory)
     repository = AspaceRepositories.find_by(code: aspace_repository_code, aspace_config_set:)
-    enqueue_repository(repository:, config:)
+    EnqueueRepositoryDownload.call(repository:, config:)
   end
-
-  # rubocop:disable Metrics/MethodLength
-  def self.enqueue_repository(repository:, config:)
-    uris_to_exclude = []
-    aspace_config_set = repository.aspace_config_set
-
-    repository.each_published_resource(updated_after: config.updated_after) do |resource|
-      uris_to_exclude << resource.uri if config.check_record_dates
-      enqueue_resource(resource:, config:, aspace_config_set:)
-    end
-
-    return unless config.check_record_dates
-
-    repository.each_published_resource_with_updated_components(updated_after: config.updated_after,
-                                                               uris_to_exclude:) do |resource|
-      enqueue_resource(resource:, config:, aspace_config_set:)
-    end
-
-    repository.each_published_resource_with_updated_agents(updated_after: config.updated_after,
-                                                           uris_to_exclude:) do |resource|
-      enqueue_resource(resource:, config:, aspace_config_set:)
-    end
-  end
-  # rubocop:enable Metrics/MethodLength
-  private_class_method :enqueue_repository
-
-  def self.enqueue_resource(resource:, config:, aspace_config_set:)
-    file_dir = "#{config.data_directory}/#{resource.arclight_repository_code}"
-    DownloadEadJob.perform_later(aspace_config_set:,
-                                 resource_uri: resource.uri,
-                                 file_name: resource.file_name, file_dir:,
-                                 index: config.index, generate_pdf: config.generate_pdf)
-  rescue Aspace::AspaceResourceError => e
-    message = "Failed to create filename for #{resource.uri}: #{e.message}"
-    Rails.logger.warn(message)
-    Honeybadger.notify(message)
-  end
-  private_class_method :enqueue_resource
 
   # Ensure all arclight repositories have a directory where EAD files can be stored
   def self.create_directories(data_dir:)
