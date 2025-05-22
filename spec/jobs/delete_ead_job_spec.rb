@@ -49,5 +49,34 @@ RSpec.describe DeleteEadJob do
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
     end
   end
+
+  describe '#excessive_deletes_guard' do
+    let(:ids_to_delete) { %w[ead123 ead456] }
+    let(:override_excessive_deletes_guard) { false }
+
+    it 'raises an error if the number of records to delete exceeds the limit' do
+      allow(Settings).to receive(:max_automated_deletes).and_return(1)
+
+      expect do
+        described_class.new.excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard:)
+      end.to raise_error(DeleteEadJob::DeleteEadJobError, /Attempting to delete 2 records/)
+    end
+
+    it 'does not raise an error if the number of records to delete is within the limit' do
+      allow(Settings).to receive(:max_automated_deletes).and_return(3)
+
+      expect do
+        described_class.new.excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard:)
+      end.not_to raise_error
+    end
+
+    it 'does not raise an error if override_excessive_deletes_guard is true' do
+      allow(Settings).to receive(:max_automated_deletes).and_return(1)
+
+      expect do
+        described_class.new.excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard: true)
+      end.not_to raise_error
+    end
+  end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
