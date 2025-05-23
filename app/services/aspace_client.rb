@@ -52,12 +52,12 @@ class AspaceClient
     AspaceQuery.new(client: self, repository_id:, updated_after:, options: { published: true, suppressed: false })
   end
 
-  # Returns an array of all published resource uris in ASpace for the specified repository
-  # e.g. ["/repositories/2/resources/5363", "/repositories/2/resources/3635"]
-  # @example client.all_published_resource_uris_by(repository_id: '2')
+  # Returns an array of all published resource ARKs in ASpace for the specified repository
+  # e.g. ["ark:/22236/r50bc21642-111d-46e3-8e44-d30f9463d6a9", "ark:/22236/r523b42772-48e8-4090-9bc9-dbdfc75ae777"]
+  # @example client.all_published_resource_arks_by(repository_id: '11')
   # @param repository_id [String] the repository id in ASpace
-  def all_published_resource_uris_by(repository_id:)
-    published_resources(repository_id:).each.to_a.pluck('uri')
+  def all_published_resource_arks_by(repository_id:)
+    published_resource_arks_query(repository_id:).each.to_a.pluck('ark_name').compact_blank&.map(&:first)
   end
 
   # Returns an instance of AspaceQuery that response to :each returning
@@ -210,6 +210,18 @@ class AspaceClient
                            limit_results_to_uris: record_uris }
     result = AspaceQuery.new(client: self, repository_id:, primary_type: nil, options: resources_with_uri).each.to_a
     result.pluck('resource')
+  end
+
+  # Returns an instance of AspaceQuery that response to :each returning
+  # hashes containing an ark_name for resources of interest,
+  # e.g. {"ark_name"=> ["ark:/22236/r523b42772-48e8-4090-9bc9-dbdfc75ae777"]}
+  # @example client.published_resource_arks_query(repository_id: 2).each { |r| do something }
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  def published_resource_arks_query(repository_id:)
+    raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
+
+    AspaceQuery.new(client: self, repository_id:,
+                    options: { published: true, suppressed: false, select_fields: ['ark_name'] })
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
