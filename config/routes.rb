@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   get '/using-this-site' => 'using_this_site#index'
 
   # Match ARKs that contain:
-  # - a respistory shoulder (one letter followed by one digit)
+  # - a repository shoulder (one letter followed by one digit)
   # - a UUID (with or without hyphens)
   # In the ARK spec, strings that differ only by hyphens are considered identical
   # rubocop :disable Layout/LineLength

@@ -4,11 +4,11 @@ require 'rails_helper'
 
 RSpec.describe Aspace::Resource do
   subject(:resource) do
-    described_class.new(ead_id: 'scm.123/ more stuff.xml', uri: '/respositories/11/resources/22',
+    described_class.new(ead_id: 'scm.123/ more stuff.xml', uri: '/repositories/11/resources/22',
                         repository_code: 'speccoll')
   end
 
-  it { expect(resource.uri).to eq '/respositories/11/resources/22' }
+  it { expect(resource.uri).to eq '/repositories/11/resources/22' }
   it { expect(resource.repository_code).to eq 'speccoll' }
 
   describe '#file_name' do
@@ -18,7 +18,7 @@ RSpec.describe Aspace::Resource do
 
     context 'when only an identifier is provided in the resource' do
       subject(:resource) do
-        described_class.new(identifier: 'scm-123morestuff', uri: '/respositories/11/resources/22',
+        described_class.new(identifier: 'scm-123morestuff', uri: '/repositories/11/resources/22',
                             repository_code: 'speccoll')
       end
 
@@ -29,7 +29,7 @@ RSpec.describe Aspace::Resource do
 
     context 'when no EAD ID or identifier is provided in the resource' do
       subject(:resource) do
-        described_class.new(uri: '/respositories/11/resources/22', repository_code: 'speccoll')
+        described_class.new(uri: '/repositories/11/resources/22', repository_code: 'speccoll')
       end
 
       it 'raises an error when file_name is called' do
@@ -45,7 +45,7 @@ RSpec.describe Aspace::Resource do
 
     context 'when only an identifier is provided in the resource' do
       subject(:resource) do
-        described_class.new(identifier: 'scm-123morestuff', uri: '/respositories/11/resources/22',
+        described_class.new(identifier: 'scm-123morestuff', uri: '/repositories/11/resources/22',
                             repository_code: 'speccoll')
       end
 
@@ -56,7 +56,7 @@ RSpec.describe Aspace::Resource do
 
     context 'when no EAD ID or identifier is provided in the resource' do
       subject(:resource) do
-        described_class.new(uri: '/respositories/11/resources/22', repository_code: 'speccoll')
+        described_class.new(uri: '/repositories/11/resources/22', repository_code: 'speccoll')
       end
 
       it 'raises an error when arclight_repository_code is called' do
