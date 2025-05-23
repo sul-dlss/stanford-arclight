@@ -122,4 +122,7 @@ label.toggle-bookmark {
     padding: 0;
     flex-basis: 75%;
   }
+  #access-use-content > div {
+    width: 100%
+  }
 }
