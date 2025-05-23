@@ -20,6 +20,15 @@ RSpec.describe Aspace::Repository do
   it { expect(repository.uri).to eq '/repositories/11' }
   it { expect(repository.harvestable?).to be true }
   it { expect(repository.aspace_config_set).to eq 'default' }
+  it { expect(repository.ark_shoulder).to be_nil }
+
+  context 'when an ark_shoulder is provided' do
+    subject(:repository) do
+      described_class.new(repo_code: 'ARS', uri: '/repositories/11', aspace_config_set: 'default', ark_shoulder: 'f4')
+    end
+
+    it { expect(repository.ark_shoulder).to eq 'f4' }
+  end
 
   describe '#each_published_resource' do
     before do
