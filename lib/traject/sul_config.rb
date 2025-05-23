@@ -23,13 +23,6 @@ to_field 'aspace_config_set_ssi' do |_record, accumulator|
   accumulator << settings['aspace_config_set']
 end
 
-to_field 'sul_ark_link_ssi',
-         extract_xpath('/ead/archdesc/did/unitid[@type="ark"]/extref', to_text: false) do |_record, accumulator|
-  accumulator.map! do |node|
-    node['href'] if node
-  end
-end
-
 to_field 'sul_ark_id_ssi',
          extract_xpath('/ead/archdesc/did/unitid[@type="ark"]/extref', to_text: false) do |_record, accumulator|
   accumulator.map! do |node|
