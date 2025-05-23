@@ -7,7 +7,7 @@ RSpec.describe AspaceRepositories do
 
   let(:client) { instance_double(AspaceClient, repositories:) }
   let(:repositories) do
-    [{ 'repo_code' => 'ars', 'uri' => '/repositories/11', 'key' => 'value' },
+    [{ 'repo_code' => 'ars', 'uri' => '/repositories/11', 'key' => 'value', 'ark_shoulder' => 'f4' },
      { 'repo_code' => 'sul', 'uri' => '/repositories/1', 'key' => 'value' }]
   end
 

@@ -14,7 +14,7 @@ class AspaceRepositories
     Rails.cache.fetch('aspace_repositories', expires_in: 1.hour) do
       Settings.aspace.keys.flat_map do |aspace_config_set|
         client(aspace_config_set).repositories.flat_map do |repo|
-          Aspace::Repository.new(**repo.slice('repo_code', 'uri').symbolize_keys, aspace_config_set:)
+          Aspace::Repository.new(**repo.slice('repo_code', 'uri', 'ark_shoulder').symbolize_keys, aspace_config_set:)
         end
       end
     end
