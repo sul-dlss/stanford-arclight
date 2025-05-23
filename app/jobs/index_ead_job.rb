@@ -10,20 +10,14 @@ class IndexEadJob < ApplicationJob
 
   # @example IndexEadJob.perform_later(file_path: '/data/ars/ars1234.xml')
   # @param file_path [String] the path to the file to be indexed, such as, '/data/ars/ars1234.xml'
-  # @param resource_uri [String] the resource URI for the record in ASpace
-  # @param aspace_config_set [String] the ASpace config set to use for the indexing, such as 'default'
   # @param arclight_repository_code [String] the arclight repository code, such as 'ars'
   # @param solr_url [String] the web address for Solr where the file should be indexed
   # @param app_dir [Pathname] directory where the index command should be executed
-  def perform(file_path:, # rubocop:disable Metrics/ParameterLists
-              resource_uri: nil,
-              aspace_config_set: nil,
+  def perform(file_path:,
               arclight_repository_code: nil,
               solr_url: ENV.fetch('SOLR_URL', Blacklight.default_index.connection.base_uri),
               app_dir: Rails.root)
-    env = { 'REPOSITORY_ID' => arclight_repository_code || arclight_repository_code(file_path),
-            'RESOURCE_URI' => resource_uri,
-            'ASPACE_CONFIG_SET' => aspace_config_set.to_s }
+    env = { 'REPOSITORY_ID' => arclight_repository_code || arclight_repository_code(file_path) }
     cmd = "bundle exec traject -u #{solr_url} -i xml -c ./lib/traject/sul_config.rb #{file_path}"
 
     output, status = Open3.capture2(env, cmd, chdir: app_dir)

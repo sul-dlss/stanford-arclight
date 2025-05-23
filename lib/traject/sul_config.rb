@@ -6,21 +6,12 @@ require_relative 'sul/normalized_id'
 settings do
   provide 'component_traject_config', File.join(__dir__, 'sul_component_config.rb')
   provide 'solr_writer.http_timeout', 1200
-  provide 'resource_uri', ENV.fetch('RESOURCE_URI', nil)
   provide 'aspace_config_set', ENV.fetch('ASPACE_CONFIG_SET', nil)
   provide 'id_normalizer', 'Sul::NormalizedId'
 end
 
 to_field 'ead_filename_ssi' do |_record, accumulator|
   accumulator << File.basename(settings['command_line.filename'])
-end
-
-to_field 'resource_uri_ssi' do |_record, accumulator|
-  accumulator << settings['resource_uri']
-end
-
-to_field 'aspace_config_set_ssi' do |_record, accumulator|
-  accumulator << settings['aspace_config_set']
 end
 
 to_field 'sul_ark_id_ssi',
