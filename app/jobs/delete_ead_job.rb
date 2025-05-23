@@ -14,9 +14,8 @@ class DeleteEadJob < ApplicationJob
 
   # @param repository_id [String] the ASpace repository id, such as '11'
   # @param aspace_config_set [String] the ASpace instance configuration set, such as 'default'
-  # @param override_excessive_deletes_guard [Boolean] if true, the job will not raise an error if the number of records
-  #        to delete exceeds Settings.max_automated_deletes
-  def perform(repository_id:, aspace_config_set:, override_excessive_deletes_guard: false)
+  # @param skip_delete_safeguard [Boolean] if true, skips the safeguard that prevents excessive deletes
+  def perform(repository_id:, aspace_config_set:, skip_delete_safeguard: false)
     indexed_eads = IndexedEads.new(repository_id:, aspace_config_set:).all
     published_eads = AspaceClient.new(aspace_config_set:).all_published_resource_uris_by(repository_id:)
 
@@ -25,21 +24,17 @@ class DeleteEadJob < ApplicationJob
 
     return if ids_to_delete.none?
 
-    excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard:)
+    unless skip_delete_safeguard
+      DeleteSafeguard.check(delete_count: ids_to_delete.count,
+                            index_count: indexed_eads.count)
+    end
 
-    Blacklight.default_index.connection.delete_by_id(ids_to_delete)
-    Blacklight.default_index.connection.commit
+    delete_and_commit_to_solr(ids_to_delete)
   end
 
-  # This is a safeguard to prevent deleting too many records at once (indicating something could be wrong).
-  # If the number of records to delete exceeds Settings.max_automated_deletes, raise an error instead of proceeding.
-  def excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard: false)
-    return if override_excessive_deletes_guard
-
-    return unless ids_to_delete.size > Settings.max_automated_deletes
-
-    raise DeleteEadJobError, "Attempting to delete #{ids_to_delete.size} records. " \
-                             "This exceeds the limit of #{Settings.max_automated_deletes}."
+  def delete_and_commit_to_solr(ids_to_delete)
+    Blacklight.default_index.connection.delete_by_id(ids_to_delete)
+    Blacklight.default_index.connection.commit
   end
 
   # Fetches all the indexed EAD files for an aspace repository
