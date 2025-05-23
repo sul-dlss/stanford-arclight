@@ -4,11 +4,12 @@ module Aspace
   # Model for an Aspace repository to manage information
   # needed for downloading and updating a repository's resources
   class Repository
-    attr_reader :uri, :code, :aspace_config_set
+    attr_reader :uri, :code, :ark_shoulder, :aspace_config_set
 
-    def initialize(repo_code:, uri:, aspace_config_set:)
+    def initialize(repo_code:, uri:, aspace_config_set:, ark_shoulder: nil)
       @code = repo_code.downcase
       @uri = uri
+      @ark_shoulder = ark_shoulder
       @aspace_config_set = aspace_config_set
     end
 

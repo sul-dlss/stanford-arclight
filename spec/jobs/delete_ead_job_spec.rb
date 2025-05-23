@@ -3,10 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe DeleteEadJob do
-  let(:client) { instance_double(AspaceClient, all_published_resource_uris_by: ['/repositories/1/resources/2']) }
+  let(:client) do
+    instance_double(AspaceClient,
+                    all_published_resource_arks_by: ['ark:/22236/c88366e7e5-b138-4d4f-b210-9063f159547c'])
+  end
   let(:indexed_eads) do
     instance_double(DeleteEadJob::IndexedEads,
-                    all: { '/repositories/1/resources/2' => 'ead123', '/repositories/1/resources/3' => 'ead456' })
+                    all: { 'ark:/22236/c88366e7e5-b138-4d4f-b210-9063f159547c' => 'ead123',
+                           'ark:/22236/c83390a9ec-7afc-45ef-a2d1-0b065b53591d' => 'ead456' })
   end
   let(:rsolr_client) { instance_double(RSolr::Client) }
   let(:repository) { instance_double(Blacklight::Solr::Repository, connection: rsolr_client) }
@@ -20,10 +24,10 @@ RSpec.describe DeleteEadJob do
   end
 
   it 'deletes any eads not published in ASpace' do
-    described_class.perform_now(repository_id: 1, aspace_config_set: 'default')
+    described_class.perform_now(repository_id: 1, aspace_config_set: 'default', ark_shoulder: 'c8')
 
-    expect(DeleteEadJob::IndexedEads).to have_received(:new).with(repository_id: 1, aspace_config_set: 'default')
-    expect(client).to have_received(:all_published_resource_uris_by).with(repository_id: 1)
+    expect(DeleteEadJob::IndexedEads).to have_received(:new).with(ark_shoulder: 'c8')
+    expect(client).to have_received(:all_published_resource_arks_by).with(repository_id: 1)
     expect(rsolr_client).to have_received(:delete_by_id).with(['ead456'])
     expect(rsolr_client).to have_received(:commit)
   end
@@ -31,8 +35,10 @@ RSpec.describe DeleteEadJob do
   # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '.enqueue_all' do
     let(:harvestable_repos) do
-      [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11', aspace_config_set: 'default'),
-       Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4', aspace_config_set: 'default')]
+      [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11',
+                              aspace_config_set: 'default', ark_shoulder: 'c8'),
+       Aspace::Repository.new(repo_code: 'eal', uri: '/repositories/4',
+                              aspace_config_set: 'default', ark_shoulder: 'r2')]
     end
     let(:aspace_repository) do
       instance_double(AspaceRepositories, all_harvestable: harvestable_repos)
