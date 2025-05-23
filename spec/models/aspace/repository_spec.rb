@@ -23,7 +23,7 @@ RSpec.describe Aspace::Repository do
 
   describe '#each_published_resource' do
     before do
-      allow(client).to(receive(:published_resource_uris))
+      allow(client).to(receive(:published_resources))
                    .with(repository_id: '11', updated_after: nil)
                    .and_return([{ ead_id: 'ARS123', uri: '/repositories/11/resources/12' }])
     end

@@ -23,7 +23,7 @@ module Aspace
     def each_published_resource(updated_after: nil)
       return enum_for(:each_published_resource, updated_after:) unless block_given?
 
-      client.published_resource_uris(repository_id: id, updated_after:).each do |resource|
+      client.published_resources(repository_id: id, updated_after:).each do |resource|
         yield Aspace::Resource.new(**resource.symbolize_keys.merge({ repository_code: code }))
       end
     end

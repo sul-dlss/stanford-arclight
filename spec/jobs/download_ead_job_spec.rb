@@ -63,24 +63,24 @@ RSpec.describe DownloadEadJob do
   describe '.enqueue_all' do
     before do
       allow(Honeybadger).to receive(:notify)
-      allow(client).to receive(:published_resource_uris).with(repository_id: '11', updated_after: nil)
-                                                        .and_return([
-                                                                      { 'uri' => '/repositories/11/resources/1',
-                                                                        'ead_id' => 'ars123' },
-                                                                      { 'uri' => '/repositories/11/resources/2',
-                                                                        'identifier' => 'ars456' },
-                                                                      # This resource will not be enqueued
-                                                                      # because it has no ead_id or identifier
-                                                                      { 'uri' => '/repositories/11/resources/23' }
-                                                                    ])
-      allow(client).to receive(:published_resource_uris).with(repository_id: '4', updated_after: nil)
-                                                        .and_return([
-                                                                      { 'uri' => '/repositories/4/resources/1',
-                                                                        'ead_id' => 'eal123' },
+      allow(client).to receive(:published_resources).with(repository_id: '11', updated_after: nil)
+                                                    .and_return([
+                                                                  { 'uri' => '/repositories/11/resources/1',
+                                                                    'ead_id' => 'ars123' },
+                                                                  { 'uri' => '/repositories/11/resources/2',
+                                                                    'identifier' => 'ars456' },
+                                                                  # This resource will not be enqueued
+                                                                  # because it has no ead_id or identifier
+                                                                  { 'uri' => '/repositories/11/resources/23' }
+                                                                ])
+      allow(client).to receive(:published_resources).with(repository_id: '4', updated_after: nil)
+                                                    .and_return([
+                                                                  { 'uri' => '/repositories/4/resources/1',
+                                                                    'ead_id' => 'eal123' },
 
-                                                                      { 'uri' => '/repositories/4/resources/2',
-                                                                        'identifier' => 'eal456' }
-                                                                    ])
+                                                                  { 'uri' => '/repositories/4/resources/2',
+                                                                    'identifier' => 'eal456' }
+                                                                ])
     end
 
     it "assembles and enqueues a job for each repository's resource uri" do
@@ -89,7 +89,7 @@ RSpec.describe DownloadEadJob do
       expect do
         described_class.enqueue_all
       end.to enqueue_job(described_class).exactly(4).times
-      expect(client).to have_received(:published_resource_uris).exactly(2).times
+      expect(client).to have_received(:published_resources).exactly(2).times
       expect(FileUtils).to have_received(:mkdir_p).exactly(2).times
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
 
@@ -100,7 +100,7 @@ RSpec.describe DownloadEadJob do
 
   describe '.enqueue_all_updated' do
     before do
-      allow(client).to receive(:published_resource_uris).with(
+      allow(client).to receive(:published_resources).with(
         repository_id: '11', updated_after: '2023-12-12'
       ).and_return(
         [{ 'uri' => '/repositories/11/resources/1', 'ead_id' => 'ars123' },
@@ -118,7 +118,7 @@ RSpec.describe DownloadEadJob do
       ).and_return(
         [{ 'uri' => '/repositories/11/resources/4', 'ead_id' => 'ars000' }]
       )
-      allow(client).to receive(:published_resource_uris).with(
+      allow(client).to receive(:published_resources).with(
         repository_id: '4', updated_after: '2023-12-12'
       ).and_return(
         [{ 'uri' => '/repositories/4/resources/1', 'ead_id' => 'eal123' },
@@ -140,7 +140,7 @@ RSpec.describe DownloadEadJob do
 
     it 'fetches all resource uris from aspace limited to a specified date' do
       described_class.enqueue_all_updated(updated_after: '2023-12-12')
-      expect(client).to have_received(:published_resource_uris).with(repository_id: '11', updated_after: '2023-12-12')
+      expect(client).to have_received(:published_resources).with(repository_id: '11', updated_after: '2023-12-12')
       expect(client).to have_received(:published_resource_with_updated_component_uris).with(
         repository_id: '11',
         updated_after: '2023-12-12',
@@ -151,7 +151,7 @@ RSpec.describe DownloadEadJob do
         updated_after: '2023-12-12',
         uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
       )
-      expect(client).to have_received(:published_resource_uris).with(repository_id: '4', updated_after: '2023-12-12')
+      expect(client).to have_received(:published_resources).with(repository_id: '4', updated_after: '2023-12-12')
       expect(client).to have_received(:published_resource_with_updated_component_uris).with(
         repository_id: '4',
         updated_after: '2023-12-12',
@@ -170,10 +170,10 @@ RSpec.describe DownloadEadJob do
       allow(aspace_repository).to receive(:find_by).with({ code: 'ars', aspace_config_set: :default }).and_return(
         Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11', aspace_config_set: 'default')
       )
-      allow(client).to receive(:published_resource_uris).and_return([{ 'uri' => '/repositories/11/resources/1',
-                                                                       'ead_id' => 'ars123' },
-                                                                     { 'uri' => '/repositories/11/resources/2',
-                                                                       'ead_id' => 'ars456' }])
+      allow(client).to receive(:published_resources).and_return([{ 'uri' => '/repositories/11/resources/1',
+                                                                   'ead_id' => 'ars123' },
+                                                                 { 'uri' => '/repositories/11/resources/2',
+                                                                   'ead_id' => 'ars456' }])
     end
 
     it 'enqueues two jobs with the repository of interest' do
