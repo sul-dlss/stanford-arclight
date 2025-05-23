@@ -45,7 +45,7 @@ RSpec.describe AspaceClient do
     end
   end
 
-  describe '#published_resource_uris' do
+  describe '#published_resources' do
     let(:aspace_query) { instance_double(AspaceQuery) }
 
     before do
@@ -55,18 +55,18 @@ RSpec.describe AspaceClient do
     end
 
     it 'returns an instance of AspaceQuery' do
-      expect(client.published_resource_uris(repository_id: 11)).to eq aspace_query
+      expect(client.published_resources(repository_id: 11)).to eq aspace_query
     end
 
     context 'without a repository_id argument' do
       it 'raises an error' do
-        expect { client.published_resource_uris }.to raise_error(ArgumentError)
+        expect { client.published_resources }.to raise_error(ArgumentError)
       end
     end
   end
 
   describe '#all_published_resource_uris_by' do
-    let(:published_resource_uris) do
+    let(:published_resources) do
       [{ 'ead_id' => 'abc123', 'uri' => '/repositories/3/resources/2' },
        { 'ead_id' => 'abc456', 'uri' => '/repositories/3/resources/4' }]
     end
@@ -74,7 +74,7 @@ RSpec.describe AspaceClient do
     before do
       allow(AspaceQuery).to receive(:new).with(client:, repository_id: 3, updated_after: nil,
                                                options: { published: true, suppressed: false })
-                                         .and_return(published_resource_uris)
+                                         .and_return(published_resources)
     end
 
     it 'returns an array of published resource uris' do

@@ -42,11 +42,11 @@ class AspaceClient
 
   # Returns an instance of AspaceQuery that response to :each returning
   # hashes containing an ead id and uri for resources of interest,
-  # e.g. {"ead_id"=>"sc0348.xml", "uri"=>"/repositories/2/resources/5363"}
-  # @example client.published_resource_uris(repository_id: 2, updated_after: '2023-11-21').each { |r| do something }
+  # e.g. {"ead_id"=>"sc0348.xml", "identifier"=>"SC-0348", "uri"=>"/repositories/2/resources/5363"}
+  # @example client.published_resources(repository_id: 2, updated_after: '2023-11-21').each { |r| do something }
   # @param repository_id [Integer] the repository id in ArchivesSpace
   # @param updated_after [String] YYYY-MM-DD optionally limit the response to resources updated after a specific date
-  def published_resource_uris(repository_id:, updated_after: nil)
+  def published_resources(repository_id:, updated_after: nil)
     raise ArgumentError, 'Please provide the ArchivesSpace repository id' unless repository_id
 
     AspaceQuery.new(client: self, repository_id:, updated_after:, options: { published: true, suppressed: false })
@@ -57,7 +57,7 @@ class AspaceClient
   # @example client.all_published_resource_uris_by(repository_id: '2')
   # @param repository_id [String] the repository id in ASpace
   def all_published_resource_uris_by(repository_id:)
-    published_resource_uris(repository_id:).each.to_a.pluck('uri')
+    published_resources(repository_id:).each.to_a.pluck('uri')
   end
 
   # Returns an instance of AspaceQuery that response to :each returning
