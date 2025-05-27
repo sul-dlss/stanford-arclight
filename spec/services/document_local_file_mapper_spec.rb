@@ -6,8 +6,7 @@ RSpec.describe DocumentLocalFileMapper do
   let(:document) do
     SolrDocument.new(
       id: 'ars0001',
-      level_ssm: ['collection'],
-      ead_filename_ssi: 'ars0001.xml'
+      level_ssm: ['collection']
     )
   end
   let(:data_dir) { '/data' }
@@ -50,32 +49,6 @@ RSpec.describe DocumentLocalFileMapper do
 
         it 'returns the path to the EAD PDF file' do
           expect(mapper.path).to eq('/data/ars/ars0001.pdf')
-        end
-      end
-    end
-
-    context 'when ead_filename is empty' do
-      let(:document) do
-        SolrDocument.new(
-          id: 'ars0001',
-          level_ssm: ['collection'],
-          ead_filename_ssi: ''
-        )
-      end
-
-      context 'when the format is :xml' do
-        let(:mapper) { described_class.new(document:, format: :xml) }
-
-        it 'returns nil' do
-          expect(mapper.path).to be_nil
-        end
-      end
-
-      context 'when the format is :pdf' do
-        let(:mapper) { described_class.new(document:, format: :pdf) }
-
-        it 'returns nil' do
-          expect(mapper.path).to be_nil
         end
       end
     end

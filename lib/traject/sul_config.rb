@@ -11,10 +11,6 @@ settings do
   provide 'id_normalizer', 'Sul::NormalizedId'
 end
 
-to_field 'ead_filename_ssi' do |_record, accumulator|
-  accumulator << File.basename(settings['command_line.filename'])
-end
-
 to_field 'resource_uri_ssi' do |_record, accumulator|
   accumulator << settings['resource_uri']
 end

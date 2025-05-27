@@ -5,8 +5,6 @@ class SolrDocument
   include Blacklight::Solr::Document
   include Arclight::SolrDocument
 
-  attribute :ead_filename, :string, 'ead_filename_ssi'
-
   # Override Arclight::SolrDocument.digital_objects to use
   # local DigitalObject class that adds the Purl URL
   # Demo data href only contains the ID
@@ -43,6 +41,10 @@ class SolrDocument
     params = { without_namespace: true }
 
     "#{ead_file.href}?#{params.to_query}"
+  end
+
+  def ead_filename
+    "#{id}.xml"
   end
 
   def local_ead_file_size
