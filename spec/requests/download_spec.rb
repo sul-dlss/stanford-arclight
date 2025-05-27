@@ -38,7 +38,6 @@ RSpec.describe 'Download finding aid file' do
     before do
       solr_conn.add({
                       id: 'abc123',
-                      ead_filename_ssi: 'abc123.xml',
                       repository_ssm: 'Archive of Recorded Sound'
                     })
       solr_conn.commit

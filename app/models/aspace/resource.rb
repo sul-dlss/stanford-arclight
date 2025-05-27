@@ -16,7 +16,9 @@ module Aspace
     end
 
     def file_name
-      file_identifier.sub(/(\.xml)?$/i, '').parameterize
+      IdentifierService.new([ead_id, identifier]).to_s
+    rescue Arclight::Exceptions::IDNotFound
+      raise_error
     end
 
     def arclight_repository_code
@@ -31,8 +33,11 @@ module Aspace
     # If no EAD ID or identifier is provided, throw an error.
     # We need an identifier to generate a file name and determine the repository code
     def file_identifier
-      ead_id || identifier || raise(AspaceResourceError,
-                                    'Resources from ArchivesSpace must have an EAD ID or identifier')
+      ead_id || identifier || raise_error
+    end
+
+    def raise_error
+      raise(AspaceResourceError, 'Resources from ArchivesSpace must have an EAD ID or identifier')
     end
   end
 end
