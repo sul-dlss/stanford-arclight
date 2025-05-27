@@ -16,7 +16,7 @@ class DeleteEadJob < ApplicationJob
   # @param aspace_config_set [String] the ASpace instance configuration set, such as 'default'
   # @param skip_delete_safeguard [Boolean] if true, skips the safeguard that prevents excessive deletes
   def perform(repository_id:, aspace_config_set:, skip_delete_safeguard: false)
-    indexed_eads = IndexedEads.new(repository_id:, aspace_config_set:).all
+    indexed_eads = indexed_eads(repository_id:, aspace_config_set:)
     published_eads = AspaceClient.new(aspace_config_set:).all_published_resource_uris_by(repository_id:)
 
     eads_to_delete = indexed_eads.keys - published_eads
@@ -37,55 +37,9 @@ class DeleteEadJob < ApplicationJob
     Blacklight.default_index.connection.commit
   end
 
-  # Fetches all the indexed EAD files for an aspace repository
-  class IndexedEads
-    attr_reader :repository_id, :aspace_config_set
-
-    PAGE_SIZE = 250
-
-    def initialize(repository_id:, aspace_config_set:)
-      @repository_id = repository_id
-      @aspace_config_set = aspace_config_set
-    end
-
-    # returns a hash where each key is an aspace resource uri and each value is a Solr document id
-    # e.g. {'/repositories/1/resources/123' => 'sc0908-xml', '/repositories/1/resources/456'' => 'm0001-xml'}
-    def all
-      each.to_h
-    end
-
-    private
-
-    # rubocop:disable Metrics/MethodLength
-    def each(&)
-      return enum_for(:each) unless block_given?
-
-      this_page = 0
-      last_page = nil
-
-      while last_page.nil? || this_page < last_page
-        response = repository.search(
-          rows: PAGE_SIZE,
-          start: this_page,
-          fl: 'id,resource_uri_ssi',
-          fq: ["repository_uri_ssi:\"/repositories/#{repository_id}\"",
-               "aspace_config_set_ssi:#{aspace_config_set}"],
-          sort: 'id ASC',
-          facet: false
-        )
-
-        this_page += PAGE_SIZE
-        last_page = response.dig('response', 'numFound')
-
-        response.dig('response', 'docs').map { |result| [result['resource_uri_ssi'], result['id']] }.each(&)
-      end
-    end
-    # rubocop:enable Metrics/MethodLength
-
-    delegate :repository, to: :blacklight_config
-
-    def blacklight_config
-      @blacklight_config ||= CatalogController.blacklight_config.configure
-    end
+  def indexed_eads(repository_id:, aspace_config_set:)
+    SolrPaginatedQuery.new(filter_queries: { respository_uri_ssi: "/repositories/#{repository_id}",
+                                             aspace_config_set_ssi: aspace_config_set },
+                           fields_to_return: %w[id resource_uri_ssi]).all.to_h
   end
 end
