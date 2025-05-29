@@ -11,6 +11,10 @@ settings do
   provide 'id_normalizer', 'Sul::NormalizedId'
 end
 
+to_field 'repository_uri_ssi' do |_record, accumulator|
+  accumulator << settings['resource_uri'].to_s[%r{/repositories/\d*}]
+end
+
 to_field 'resource_uri_ssi' do |_record, accumulator|
   accumulator << settings['resource_uri']
 end
