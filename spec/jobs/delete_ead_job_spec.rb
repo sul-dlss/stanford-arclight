@@ -17,6 +17,7 @@ RSpec.describe DeleteEadJob do
     allow(Blacklight).to receive(:default_index).and_return(repository)
     allow(rsolr_client).to receive(:commit)
     allow(rsolr_client).to receive(:delete_by_id)
+    allow(DeleteSafeguard).to receive(:check).and_return(nil)
   end
 
   it 'deletes any eads not published in ASpace' do
@@ -48,34 +49,25 @@ RSpec.describe DeleteEadJob do
       end.to enqueue_job(described_class).exactly(2).times
       expect(aspace_repository).to have_received(:all_harvestable).exactly(1).time
     end
-  end
 
-  describe '#excessive_deletes_guard' do
-    let(:ids_to_delete) { %w[ead123 ead456] }
-    let(:override_excessive_deletes_guard) { false }
+    context 'when delete safeguard raises an error' do
+      before do
+        allow(DeleteSafeguard).to receive(:check).and_raise(DeleteSafeguard::DeleteSafeguardError)
+      end
 
-    it 'raises an error if the number of records to delete exceeds the limit' do
-      allow(Settings).to receive(:max_automated_deletes).and_return(1)
-
-      expect do
-        described_class.new.excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard:)
-      end.to raise_error(DeleteEadJob::DeleteEadJobError, /Attempting to delete 2 records/)
+      it 'raises an error when the delete safeguard is triggered' do
+        expect do
+          described_class.perform_now(repository_id: 1, aspace_config_set: 'default')
+        end.to raise_error(DeleteSafeguard::DeleteSafeguardError)
+      end
     end
 
-    it 'does not raise an error if the number of records to delete is within the limit' do
-      allow(Settings).to receive(:max_automated_deletes).and_return(3)
-
-      expect do
-        described_class.new.excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard:)
-      end.not_to raise_error
-    end
-
-    it 'does not raise an error if override_excessive_deletes_guard is true' do
-      allow(Settings).to receive(:max_automated_deletes).and_return(1)
-
-      expect do
-        described_class.new.excessive_deletes_guard(ids_to_delete:, override_excessive_deletes_guard: true)
-      end.not_to raise_error
+    context 'when delete safeguard is skipped' do
+      it 'raises an error when the delete safeguard is triggered' do
+        expect do
+          described_class.perform_now(repository_id: 1, aspace_config_set: 'default', skip_delete_safeguard: true)
+        end.not_to raise_error(DeleteSafeguard::DeleteSafeguardError)
+      end
     end
   end
   # rubocop:enable RSpec/MultipleMemoizedHelpers
