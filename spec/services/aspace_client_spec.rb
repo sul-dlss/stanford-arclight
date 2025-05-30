@@ -65,21 +65,23 @@ RSpec.describe AspaceClient do
     end
   end
 
-  describe '#all_published_resource_uris_by' do
-    let(:published_resources) do
-      [{ 'ead_id' => 'abc123', 'uri' => '/repositories/3/resources/2' },
-       { 'ead_id' => 'abc456', 'uri' => '/repositories/3/resources/4' }]
+  describe '#all_published_resource_arks_by' do
+    let(:published_resource_arks) do
+      [{ 'ark_name' => ['ark:/22236/c88366e7e5-b138-4d4f-b210-9063f159547c'] },
+       { 'ark_name' => ['ark:/22236/c83390a9ec-7afc-45ef-a2d1-0b065b53591d'] }]
     end
 
     before do
-      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 3, updated_after: nil,
-                                               options: { published: true, suppressed: false })
-                                         .and_return(published_resources)
+      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 3,
+                                               options: { published: true,
+                                                          suppressed: false,
+                                                          select_fields: ['ark_name'] })
+                                         .and_return(published_resource_arks)
     end
 
-    it 'returns an array of published resource uris' do
-      expect(client.all_published_resource_uris_by(repository_id: 3)).to eq(
-        ['/repositories/3/resources/2', '/repositories/3/resources/4']
+    it 'returns an array of published resource ARKs' do
+      expect(client.all_published_resource_arks_by(repository_id: 3)).to eq(
+        ['ark:/22236/c88366e7e5-b138-4d4f-b210-9063f159547c', 'ark:/22236/c83390a9ec-7afc-45ef-a2d1-0b065b53591d']
       )
     end
   end
