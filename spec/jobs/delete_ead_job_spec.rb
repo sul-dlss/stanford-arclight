@@ -5,15 +5,15 @@ require 'rails_helper'
 RSpec.describe DeleteEadJob do
   let(:client) { instance_double(AspaceClient, all_published_resource_uris_by: ['/repositories/1/resources/2']) }
   let(:indexed_eads) do
-    instance_double(DeleteEadJob::IndexedEads,
-                    all: { '/repositories/1/resources/2' => 'ead123', '/repositories/1/resources/3' => 'ead456' })
+    instance_double(SolrPaginatedQuery,
+                    all: [['/repositories/1/resources/2', 'ead123'], ['/repositories/1/resources/3', 'ead456']])
   end
   let(:rsolr_client) { instance_double(RSolr::Client) }
   let(:repository) { instance_double(Blacklight::Solr::Repository, connection: rsolr_client) }
 
   before do
     allow(AspaceClient).to receive(:new).and_return(client)
-    allow(DeleteEadJob::IndexedEads).to receive(:new).and_return(indexed_eads)
+    allow(SolrPaginatedQuery).to receive(:new).and_return(indexed_eads)
     allow(Blacklight).to receive(:default_index).and_return(repository)
     allow(rsolr_client).to receive(:commit)
     allow(rsolr_client).to receive(:delete_by_id)
@@ -23,7 +23,11 @@ RSpec.describe DeleteEadJob do
   it 'deletes any eads not published in ASpace' do
     described_class.perform_now(repository_id: 1, aspace_config_set: 'default')
 
-    expect(DeleteEadJob::IndexedEads).to have_received(:new).with(repository_id: 1, aspace_config_set: 'default')
+    expect(SolrPaginatedQuery).to(
+      have_received(:new).with({ fields_to_return: %w[id resource_uri_ssi],
+                                 filter_queries: { aspace_config_set_ssi: 'default',
+                                                   respository_uri_ssi: '/repositories/1' } })
+    )
     expect(client).to have_received(:all_published_resource_uris_by).with(repository_id: 1)
     expect(rsolr_client).to have_received(:delete_by_id).with(['ead456'])
     expect(rsolr_client).to have_received(:commit)
