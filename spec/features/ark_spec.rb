@@ -26,6 +26,15 @@ RSpec.describe 'ARK indexing and routing' do
     end
   end
 
+  context 'when a component has an ARK' do
+    before { visit 'sc0097_aspace_ref128_jpj' }
+
+    it 'does not index extra ARK fields in the unitid' do
+      expect(page).to have_no_content('Archival Resource Key')
+      expect(page).to have_no_content('Previous Archival Resource Key')
+    end
+  end
+
   context 'when the route requests an ARK with no hyphens' do
     before do
       visit "/findingaid/#{no_hyphen_ark_id}"
