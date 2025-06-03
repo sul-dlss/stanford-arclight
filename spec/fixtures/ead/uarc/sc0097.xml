@@ -121,6 +121,9 @@ Stanford University School of Engineering Hero Award, 2011 </p>
           <unittitle>
             <title render="italic">The Art of Computer Programming</title>
           </unittitle>
+          <unitid type="ark">
+            <extref xlink:actuate="onLoad" xlink:href="https://archives.stanford.edu/findingaid/ark:/22236/s1d38f250f-b769-4384-8b95-58191e3a8fca" xlink:show="new">Archival Resource Key</extref>
+          </unitid>
           <unitid>Series 1</unitid>
           <langmaterial><language langcode="eng">English</language>.</langmaterial>
         </did>
