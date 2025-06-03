@@ -37,6 +37,7 @@ aspace:
       - ars
       - cubberley
       - eal
+      - speccoll
   chs:
     user: <%= ENV['ASPACE_CHS_USER'] %>
     password: <%= ENV['ASPACE_CHS_PASSWORD'] %>
