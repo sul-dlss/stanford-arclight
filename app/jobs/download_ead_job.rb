@@ -84,7 +84,7 @@ class DownloadEadJob < ApplicationJob
       f.puts ead.to_xml(indent: 2)
     end
 
-    IndexEadJob.perform_later(file_path:, resource_uri:, aspace_config_set:) if index
+    IndexEadJob.perform_later(file_path:) if index
     GeneratePdfJob.perform_later(file_path:, file_name:, data_dir: file_dir, skip_existing: false) if generate_pdf
   end
 end
