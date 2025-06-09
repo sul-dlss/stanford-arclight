@@ -6,17 +6,18 @@ module Sul
   ##
   # A Traject utility class to normalize identifiers
   class NormalizedId
-    # The Arclight to_field directive sends kwargs (:title and :repository)
-    # to this class and we use the id and title to form the collection id
+    # The Arclight to_field directive sends kwargs (:unitid, :title and :repository)
+    # to this class and we use the id (EAD ID), unitid, or title to form the collection id
     def initialize(id, **kwargs)
-      @id = id
+      @id = id # this is the EAD ID
+      @unitid = kwargs[:unitid]
       @title = kwargs[:title]
     end
 
-    attr_reader :id, :title
+    attr_reader :id, :unitid, :title
 
     def to_s
-      IdentifierService.new([id, title]).to_s
+      IdentifierService.new([id, unitid, title]).to_s
     end
   end
 end
