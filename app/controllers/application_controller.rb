@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   layout :determine_layout if respond_to? :layout
 
   # Override Blacklight so that the "Login" link doesn't display
-  def has_user_authentication_provider? # rubocop:disable Naming/PredicateName
+  def has_user_authentication_provider? # rubocop:disable Naming/PredicatePrefix
     false
   end
 end
