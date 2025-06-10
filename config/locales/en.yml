@@ -72,8 +72,6 @@ en:
         page (up to 100).
     email_link: 'Email bookmarks'
   shared:
-    beta_banner:
-      beta_message_html: Please note this is a public beta version of this application. Visit the <a href="https://oac.cdlib.org/">Online Archive of California</a> for the most up to date information and to make a request.
     content_warning:
       warning_html: Some materials and description may contain harmful content. <a href="https://library.stanford.edu/about-stanford-libraries/about-libraries#statement-on-harmful-language" class="fa fa-exclamation-circle">More info</a>
   landing_page:

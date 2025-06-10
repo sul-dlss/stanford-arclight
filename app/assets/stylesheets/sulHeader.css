@@ -71,12 +71,3 @@
 .blacklight-icons-outline_info svg {
   fill: white;
 }
-
-.beta-banner {
-  background-color: var(--stanford-illuminating);
-  color: #000;
-}
-
-.beta-banner a {
-  color: #0065ad;
-}
