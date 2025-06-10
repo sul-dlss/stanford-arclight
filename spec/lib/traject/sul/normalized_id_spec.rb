@@ -4,16 +4,17 @@ require 'rails_helper'
 require 'traject/sul/normalized_id'
 
 RSpec.describe Sul::NormalizedId do
-  subject(:normalized_id) { described_class.new(ead_id, title:).to_s }
+  subject(:normalized_id) { described_class.new(ead_id, title:, unitid:).to_s }
 
   let(:ead_id) { 'abc1234' }
+  let(:unitid) { 'def5678' }
   let(:title) { 'A Collection of Papers' }
 
   it 'returns a normalized id' do
     expect(normalized_id).to eq 'abc1234'
   end
 
-  context 'when the both an eadid and title are present' do
+  context 'when an eadid, unitid, and title are present' do
     it 'returns a normalized id using the eadid' do
       expect(normalized_id).to eq 'abc1234'
     end
@@ -39,13 +40,23 @@ RSpec.describe Sul::NormalizedId do
   context 'when the eadid is nil' do
     let(:ead_id) { nil }
 
+    it 'returns a normalized id formed from the unitid' do
+      expect(normalized_id).to eq 'def5678'
+    end
+  end
+
+  context 'when the eadid and unitid are both nil' do
+    let(:ead_id) { nil }
+    let(:unitid) { nil }
+
     it 'returns a normalized id formed from the title' do
       expect(normalized_id).to eq 'a-collection-of-papers'
     end
   end
 
-  context 'when the eadid is empty' do
+  context 'when the eadid and unitid are empty' do
     let(:ead_id) { '' }
+    let(:unitid) { '' }
 
     it 'returns a normalized id formed from the title' do
       expect(normalized_id).to eq 'a-collection-of-papers'
