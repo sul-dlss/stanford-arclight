@@ -6,6 +6,8 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   mount Blacklight::Engine => '/'
+  mount BlacklightDynamicSitemap::Engine => '/'
+
   mount Arclight::Engine => '/'
   mount Sidekiq::Web => '/sidekiq'
 
