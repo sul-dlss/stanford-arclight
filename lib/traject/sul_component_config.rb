@@ -17,4 +17,6 @@ each_record do |_record, context|
   # Remove from 'unitid_ssm' -- these ARK-related values live in <unitid> elements in the EAD
   context.output_hash['unitid_ssm']&.reject! { |v| v == 'Archival Resource Key' }
   context.output_hash['unitid_ssm']&.reject! { |v| v == 'Previous Archival Resource Key' }
+  # Store a hashed version of the id for blacklight dynamic sitemaps
+  context.output_hash['hashed_id_ssi'] = [Digest::MD5.hexdigest(context.output_hash['id'].first)]
 end

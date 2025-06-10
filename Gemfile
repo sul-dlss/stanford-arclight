@@ -93,6 +93,7 @@ end
 gem 'rsolr', '>= 1.0', '< 3'
 gem 'devise'
 gem 'devise-guests', '~> 0.8'
+gem 'blacklight_dynamic_sitemap'
 gem 'blacklight-locale_picker'
 gem 'blacklight_range_limit', '~> 9'
 
