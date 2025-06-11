@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'ARK indexing and routing' do
-  let(:valid_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efc-dc7f-4ca7-bc10-d8456c3451a0" }
+  let(:collection_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efc-dc7f-4ca7-bc10-d8456c3451a0" }
+  let(:component_ark_id) { "ark:/#{Settings.ark_naan}/s1d38f250f-b769-4384-8b95-58191e3a8fca" }
   let(:no_hyphen_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efcdc7f4ca7bc10d8456c3451a0" }
   let(:missing_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efc-dc7f-4ca7-bc10-d8456c3451b3" }
   # This ARK has no shoulder (s1)
@@ -13,7 +14,7 @@ RSpec.describe 'ARK indexing and routing' do
 
   context 'when a valid ARK is found in Solr' do
     before do
-      visit "/findingaid/#{valid_ark_id}"
+      visit "/findingaid/#{collection_ark_id}"
     end
 
     it 'redirects to the catalog page when ARK ID is found' do
@@ -27,7 +28,11 @@ RSpec.describe 'ARK indexing and routing' do
   end
 
   context 'when a component has an ARK' do
-    before { visit 'sc0097_aspace_ref128_jpj' }
+    before { visit "findingaid/#{component_ark_id}" }
+
+    it 'redirects to the catalog page when ARK ID is found' do
+      expect(page).to have_current_path('/catalog/sc0097_aspace_ref128_jpj')
+    end
 
     it 'does not index extra ARK fields in the unitid' do
       expect(page).to have_no_content('Archival Resource Key')

@@ -13,8 +13,7 @@ end
 to_field 'sul_ark_id_ssi',
          extract_xpath('/ead/archdesc/did/unitid[@type="ark"]/extref', to_text: false) do |_record, accumulator|
   accumulator.map! do |node|
-    href = node['href']
-    href[%r{ark:/\S+}] if href
+    node.attributes['href']&.text&.[](%r{ark:/\S+})
   end
 end
 
