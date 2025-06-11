@@ -1,6 +1,8 @@
 beta_banner:
   enabled: true
 
+google_site_verification: 'abyPMNSENI9-BVzLcKBsxfpsl_lOq-3hN588Ip12ZTk'
+
 global_alert: <%= ENV['GLOBAL_ALERT'] || false %>
 
 hours_api: 'https://library-hours.stanford.edu/'
