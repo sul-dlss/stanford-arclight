@@ -8,6 +8,13 @@ settings do
   provide 'title_normalizer', 'Sul::NormalizedTitle'
 end
 
+to_field 'sul_ark_id_ssi',
+         extract_xpath('./did/unitid[@type="ark"]/extref', to_text: false) do |_record, accumulator|
+  accumulator.map! do |node|
+    node.attributes['href']&.text&.[](%r{ark:/\S+})
+  end
+end
+
 load_config_file(File.expand_path("#{Arclight::Engine.root}/lib/arclight/traject/ead2_component_config.rb"))
 
 # Some finding aids in OAC have empty elements that are indexed as empty strings in Solr.
