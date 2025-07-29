@@ -114,7 +114,7 @@ gem 'pdf-reader', '~> 2.12'
 
 gem 'cssbundling-rails', '~> 1.1'
 
-gem 'sidekiq', '~> 7.0'
+gem 'sidekiq', '~> 8.0'
 
 gem 'whenever', require: false
 
