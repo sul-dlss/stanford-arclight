@@ -627,7 +627,6 @@ DEPENDENCIES
   sqlite3 (~> 2.0)
   stimulus-rails
   turbo-rails
-  tzinfo-data
   web-console
   webmock
   whenever
