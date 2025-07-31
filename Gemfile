@@ -94,6 +94,8 @@ gem 'blacklight_dynamic_sitemap'
 gem 'blacklight-locale_picker'
 gem 'blacklight_range_limit', '~> 9'
 
+gem 'bot_challenge_page', '~> 0.4.0'
+
 gem 'config'
 
 gem 'csv', '~> 3.3'
@@ -114,8 +116,6 @@ gem 'cssbundling-rails', '~> 1.1'
 gem 'sidekiq', '~> 8.0'
 
 gem 'whenever', require: false
-
-gem 'rack-attack'
 
 gem 'recaptcha', '~> 5.16'
 
