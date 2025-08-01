@@ -11,6 +11,9 @@
       <span class="d-none d-md-flex">
         <%= render(Blacklight::Icons::SearchComponent.new) %>
       </span>
+      <label class="visually-hidden" for="within_collection">
+        <%= t('arclight.within_collection_dropdown.label_html') %>
+      </label>
       <%= select_tag ('f[collection][]' if collection_name.present?), within_collection_options, id: 'within_collection', class: 'form-select search-field' %>
     </div>
   <% end %>
