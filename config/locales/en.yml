@@ -55,6 +55,7 @@ en:
         group_results_count_more: Top 3 results in this collection
     within_collection_dropdown:
       all_collections: All collections
+      label_html: 'Search within'
       this_collection: This collection
   blacklight:
     search:
