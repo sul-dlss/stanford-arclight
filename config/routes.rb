@@ -55,6 +55,9 @@ Rails.application.routes.draw do
 
   resource :feedback, only: :create
 
+  # Cloudflare turnstile bot challenges via bot_challenge_page gem
+  post '/challenge', to: 'bot_challenge_page/bot_challenge_page#verify_challenge', as: :bot_detect_challenge
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
