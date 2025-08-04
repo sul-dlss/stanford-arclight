@@ -31,7 +31,7 @@ Rails.application.config.to_prepare do
   BotChallengePage::BotChallengePageController.bot_challenge_config.allow_exempt = lambda do |controller, _config|
     (controller.is_a?(CatalogController) && controller.params[:action].in?(%w[facet index]) &&
       controller.params[:format] == 'json' && controller.request.headers['sec-fetch-dest'] == 'empty') ||
-      Settings.turnstile.safelist.map { |cidr| IPAddr.new(cidr) }.any? { |range| controller.request.remote_ip.in?(range) }
+      SAFELIST.map { |cidr| IPAddr.new(cidr) }.any? { |range| controller.request.remote_ip.in?(range) }
   end
 
   # More configuration is available; see:
