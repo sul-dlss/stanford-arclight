@@ -8,3 +8,4 @@ server 'sul-arclight-worker-prod-b.stanford.edu', user: 'arclight', roles: %w[ba
 Capistrano::OneTimeKey.generate_one_time_key!
 set :rails_env, 'production'
 set :sidekiq_roles, :background
+set :sidekiq_systemd_role, :background
