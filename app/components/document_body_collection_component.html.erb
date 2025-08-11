@@ -11,7 +11,7 @@
     <%= render UsingTheseMaterialsComponent.new(document:) %>
   </div>
 </div>
-<%= embed_html %>
+<%= embed %>
 <% rest_partials.each do |partial| %>
   <div class="metadata">
     <%= render Arclight::MetadataSectionComponent.with_collection([partial],

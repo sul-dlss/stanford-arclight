@@ -7,7 +7,8 @@ class DocumentComponent < Arclight::DocumentComponent
     render component.new(
       document: document,
       presenter: presenter,
-      metadata_partials: partials
+      metadata_partials: partials,
+      embed: embed
     )
   end
 
