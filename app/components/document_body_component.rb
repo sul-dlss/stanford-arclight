@@ -7,7 +7,7 @@ class DocumentBodyComponent < ViewComponent::Base
     @document = document
     @presenter = presenter
     @metadata_partials = metadata_partials
-    super
+    super()
   end
 
   attr_reader :document, :presenter, :metadata_partials

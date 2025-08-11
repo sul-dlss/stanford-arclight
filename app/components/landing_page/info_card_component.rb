@@ -5,7 +5,7 @@ module LandingPage
   class InfoCardComponent < ViewComponent::Base
     def initialize(key:)
       @key = key.to_s
-      super
+      super()
     end
 
     def image

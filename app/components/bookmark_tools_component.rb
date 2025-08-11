@@ -5,7 +5,7 @@ class BookmarkToolsComponent < ViewComponent::Base
   def initialize(response:, params:)
     @params = Blacklight::Parameters.sanitize(params.to_unsafe_h)
     @response = response
-    super
+    super()
   end
 
   def disclaimer_alert

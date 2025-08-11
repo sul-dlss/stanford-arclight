@@ -4,7 +4,7 @@
 class RecaptchaComponent < ViewComponent::Base
   def initialize(action:)
     @action = action
-    super
+    super()
   end
 
   attr_reader :action

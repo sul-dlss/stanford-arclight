@@ -7,7 +7,7 @@ class DocumentCollectionControlsComponent < ViewComponent::Base
     @search_state = search_state
     @blacklight_config = blacklight_config
     @params = params
-    super
+    super()
   end
 
   def per_page_dropdown
