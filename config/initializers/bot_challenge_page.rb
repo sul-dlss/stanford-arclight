@@ -30,7 +30,7 @@ Rails.application.config.to_prepare do
   # Also exempt any IPs contained in the CIDR blocks in Settings.turnstile.safelist.
   BotChallengePage::BotChallengePageController.bot_challenge_config.allow_exempt = lambda do |controller, _config|
     (controller.is_a?(CatalogController) && controller.params[:action].in?(%w[facet index]) &&
-      controller.params[:format] == 'json' && controller.request.headers['sec-fetch-dest'] == 'empty') ||
+      controller.request.format.json? && controller.request.headers['sec-fetch-dest'] == 'empty') ||
       SAFELIST.map { |cidr| IPAddr.new(cidr) }.any? { |range| controller.request.remote_ip.in?(range) }
   end
 
