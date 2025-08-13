@@ -1,5 +1,5 @@
 <p class="text-secondary mt-2 mb-0">This site is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
-<%= recaptcha_v3(action:) %>
+<%= helpers.recaptcha_v3(action:) %>
 <script type="text/javascript">
   document.forms.<%= form_id %>.addEventListener('submit', async function(e) {
     e.preventDefault();

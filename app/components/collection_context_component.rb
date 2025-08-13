@@ -3,7 +3,7 @@
 # Render various actions for a collection (e.g. requesting, download links, etc)
 class CollectionContextComponent < ViewComponent::Base
   def initialize(presenter:, download_component:)
-    super
+    super()
 
     @collection = presenter.document.collection
     @download_component = download_component

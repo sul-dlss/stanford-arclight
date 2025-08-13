@@ -5,7 +5,7 @@ class ContainersPillComponent < ViewComponent::Base
   def initialize(document:, compact: false)
     @document = document
     @compact = compact
-    super
+    super()
   end
 
   def containers

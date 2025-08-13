@@ -4,7 +4,7 @@
 class CollectionUnitidPillComponent < ViewComponent::Base
   def initialize(document:)
     @document = document
-    super
+    super()
   end
 
   delegate :unitid, to: :@document

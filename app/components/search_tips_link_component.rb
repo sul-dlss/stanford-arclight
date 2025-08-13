@@ -5,6 +5,6 @@ class SearchTipsLinkComponent < ViewComponent::Base
   def initialize(custom_classes: '')
     default_classes = 'searchtips-link ms-lg-2 mt-2 mt-lg-0'
     @classes = [default_classes, custom_classes].join(' ').strip
-    super
+    super()
   end
 end

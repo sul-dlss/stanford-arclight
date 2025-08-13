@@ -6,7 +6,7 @@ class UsingTheseMaterialsComponent < ViewComponent::Base
 
   def initialize(document:)
     @document = document
-    super
+    super()
   end
 
   def repository_url

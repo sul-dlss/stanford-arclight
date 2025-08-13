@@ -3,7 +3,7 @@
   <li class="nav-item"><%= render 'blacklight/nav/search_history' %></li>
   <li class="nav-item"><a href="#feedback" class="nav-link" data-bs-toggle="collapse" data-bs-target="#feedback">Feedback</a></li>
   <li class="nav-item d-md-none"><hr class="dropdown-divider"></li>
-  <li class="nav-item d-md-none <%= repositories_active_class %>">
+  <li class="nav-item d-md-none <%= helpers.repositories_active_class %>">
     <%= link_to t('arclight.routes.repositories'), helpers.arclight_engine.repositories_path, class: 'nav-link' %>
   </li>
   <li class="nav-item d-md-none <%= helpers.collection_active_class %>">

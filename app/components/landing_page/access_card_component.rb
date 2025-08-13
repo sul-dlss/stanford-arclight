@@ -5,7 +5,7 @@ module LandingPage
   class AccessCardComponent < ViewComponent::Base
     def initialize(key:)
       @key = key.to_s
-      super
+      super()
     end
 
     attr_reader :key
