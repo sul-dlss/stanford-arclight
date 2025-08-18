@@ -97,9 +97,9 @@ arclight@^1.0.0:
   integrity sha512-0nTupa7p1cnNpFPrlzRD7rB89PtI1Rm2N0szxWmc16O3rGlZulEB0sfFxv8RvdvsK6zQKiqpmZc1OOZqWjkQzw==
 
 blacklight-frontend@^8.2.2:
-  version "8.12.0"
-  resolved "https://registry.yarnpkg.com/blacklight-frontend/-/blacklight-frontend-8.12.0.tgz#8457c17238cbd20bce14292ca103e7bd9c1ad41e"
-  integrity sha512-PlmAmJB9+VnNxvsu9WZXs/GotZYGM/+BLg/BkCfVurTYsQKPUxUnZz3INKMFC69r9iRk3vPPxWvvYfwSJlNY4w==
+  version "8.12.1"
+  resolved "https://registry.yarnpkg.com/blacklight-frontend/-/blacklight-frontend-8.12.1.tgz#efecdf4e7b965c8c79001edd5c910734d7544050"
+  integrity sha512-neS9rQXJEJ2v7n6y81h5OgdXY5apqq2A+1iVl7IAjRlmw+trbJrYrCZbSuHzWJeqNaloL7sQAigpJzlTbC0Prg==
   dependencies:
     bootstrap ">=4.3.1 <6.0.0"
 
