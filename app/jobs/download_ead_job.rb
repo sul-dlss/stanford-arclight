@@ -64,6 +64,7 @@ class DownloadEadJob < ApplicationJob
   private_class_method :create_directories
 
   # @example DownloadEadJob.perform_later(resource_uri: '/repositories/2/resources/5363',
+  #                                       aspace_config_set: :default,
   #                                       file_name: 'ars0018',
   #                                       file_dir: '/opt/app/arclight/data/ars'
   #                                       index: true,
