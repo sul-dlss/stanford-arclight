@@ -21,7 +21,7 @@ hours_locations:
   - label: 'Cubberley Education Library'
     library: 'cubberley'
     location: 'library-circulation'
-    closed_note: 'Closed for construction until 2025'
+    url: 'https://library-hours.stanford.edu/'
   - label: 'East Asia Library'
     library: 'eal'
     location: 'library-circulation'
