@@ -33,7 +33,7 @@ cubberley:
   phone: ''
   contact_html: |
      <div class="al-repository-contact-info"><a href="cubberley@stanford.edu">cubberley@stanford.edu</a></div>
-  thumbnail_url: 'repositories/cubberley.png'
+  thumbnail_url: 'repositories/cubberley.jpg'
   url: https://library.stanford.edu/libraries/cubberley-education-library
 
 eal:
