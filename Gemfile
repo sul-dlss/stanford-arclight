@@ -94,7 +94,7 @@ gem 'blacklight_dynamic_sitemap'
 gem 'blacklight-locale_picker'
 gem 'blacklight_range_limit', '~> 9'
 
-gem 'bot_challenge_page', '~> 0.4.0'
+gem 'bot_challenge_page', '~> 1.0.0'
 
 gem 'config'
 
