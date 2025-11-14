@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   # Adds a few additional behaviors into the application controller
   include Blacklight::Controller
   include Blacklight::LocalePicker::Concern
+  include BotChallengePage::Controller
+  class_attribute :bot_challenge_config, default: ::BotChallengePage.config
+
   layout :determine_layout if respond_to? :layout
 
   # Override Blacklight so that the "Login" link doesn't display
