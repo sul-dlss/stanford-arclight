@@ -24,6 +24,10 @@ module StanfordArclight
     config.time_zone = 'Pacific Time (US & Canada)'
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Disable Active Storage variants (image processing) to avoid installing
+    # image_processing gem where not needed.
+    config.active_storage.variant_processor = :disabled
+
     Recaptcha.configure do |config|
       config.site_key = ENV.fetch('RECAPTCHA_SITE_KEY', '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy')
       config.secret_key = ENV.fetch('RECAPTCHA_SECRET_KEY', '6Lc6BAAAAAAAAKN3DRm6VA_xxxxxxxxxxxxxxxxx')
