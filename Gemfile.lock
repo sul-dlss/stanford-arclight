@@ -93,6 +93,7 @@ GEM
     bcrypt_pbkdf (1.1.1)
     bcrypt_pbkdf (1.1.1-arm64-darwin)
     bcrypt_pbkdf (1.1.1-x86_64-darwin)
+    benchmark (0.5.0)
     bigdecimal (3.3.1)
     bindex (0.8.1)
     blacklight (8.12.3)
