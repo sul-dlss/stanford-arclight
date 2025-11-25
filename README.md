@@ -86,6 +86,20 @@ bundle exec rake stanford_arclight:delete_by_id\['ars0167'\]
 ```
 3. Enter YES at the prompt to delete the collection and its components.
 
+### Efficient bulk re-indexing
+During normal operations we don't expect large numbers of finding aids to change each day. For simplicity we enqueue one indexing job per file. However, if you need to re-index an entire repository or the whole corpus it's much more efficient to send multiple files to an indexing job. If you don't need to re-download the EAD files you can proceed by running the rake task described below, which will add up to 100 EADs to each indexing job. If you do need to re-download all the EAD files from ArchivesSpace you should do that first and wait for all the jobs to finish before proceeding (To re-download everything you would run: `bin/rails runner 'DownloadEadJob.enqueue_all(config: DownloadEadJob::Config.new(index: false, generate_pdf: false))'`), then proceed as follows:
+
+To re-index all downloaded EAD files in all repositories:
+```shell
+bundle exec rake stanford_arclight:reindex_all
+```
+
+To re-index all downloaded EAD files in a single repository pass the Arclight Repository code/slug as an argument to the job:
+```shell
+# Some shells (such as zsh) require that the brackets are escaped.
+bundle exec rake stanford_arclight:reindex_all\['uarc'\]
+```
+
 ## PDF Generation
 ### Requirements
 Finding aid PDFs can be automatically generated from EAD XML. The following are needed:
