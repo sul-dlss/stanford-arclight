@@ -1,6 +1,15 @@
 <header>
   <%= render 'shared/stanford_stripe' %>
   <%= top_bar %>
-  <%= masthead %>
+  <%= render MastheadComponent.new do | component | %>
+    <% component.with_header_menu do %>
+      <li class="nav-item <%= helpers.repositories_active_class %>">
+        <%= link_to t('arclight.routes.repositories'), helpers.arclight_engine.repositories_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item <%= helpers.collection_active_class %>">
+        <%= link_to t('arclight.routes.collections'), helpers.arclight_engine.collections_path, class: 'nav-link' %>
+      </li>
+    <% end %>
+  <% end %>
   <%= search_bar %>
 </header>

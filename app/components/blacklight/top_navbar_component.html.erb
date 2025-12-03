@@ -5,8 +5,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-md-end" id="user-util-collapse">
-      <%= render blacklight_config.user_util_links_component.new %>
+    <div class="collapse navbar-collapse justify-content-md-end">
+      <ul class="navbar-nav">
+        <%= render 'shared/top_nav_links' %>
+      </ul>
     </div>
   </div>
 </nav>
