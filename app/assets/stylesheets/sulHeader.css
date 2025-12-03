@@ -57,7 +57,7 @@
   }
 }
 
-.al-masthead ~ .navbar-search .custom-select.form-select {
+.masthead ~ .navbar-search .custom-select.form-select {
   width: auto;
   flex: 0 0 auto;
   border: none;

@@ -9,11 +9,11 @@ RSpec.describe 'Navbar' do
     end
 
     it "renders the 'Bookmark' and 'Search History' navigation items" do
-      expect(page).to have_css('#user-util-collapse .nav-item', count: 6)
-      expect(page).to have_css('#user-util-collapse .nav-item a', text: 'Bookmarks')
-      expect(page).to have_css('#user-util-collapse .nav-item a', text: 'History')
-      expect(page).to have_css('#user-util-collapse .nav-item.d-md-none a', text: 'Repositories')
-      expect(page).to have_css('#user-util-collapse .nav-item.d-md-none a', text: 'Collections')
+      expect(page).to have_css('#user-util-collapse .nav-item', count: 5)
+      expect(page).to have_css('#user-util-collapse .d-md-none .nav-item a', text: 'Bookmarks')
+      expect(page).to have_css('#user-util-collapse .d-md-none .nav-item a', text: 'History')
+      expect(page).to have_css('#user-util-collapse .nav-item a', text: 'Repositories')
+      expect(page).to have_css('#user-util-collapse .nav-item a', text: 'Collections')
     end
 
     it "always renders the 'Feedback' navigation item" do
@@ -26,10 +26,10 @@ RSpec.describe 'Navbar' do
       visit root_path
     end
 
-    it "does not render 'Bookmark' and 'Search History' navigation items" do
-      expect(page).to have_css('.navbar-nav .nav-item', count: 3)
-      expect(page).to have_css('.navbar-nav .nav-item', text: 'Bookmarks')
-      expect(page).to have_css('.navbar-nav .nav-item', text: 'History')
+    it "does render 'Bookmark' and 'Search History' navigation items" do
+      expect(page).to have_css('.masthead .navbar-nav .nav-item', count: 3)
+      expect(page).to have_css('.masthead .navbar-nav .nav-item', text: 'Bookmarks')
+      expect(page).to have_css('.masthead .navbar-nav .nav-item', text: 'History')
     end
 
     it "always renders the 'Feedback' navigation item" do

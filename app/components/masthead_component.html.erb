@@ -1,0 +1,29 @@
+<div class="masthead bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-end pt-3 pb-1 pb-md-3 gap-2">
+      <div class="d-flex align-items-end gap-2 flex-grow-1">
+        <span class="rosette-logo me-1 align-self-start flex-shrink-0" aria-hidden="true"></span>
+        <div class="me-1 flex-grow-1">
+          <div class="h1 my-0">
+            <a href="<%= root_url %>"><%= heading %></a>
+          </div>
+        </div>
+      </div>
+      <div class="navbars ms-md-auto bg-dark">
+        <nav id="user-util-collapse" class="collapse navbar-collapse align-items-start justify-content-md-end navbar-expand-md d-md-flex flex-column flex-md-row">
+          <hr class="d-md-none text-white vw-100 my-0">
+          <% if header_menu %>
+            <ul class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100 fw-semibold">
+              <%= header_menu %>
+            </ul>
+            <hr class="d-md-none text-white vw-100 my-0">
+          <% end %>
+
+          <ul class="navbar-nav d-md-none gap-0 w-100">
+            <%= render 'shared/top_nav_links' %>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
