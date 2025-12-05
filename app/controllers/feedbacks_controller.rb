@@ -8,10 +8,11 @@ class FeedbacksController < ApplicationController
       FeedbackMailer.submit_feedback(name: params[:name], email: params[:email],
                                      reporting_from: params[:reporting_from],
                                      message: params[:message]).deliver_now
-      redirect_to root_path, notice: t('.success')
+      redirect_back_or_to root_path, notice: t('.success')
+
     else
       # Score is below threshold, so user may be a bot.
-      redirect_to root_path, alert: t('.failure')
+      redirect_back_or_to root_path, alert: t('.failure')
     end
   end
   # rubocop:enable Metrics/AbcSize
