@@ -1,0 +1,158 @@
+ars:
+  name: 'Archive of Recorded Sound'
+  visit_note: 'Archive of Recorded Sound materials are stored offsite. To examine them in person, place a request least 3 business days in advance. Media must be digitized for listening or viewing. This may take up to 30 days.'
+  description: 'The Archive of Recorded Sound’s collections comprise over 400,000 publicly available media and print items that span sound recording history. Archival holdings include nearly 200 research collections, encompassing  artists’ personal papers, organizational records, and other unique and historic materials pertaining to music and sound.'
+  building: 'Braun Music Center'
+  address1: '541 Lasuen Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305-3076'
+  country: 'USA'
+  phone: ''
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="mailto:soundarchive@stanford.edu">soundarchive@stanford.edu</a></div>
+  thumbnail_url: 'repositories/ars.png'
+  url: https://library.stanford.edu/libraries/archive-recorded-sound
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
+
+cubberley:
+  name: 'Cubberley Education Library'
+  visit_note: 'Cubberley Library materials are for use on-site only. They are stored offsite and must be paged 36 hours in advance.'
+  description: 'Cubberley Education Library supports the research and teaching needs of those interested in education at all levels. A large part of this collection is stored off campus in SAL3 for preservation and must be paged to campus.'
+  building: 'Education Building'
+  address1: '485 Lasuen Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305-3076'
+  country: 'USA'
+  phone: ''
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="cubberley@stanford.edu">cubberley@stanford.edu</a></div>
+  thumbnail_url: 'repositories/cubberley.jpg'
+  url: https://library.stanford.edu/libraries/cubberley-education-library
+
+eal:
+  name: 'East Asia Library'
+  visit_note: 'East Asia Library special collection materials are for on-site use only and must be paged 36 hours in advance.'
+  description: 'The East Asia Library, the largest of Stanford’s branch libraries, collects materials in Chinese, Japanese and Korean and supports scholars who use materials in these languages.'
+  building: 'Lathrop Library'
+  address1: '518 Memorial Way'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-3435'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="eastasialibrary@stanford.edu">eastasialibrary@stanford.edu</a></div>  
+  thumbnail_url: 'repositories/eal.png'
+  url: https://library.stanford.edu/libraries/east-asia-library
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
+
+manuscripts:
+  name: 'Manuscripts'
+  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 3 working days in advance.'
+  description: 'The Manuscripts division of Special Collections & University Archives comprises archival collections acquired by subject specialists across the library. They cover topics such as: medieval manuscripts, photographs, personal papers, and organizational records, with a focus on California and Mexican American history, Silicon Valley, art, literature, politics, and activist organizations.'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>  
+  thumbnail_url: 'repositories/manuscripts.png'
+  url: https://library.stanford.edu/libraries/special-collections
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
+
+rarebooks:
+  name: 'Rare Books'
+  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 3 working days in advance.'
+  description: 'The Rare Books division of Special Collections and University Archives provides access to rare, antiquarian, fine press, and artists’ books of enduring value both for intellectual content and as historical artifacts. In addition to a broad, general rare book collection, there are named collections that focus on specific subjects, such as book arts, religion, science, literature, music, and American history.'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>
+  thumbnail_url: 'repositories/rarebooks.png'
+  url: https://library.stanford.edu/libraries/special-collections
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
+
+uarc:
+  name: 'University Archives'
+  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 3 working days in advance.'
+  description: 'The Stanford University Archives division of Special Collections and University Archives provides access to Stanford University records, faculty papers, and other related materials of enduring historical value.'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="specialcollections@stanford.edu">specialcollections@stanford.edu</a></div>
+  thumbnail_url: 'repositories/uarc.jpg'
+  url: https://library.stanford.edu/libraries/special-collections
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
+
+chs:
+  name: 'California Historical Society'
+  visit_note: 'Special Collections and University Archives materials are stored offsite and must be paged 3 working days in advance.'
+  description: 'The CHS Collection documents the environmental, economic, social, political, and cultural heritage of the entire state of California. Spanning from the early 1800s to the 2000s, the collection includes rare books and pamphlets, manuscripts, photographs, ephemera, maps, newspapers, and one of the most complete collections of materials documenting printing in the western United States.'
+  building: 'Green Library'
+  address1: '557 Escondido Mall'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  phone: '(650) 725-1022'
+  contact_html: |
+     <div class="al-repository-contact-info"><a href="chscollection@stanford.edu ">chscollection@stanford.edu</a></div>
+  thumbnail_url: 'repositories/chs.jpg'
+  url: https://library.stanford.edu/libraries/special-collections
+  request_types:
+    aeon_web_ead:
+      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_mappings: 'Action=10&Form=31&Value=ead_url'
+
+vt:
+  name: 'Virtual Tribunals'
+  description: 'The Taube Archive of the International Military Tribunal (IMT) at Nuremberg, 1945-46 archival collection provides access to a digital version of Nuremberg IMT courtroom proceedings and documentation, including evidentiary films, full audio recordings of the proceedings, and approximately 250,000 pages of digitized paper documents. These documents include transcripts of the hearings in English, French, German and Russian; written pleadings; evidence exhibits filed by the prosecution and the defense; documents of the Committee for the Investigation and Prosecution of Major War Criminals; the judgment. All 9,920 collection items are searchable and viewable in digital form.'
+  thumbnail_url: 'repositories/vt.png'
+  url: https://exhibits.stanford.edu/virtual-tribunals/about/about-virtual-tribunals
+  building: 'Encina Hall, Suite 030'
+  address1: '616 Jane Stanford Way'
+  address2: ''
+  city: 'Stanford'
+  state: 'CA'
+  zip: '94305'
+  country: 'USA'
+  contact_html: |
+     <div class="al-repository-contact-info"></div>
+
