@@ -121,5 +121,3 @@ gem 'recaptcha', '~> 5.16'
 gem 'redis', '~> 5.2'
 
 gem 'rack-cors', '~> 2.0'
-
-gem 'connection_pool', '~> 2.5' # pinned until fix for https://github.com/rails/rails/issues/56291 is released
