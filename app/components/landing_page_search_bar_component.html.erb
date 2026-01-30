@@ -1,9 +1,9 @@
-<%= form_with url: @url, local: true, method: @method, class: @classes.join(' '), scope: @prefix, role: 'search', **@form_options do |f| %>
-  <%= render Blacklight::HiddenSearchStateComponent.new(params: @params) %>
+<div class="d-flex flex-column flex-lg-row">
+  <%= form_with url: @url, local: true, method: @method, class: @classes.join(' '), scope: @prefix, role: 'search', **@form_options do |f| %>
+    <%= render Blacklight::HiddenSearchStateComponent.new(params: @params) %>
 
-  <%= f.label @query_param, scoped_t('search.label'), class: 'sr-only visually-hidden' %>
-  
-  <div class="d-flex flex-column flex-lg-row">
+    <%= f.label @query_param, scoped_t('search.label'), class: 'sr-only visually-hidden' %>
+    
     <div class="input-group rounded-2 flex-grow-1">
       <% if autocomplete_path.present? %>
         <auto-complete src="<%= autocomplete_path %>" for="autocomplete-popup" class="search-autocomplete-wrapper">
@@ -16,16 +16,14 @@
       <%= append %>
       <%= with_search_button %>
     </div>
-    <%= render SearchTipsLinkComponent.new(custom_classes: 'd-flex text-nowrap align-self-start align-self-lg-center') %>
-  </div>
-
-
-  <div class="search-links">
-    <ul class="ps-md-0 pt-3">
-      <%# Temporarily removing Advanced Search link per https://github.com/sul-dlss/stanford-arclight/issues/554 %> 
-       <%# <li> link_to 'Advanced Search', advanced_search_catalog_path</li> %>
-      <li><%= link_to 'Browse all collections', helpers.arclight_engine.collections_path %></li>
-      <li><%= link_to 'Browse repositories', helpers.arclight_engine.repositories_path %></li>
-    </ul>
-  </div>
-<% end %>
+  <% end %>
+  <%= render SearchTipsLinkComponent.new(custom_classes: 'd-flex text-nowrap align-self-start align-self-lg-center') %>
+</div>
+<div class="search-links">
+  <ul class="ps-md-0 pt-3">
+    <%# Temporarily removing Advanced Search link per https://github.com/sul-dlss/stanford-arclight/issues/554 %> 
+      <%# <li> link_to 'Advanced Search', advanced_search_catalog_path</li> %>
+    <li><%= link_to 'Browse all collections', helpers.arclight_engine.collections_path %></li>
+    <li><%= link_to 'Browse repositories', helpers.arclight_engine.repositories_path %></li>
+  </ul>
+</div>

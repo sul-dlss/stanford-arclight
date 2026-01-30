@@ -10,9 +10,7 @@ RSpec.describe 'Searching', :js do
       # Fill in the search input with some text
       fill_in 'q', with: 'Example search query'
 
-      within '.search-btn-wrapper' do
-        click_on 'Search'
-      end
+      click_on 'Search'
     end
 
     it 'renders the search results page with default params' do
@@ -31,9 +29,7 @@ RSpec.describe 'Searching', :js do
     it 'does not group by collection' do
       visit solr_document_path(id: 'ars-0043')
       fill_in 'q', with: 'jazz'
-      within '.search-btn-wrapper' do
-        click_on 'Search'
-      end
+      click_on 'Search'
       expect(page).to have_content(/Your selections:\nKeyword jazz/)
       expect(page.current_url).not_to include('group=true')
     end
@@ -43,9 +39,7 @@ RSpec.describe 'Searching', :js do
     it 'does not group by collection' do
       visit arclight_engine.collections_path
       fill_in 'q', with: 'knuth'
-      within '.search-btn-wrapper' do
-        click_on 'Search'
-      end
+      click_on 'Search'
 
       expect(page).to have_content(/Your selections:\nKeyword knuth/)
       expect(page.current_url).not_to include('group=true')
@@ -57,9 +51,7 @@ RSpec.describe 'Searching', :js do
       visit solr_document_path(id: 'ars-0043')
       fill_in 'q', with: 'jazz'
       select('All collections', from: 'within_collection')
-      within '.search-btn-wrapper' do
-        click_on 'Search'
-      end
+      click_on 'Search'
       expect(page).to have_content(/Your selections:\nKeyword jazz/)
       expect(page.current_url).to include('group=true')
     end
@@ -69,9 +61,7 @@ RSpec.describe 'Searching', :js do
     before do
       visit search_catalog_path
       fill_in 'q', with: 'Academy of Ancient Music - Broadway Celebration'
-      within '.search-btn-wrapper' do
-        click_on 'Search'
-      end
+      click_on 'Search'
     end
 
     it 'returns the expected number of results' do
