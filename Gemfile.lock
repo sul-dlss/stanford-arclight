@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/projectblacklight/arclight.git
+  revision: a2def94e5a46692555e9089c6e8abc5555c25ab3
+  branch: test-on-bl9
+  specs:
+    arclight (2.0.0.alpha)
+      blacklight (>= 9.0.0, < 10)
+      gretel
+      rails (>= 7.1, < 9)
+      traject (~> 3.0)
+      traject_plus (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -81,12 +93,6 @@ GEM
     afm (1.0.0)
     airbrussh (1.6.0)
       sshkit (>= 1.6.1, != 1.7.0)
-    arclight (1.6.2)
-      blacklight (>= 8.0.0, < 9)
-      gretel
-      rails (>= 7.1, < 9)
-      traject (~> 3.0)
-      traject_plus (~> 2.0)
     ast (2.4.3)
     base64 (0.3.0)
     bcrypt (3.1.21)
@@ -94,14 +100,14 @@ GEM
     benchmark (0.5.0)
     bigdecimal (3.3.1)
     bindex (0.8.1)
-    blacklight (8.12.3)
+    blacklight (9.0.0)
       globalid
       i18n (>= 1.7.0)
       jbuilder (~> 2.7)
       kaminari (>= 0.15)
       ostruct (>= 0.3.2)
-      rails (>= 6.1, < 9)
-      view_component (>= 2.74, < 5)
+      rails (>= 7.0, < 9)
+      view_component (>= 3.0, < 5.0)
       zeitwerk
     blacklight-locale_picker (1.3.0)
       rails (>= 5.2.3, < 9)
@@ -589,7 +595,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  arclight (>= 1.1.0, < 2)
+  arclight!
   blacklight-locale_picker
   blacklight_dynamic_sitemap
   blacklight_range_limit (~> 9)
