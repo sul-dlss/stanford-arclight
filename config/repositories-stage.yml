@@ -16,7 +16,7 @@ ars:
   url: https://library.stanford.edu/libraries/archive-recorded-sound
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
       request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 cubberley:
@@ -54,7 +54,7 @@ eal:
   url: https://library.stanford.edu/libraries/east-asia-library
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
       request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 manuscripts:
@@ -75,7 +75,7 @@ manuscripts:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
       request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 rarebooks:
@@ -96,7 +96,7 @@ rarebooks:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
       request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 uarc:
@@ -117,7 +117,7 @@ uarc:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
       request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 chs:
@@ -138,7 +138,7 @@ chs:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford.aeon.atlas-sys.com/logon'
+      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
       request_mappings: 'Action=10&Form=31&Value=ead_url'
 
 vt:
