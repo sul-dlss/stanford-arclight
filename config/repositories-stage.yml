@@ -16,8 +16,8 @@ ars:
   url: https://library.stanford.edu/libraries/archive-recorded-sound
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+      request_url: 'https://requests-dev.stanford.edu/archives_request/new'
+      request_mappings: 'value=ead_url'
 
 cubberley:
   name: 'Cubberley Education Library'
@@ -54,8 +54,8 @@ eal:
   url: https://library.stanford.edu/libraries/east-asia-library
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+      request_url: 'https://requests-dev.stanford.edu/archives_request/new'
+      request_mappings: 'value=ead_url'
 
 manuscripts:
   name: 'Manuscripts'
@@ -75,8 +75,8 @@ manuscripts:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+      request_url: 'https://requests-dev.stanford.edu/archives_request/new'
+      request_mappings: 'value=ead_url'
 
 rarebooks:
   name: 'Rare Books'
@@ -96,8 +96,8 @@ rarebooks:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+      request_url: 'https://requests-dev.stanford.edu/archives_request/new'
+      request_mappings: 'value=ead_url'
 
 uarc:
   name: 'University Archives'
@@ -117,8 +117,8 @@ uarc:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+      request_url: 'https://requests-dev.stanford.edu/archives_request/new'
+      request_mappings: 'value=ead_url'
 
 chs:
   name: 'California Historical Society'
@@ -138,8 +138,8 @@ chs:
   url: https://library.stanford.edu/libraries/special-collections
   request_types:
     aeon_web_ead:
-      request_url: 'https://stanford-dev.aeon.atlas-sys.com/logon'
-      request_mappings: 'Action=10&Form=31&Value=ead_url'
+      request_url: 'https://requests-dev.stanford.edu/archives_request/new'
+      request_mappings: 'value=ead_url'
 
 vt:
   name: 'Virtual Tribunals'
