@@ -8,6 +8,10 @@
   background-color: var(--stanford-palo-alto-dark);
 }
 
+.navbar-logo {
+  background-size: auto;
+}
+
 /* Search bar in header -- interior pages */
 .navbar-search {
   display: flex;
@@ -16,12 +20,6 @@
   background-color: var(--stanford-black);
   border-top: none;
   margin-bottom: 0;
-   
-  .form-select {
-    background-size: 1.125rem 1.125rem;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
 
   /* fill entire width on small screens, 75% when larger */
   .search-query-form {
@@ -46,21 +44,15 @@
 /* custom-select aka the fielded search (keyword, place, etc.) styles 
    display only on larger screens
 */
-.custom-select {
+#search_field {
   border-radius: 0;
   display: none;
 }
 
 @media (min-width: 768px) {
-  .custom-select {
+  #search_field {
     display: block;
   }
-}
-
-.masthead ~ .navbar-search .custom-select.form-select {
-  width: auto;
-  flex: 0 0 auto;
-  border: none;
 }
 
 /* Misc other styles */
