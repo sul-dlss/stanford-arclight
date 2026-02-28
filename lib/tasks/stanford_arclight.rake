@@ -12,6 +12,20 @@ namespace :stanford_arclight do
     Blacklight.default_index.connection.commit
   end
 
+  desc 'Delete EAD files (and their associated PDFs) from the filesystem that are no longer indexed in Solr'
+  task delete_old_files: :environment do
+    Arclight::Repository.all.to_h { |repo| [repo.name, repo.slug] }.each do |repository_name, repository_slug|
+      service = DeleteOldFilesService.new(repository_name:, repository_slug:)
+      if service.files_to_delete.empty?
+        puts "No old files to delete for #{repository_name} (#{repository_slug})."
+        next
+      end
+      puts "Deleting the following files for #{repository_name} (#{repository_slug}):"
+      puts service.files_to_delete
+      service.delete_old_files!
+    end
+  end
+
   desc 'Prune guest users without bookmarks from the database'
   task :prune_guest_user_data, %i[months_old] => :environment do |_, args|
     updated_at = User.arel_table[:updated_at]
