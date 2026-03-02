@@ -1,4 +1,4 @@
-# Stanford Arclight Demo
+# Stanford Arclight
 
 ## Starting the development server
 ```shell
