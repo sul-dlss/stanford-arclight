@@ -6,6 +6,9 @@
 class DeleteEadJob < ApplicationJob
   class DeleteEadJobError < StandardError; end
 
+  # Since we run this job every 6 hours there isn't much benefit to retrying more than once.
+  sidekiq_options retry: 1
+
   def self.enqueue_all
     AspaceRepositories.all_harvestable.each do |repository|
       perform_later(repository_id: repository.id,
