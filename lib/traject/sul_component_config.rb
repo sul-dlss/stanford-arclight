@@ -21,6 +21,8 @@ load_config_file(File.expand_path("#{Arclight::Engine.root}/lib/arclight/traject
 # We want to remove these. This is not an issue with finding aids produced by ArchivesSpace.
 each_record do |_record, context|
   context.output_hash['creator_ssim']&.reject!(&:blank?)
+  # Remove whitespace before trailing periods but keep the period. Common issue with ASpace-produced EAD.
+  context.output_hash['language_ssim']&.map! { |value| value.gsub(/\s+\.\s*$/, '.').strip }
   # Remove from 'unitid_ssm' -- these ARK-related values live in <unitid> elements in the EAD
   context.output_hash['unitid_ssm']&.reject! { |v| v == 'Archival Resource Key' }
   context.output_hash['unitid_ssm']&.reject! { |v| v == 'Previous Archival Resource Key' }
