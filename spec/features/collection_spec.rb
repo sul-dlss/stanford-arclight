@@ -75,10 +75,11 @@ RSpec.describe 'Collection Page' do
 
   context 'when visiting a collection page with no collection contents' do
     before do
-      visit solr_document_path('Cubb1967.xml')
+      visit solr_document_path('cubb1967')
     end
 
     it 'does not display the collection contents in the sidebar' do
+      expect(page).to have_text('Aarhus Universitet, 1963-1972')
       expect(page).to have_no_css('#collection-context')
     end
   end
