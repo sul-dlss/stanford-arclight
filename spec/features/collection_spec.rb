@@ -83,4 +83,18 @@ RSpec.describe 'Collection Page' do
       expect(page).to have_no_css('#collection-context')
     end
   end
+
+  context 'when visiting a collection with language values' do
+    before do
+      visit solr_document_path('universite-de-toulouse')
+    end
+
+    it 'displays the language values without newlines or spaces before periods' do
+      # Checks that our indexing correctly formats stray periods in <langmaterial> coming from ArchivesSpace EAD
+      # See universite-de-toulouse.xml fixture
+      within('#summary') do
+        expect(page).to have_text('English.')
+      end
+    end
+  end
 end
