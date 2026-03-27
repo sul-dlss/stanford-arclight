@@ -10,6 +10,10 @@
   .search-btn {
     align-items: center;
   }
+  .search-query-form {
+    --search-q-border: none;
+    width: 85%;
+  }
 }
 
 #featured-item-wrapper {
@@ -40,35 +44,6 @@
     }
     svg {
       fill: var(--stanford-black);
-    }
-  }
-
-  .input-group > .search-autocomplete-wrapper input:focus {
-    box-shadow: none;
-  }
-
-  .search-query-form .input-group:focus-within {
-    box-shadow: 0 0 0 0.25rem rgba(var(--stanford-digital-blue-rgb), 0.25);
-  }
-
-  /* Remove left border from the search input on the landing page */
-  .input-group .search-autocomplete-wrapper::before {
-    width: 0px;
-  }
-
-  .input-group input {
-    background-image: none;
-    background-repeat: no-repeat;
-    background-position: 0.5rem center;
-    padding-left: 0.75rem;
-  }
-    
-  @media (min-width: 768px) {
-    .input-group input {
-      background-image: url('data:image/svg+xml, <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" width="32" height="32" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path fill="%23585754" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>');
-      background-repeat: no-repeat;
-      background-position: 0.5rem center;
-      padding-left: 2.75rem;
     }
   }
 
@@ -119,12 +94,6 @@
 
 #autocomplete-popup {
   border-radius: 0;
-}
-
-.input-group {
-  input {
-    font-style: italic;
-  }
 }
 
 .landing-page-access,
