@@ -20,7 +20,7 @@ class AspaceClient
   # Get a list of repositories
   # See https://archivesspace.github.io/archivesspace/api/#get-a-list-of-repositories
   def repositories
-    response = authenticated_get('repositories')
+    response = authenticated_get('/repositories')
 
     JSON.parse(response)
   end
@@ -228,7 +228,7 @@ class AspaceClient
   def send_request(method, path, body = nil)
     raise ArgumentError, 'Please provide a path for the request' unless path
 
-    uri = URI.parse("#{@base_url}/#{path}")
+    uri = URI.parse(@base_url + path)
     req = case method
           when :get
             Net::HTTP::Get.new(uri)

@@ -33,7 +33,7 @@ RSpec.describe AspaceClient do
     it 'sends an authenticated request with correct auth header to the resource_desriptions address' do
       request_url = 'http://example.com:8089/repositories/2/resource_descriptions/10208.xml?include_daos=true&numbered_cs=true'
       stub_request(:get, request_url)
-      client.resource_description('repositories/2/resources/10208')
+      client.resource_description('/repositories/2/resources/10208')
       expect(WebMock).to have_requested(:get, request_url)
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
     end
@@ -249,7 +249,7 @@ RSpec.describe AspaceClient do
   describe '#authenticated_get' do
     it 'sends an authenticated request with correct auth header to the specified address' do
       stub_request(:get, 'http://example.com:8089/some_request')
-      client.authenticated_get('some_request')
+      client.authenticated_get('/some_request')
       expect(WebMock).to have_requested(:get,
                                         'http://example.com:8089/some_request')
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once
@@ -272,7 +272,7 @@ RSpec.describe AspaceClient do
   describe '#authenticated_post' do
     it 'sends an authenticated request with correct auth header to the specified address' do
       stub_request(:post, 'http://example.com:8089/some_request')
-      client.authenticated_post('some_request')
+      client.authenticated_post('/some_request')
       expect(WebMock).to have_requested(:post,
                                         'http://example.com:8089/some_request')
         .with(headers: { 'X-ArchivesSpace-Session' => 'token1' }).once

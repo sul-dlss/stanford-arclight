@@ -31,7 +31,7 @@ module AspacePaginatedQuery
 
   def fetch_page(page_number)
     params = { page: page_number, page_size: PAGE_SIZE }.merge(query_params)
-    response = client.authenticated_post("repositories/#{repository_id}/search", params)
+    response = client.authenticated_post("/repositories/#{repository_id}/search", params)
     JSON.parse(response)
   end
 end
