@@ -122,6 +122,7 @@ In the mid 1990s the Worldwide Church of God, which operated the Ambassador Audi
               <extref xlink:actuate="onLoad" xlink:href="https://archives.stanford.edu/findingaid/ark:/22236/r58e3f24e4-0630-4323-a36c-816b315b6486" xlink:show="new">Archival Resource Key</extref>
             </unitid>
             <unitid type="aspace_uri">/repositories/11/archival_objects/867293</unitid>
+            <unitid>test-unit-id</unitid>
             <unitdate calendar="gregorian" datechar="creation" era="ce" normal="1981/1995" type="inclusive">1981 -- 1995</unitdate>
             <physdesc id="aspace_4d27325812c10f2a245425a6b5defa85" label="Container Summary">77 audio cassettes ; 34 5" open reel tapes ; 5 7" open reel tapes</physdesc>
             <langmaterial>

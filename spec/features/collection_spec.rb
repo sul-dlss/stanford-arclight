@@ -97,4 +97,17 @@ RSpec.describe 'Collection Page' do
       end
     end
   end
+
+  describe 'the call number displayed in the summary section' do
+    before do
+      visit solr_document_path('cubb1967')
+    end
+
+    it 'displays the collection-level call number but not the ASpace resource URI' do
+      within('#summary') do
+        expect(page).to have_text('Cubb.1967')
+        expect(page).to have_no_text('/repositories/14/resources/13290')
+      end
+    end
+  end
 end

@@ -33,6 +33,8 @@ each_record do |_record, context|
   # Remove from 'unitid_ssm' -- these ARK-related values live in <unitid> elements in the EAD
   context.output_hash['unitid_ssm']&.reject! { |v| v == 'Archival Resource Key' }
   context.output_hash['unitid_ssm']&.reject! { |v| v == 'Previous Archival Resource Key' }
+  # Remove from 'unitid_ssm' -- ASpace resource URIs
+  context.output_hash['unitid_ssm']&.reject! { |v| v.match?(%r{^/repositories/\d+/resources/\d+$}) }
   # Remove whitespace before trailing periods but keep the period. Common issue with ASpace-produced EAD.
   context.output_hash['language_ssim']&.map! { |value| value.gsub(/\s+\.\s*$/, '.').strip }
   # Store a hashed version of the id for blacklight dynamic sitemaps
