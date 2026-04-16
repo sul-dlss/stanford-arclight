@@ -37,7 +37,7 @@ RSpec.describe 'Component Page' do
 
     it 'links to the collection in the breadcrumbs' do
       within('.al-show-breadcrumb') do
-        expect(page).to have_link('Ambassador Auditorium Collection, 1974-1995', href: '/catalog/ars-0043')
+        expect(page).to have_link('Ambassador Auditorium Collection, 1974-1995', href: '/catalog/ars0043')
       end
     end
   end

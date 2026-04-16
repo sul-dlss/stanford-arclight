@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe 'ARK indexing and routing' do
-  let(:collection_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efc-dc7f-4ca7-bc10-d8456c3451a0" }
-  let(:component_ark_id) { "ark:/#{Settings.ark_naan}/s1d38f250f-b769-4384-8b95-58191e3a8fca" }
-  let(:no_hyphen_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efcdc7f4ca7bc10d8456c3451a0" }
+  let(:collection_ark_id) { "ark:/#{Settings.ark_naan}/s1493633f6-8e37-4586-9eb4-8f09c6e72726" }
+  let(:component_ark_id) { "ark:/#{Settings.ark_naan}/s16071313f-9e26-4662-bcd4-f160f967ba9f" }
+  let(:no_hyphen_ark_id) { "ark:/#{Settings.ark_naan}/s1493633f68e3745869eb48f09c6e72726" }
   let(:missing_ark_id) { "ark:/#{Settings.ark_naan}/s19f562efc-dc7f-4ca7-bc10-d8456c3451b3" }
   # This ARK has no shoulder (s1)
   let(:invalid_ark_id) do
