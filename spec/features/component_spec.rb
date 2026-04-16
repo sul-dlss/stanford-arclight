@@ -40,5 +40,14 @@ RSpec.describe 'Component Page' do
         expect(page).to have_link('Ambassador Auditorium Collection, 1974-1995', href: '/catalog/ars0043')
       end
     end
+
+    describe 'the summary section' do
+      it 'displays the component ID but not the ASpace archival object URI' do
+        within('#about-this-level') do
+          expect(page).to have_text('test-unit-id')
+          expect(page).to have_no_text('/repositories/11/archival_objects/867293')
+        end
+      end
+    end
   end
 end
