@@ -11,7 +11,7 @@ RSpec.describe 'OnlineContentLinks', :js do
     expect(page).to have_link('A non-embedded online content link', href: 'https://purl.stanford.edu/zc892pd6364')
   end
 
-  it 'removes the link to the non-embedded online content' do
+  it 'removes the link to the embedded online content' do
     expect(page).to have_css(".al-oembed-viewer[loaded='loaded']")
     expect(page).to have_no_link('Comments on student answers (2)', href: 'https://purl.stanford.edu/vz772ry6707')
   end
