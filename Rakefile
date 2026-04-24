@@ -38,6 +38,9 @@ def with_solr(&block) # rubocop:disable Metrics/MethodLength
     begin
       sh 'docker compose -f compose.yaml up -d --wait solr'
       yield
+    rescue StandardError
+      system 'docker compose -f compose.yaml logs --no-color solr'
+      raise
     ensure
       system 'docker compose -f compose.yaml stop solr'
     end
