@@ -1,7 +1,7 @@
 services:
   solr:
     image: "solr:${SOLR_VERSION:-9.10.0}"
-    user: "0:0"
+    user: solr
     ports:
       - "${SOLR_PORT:-8983}:8983"
     volumes:
@@ -19,8 +19,8 @@ services:
       test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/blacklight-core/admin/ping || exit 1"]
       interval: 5s
       timeout: 5s
-      retries: 12
-      start_period: 30s
+      retries: 24
+      start_period: 60s
 
   redis:
     image: "redis:7.2-alpine"
