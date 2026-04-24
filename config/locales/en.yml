@@ -53,6 +53,12 @@ en:
           one: 1 result in this collection
           other: "%{count} results in this collection"
         group_results_count_more: Top 3 results in this collection
+        group_component_results_count:
+          one: 1 matching component
+          other: "%{count} matching components"
+        collection_description_matched: Collection description also matched
+        collection_description_only_matched: Matched on collection description
+        explore_collection: Explore this collection
     within_collection_dropdown:
       all_collections: All collections
       label_html: 'Search within'

@@ -1,0 +1,20 @@
+<div class="al-grouped-result-row">
+  <span class="al-grouped-result-icon" aria-hidden="true">
+    <%= icon %>
+  </span>
+  <div class="al-grouped-result-body">
+    <div class="al-grouped-result-header">
+      <span class="al-grouped-result-title">
+        <%= helpers.link_to_document @document %>
+      </span>
+      <% if @document.containers.any? %>
+        <span class="al-grouped-result-containers"><%= containers %></span>
+      <% end %>
+    </div>
+    <% if highlight.present? %>
+      <div class="al-grouped-result-highlight">
+        <%= sanitize(highlight, tags: %w[em]) %>
+      </div>
+    <% end %>
+  </div>
+</div>
