@@ -198,6 +198,119 @@
     </arr>
   </requestHandler>
 
+  <!-- Block join handler: returns only collection-level parents, scored by best-matching child -->
+  <requestHandler name="collection_search" class="solr.SearchHandler">
+     <lst name="defaults">
+       <str name="echoParams">explicit</str>
+       <int name="rows">10</int>
+
+       <str name="q.alt">*:*</str>
+
+       <str name="mm">4&lt;90%</str>
+
+       <str name="qf">
+         collection_title_tesim^150
+         title_tesim^100
+         normalized_title_teim^100
+         unitid_identifier_match^40
+         ead_identifier_match^40
+         name_teim^10
+         place_teim^10
+         subject_teim^2
+         identifier_search
+         container_teim
+         parent_unittitles_tesim
+         text
+       </str>
+       <str name="pf">
+         collection_title_tesim^300
+         title_tesim^200
+         normalized_title_teim^200
+         unitid_identifier_match^80
+         ead_identifier_match^80
+         name_teim^20
+         place_teim^20
+         subject_teim^5
+         identifier_search^2
+         container_teim^2
+         parent_unittitles_tesim^2
+         text^2
+       </str>
+
+       <str name="qf_container">
+         container_teim
+       </str>
+       <str name="pf_container">
+         container_teim^2
+       </str>
+       <str name="qf_identifier">
+         identifier_search
+         ead_identifier_match
+         unitid_identifier_match
+       </str>
+       <str name="pf_identifier">
+         identifier_search^2
+         ead_identifier_match^2
+         unitid_identifier_match^2
+       </str>
+       <str name="qf_name">
+         name_teim
+       </str>
+       <str name="pf_name">
+         name_teim^2
+       </str>
+       <str name="qf_place">
+         place_teim
+       </str>
+       <str name="pf_place">
+         place_teim^2
+       </str>
+       <str name="qf_subject">
+         subject_teim
+       </str>
+       <str name="pf_subject">
+         subject_teim^2
+       </str>
+       <str name="qf_title">
+         title_tesim
+         normalized_title_teim
+       </str>
+       <str name="pf_title">
+         title_tesim^2
+         normalized_title_teim^2
+       </str>
+
+       <int name="ps">3</int>
+       <float name="tie">0.01</float>
+
+       <str name="fl">*</str>
+
+       <str name="facet">true</str>
+       <str name="facet.mincount">1</str>
+       <str name="facet.field">level_ssim</str>
+       <str name="facet.field">creator_ssim</str>
+       <str name="facet.field">date_range_isim</str>
+       <str name="facet.field">names_ssim</str>
+       <str name="facet.field">geogname_ssim</str>
+       <str name="facet.field">access_subjects_ssim</str>
+       <str name="facet.field">repository_ssim</str>
+       <str name="facet.field">collection_ssim</str>
+
+       <str name="spellcheck">true</str>
+       <str name="spellcheck.dictionary">default</str>
+       <str name="spellcheck.onlyMorePopular">true</str>
+       <str name="spellcheck.extendedResults">true</str>
+       <str name="spellcheck.collate">false</str>
+       <str name="spellcheck.count">5</str>
+     </lst>
+     <lst name="invariants">
+       <str name="defType">lucene</str>
+     </lst>
+    <arr name="last-components">
+      <str>spellcheck</str>
+    </arr>
+  </requestHandler>
+
   <!-- for requests to get a single document; use id=666 instead of q=id:666 -->
   <requestHandler name="document" class="solr.SearchHandler" >
     <lst name="defaults">

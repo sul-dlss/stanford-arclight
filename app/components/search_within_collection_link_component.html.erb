@@ -1,0 +1,5 @@
+<% if current_query.present? %>
+  <%= link_to search_url, class: 'search-within-collection-link' do %>
+    Search for &ldquo;<%= current_query %>&rdquo; within this collection
+  <% end %>
+<% end %>

@@ -1,6 +1,6 @@
 <%= render(Blacklight::SearchBarComponent.new(
       **@kwargs,
-      params: @params.merge(f: (@params[:f] || {}).except(:collection), group: true),
+      params: @params.merge(f: (@params[:f] || {}).except(:collection)).except(:group),
                             q: @q,
                             search_field: @search_field,
                             form_options: { data: { controller: "search-form" } })) do |c| %>

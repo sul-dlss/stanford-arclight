@@ -17,7 +17,7 @@ module Blacklight
       h = {}
       current_index_view_type = helpers.document_index_view_type(query_params)
       h[:view] = current_index_view_type unless current_index_view_type == helpers.default_document_index_view_type
-      h[:group] = true
+      # h[:group] = true
       helpers.search_action_path(h)
     end
   end

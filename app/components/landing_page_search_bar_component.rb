@@ -6,7 +6,7 @@ class LandingPageSearchBarComponent < Arclight::SearchBarComponent
     super
 
     # Default to grouping search results by collection.
-    @params = @params.merge(@params, group: true)
+    @params = @params.merge(@params)
   end
 
   def with_search_button

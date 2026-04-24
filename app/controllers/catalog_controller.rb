@@ -19,13 +19,14 @@ class CatalogController < ApplicationController
     # config.repository_class = Blacklight::Solr::Repository
     #
     ## Class for converting Blacklight's url parameters to into request parameters for the search index
-    # config.search_builder_class = ::SearchBuilder
+    config.search_builder_class = CollectionSearchBuilder
     #
     ## Model that maps search index responses to the blacklight response model
     # config.response_model = Blacklight::Solr::Response
 
     ## Default parameters to send to solr for all search-like requests. See also SearchBuilder#processed_parameters
     config.default_solr_params = {
+      qt: 'collection_search',
       rows: 10,
       fl: '*,collection:[subquery]',
       'collection.q': '{!terms f=id v=$row._root_}',
@@ -63,12 +64,12 @@ class CatalogController < ApplicationController
     # Then actions are interated over in search_results_document_component.html.erb
     # See https://github.com/projectblacklight/blacklight/blob/6c6a72066a6330a815603e839b316958f6321dd7/lib/blacklight/configuration.rb#L560
     config.add_results_document_tool(:online, component: Arclight::OnlineStatusIndicatorComponent)
+    config.add_results_document_tool(:search_within_collection, component: SearchWithinCollectionLinkComponent)
     config.add_results_document_tool(:arclight_bookmark_control, component: Blacklight::Document::BookmarkComponent)
     # TODO: Use the BookmarkIconComponent once keyboard navigation for this control is fixed
     # config.bookmark_icon_component = Blacklight::Icons::BookmarkIconComponent
     config.track_search_session.applied_params_component = SearchContext::NullServerAppliedParamsComponent
 
-    config.add_results_collection_tool(:group_toggle)
     config.add_results_collection_tool(:sort_widget)
     config.add_results_collection_tool(:per_page_widget)
     config.add_results_collection_tool(:view_type_group)
@@ -207,6 +208,7 @@ class CatalogController < ApplicationController
 
     config.add_search_field 'within_collection' do |field|
       field.include_in_simple_select = false
+      field.qt = 'search'
       field.solr_parameters = {
         fq: '-level_ssim:Collection'
       }
@@ -215,45 +217,45 @@ class CatalogController < ApplicationController
     # Field-based searches. We have registered handlers in the Solr configuration
     # so we have Blacklight use the `qt` parameter to invoke them
     config.add_search_field 'keyword', label: 'Keyword' do |field|
-      field.qt = 'search' # default
+      field.qt = 'collection_search'
     end
     config.add_search_field 'name', label: 'Name' do |field|
-      field.qt = 'search'
+      field.qt = 'collection_search'
       field.solr_parameters = {
         qf: '${qf_name}',
         pf: '${pf_name}'
       }
     end
     config.add_search_field 'place', label: 'Place' do |field|
-      field.qt = 'search'
+      field.qt = 'collection_search'
       field.solr_parameters = {
         qf: '${qf_place}',
         pf: '${pf_place}'
       }
     end
     config.add_search_field 'subject', label: 'Subject' do |field|
-      field.qt = 'search'
+      field.qt = 'collection_search'
       field.solr_parameters = {
         qf: '${qf_subject}',
         pf: '${pf_subject}'
       }
     end
     config.add_search_field 'title', label: 'Title' do |field|
-      field.qt = 'search'
+      field.qt = 'collection_search'
       field.solr_parameters = {
         qf: '${qf_title}',
         pf: '${pf_title}'
       }
     end
     config.add_search_field 'container', label: 'Container' do |field|
-      field.qt = 'search'
+      field.qt = 'collection_search'
       field.solr_parameters = {
         qf: '${qf_container}',
         pf: '${pf_container}'
       }
     end
     config.add_search_field 'call_number', label: 'Call number' do |field|
-      field.qt = 'search'
+      field.qt = 'collection_search'
       field.solr_parameters = {
         qf: '${qf_identifier}',
         pf: '${pf_identifier}'
