@@ -33,16 +33,28 @@ unless Rails.env.production?
   end
 end
 
+def with_solr(&block) # rubocop:disable Metrics/MethodLength
+  if system('docker compose -f compose.yaml version', out: File::NULL, err: File::NULL)
+    begin
+      sh 'docker compose -f compose.yaml up -d --wait solr'
+      yield
+    ensure
+      system 'docker compose -f compose.yaml stop solr'
+    end
+  else
+    require 'solr_wrapper'
+    SolrWrapper.wrap(port: '8983') do |solr|
+      solr.with_collection(name: 'blacklight-core', dir: Rails.root.join('solr/conf'), &block)
+    end
+  end
+end
+
 desc 'Run tests in generated test Rails app with generated Solr instance running'
 task ci: %i[rubocop environment] do
-  require 'solr_wrapper'
   ENV['environment'] = 'test'
-  SolrWrapper.wrap(port: '8983') do |solr|
-    solr.with_collection(name: 'blacklight-core', dir: Rails.root.join('solr/conf')) do
-      # run the tests
-      Rake::Task['seed'].invoke
-      Rake::Task['spec'].invoke
-    end
+  with_solr do
+    Rake::Task['seed'].invoke
+    Rake::Task['spec'].invoke
   end
 end
 

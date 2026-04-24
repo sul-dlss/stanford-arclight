@@ -4,8 +4,8 @@ services:
     ports:
       - "${SOLR_PORT:-8983}:8983"
     volumes:
-      - $PWD/solr/conf:/opt/solr/conf
-      - $PWD/solr-data:/var/solr/data
+      - ./solr/conf:/opt/solr/conf
+      - solr-data:/var/solr/data
     environment:
       - SOLR_HOME=/var/solr/data
       - SOLR_OPTS=-Dsolr.config.lib.enabled=true
@@ -14,6 +14,12 @@ services:
       - solr-precreate
       - blacklight-core
       - /opt/solr/conf
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8983/solr/blacklight-core/admin/ping || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
 
   redis:
     image: "redis:7.2-alpine"
