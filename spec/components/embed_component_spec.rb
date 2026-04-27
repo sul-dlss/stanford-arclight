@@ -3,8 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe EmbedComponent, type: :component do
-  subject(:component) { described_class.new(document:, presenter: nil) }
+  subject(:component) { described_class.new(presenter: presenter) }
 
+  let(:presenter) do
+    Blacklight::DocumentPresenter.new(document, request_context)
+  end
+  let(:blacklight_config) { Blacklight::Configuration.new }
+  let(:request_context) { double('View context', blacklight_config: blacklight_config) } # rubocop:disable RSpec/VerifiedDoubles
   let(:document) do
     SolrDocument.new(id: 'abc123',
                      digital_objects_ssm: ['{"label":"Preparing books for publication (3)","href":"jp131ht4213"}'])
