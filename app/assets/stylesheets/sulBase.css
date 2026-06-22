@@ -56,7 +56,7 @@ body {
   color: black;
 }
 
-label.toggle-bookmark {
+label.toggle-bookmark-label {
   color: var(--stanford-digital-blue);
 }
 

@@ -56,6 +56,7 @@ class CatalogController < ApplicationController
       'collection.rows': 1
     }
 
+    config.advanced_search.enabled = false
     config.header_component = Arclight::HeaderComponent
     config.logo_link = 'https://library.stanford.edu'
     config.full_width_layout = true

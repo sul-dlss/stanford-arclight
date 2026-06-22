@@ -1,12 +1,12 @@
 <%# This file copies the equivalent file in Blacklight and adds Google Analytics in :head %>
 <% content_for(:head) do %>
   <%= render 'shared/analytics' %>
-  <meta name="google-site-verification" content="<%= Settings.google_site_verification %>" />
+  <meta name="google-site-verification" content="<%= Settings.google_site_verification %>">
   <meta name="turbo-prefetch" content="false">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2025-09-11/styles/sul.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2026-01-27/styles/sul.css">
   <%= stylesheet_link_tag 'componentLibraryOverrides' %>
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2025-07-28/styles/icon.png" type="image/png">
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2025-07-28/styles/icon.svg" type="image/svg+xml">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2026-01-27/styles/icon.png" type="image/png">
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/sul-dlss/component-library@v2026-01-27/styles/icon.svg" type="image/svg+xml">
 <% end %>
 
 <% content_for(:content) do %>

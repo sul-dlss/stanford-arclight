@@ -24,3 +24,22 @@
     }
   }
 }
+
+.facet-limit-active {
+  --bs-accordion-btn-color: var(--bs-body-color);
+  --bl-facet-active-color: var(--bs-body-color);
+  --bs-accordion-btn-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23212529' stroke-linecap='round' stroke-linejoin='round'><path d='m2 5 6 6 6-6'/></svg>");
+}
+
+.accordion-item {
+  margin-left: 6px;
+}
+
+/* Applied constraints to match searchworks. */
+.applied-filter .constraint-value .filter-name::after {
+  height: 0.8rem;
+  width: 1.25rem;
+  vertical-align: middle;
+  margin-right: -0.2rem;
+  margin-left: 0.25rem;
+}
