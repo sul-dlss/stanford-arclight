@@ -12,7 +12,7 @@ RSpec.describe SearchTipsComponent, type: :component do
 
   it 'includes search tips text' do
     expect(rendered).to have_css('ul.pe-4 li', count: 7)
-    expect(rendered).to have_content('Use quotation marks to search')
+    expect(rendered).to have_text('Use quotation marks to search')
   end
 
   it 'includes a close button' do

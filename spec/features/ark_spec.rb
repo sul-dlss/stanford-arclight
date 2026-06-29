@@ -22,8 +22,8 @@ RSpec.describe 'ARK indexing and routing' do
     end
 
     it 'does not index extra ARK fields in the unitid' do
-      expect(page).to have_no_content('Archival Resource Key')
-      expect(page).to have_no_content('Previous Archival Resource Key')
+      expect(page).to have_no_text('Archival Resource Key')
+      expect(page).to have_no_text('Previous Archival Resource Key')
     end
   end
 
@@ -35,8 +35,8 @@ RSpec.describe 'ARK indexing and routing' do
     end
 
     it 'does not index extra ARK fields in the unitid' do
-      expect(page).to have_no_content('Archival Resource Key')
-      expect(page).to have_no_content('Previous Archival Resource Key')
+      expect(page).to have_no_text('Archival Resource Key')
+      expect(page).to have_no_text('Previous Archival Resource Key')
     end
   end
 
@@ -56,7 +56,7 @@ RSpec.describe 'ARK indexing and routing' do
     end
 
     it 'shows not found message' do
-      expect(page).to have_content('Finding aid not found')
+      expect(page).to have_text('Finding aid not found')
       expect(page.status_code).to eq(404)
     end
   end

@@ -16,7 +16,7 @@ RSpec.describe 'Searching', :js do
     end
 
     it 'renders the search results page with default params' do
-      expect(page).to have_content(/You searched for:\s*Keyword Example search query/)
+      expect(page).to have_text(/You searched for:\s*Keyword Example search query/)
       expect(page.current_url).to include('group=true&search_field=keyword&q=Example+search+query')
     end
 
@@ -34,7 +34,7 @@ RSpec.describe 'Searching', :js do
       within '.search-btn-wrapper' do
         click_on 'Search'
       end
-      expect(page).to have_content(/You searched for:\s*Keyword jazz/)
+      expect(page).to have_text(/You searched for:\s*Keyword jazz/)
       expect(page.current_url).not_to include('group=true')
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe 'Searching', :js do
         click_on 'Search'
       end
 
-      expect(page).to have_content(/You searched for:\s*Keyword knuth/)
+      expect(page).to have_text(/You searched for:\s*Keyword knuth/)
       expect(page.current_url).not_to include('group=true')
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe 'Searching', :js do
       within '.search-btn-wrapper' do
         click_on 'Search'
       end
-      expect(page).to have_content(/You searched for:\s*Keyword jazz/)
+      expect(page).to have_text(/You searched for:\s*Keyword jazz/)
       expect(page.current_url).to include('group=true')
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe 'Searching', :js do
     end
 
     it 'returns the expected number of results' do
-      expect(page).to have_content(/1 collections found/)
+      expect(page).to have_text(/1 collections found/)
     end
   end
 end
