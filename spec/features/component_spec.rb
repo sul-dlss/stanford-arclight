@@ -21,8 +21,8 @@ RSpec.describe 'Component Page' do
         click_on('Archive of Recorded Sound')
       end
       # Click on a specific file
-      component_title_element = find('#documents .document-title-heading a',
-                                     text: 'Audio Recordings: Radio Promotional Spots:, 1981 -- 1995', match: :first)
+      component_title_element = first('#documents .document-title-heading a',
+                                      text: 'Audio Recordings: Radio Promotional Spots:, 1981 -- 1995')
 
       component_title_element.click
     end
