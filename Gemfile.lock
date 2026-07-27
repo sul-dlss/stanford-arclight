@@ -523,7 +523,7 @@ GEM
       railties (>= 6.0.0)
     thor (1.5.0)
     timeout (0.6.1)
-    traject (3.9.0)
+    traject (3.9.1)
       base64
       concurrent-ruby (>= 0.8.0)
       csv
@@ -649,4 +649,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-  4.0.17
+  4.0.16
