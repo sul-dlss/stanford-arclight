@@ -8,8 +8,4 @@ class LandingPageSearchBarComponent < Arclight::SearchBarComponent
     # Default to grouping search results by collection.
     @params = @params.merge(@params, group: true)
   end
-
-  def with_search_button
-    render SearchButtonComponent.new(id: "#{@prefix}search", text: scoped_t('submit'))
-  end
 end
