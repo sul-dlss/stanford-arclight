@@ -355,7 +355,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
     public_suffix (7.0.5)
-    puma (6.6.1)
+    puma (8.0.2)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.6)
@@ -624,7 +624,7 @@ DEPENDENCIES
   pdf-reader (~> 2.12)
   pg (~> 1.5)
   propshaft
-  puma (~> 6.0)
+  puma (~> 8.0)
   rack-cors (~> 2.0)
   rails (~> 8.1.1)
   recaptcha (~> 5.16)
