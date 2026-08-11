@@ -81,7 +81,8 @@ GEM
     afm (1.0.0)
     airbrussh (1.6.2)
       sshkit (>= 1.6.1, != 1.7.0)
-    arclight (1.6.2)
+    arclight (1.6.3)
+      benchmark
       blacklight (>= 8.0.0, < 9)
       gretel
       rails (>= 7.1, < 9)
@@ -482,7 +483,7 @@ GEM
     ruby-progressbar (1.13.0)
     rubyzip (3.4.1)
     securerandom (0.4.1)
-    selenium-webdriver (4.46.0)
+    selenium-webdriver (4.47.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
