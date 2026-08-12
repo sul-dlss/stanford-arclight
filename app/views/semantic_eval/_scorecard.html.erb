@@ -1,0 +1,28 @@
+<%# locals: modes (Hash mode => {ndcg,ap,rr,p10}), caption (String or nil) %>
+<div class="table-responsive mb-2">
+  <table class="table table-sm align-middle w-auto mb-0">
+    <% if caption.present? %>
+      <caption class="caption-top small text-body-secondary py-0"><%= caption %></caption>
+    <% end %>
+    <thead>
+      <tr>
+        <th class="small">Mode</th>
+        <th class="text-end small">NDCG@10</th><th class="text-end small">MAP</th>
+        <th class="text-end small">MRR</th><th class="text-end small">P@10</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% best = best_metrics(modes) %>
+      <% modes.each do |mode, m| %>
+        <tr>
+          <td class="text-uppercase small fw-semibold"><%= mode %></td>
+          <% SemanticSearch::Evaluator::METRIC_KEYS.each do |k| %>
+            <td class="text-end font-monospace small <%= 'fw-bold text-success' if best[k] == m[k] %>">
+              <%= format('%.3f', m[k]) %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

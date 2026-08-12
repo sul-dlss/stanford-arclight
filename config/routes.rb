@@ -12,6 +12,13 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   root 'landing_page#index'
+
+  # Stage/dev-only semantic-search relevance eval page (gated in the controller
+  # by SemanticSearch.tuning_enabled?; 404s in production). POST carries large or
+  # file-uploaded JSON test suites that can't fit in a GET query string.
+  get '/semantic-eval', to: 'semantic_eval#index', as: :semantic_eval
+  post '/semantic-eval', to: 'semantic_eval#index'
+
   concern :searchable, Blacklight::Routes::Searchable.new
 
   resource :catalog, only: [], as: 'catalog', path: '/catalog', controller: 'catalog' do

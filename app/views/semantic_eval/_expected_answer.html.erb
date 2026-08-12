@@ -1,0 +1,14 @@
+<%# locals: answer (parsed expected_answer hash: 'value', 'evidence'[]) %>
+<div class="border-start border-3 border-info ps-2 mb-3">
+  <div class="small fw-semibold">Expected answer <span class="text-body-secondary fw-normal">(fact lookup)</span></div>
+  <p class="small mb-1"><%= answer['value'] %></p>
+  <% Array(answer['evidence']).each do |ev| %>
+    <div class="small text-body-secondary mb-1">
+      <span class="font-monospace"><%= ev['document_id'] %></span>
+      <% if ev['locator'].present? %><span>· <%= ev['locator'] %></span><% end %>
+      <% if ev['quote'].present? %>
+        <blockquote class="border-start ps-2 my-1 mb-0 fst-italic">&ldquo;<%= ev['quote'] %>&rdquo;</blockquote>
+      <% end %>
+    </div>
+  <% end %>
+</div>

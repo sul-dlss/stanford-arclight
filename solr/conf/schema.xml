@@ -274,6 +274,14 @@
 
     <fieldType name="_nest_path_" class="solr.NestPathField" />
 
+    <!-- Dense vector field for semantic (KNN) search. Additive: used only when
+         the semantic-search feature flags are enabled. Backed by HNSW, cosine
+         similarity. 768 dims = gemini-embedding-001 truncated via
+         output_dimensionality (Matryoshka). See SemanticSearch. -->
+    <fieldType name="knn_vector_768" class="solr.DenseVectorField"
+               vectorDimension="768" similarityFunction="cosine"
+               knnAlgorithm="hnsw"/>
+
  </types>
 
 
@@ -310,6 +318,26 @@
    <field name="unitid_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
    <field name="ead_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
    <field name="identifier_search" type="string_punct_stop" indexed="true" stored="false" multiValued="true"/>
+
+   <!-- Semantic-search embedding vector. Populated only when
+        ENABLE_SEMANTIC_INDEXING is on.
+
+        stored="true" so a document's own vector can be read back and reused as a
+        KNN query - that is what "related collections" / more-like-this needs. The
+        alternative (look the vector up in the build-time embedding cache via the
+        doc's embedding_input_hash_ssm) works but couples a runtime feature to a
+        build artifact that can legitimately be purged or regenerated, and would
+        break silently when they drift.
+
+        COST, and it is not negligible: a 768-dim vector serializes to ~8.4KB of
+        JSON, and Solr has NO fl-exclusion syntax (`fl=*,-embedding_vector` is a
+        parse error), so any request using `fl=*` now carries it - about 84KB extra
+        per 10-row page. CatalogController requests `fl: '*,collection:[subquery]'`
+        for both search and show, and solrconfig.xml has `fl=*` handler defaults.
+        Restrict those to the fields actually rendered, or accept the overhead
+        knowingly. Changing `stored` does NOT backfill: existing docs need a
+        reindex. -->
+   <field name="embedding_vector" type="knn_vector_768" indexed="true" stored="true" multiValued="false"/>
 
    <field name="_root_" type="string" indexed="true" stored="true" docValues="false" />
    <field name="_nest_parent_" type="string" indexed="true" stored="true"/>

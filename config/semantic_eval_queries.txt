@@ -1,0 +1,34 @@
+# Semantic search evaluation query set.
+#
+# Format: one query per line. After "=>" list the expected hit(s), comma-
+# separated — each either a Solr doc id (id:ars0001) or words from a good
+# result's title. Any one matching counts as the target (drives the rank badge).
+# Lines starting with "#" are comments (category headers) and are ignored.
+#
+#   <your search query>  =>  id:ars0001, or title words
+#
+# Targets below were verified against the corpus during the 2026-08 model A/B;
+# keep them accurate as the index changes (a record's id is in its catalog URL,
+# /catalog/<id>). Known-item queries are mostly keyword's job; the conceptual /
+# vocab / cross-lingual queries are where semantic earns its keep.
+
+# --- Known item (keyword should nail these; hybrid must not lose them) ---
+Kirsten Flagstad Collection 1923-1962 => id:ars0001
+Gary Hickling Collection on Lotte Lehmann => id:ars0002
+
+# --- Vocabulary mismatch (different words than the target) ---
+recordings of famous opera sopranos => Sopranos, id:ars0001, id:ars0002
+Kirsten Flagstadt colection sopprano => id:ars0001
+
+# --- Conceptual (broad meaning; keyword usually weak) ---
+primary sources documenting the west coast traditional jazz revival => id:ars0201, id:ars0194, id:ars0048, id:ars-0151
+photographs of traditional jazz musicians performing live => Jazz performance photos
+electronic and experimental studio music => Experimental Music Studio
+1930s opera radio broadcasts => Metropolitan Opera
+
+# --- Cross-lingual (English query, expect Chinese material; keyword returns 0) ---
+the theory of relativity => id:eal0105_aspace_83a284f533207fe903bbcf50ca34d79f, id:eal0105_aspace_b0e3716a93650920ecba118595bc0711
+Einstein biography => id:eal0105_aspace_035180f4a3552ee308652b367be1ea0e, id:eal0105_aspace_f582924bbda6361f37380bc9d25b2f43
+the history of modern physics => id:eal0105_aspace_b0e3716a93650920ecba118595bc0711
+human rights and democracy in China => id:eal0105_aspace_91ca9ab39c855dc52ab201c3fb978a66, id:eal0105_aspace_3db89eaa055987ff8bce0675e1b41b3f
+criticism of Einstein and relativity during the Cultural Revolution => id:eal0105_aspace_83a284f533207fe903bbcf50ca34d79f

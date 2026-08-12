@@ -1,5 +1,36 @@
 google_site_verification: 'abyPMNSENI9-BVzLcKBsxfpsl_lOq-3hN588Ip12ZTk'
 
+# Semantic (vector) search feature flags + config. Both flags default OFF here
+# and in every shared/production config; enable per-environment by setting the
+# ENV vars on that environment's hosts (e.g. on stage) without editing this
+# shared file. The two flags are independent:
+#   * indexing_enabled - generate + write embeddings at index time
+#   * query_enabled     - issue KNN queries and blend semantic results
+# See SemanticSearch and README "Semantic search".
+semantic_search:
+  indexing_enabled: <%= ENV['ENABLE_SEMANTIC_INDEXING'] || false %>
+  query_enabled: <%= ENV['ENABLE_SEMANTIC_QUERY'] || false %>
+  # Relevance-tuning overrides (URL params + dev tuning panel). Dev/stage only;
+  # never enable in production.
+  tuning_enabled: <%= ENV['SEMANTIC_SEARCH_TUNING'] || false %>
+  # Vector-based "Related collections" panel on record pages. Reads the stored
+  # embedding_vector, so no embedding-gateway call and no API key; independent of
+  # query_enabled? so it can be turned on without altering search results.
+  related_enabled: <%= ENV['ENABLE_SEMANTIC_RELATED'] || false %>
+  # Fuse hybrid search with Solr's native RRF combiner instead of the default
+  # bool.should + reRank blend. Requires Solr 9.11 / 10.1 (SOLR-17319); on 9.10
+  # it silently returns match-all, so keep OFF until Solr is upgraded.
+  rrf_combiner_enabled: <%= ENV['SEMANTIC_SEARCH_RRF_COMBINER'] || false %>
+  # Embeddings use gemini-embedding-2 via the Stanford LiteLLM AI gateway
+  # (OpenAI-compatible), read from ENV by SemanticSearch::EmbeddingService:
+  #   SEMANTIC_SEARCH_EMBEDDING_API_KEY (required when a flag is on),
+  #   SEMANTIC_SEARCH_EMBEDDING_API_BASE (optional; defaults to the prod gateway).
+  # Optional persistent embedding cache (generate once, reuse on every reindex):
+  #   SEMANTIC_SEARCH_EMBEDDING_CACHE       - path to the SQLite cache file
+  #   SEMANTIC_SEARCH_EMBEDDING_CACHE_WRITE - truthy only during generation
+  # When set read-only (no _WRITE), indexing serves vectors from the file with
+  # no API calls. Generate it locally; ship it read-only to the app hosts.
+
 global_alert: <%= ENV['GLOBAL_ALERT'] || false %>
 
 hours_api: 'https://library-hours.stanford.edu/'

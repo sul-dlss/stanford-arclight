@@ -217,6 +217,31 @@ class CatalogController < ApplicationController
     config.add_search_field 'keyword', label: 'Keyword' do |field|
       field.qt = 'search' # default
     end
+
+    # Semantic-search modes, folded into the search field dropdown so there is a
+    # single control. Only offered when ENABLE_SEMANTIC_QUERY is on, and hybrid
+    # becomes the default search. Both use the default (all-fields) qf/pf; the
+    # KNN blending happens in SearchBehavior::SemanticQuery, keyed on these
+    # field keys. Scoped fields below (Name, Title, ...) stay purely lexical.
+    if SemanticSearch.query_enabled?
+      config.add_search_field 'hybrid', label: 'Hybrid' do |field|
+        field.qt = 'search'
+      end
+      config.add_search_field 'semantic', label: 'Semantic' do |field|
+        field.qt = 'search'
+      end
+      # Assign the field object (not the 'hybrid' string) so Blacklight views
+      # that call default_search_field.key/.label keep working.
+      config.default_search_field = config.search_fields['hybrid']
+
+      # Hybrid/semantic queries use Solr's JSON Query DSL (json.query). Blacklight
+      # routes any JSON-DSL request to `json_solr_path`, which defaults to
+      # 'advanced' - a handler this app's stripped-down solrconfig.xml does not
+      # define (it would 404). Point it at 'select' instead: handleSelect maps
+      # that to the default `search` handler, so the nested edismax subquery
+      # inherits the same qf/pf/mm keyword-ranking config as ordinary search.
+      config.json_solr_path = 'select'
+    end
     config.add_search_field 'name', label: 'Name' do |field|
       field.qt = 'search'
       field.solr_parameters = {
@@ -263,6 +288,10 @@ class CatalogController < ApplicationController
     # These are the parameters passed through in search_state.params_for_search
     config.search_state_fields += %i[id group hierarchy_context original_document]
     config.search_state_fields << { original_parents: [] }
+
+    # Persist relevance-tuning params across facet/pagination navigation so a
+    # chosen value sticks during a tuning session (dev/stage only).
+    config.search_state_fields += SearchBehavior::SemanticQuery::TUNING_PARAMS if SemanticSearch.tuning_enabled?
 
     # "sort results by" select (pulldown)
     # label in pulldown is followed by the name of the SOLR field to sort by and

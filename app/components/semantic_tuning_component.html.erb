@@ -1,0 +1,35 @@
+<div class="semantic-tuning card border-warning my-3">
+  <div class="card-body py-2">
+    <h2 class="h6 card-title mb-2">
+      Semantic tuning <span class="badge text-bg-warning">dev / stage</span>
+    </h2>
+    <%= form_tag helpers.search_action_url, method: :get, class: "row g-2 align-items-end" do %>
+      <%= render(Blacklight::HiddenSearchStateComponent.new(params: preserved_params)) %>
+      <% FIELDS.each do |field| %>
+        <div class="col-auto">
+          <label class="form-label small mb-0" for="<%= field.param %>"><%= field.label %></label>
+          <%= number_field_tag field.param, current_value(field),
+                id: field.param, step: field.step, min: 0, max: field.max_value,
+                class: "form-control form-control-sm" %>
+        </div>
+      <% end %>
+      <div class="col-auto">
+        <%= submit_tag "Apply", class: "btn btn-sm btn-warning" %>
+      </div>
+    <% end %>
+    <dl class="row small text-body-secondary mb-1 mt-2">
+      <% FIELDS.each do |field| %>
+        <dt class="col-sm-3 col-lg-2 fw-semibold text-nowrap"><%= field.label %></dt>
+        <dd class="col-sm-9 col-lg-10 mb-1"><%= field.help %></dd>
+      <% end %>
+    </dl>
+    <p class="form-text small mb-0">
+      Defaults: <%= safe_join(FIELDS.map { |f| "#{f.label} #{f.default}" }, ", ") %>.
+      Applies to hybrid / semantic searches only.
+      Keep <code>topK &ge; reRankDocs</code> (docs beyond topK get no vector score)
+      and <code>reRankDocs &ge;</code> your page size; cosine scores are 0&ndash;1,
+      so reRankWeight takes tens to compete with keyword scores.
+      <code>min similarity</code> drops below-cutoff vector hits (out-of-scope knob).
+    </p>
+  </div>
+</div>

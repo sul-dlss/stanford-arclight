@@ -1,0 +1,117 @@
+[
+  {
+    "test_id": "peoples-temple-1",
+    "subject_id": "peoples-temple",
+    "query": "jonestown",
+    "test_type": "keyword_search",
+    "test_description": "As-typed head query. Literal term appears in the finding aids; tests the lexical path. All Peoples Temple / CHS collections should surface.",
+    "expected_answer": null,
+    "expected_nothing": false,
+    "judge": "claude-opus-5",
+    "judged_on": "2026-08-24",
+    "human_reviewed": false,
+    "judgments": [
+      {"document_id": "ms_3791", "score": 3, "explanation": "Peoples Temple records - the core collection."},
+      {"document_id": "ms_3800", "score": 3, "explanation": "Peoples Temple photographs."},
+      {"document_id": "msp_3800", "score": 3, "explanation": "Peoples Temple photographs (parallel record)."},
+      {"document_id": "pc_010", "score": 3, "explanation": "Peoples Temple / Jonestown ephemera."},
+      {"document_id": "ms_4125", "score": 3, "explanation": "Related Peoples Temple materials."},
+      {"document_id": "ms_4124", "score": 3, "explanation": "Related Peoples Temple materials."},
+      {"document_id": "ms_3792", "score": 3, "explanation": "Related Peoples Temple materials."}
+    ]
+  },
+  {
+    "test_id": "peoples-temple-2",
+    "subject_id": "peoples-temple",
+    "query": "peoples temple",
+    "test_type": "keyword_search",
+    "test_description": "Related term / organization name. Exact-phrase precision case; keyword should rank the named collections at the top.",
+    "expected_answer": null,
+    "expected_nothing": false,
+    "judge": "claude-opus-5",
+    "judged_on": "2026-08-24",
+    "human_reviewed": false,
+    "judgments": [
+      {"document_id": "ms_3791", "score": 3, "explanation": "Peoples Temple records."},
+      {"document_id": "ms_3800", "score": 3, "explanation": "Peoples Temple photographs."},
+      {"document_id": "msp_3800", "score": 3, "explanation": "Peoples Temple photographs (parallel record)."},
+      {"document_id": "pc_010", "score": 2, "explanation": "Ephemera - on target but a lighter fit than the records."},
+      {"document_id": "ms_4125", "score": 2, "explanation": "Related materials."},
+      {"document_id": "ms_4124", "score": 2, "explanation": "Related materials."},
+      {"document_id": "ms_3792", "score": 2, "explanation": "Related materials."}
+    ]
+  },
+  {
+    "test_id": "peoples-temple-3",
+    "subject_id": "peoples-temple",
+    "query": "Jim Jones",
+    "test_type": "keyword_search",
+    "test_description": "Founder's name. Watch for surname collisions with unrelated people named Jones in other collections (documented as distractors).",
+    "expected_answer": null,
+    "expected_nothing": false,
+    "judge": "claude-opus-5",
+    "judged_on": "2026-08-24",
+    "human_reviewed": false,
+    "judgments": [
+      {"document_id": "ms_3791", "score": 3, "explanation": "Peoples Temple records - founded by Jim Jones."},
+      {"document_id": "ms_3800", "score": 2, "explanation": "Photographs including Jones."},
+      {"document_id": "pc_010", "score": 2, "explanation": "Ephemera referencing Jones."},
+      {"document_id": "ms_4125", "score": 1, "explanation": "Same entity, weaker fit."},
+      {"document_id": "REPLACE_WITH_A_REAL_JONES_COLLISION_ID", "score": 0, "explanation": "Distractor example: an unrelated collection for a different person named Jones - surname collision, not the founder."}
+    ]
+  },
+  {
+    "test_id": "peoples-temple-4",
+    "subject_id": "peoples-temple",
+    "query": "religious group mass deaths in Guyana",
+    "test_type": "synonym_match",
+    "test_description": "Vocabulary mismatch: describes the need with no name or corpus vocabulary. Tests whether embeddings bridge to the Peoples Temple collections. Keyword is expected to miss most; hybrid/semantic should recover all seven.",
+    "expected_answer": null,
+    "expected_nothing": false,
+    "judge": "claude-opus-5",
+    "judged_on": "2026-08-24",
+    "human_reviewed": false,
+    "judgments": [
+      {"document_id": "ms_3791", "score": 3, "explanation": "The Jonestown / Guyana mass deaths are Peoples Temple."},
+      {"document_id": "ms_3800", "score": 3, "explanation": "Photographs of the group."},
+      {"document_id": "msp_3800", "score": 3, "explanation": "Photographs (parallel record)."},
+      {"document_id": "pc_010", "score": 2, "explanation": "Ephemera."},
+      {"document_id": "ms_4125", "score": 2, "explanation": "Related materials."},
+      {"document_id": "ms_4124", "score": 2, "explanation": "Related materials."},
+      {"document_id": "ms_3792", "score": 2, "explanation": "Related materials."}
+    ]
+  },
+  {
+    "test_id": "peoples-temple-oos-1",
+    "subject_id": "peoples-temple",
+    "query": "quantum teleportation patent filings",
+    "test_type": "out_of_scope",
+    "test_description": "Plausible-sounding query with nothing relevant in these collections. Semantic search always returns something; success is the min-similarity floor suppressing it so the mode reports no results.",
+    "expected_answer": null,
+    "expected_nothing": true,
+    "judge": "claude-opus-5",
+    "judged_on": "2026-08-24",
+    "human_reviewed": false,
+    "judgments": []
+  },
+  {
+    "test_id": "peoples-temple-fact-1",
+    "subject_id": "peoples-temple",
+    "query": "<a question with a specific factual answer, e.g. what year did the group relocate to Guyana>",
+    "test_type": "fact_lookup",
+    "test_description": "TEMPLATE - fill the answer and evidence from the actual finding aid. Tests whether retrieval reaches the answer-bearing passage, not just the right collection.",
+    "expected_answer": {
+      "value": "<short answer, verbatim as the corpus states it>",
+      "evidence": [
+        {"document_id": "ms_3791", "locator": "<file / chunk / page / timestamp>", "quote": "<verbatim supporting text, including any OCR damage>"}
+      ]
+    },
+    "expected_nothing": false,
+    "judge": "claude-opus-5",
+    "judged_on": "2026-08-24",
+    "human_reviewed": false,
+    "judgments": [
+      {"document_id": "ms_3791", "score": 3, "explanation": "Answer-bearing collection."}
+    ]
+  }
+]

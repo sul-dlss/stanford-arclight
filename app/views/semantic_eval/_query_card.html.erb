@@ -1,0 +1,98 @@
+<%# locals: row (one evaluated query). Reads @group_by_collection. %>
+<% meta = row[:meta] || {} %>
+<% oos = row[:expected_nothing] %>
+<div class="card mb-3">
+  <div class="card-header d-flex flex-wrap align-items-baseline gap-2">
+    <span class="fw-semibold"><%= row[:query] %></span>
+    <% if meta[:test_type].present? %>
+      <span class="badge text-bg-secondary"><%= meta[:test_type] %></span>
+    <% end %>
+    <% if meta[:subject_id].present? && meta[:subject_id] != 'unspecified' %>
+      <span class="text-body-secondary small">subject: <%= meta[:subject_id] %></span>
+    <% end %>
+    <% if oos %>
+      <span class="badge text-bg-dark">expects no results</span>
+    <% elsif row[:expects].present? %>
+      <span class="text-body-secondary small"><%= pluralize(row[:expects].size, 'target') %></span>
+    <% else %>
+      <span class="text-body-secondary small fst-italic">no expected result — judge the top hits</span>
+    <% end %>
+    <% if meta[:human_reviewed] %>
+      <span class="badge text-bg-success">human-reviewed</span>
+    <% elsif meta[:judge].present? %>
+      <span class="text-body-secondary small">judge: <%= meta[:judge] %></span>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <% if meta[:test_description].present? %>
+      <p class="small text-body-secondary fst-italic mb-2"><%= meta[:test_description] %></p>
+    <% end %>
+
+    <% if meta[:expected_answer].present? %>
+      <%= render 'expected_answer', answer: meta[:expected_answer] %>
+    <% end %>
+
+    <% if !oos && row[:relevant].to_i.positive? %>
+      <%= render 'scorecard', modes: row[:modes].transform_values { |d| d[:metrics] }.compact, caption: nil %>
+    <% end %>
+
+    <div class="row g-3">
+      <% SemanticSearch::Evaluator::MODES.each do |mode| %>
+        <% data = row[:modes][mode] %>
+        <div class="col-md-4">
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <span class="text-uppercase small fw-bold text-body-secondary"><%= mode %></span>
+            <% unless data[:error] %>
+              <% if oos %>
+                <% if data[:passed] %>
+                  <span class="badge text-bg-success">PASS — no results</span>
+                <% else %>
+                  <span class="badge text-bg-danger">FAIL — <%= number_with_delimiter(data[:num_found]) %> returned</span>
+                <% end %>
+              <% else %>
+                <%= eval_rank_badge(data[:rank], row[:expects]) %>
+              <% end %>
+            <% end %>
+          </div>
+          <% if data[:error] %>
+            <p class="text-danger small mb-0"><%= data[:error] %></p>
+          <% else %>
+            <div class="text-body-secondary small mb-1">
+              <%= number_with_delimiter(data[:num_found]) %> results<%= ' (grouped below)' if @group_by_collection %>
+            </div>
+            <% if !oos && row[:expects].present? %>
+              <% matches = eval_matches(data) %>
+              <div class="small mb-1">
+                <% if matches.present? %>
+                  <span class="text-success fw-semibold"><%= @group_by_collection ? 'collections' : 'records' %> matched:</span>
+                  <% matches.each do |m| %>
+                    <span class="badge text-bg-light border fw-normal font-monospace"><%= m[:id] %> <span class="text-body-secondary">#<%= m[:rank] %></span></span>
+                  <% end %>
+                <% else %>
+                  <span class="text-body-secondary fst-italic">none of the expected results found</span>
+                <% end %>
+              </div>
+            <% end %>
+            <% distractors = eval_distractors(data, row[:distractors]) %>
+            <% if distractors.present? %>
+              <div class="small mb-1">
+                <span class="text-danger fw-semibold">false matches caught:</span>
+                <% distractors.each do |d| %>
+                  <span class="badge text-bg-danger border fw-normal font-monospace" title="<%= d[:why] %>"><%= d[:id] %> #<%= d[:rank] %></span>
+                <% end %>
+              </div>
+            <% end %>
+            <ol class="small ps-3 mb-0">
+              <% data[:results].each do |r| %>
+                <li class="<%= 'fw-semibold' if r[:hit] %>">
+                  <%= r[:hit] ? '✓ ' : '' %><%= r[:title].presence || '(untitled)' %>
+                  <span class="d-block text-body-secondary font-monospace" style="font-size: .8em;"><%= r[:id] %></span>
+                </li>
+              <% end %>
+            </ol>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

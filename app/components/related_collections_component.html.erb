@@ -1,0 +1,23 @@
+<div id="related-collections" class="sidebar-section">
+  <h2><%= t('.heading', default: 'Related collections') %></h2>
+  <ul class="list-unstyled mb-0">
+    <% related.each do |doc| %>
+      <li class="mb-2">
+        <%= link_to title_for(doc), path_for(doc) %>
+        <% if matched_title_for(doc) %>
+          <div class="small fst-italic">
+            <span class="text-muted"><%= t('.matched_on', default: 'matched on') %>:</span>
+            <% if matched_path_for(doc) %>
+              <%= link_to matched_title_for(doc), matched_path_for(doc), class: 'link-secondary' %>
+            <% else %>
+              <span class="text-muted"><%= matched_title_for(doc) %></span>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="small text-muted">
+          <%= repository_for(doc) %><%= " · #{score_for(doc)}" if score_for(doc) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

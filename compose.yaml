@@ -9,6 +9,12 @@ services:
     environment:
       - SOLR_HOME=/var/solr/data
       - SOLR_OPTS=-Dsolr.config.lib.enabled=true
+      # The Solr image defaults to a 512MB heap, which is not enough once the
+      # semantic-search HNSW vector index gets large: indexing the manuscripts
+      # repo (~672k docs) on top of the existing ~489k vectors died with
+      # "OutOfMemoryError: Java heap space", and the image sets
+      # -XX:+CrashOnOutOfMemoryError so the JVM hard-crashes rather than limping.
+      - SOLR_HEAP=4g
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate

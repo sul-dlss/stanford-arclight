@@ -1,0 +1,4 @@
+<%# Preserve Blacklight's default search header, then add the dev/stage-only %>
+<%# semantic relevance-tuning panel (renders nothing unless the flags are on). %>
+<%= render blacklight_config.view_config(document_index_view_type).search_header_component.new %>
+<%= render(SemanticTuningComponent.new(search_state: search_state)) %>

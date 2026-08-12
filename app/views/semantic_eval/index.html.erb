@@ -1,0 +1,184 @@
+<% content_for(:page_title) { 'Semantic search evaluation' } %>
+<div class="semantic-eval my-4">
+  <div class="d-flex align-items-center gap-2 mb-2">
+    <h1 class="h3 mb-0">Semantic search evaluation</h1>
+    <span class="badge text-bg-warning">dev / stage</span>
+  </div>
+  <p class="text-body-secondary">
+    Compare how <strong>keyword</strong>, <strong>hybrid</strong>, and
+    <strong>semantic</strong> search rank results for a set of test queries.
+    Each query runs through the real search, so this reflects exactly what the
+    site does. Run a quick list in the textarea, or a full judged suite as JSON.
+  </p>
+
+  <%= form_with url: semantic_eval_path, method: :post do |f| %>
+    <div class="mb-2">
+      <%= f.label :queries, 'Quick test queries', class: 'form-label fw-semibold' %>
+      <div class="form-text mt-0 mb-2">
+        <p class="mb-1">
+          One query per line. After <code>=&gt;</code>, list the result(s) you'd
+          expect a good search to return — comma-separated, any one counts:
+        </p>
+        <ul class="mb-1 ps-3">
+          <li>
+            <strong>A specific record</strong> — <code>id:ars0001</code>. The id is the
+            last part of a record's URL: <code>/catalog/<em>ars0001</em></code>.
+          </li>
+          <li>
+            <strong>Any record with those words in its title</strong> —
+            e.g. <code>Sopranos</code> (use when several results are all fine).
+          </li>
+          <li>
+            <strong>Mix or list several</strong> —
+            <code>opera sopranos =&gt; Sopranos, id:ars0002</code>.
+          </li>
+        </ul>
+        <p class="mb-1">
+          A line with no <code>=&gt;</code> still runs but isn't scored (judge it by eye).
+          Lines starting with <code>#</code> are notes/headers and are ignored.
+          Optional per-hit grade — <code>id:ars0001:3</code> (3 = best, default 1).
+        </p>
+      </div>
+      <%= f.text_area :queries, value: @queries_text, rows: 12,
+            class: 'form-control font-monospace', spellcheck: false %>
+    </div>
+
+    <fieldset class="border rounded p-2 mb-3">
+      <legend class="float-none w-auto px-2 fs-6 fw-semibold mb-0">
+        Test-case JSON <span class="text-body-secondary fw-normal small">— optional; overrides the queries above</span>
+      </legend>
+      <p class="form-text mt-0">
+        Paste a JSON array of test cases in the shared schema (query + graded
+        0–3 <code>judgments</code> + <code>test_type</code>/<code>subject_id</code>,
+        plus <code>out_of_scope</code> and <code>fact_lookup</code> cases), or
+        upload a <code>.json</code> file. This is the durable format for real,
+        judged suites; the textarea above stays for quick ad-hoc checks.
+      </p>
+      <%= f.text_area :test_cases_json, value: @json_text, rows: 6,
+            class: 'form-control font-monospace', spellcheck: false,
+            placeholder: '[ { "test_id": "jonestown-1", "query": "...", "test_type": "conceptual_thematic", "expected_answer": null, "expected_nothing": false, "judgments": [ { "document_id": "ms_3791", "score": 3, "explanation": "..." } ] } ]' %>
+      <%= f.file_field :file, accept: 'application/json,.json', class: 'form-control form-control-sm mt-2' %>
+    </fieldset>
+
+    <fieldset class="border rounded p-2 mb-3">
+      <legend class="float-none w-auto px-2 fs-6 fw-semibold mb-0">
+        Ranking knobs <span class="text-body-secondary fw-normal small">— apply to hybrid &amp; semantic</span>
+      </legend>
+      <div class="row g-2 align-items-end">
+        <% SemanticTuningComponent::FIELDS.each do |field| %>
+          <div class="col-auto">
+            <%= f.label field.param, field.label, class: 'form-label small mb-0' %>
+            <%= f.number_field field.param, value: (@tuning[field.param].presence || field.default),
+                  step: field.step, min: 0, max: field.max_value,
+                  class: 'form-control form-control-sm', title: field.help %>
+          </div>
+        <% end %>
+      </div>
+      <p class="form-text mb-0">
+        Leave at defaults for a normal run. <code>min similarity</code> &gt; 0 drops
+        weak vector hits — the knob that makes <code>out_of_scope</code> cases pass.
+      </p>
+    </fieldset>
+
+    <div class="form-check mb-3">
+      <%= f.check_box :group, { checked: @group_by_collection, class: 'form-check-input' }, '1', '0' %>
+      <%= f.label :group, 'Group results by collection', class: 'form-check-label fw-semibold' %>
+      <div class="form-text mt-0">
+        Collapse component matches to one row per collection (the grouped catalog view) before scoring.
+        In this mode an <code>id:</code> target matches the <strong>collection</strong>, so a collection-level
+        id like <code>id:ms_3791</code> counts whenever any of its components rank. Off = flat, exact-record scoring.
+      </div>
+    </div>
+
+    <%= f.submit 'Run evaluation', class: 'btn btn-primary' %>
+  <% end %>
+
+  <% if @error %>
+    <div class="alert alert-danger mt-3" role="alert">
+      <strong>Couldn't run the suite.</strong> <%= @error %>
+    </div>
+  <% end %>
+
+  <% if @ran %>
+    <hr class="my-4">
+
+    <% if @group_by_collection %>
+      <p class="mb-3">
+        <span class="badge text-bg-primary">grouped by collection</span>
+        <span class="text-body-secondary small">
+          Results collapsed to one row per collection; <code>id:</code> targets match the collection.
+        </span>
+      </p>
+    <% end %>
+
+    <% if @scorecard[:count].to_i.positive? %>
+      <h2 class="h4 mb-1">Metrics</h2>
+      <p class="text-body-secondary small mb-2">
+        Mean over the <%= pluralize(@scorecard[:count], 'scored query') %>. Higher is better.
+        <strong>NDCG@10</strong> and <strong>MAP</strong> reward ranking <em>all</em> relevant results high;
+        <strong>MRR</strong> rewards the first relevant result; <strong>P@10</strong> is the share of the top 10 that's relevant.
+      </p>
+      <%= render 'scorecard', modes: @scorecard[:modes], caption: 'All scored queries' %>
+
+      <% by_type = eval_group_summaries(@rows, :test_type) %>
+      <% if by_type.size > 1 %>
+        <h3 class="h6 mt-3 mb-1">By test type</h3>
+        <% by_type.each do |type, summary| %>
+          <%= render 'scorecard', modes: summary[:modes], caption: "#{type} — #{pluralize(summary[:count], 'query')}" %>
+        <% end %>
+      <% end %>
+
+      <% by_subject = eval_group_summaries(@rows, :subject_id) %>
+      <% if by_subject.size > 1 %>
+        <h3 class="h6 mt-3 mb-1">By subject</h3>
+        <% by_subject.each do |subject, summary| %>
+          <%= render 'scorecard', modes: summary[:modes], caption: "#{subject} — #{pluralize(summary[:count], 'query')}" %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% oos_rows = @rows.select { |row| row[:expected_nothing] } %>
+    <% if oos_rows.present? %>
+      <h3 class="h6 mt-4 mb-1">Out-of-scope checks
+        <span class="text-body-secondary fw-normal">— pass = returned nothing (needs the min-similarity floor)</span>
+      </h3>
+      <div class="table-responsive mb-2">
+        <table class="table table-sm align-middle w-auto mb-0">
+          <thead>
+            <tr>
+              <th class="small">Query</th>
+              <% SemanticSearch::Evaluator::MODES.each do |mode| %>
+                <th class="small text-uppercase"><%= mode %></th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% oos_rows.each do |row| %>
+              <tr>
+                <td class="small"><%= row[:query] %></td>
+                <% SemanticSearch::Evaluator::MODES.each do |mode| %>
+                  <% data = row[:modes][mode] %>
+                  <td class="small">
+                    <% if data[:error] %>
+                      <span class="text-danger">error</span>
+                    <% elsif data[:passed] %>
+                      <span class="text-success fw-semibold">pass</span>
+                    <% else %>
+                      <span class="text-danger">fail (<%= number_with_delimiter(data[:num_found]) %>)</span>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+
+    <h2 class="h4 mb-3 mt-4">Per-query results <span class="text-body-secondary fs-6">(<%= @rows.size %> queries)</span></h2>
+
+    <% @rows.each do |row| %>
+      <%= render 'query_card', row: row %>
+    <% end %>
+  <% end %>
+</div>
