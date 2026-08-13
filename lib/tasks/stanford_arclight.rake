@@ -14,11 +14,15 @@ namespace :stanford_arclight do
 
   desc 'Prune guest users without bookmarks from the database'
   task :prune_guest_user_data, %i[months_old] => :environment do |_, args|
-    updated_at = User.arel_table[:updated_at]
-    User.includes(:bookmarks)
-        .where(guest: true)
-        .where(bookmarks: { user_id: nil })
-        .where(updated_at.lt(args[:months_old].to_i.months.ago)).in_batches do |users|
+    months_old = args[:months_old].to_i
+    raise ArgumentError, 'months_old is expected to be greater than 0' if months_old <= 0
+
+    # Guests that own bookmarks are kept.
+    bookmarked_user_ids = Bookmark.where(user_type: 'User').distinct.pluck(:user_id)
+
+    User.where(guest: true)
+        .where.not(id: bookmarked_user_ids)
+        .where(User.arel_table[:updated_at].lt(months_old.months.ago)).in_batches do |users|
       users.delete_all
       sleep(10) # Throttle the delete queries
     end
