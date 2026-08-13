@@ -35,7 +35,7 @@ every 6.hours do
 end
 
 every :day, at: '4:00 am' do
-  rake 'stanford_arclight:prune_guest_user_data[12]'
+  rake 'stanford_arclight:prune_guest_user_data[1]'
 end
 
 every :day, at: '5:00 am' do
