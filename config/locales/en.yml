@@ -57,6 +57,29 @@ en:
       all_collections: All collections
       label_html: 'Search within'
       this_collection: This collection
+  ai_summary:
+    heading: 'AI summary'
+    summary_html: |
+      <p>These results relate to <strong>%{query}</strong> and span collections from Stanford's special collections and archives, including manuscripts, photographs, and correspondence.</p>
+      <ul>
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+        <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+        <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>
+      </ul>
+    more_summary_html: |
+      <p>Additional information for <strong>%{query}</strong>:</p>
+      <ul>
+        <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</li>
+        <li>Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>
+        <li>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+      </ul>
+    sources_label: 'Sources:'
+    disclaimer: 'AI-generated summary based on your search terms. May not accurately reflect archival content.'
+    aria_label: 'AI-generated summary of search results'
+    fallback_query: 'your search'
+    show_more: 'Show more'
+    ask_placeholder: 'Ask AI a question'
+    send_label: 'Send'
   blacklight:
     search:
       start_over: 'Clear all'

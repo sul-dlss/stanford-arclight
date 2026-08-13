@@ -1,0 +1,47 @@
+<div class="ai-summary-panel" role="note" aria-label="<%= t('ai_summary.aria_label') %>">
+  <div class="ai-summary-panel__header">
+    <span class="ai-summary-panel__icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3zM19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14zM5 15l.75 2.25L8 18l-2.25.75L5 21l-.75-2.25L2 18l2.25-.75L5 15z" />
+      </svg>
+    </span>
+    <span class="ai-summary-panel__label"><%= t('ai_summary.heading') %></span>
+  </div>
+  <div class="ai-summary-panel__text"><%= summary_text %></div>
+  <div class="collapse" id="<%= more_content_id %>">
+    <div class="ai-summary-panel__text ai-summary-panel__more-text"><%= more_summary_text %></div>
+  </div>
+  <% if source_documents.any? %>
+    <div class="ai-summary-panel__sources">
+      <span class="ai-summary-panel__sources-label"><%= t('ai_summary.sources_label') %></span>
+      <% source_documents.each do |doc| %>
+        <%= helpers.link_to_document doc, class: 'badge rounded-pill ai-summary-source-chip' %>
+      <% end %>
+    </div>
+  <% end %>
+  <p class="ai-summary-panel__disclaimer"><%= t('ai_summary.disclaimer') %></p>
+  <div class="ai-summary-panel__toggle">
+    <button type="button"
+            class="btn btn-outline-primary rounded-pill ai-summary-panel__toggle-btn collapsed"
+            data-bs-toggle="collapse"
+            data-bs-target="#<%= more_content_id %>"
+            aria-expanded="false"
+            aria-controls="<%= more_content_id %>">
+      <span class="ai-summary-panel__toggle-label ai-summary-panel__toggle-label--more"><%= t('ai_summary.show_more') %></span>
+      <%= helpers.blacklight_icon('chevron_down') %>
+    </button>
+    <div class="ai-summary-panel__ask input-group">
+      <span class="input-group-text ai-summary-panel__icon" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" />
+        </svg>
+      </span>
+      <input type="search"
+             class="form-control"
+             placeholder="<%= t('ai_summary.ask_placeholder') %>"
+             aria-label="<%= t('ai_summary.ask_placeholder') %>"
+             autocomplete="off">
+      <button class="btn btn-outline-primary" type="button"><%= t('ai_summary.send_label') %><i class="bi bi-arrow-up-right ms-1" aria-hidden=""></i></button>
+    </div>
+  </div>
+</div>
