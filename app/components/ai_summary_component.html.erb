@@ -30,18 +30,18 @@
       <span class="ai-summary-panel__toggle-label ai-summary-panel__toggle-label--more"><%= t('ai_summary.show_more') %></span>
       <%= helpers.blacklight_icon('chevron_down') %>
     </button>
-    <div class="ai-summary-panel__ask input-group">
+    <%= form_with url: ask_ai_path, method: :get, local: true, class: 'ai-summary-panel__ask input-group' do |f| %>
       <span class="input-group-text ai-summary-panel__icon" aria-hidden="true">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" />
         </svg>
       </span>
-      <input type="search"
-             class="form-control"
-             placeholder="<%= t('ai_summary.ask_placeholder') %>"
-             aria-label="<%= t('ai_summary.ask_placeholder') %>"
-             autocomplete="off">
-      <button class="btn btn-outline-primary" type="button"><%= t('ai_summary.send_label') %><i class="bi bi-arrow-up-right ms-1" aria-hidden=""></i></button>
-    </div>
+      <%= f.search_field :q,
+            class: 'form-control',
+            placeholder: t('ai_summary.ask_placeholder'),
+            aria: { label: t('ai_summary.ask_placeholder') },
+            autocomplete: 'off' %>
+      <button class="btn btn-outline-primary" type="submit"><%= t('ai_summary.send_label') %></button>
+    <% end %>
   </div>
 </div>

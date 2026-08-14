@@ -1,0 +1,35 @@
+<div class="d-flex">
+  <div id="ask-ai">
+    <nav aria-label="breadcrumb" class="w-100 my-4">
+      <ol class="breadcrumb-container list-unstyled d-flex">
+        <li id="breadcrumb-home">
+          <%= link_to 'Home', root_path %>
+        </li>
+        <li class="ms-1 breadcrumb-item active" aria-current="page"><%= t('ask_ai.breadcrumb_label') %></li>
+      </ol>
+    </nav>
+    <div class="title-container mb-lg-2 mb-1 p-0 border-0">
+      <h1 class="title"><%= t('ask_ai.page_title') %></h1>
+    </div>
+    <hr class="ask-ai-header-rule">
+
+    <div class="ask-ai-chat">
+      <div class="ask-ai-message ask-ai-message--user">
+        <div class="ask-ai-bubble ask-ai-bubble--user"><%= @question %></div>
+      </div>
+
+      <div class="ask-ai-message ask-ai-message--ai">
+        <span class="ask-ai-avatar" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3zM19 14l.9 2.6L22.5 17.5l-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9L19 14zM5 15l.75 2.25L8 18l-2.25.75L5 21l-.75-2.25L2 18l2.25-.75L5 15z" />
+          </svg>
+        </span>
+        <div class="ask-ai-bubble ask-ai-bubble--ai"><%= t('ask_ai.response_html', query: @question) %></div>
+      </div>
+    </div>
+
+    <div class="ask-ai-followup">
+      <%= render 'shared/ask_ai_input', url: ask_ai_path, placeholder: t('ask_ai.followup_placeholder'), button_label: t('ask_ai.reply_label'), disabled: true %>
+    </div>
+  </div>
+</div>

@@ -80,6 +80,19 @@ en:
     show_more: 'Show more'
     ask_placeholder: 'Ask AI a question'
     send_label: 'Send'
+  ask_ai:
+    page_title: 'Ask AI'
+    breadcrumb_label: 'Ask AI'
+    fallback_question: 'What can you tell me about the Stanford archival collections?'
+    followup_placeholder: 'Ask a follow-up question'
+    reply_label: 'Reply'
+    response_html: |
+      <p>Here's what I found regarding <strong>%{query}</strong>, based on Stanford's special collections and archives, including manuscripts, photographs, and correspondence.</p>
+      <ul>
+        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>
+        <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+        <li>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</li>
+      </ul>
   blacklight:
     search:
       start_over: 'Clear all'
