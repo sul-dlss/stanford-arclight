@@ -1,4 +1,9 @@
-<div class="ai-summary-panel" role="note" aria-label="<%= t('ai_summary.aria_label') %>">
+<div class="ai-summary-panel" role="note" aria-label="<%= t('ai_summary.aria_label') %>" data-controller="ai-summary">
+  <button type="button" class="ai-summary-panel__close" data-action="ai-summary#close" aria-label="<%= t('ai_summary.close_label') %>">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12l-4.9 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.9a1 1 0 0 0 1.41-1.41L13.41 12l4.9-4.89a1 1 0 0 0 0-1.4z" />
+    </svg>
+  </button>
   <div class="ai-summary-panel__header">
     <span class="ai-summary-panel__icon" aria-hidden="true">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -7,7 +12,15 @@
     </span>
     <span class="ai-summary-panel__label"><%= t('ai_summary.heading') %></span>
   </div>
-  <div class="ai-summary-panel__text"><%= summary_text %></div>
+  <div data-controller="skeleton-loader">
+    <div class="skeleton-lines" data-skeleton-loader-target="skeleton">
+      <span class="skeleton-line"></span>
+      <span class="skeleton-line"></span>
+      <span class="skeleton-line"></span>
+      <span class="skeleton-line"></span>
+    </div>
+    <div class="ai-summary-panel__text d-none" data-skeleton-loader-target="content"><%= summary_text %></div>
+  </div>
   <div class="collapse" id="<%= more_content_id %>">
     <div class="ai-summary-panel__text ai-summary-panel__more-text"><%= more_summary_text %></div>
   </div>

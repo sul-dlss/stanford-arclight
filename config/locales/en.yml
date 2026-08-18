@@ -77,9 +77,10 @@ en:
     disclaimer: 'AI-generated summary based on your search terms. May not accurately reflect archival content.'
     aria_label: 'AI-generated summary of search results'
     fallback_query: 'your search'
-    show_more: 'Show more'
+    show_more: 'Show more  |  Ask AI'
     ask_placeholder: 'Ask AI a question'
     send_label: 'Send'
+    close_label: 'Close AI summary'
   ask_ai:
     page_title: 'Ask AI'
     breadcrumb_label: 'Ask AI'

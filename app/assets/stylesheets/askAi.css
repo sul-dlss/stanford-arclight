@@ -1,3 +1,7 @@
+#ask-ai {
+  width: 100%;
+}
+
 .ask-ai-header-rule {
   margin: 0 0 1.5rem;
   border-top: 1px solid var(--stanford-40-black);
@@ -8,6 +12,9 @@
   flex-direction: column;
   gap: 1.25rem;
   margin-bottom: 2rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ask-ai-message {
@@ -37,6 +44,7 @@
   border: 1px solid var(--stanford-40-black);
   filter: var(--drop-shadow-filter);
   border-bottom-left-radius: 0.25rem;
+  width: 100%;
 }
 
 .ask-ai-bubble--ai p:last-child,

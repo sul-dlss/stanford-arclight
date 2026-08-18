@@ -27,3 +27,35 @@
      background-position-x: 0%
   }
 }
+
+.skeleton-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-line {
+  display: block;
+  height: 0.85rem;
+  border-radius: 0.25rem;
+  background: linear-gradient(to right, var(--stanford-fog-light) 40%, #fff 50%, var(--stanford-fog-light) 60%);
+  background-position-x: 100%;
+  background-size: 300%;
+  animation: shimmer 1s infinite linear;
+}
+
+.skeleton-line:nth-child(1) {
+  width: 95%;
+}
+
+.skeleton-line:nth-child(2) {
+  width: 88%;
+}
+
+.skeleton-line:nth-child(3) {
+  width: 92%;
+}
+
+.skeleton-line:nth-child(4) {
+  width: 60%;
+}
