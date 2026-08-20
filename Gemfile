@@ -26,6 +26,9 @@ gem 'stimulus-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
 
+# Model Context Protocol server SDK
+gem 'mcp', '~> 1.1'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -71,6 +74,7 @@ group :test do
   gem 'webmock'
 end
 
+gem 'addressable', '~> 2.9'
 gem 'arclight', '>= 1.1.0', '< 2'
 
 group :development, :test do

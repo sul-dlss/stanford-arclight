@@ -1,4 +1,5 @@
 require_relative "boot"
+require_relative "../lib/mcp_request_parameter_bypass"
 
 require "rails/all"
 
@@ -27,6 +28,9 @@ module StanfordArclight
     # Disable Active Storage variants (image processing) to avoid installing
     # image_processing gem where not needed.
     config.active_storage.variant_processor = :disabled
+
+    # MCP has its own bounded JSON parser; avoid Rails eagerly parsing the body first.
+    config.middleware.use McpRequestParameterBypass
 
     Recaptcha.configure do |config|
       config.site_key = ENV.fetch('RECAPTCHA_SITE_KEY', '6Lc6BAAAAAAAAChqRbQZcn_yyyyyyyyyyyyyyyyy')

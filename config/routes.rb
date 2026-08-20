@@ -42,6 +42,8 @@ Rails.application.routes.draw do
 
   get '/using-this-site' => 'using_this_site#index'
 
+  match '/mcp', to: 'mcp#create', via: %i[get post delete]
+
   # Match ARKs that contain:
   # - a repository shoulder (one letter followed by one digit)
   # - a UUID (with or without hyphens)
