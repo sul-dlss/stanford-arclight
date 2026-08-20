@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'addressable/uri'
+
 ##
 # Override Arclight::DigitalObject to add Purl URL
 # Demo data href sometimes only contains the ID
@@ -22,10 +24,12 @@ class DigitalObject
   def self.normalize_href(href)
     href = href.strip
     # Some complete Purl URLs do not use https, convert them
-    return href.gsub('http://', 'https://') if href.match?(%r{https?://purl.stanford.edu})
+    href = href.gsub('http://', 'https://') if href.match?(%r{https?://purl.stanford.edu})
     # Some hrefs contain only a druid, convert them to a complete Purl URL
-    return "https://purl.stanford.edu/#{href}" if href.match?(/^([a-z]{2})(\d{3})([a-z]{2})(\d{4})$/)
+    href = "https://purl.stanford.edu/#{href}" if href.match?(/^([a-z]{2})(\d{3})([a-z]{2})(\d{4})$/)
 
+    Addressable::URI.parse(href).normalize.to_s
+  rescue Addressable::URI::InvalidURIError
     href
   end
 end

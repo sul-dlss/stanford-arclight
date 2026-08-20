@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ead>
+  <eadheader>
+    <eadid>access-test.xml</eadid>
+    <filedesc>
+      <titlestmt>
+        <titleproper>Guide to the Example records</titleproper>
+      </titlestmt>
+    </filedesc>
+  </eadheader>
+  <archdesc level="collection">
+    <did>
+      <unittitle>Example records</unittitle>
+      <unitid>ACCESS-TEST</unitid>
+    </did>
+    <accessrestrict>
+      <p>Collection is closed until 2035.</p>
+    </accessrestrict>
+    <userestrict>
+      <p>Copyright retained by the creator.</p>
+    </userestrict>
+    <dsc>
+      <c id="series-1" level="series">
+        <did>
+          <unittitle>Series 1</unittitle>
+        </did>
+        <accessrestrict>
+          <p>Series requires staff approval.</p>
+        </accessrestrict>
+        <userestrict>
+          <p>Series copyright retained by the creator.</p>
+        </userestrict>
+        <c id="folder-1" level="file">
+          <did>
+            <unittitle>Folder 1</unittitle>
+          </did>
+        </c>
+      </c>
+    </dsc>
+  </archdesc>
+</ead>
