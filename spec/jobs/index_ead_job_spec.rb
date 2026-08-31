@@ -10,8 +10,8 @@ RSpec.describe IndexEadJob do
     allow(status).to receive(:success?).and_return(true)
   end
 
-  it 'sends a command to index the EAD in Solr with traject' do
-    described_class.perform_now(file_path: 'data/sample.xml',
+  it 'sends a command to index the EADs in Solr with traject' do
+    described_class.perform_now(file_paths: ['data/sample.xml'],
                                 arclight_repository_code: 'ars',
                                 solr_url: 'http://localhost/solr/core',
                                 app_dir: '/some/directory')
@@ -31,9 +31,24 @@ RSpec.describe IndexEadJob do
     )
   end
 
+  context 'when multiple file paths are provided' do
+    it 'passes all files to traject in a single command' do
+      described_class.perform_now(file_paths: ['data/ars/ars1.xml', 'data/ars/ars2.xml'],
+                                  arclight_repository_code: 'ars',
+                                  solr_url: 'http://localhost/solr/core',
+                                  app_dir: '/some/directory')
+      expect(Open3).to have_received(:capture2).with(
+        { 'REPOSITORY_ID' => 'ars' },
+        'bundle exec traject -u http://localhost/solr/core -i xml ' \
+        '-c ./lib/traject/sul_config.rb data/ars/ars1.xml data/ars/ars2.xml',
+        { chdir: '/some/directory' }
+      )
+    end
+  end
+
   context 'when the arclight repository code is not provided as an argument' do
-    it 'infers the repository code from the file path' do
-      described_class.perform_now(file_path: '/data/archive/sample.xml',
+    it 'infers the repository code from the first file path' do
+      described_class.perform_now(file_paths: ['/data/archive/sample.xml'],
                                   solr_url: 'http://localhost/solr/core',
                                   app_dir: '/some/directory')
 
@@ -48,7 +63,7 @@ RSpec.describe IndexEadJob do
 
     it 'raises an error' do
       expect do
-        described_class.perform_now(file_path: 'data/sample.xml',
+        described_class.perform_now(file_paths: ['data/sample.xml'],
                                     arclight_repository_code: 'ars',
                                     solr_url: 'http://localhost/solr/core',
                                     app_dir: '/some/directory')
