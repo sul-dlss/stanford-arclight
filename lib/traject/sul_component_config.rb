@@ -2,6 +2,13 @@
 
 require 'arclight'
 require_relative 'sul/normalized_title'
+require_relative '../../app/services/semantic_search'
+require_relative '../../app/services/semantic_search/text_builder'
+require_relative '../../app/services/semantic_search/embedding_service'
+require_relative '../../app/services/semantic_search/embedding_cache'
+require_relative '../../app/services/semantic_search/embedding_cache/sqlite'
+require_relative '../../app/services/semantic_search/cache_generator'
+require_relative '../../app/services/semantic_search/indexer'
 
 settings do
   provide 'component_traject_config', __FILE__
@@ -30,4 +37,8 @@ each_record do |_record, context|
   context.output_hash['unitid_ssm']&.reject! { |v| v.match?(%r{^/repositories/\d+/archival_objects/\d+$}) }
   # Store a hashed version of the id for blacklight dynamic sitemaps
   context.output_hash['hashed_id_ssi'] = [Digest::MD5.hexdigest(context.output_hash['id'].first)]
+
+  # Generate and write the semantic-search embedding vector. Fails soft: any
+  # embedding error is logged and the document still indexes, without a vector.
+  SemanticSearch::Indexer.add_embedding!(context.output_hash)
 end

@@ -274,6 +274,10 @@
 
     <fieldType name="_nest_path_" class="solr.NestPathField" />
 
+    <fieldType name="knn_vector_768" class="solr.DenseVectorField"
+               vectorDimension="768" similarityFunction="cosine"
+               knnAlgorithm="hnsw"/>
+
  </types>
 
 
@@ -310,6 +314,8 @@
    <field name="unitid_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
    <field name="ead_identifier_match" type="identifier_match" indexed="true" stored="false" multiValued="true" />
    <field name="identifier_search" type="string_punct_stop" indexed="true" stored="false" multiValued="true"/>
+
+   <field name="embedding_vector" type="knn_vector_768" indexed="true" stored="true" multiValued="false"/>
 
    <field name="_root_" type="string" indexed="true" stored="true" docValues="false" />
    <field name="_nest_parent_" type="string" indexed="true" stored="true"/>

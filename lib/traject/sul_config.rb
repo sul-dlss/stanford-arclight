@@ -2,12 +2,30 @@
 
 require 'arclight'
 require_relative 'sul/normalized_id'
+require_relative '../../app/services/semantic_search'
+require_relative '../../app/services/semantic_search/text_builder'
+require_relative '../../app/services/semantic_search/embedding_service'
+require_relative '../../app/services/semantic_search/embedding_cache'
+require_relative '../../app/services/semantic_search/embedding_cache/sqlite'
+require_relative '../../app/services/semantic_search/cache_generator'
+require_relative '../../app/services/semantic_search/indexer'
 
 settings do
   provide 'component_traject_config', File.join(__dir__, 'sul_component_config.rb')
   provide 'solr_writer.http_timeout', 1200
   provide 'aspace_config_set', ENV.fetch('ASPACE_CONFIG_SET', nil)
   provide 'id_normalizer', 'Sul::NormalizedId'
+  # Traject's default is 1, which makes the embedding-cache generation pass
+  # entirely serial - and that pass is dominated by waiting on the embedding
+  # gateway, not by CPU. Raising this is the single biggest lever on how long a
+  # full re-embed takes (measured: 1 thread ~1,200 docs/min, 8 threads ~4,800,
+  # which is roughly the API key's 100 rpm ceiling).
+  #
+  # DEFAULT STAYS 1 so ordinary indexing is byte-for-byte unchanged; the bulk
+  # generation task opts in via SEMANTIC_SEARCH_EMBED_THREADS. Don't exceed the
+  # key's max_parallel_requests (10), and remember the limit is shared across
+  # every process using the key.
+  provide 'processing_thread_pool', Integer(ENV.fetch('SEMANTIC_SEARCH_EMBED_THREADS', 1))
 end
 
 to_field 'sul_ark_id_ssi',
@@ -39,4 +57,8 @@ each_record do |_record, context|
   context.output_hash['language_ssim']&.map! { |value| value.gsub(/\s+\.\s*$/, '.').strip }
   # Store a hashed version of the id for blacklight dynamic sitemaps
   context.output_hash['hashed_id_ssi'] = [Digest::MD5.hexdigest(context.output_hash['id'].first)]
+
+  # Generate and write the semantic-search embedding vector. Fails soft: any
+  # embedding error is logged and the document still indexes, without a vector.
+  SemanticSearch::Indexer.add_embedding!(context.output_hash)
 end
