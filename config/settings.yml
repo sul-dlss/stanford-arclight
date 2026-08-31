@@ -46,6 +46,13 @@ aspace:
 
 data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>
 
+semantic_search:
+  top_k: 100
+  rerank_docs: 100
+  rerank_weight: 10.0
+  min_similarity: 0.84
+  query_embed_timeout: 20
+
 pdf_generation:
   create_on_ead_download: true
   ead_to_fo_xsl_path: './app/xslt/ead_to_fo.xsl'

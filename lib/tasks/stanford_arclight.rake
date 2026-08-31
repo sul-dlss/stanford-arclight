@@ -36,4 +36,71 @@ namespace :stanford_arclight do
       sleep(10) # Throttle the delete queries
     end
   end
+
+  # Batched, resumable generation of the semantic-search embedding cache. Runs
+  # the Traject extraction over the EAD (no Solr writes), batch-embeds each
+  # collection/component doc via the gateway, and stores vectors in the SQLite
+  # cache. Ship the resulting file read-only to the app hosts.
+  #
+  #   SEMANTIC_SEARCH_EMBEDDING_CACHE=/path.sqlite \
+  #   SEMANTIC_SEARCH_EMBEDDING_API_KEY=... \
+  #     bundle exec rake stanford_arclight:generate_embeddings[/path/to/data]
+  #
+  # Runs ONE Traject pass PER REPOSITORY, each under its own REPOSITORY_ID. The
+  # repository is part of the embed text - TextBuilder strips a document's own
+  # repository name from the "Names:" list - so generating under the wrong slug
+  # produces a cache key that indexing will never look up (see
+  # SemanticSearch::EadFileGroups). Directories with no entry in
+  # config/repositories.yml are reported and skipped, because there is no correct
+  # slug to embed them under.
+  #
+  # Single-process (one SQLite writer); resumable (already-cached texts are
+  # skipped).
+  #
+  # Concurrency: the run is almost entirely waiting on the embedding gateway, so
+  # it defaults to SEMANTIC_SEARCH_EMBED_THREADS=8 Traject worker threads (~4,800
+  # docs/min measured, vs ~1,200 serial). 8 sits at roughly the key's 100 rpm
+  # ceiling and within its max_parallel_requests of 10; 429s are expected and
+  # ridden out by the retries below. Set it to 1 to go back to a serial run.
+  # The rpm limit is per KEY, so don't run this alongside another generation
+  # process - the threads here already consume the whole budget.
+  desc 'Generate the semantic-search embedding cache from EAD (no Solr writes)'
+  task :generate_embeddings, %i[data_dir] => :environment do |_task, args|
+    cache_path = ENV.fetch('SEMANTIC_SEARCH_EMBEDDING_CACHE')
+    ENV.fetch('SEMANTIC_SEARCH_EMBEDDING_API_KEY') # fail fast if unset
+    data_dir = args[:data_dir] || Settings.data_dir
+    files = Dir.glob(File.join(data_dir, '**', '*.xml'))
+    raise "No EAD (*.xml) found under #{data_dir}" if files.empty?
+
+    known, unknown = SemanticSearch::EadFileGroups.call(files)
+                                                  .partition { |code, _| SemanticSearch::EadFileGroups.configured?(code) }
+    unknown.each do |code, repo_files|
+      warn "SKIPPING #{repo_files.size} file(s) in '#{code}': no matching slug in config/repositories.yml"
+    end
+    raise "No configured repository for any EAD under #{data_dir}" if known.empty?
+
+    puts "Generating embeddings for #{known.sum { |_, repo_files| repo_files.size }} finding aids " \
+         "across #{known.size} repositories under #{data_dir} -> #{cache_path}"
+
+    threads = ENV.fetch('SEMANTIC_SEARCH_EMBED_THREADS', '8')
+    puts "  using #{threads} embedding thread(s) per repository pass"
+
+    env = { 'SEMANTIC_SEARCH_EMBEDDING_CACHE' => cache_path,
+            'SEMANTIC_SEARCH_EMBEDDING_CACHE_GENERATE' => 'true',
+            'SEMANTIC_SEARCH_EMBED_THREADS' => threads,
+            # Ride out gateway rate limits during the batch run (fail-fast at query time).
+            'SEMANTIC_SEARCH_EMBED_MAX_RETRIES' => ENV.fetch('SEMANTIC_SEARCH_EMBED_MAX_RETRIES', '8') }
+
+    known.sort.each do |code, repo_files|
+      puts "  #{code}: #{repo_files.size} finding aids"
+      cmd = ['bundle', 'exec', 'traject', '-i', 'xml',
+             '-c', Rails.root.join('lib/traject/sul_config.rb').to_s,
+             '-w', 'Traject::JsonWriter', '-o', File::NULL, *repo_files]
+      raise "Embedding generation failed for #{code}" unless system(env.merge('REPOSITORY_ID' => code), *cmd)
+    end
+
+    cache = SemanticSearch::EmbeddingCache::Sqlite.new(cache_path)
+    puts "Done. Cache holds #{cache.size} vectors."
+    cache.close
+  end
 end

@@ -9,6 +9,7 @@ services:
     environment:
       - SOLR_HOME=/var/solr/data
       - SOLR_OPTS=-Dsolr.config.lib.enabled=true
+      - SOLR_HEAP=4g
     entrypoint:
       - docker-entrypoint.sh
       - solr-precreate

@@ -217,6 +217,17 @@ class CatalogController < ApplicationController
     config.add_search_field 'keyword', label: 'Keyword' do |field|
       field.qt = 'search' # default
     end
+
+    # Semantic/Hybrid search configurations.
+    config.json_solr_path = 'select'
+    config.default_search_field = config.search_fields['hybrid']
+    config.add_search_field 'hybrid', label: 'Hybrid' do |field|
+      field.qt = 'search'
+    end
+    config.add_search_field 'semantic', label: 'Semantic' do |field|
+      field.qt = 'search'
+    end
+
     config.add_search_field 'name', label: 'Name' do |field|
       field.qt = 'search'
       field.solr_parameters = {

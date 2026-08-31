@@ -5,10 +5,12 @@ class SearchBuilder < Blacklight::SearchBuilder
   include BlacklightRangeLimit::RangeLimitBuilder
   include Arclight::SearchBehavior
   include SearchBehavior::DigitalContentSort
+  include SearchBehavior::SemanticQuery
 
   self.default_processor_chain += [:apply_group_sort_parameter,
                                    :apply_digital_content_sort,
-                                   :min_match_for_boolean]
+                                   :min_match_for_boolean,
+                                   :add_semantic_query]
 
   # If no query is supplied when results are grouped and sorted by relevance,
   # we adjust the sort order so that each group is sorted in component order
