@@ -7,6 +7,13 @@ module SearchBehavior
     # search_field values that trigger semantic search, mapped to query mode.
     SEMANTIC_SEARCH_FIELDS = { 'hybrid' => :hybrid, 'semantic' => :vector }.freeze
 
+    # Sentinel queries that mean "browse everything" rather than a real search
+    # term. Embedding these would produce a meaningless vector, so semantic
+    # ranking is skipped and the caller gets an unranked browse instead.
+    # '*:*' is the convention used elsewhere in this app (e.g. FindingAidsController);
+    # '*' is the MCP search tool's browse-all convention.
+    BROWSE_ALL_QUERIES = ['*', '*:*'].freeze
+
     def add_semantic_query(solr_parameters)
       return unless semantic_query_applicable?
 
@@ -24,7 +31,7 @@ module SearchBehavior
       return false unless SEMANTIC_SEARCH_FIELDS.key?(semantic_search_field)
 
       query = blacklight_params[:q]
-      query.present? && query != '*:*'
+      query.present? && BROWSE_ALL_QUERIES.exclude?(query)
     end
 
     def apply_semantic_query(solr_parameters, vector)

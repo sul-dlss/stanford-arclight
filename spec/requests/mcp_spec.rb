@@ -74,7 +74,7 @@ RSpec.describe 'MCP endpoint' do
           'required' => ['query'],
           'properties' => include(
             'search_field' => include(
-              'enum' => %w[keyword name place subject title container call_number]
+              'enum' => %w[keyword name place subject title container call_number semantic hybrid]
             ),
             'limit' => include('minimum' => 1, 'maximum' => 20),
             'cursor' => include('type' => 'string'),
@@ -148,8 +148,11 @@ RSpec.describe 'MCP endpoint' do
         'query' => "Words to find in the selected search_field, or '*' to browse all records selected by filters.",
         'search_field' => 'Part of each record to search. keyword searches broadly; name searches people and ' \
                           'organizations; place searches geographic names; subject searches topics; title searches ' \
-                          'titles; container searches box and folder labels; ' \
-                          'call_number searches archival identifiers.',
+                          'titles; container searches box and folder labels; call_number searches archival ' \
+                          'identifiers; semantic ranks results by meaning using vector embeddings, useful for ' \
+                          'conceptual queries where relevant records may not contain the query words; hybrid ' \
+                          'combines keyword and semantic ranking. semantic and hybrid have no effect when query ' \
+                          "is '*'.",
         'cursor' => 'Opaque continuation cursor from a previous response. ' \
                     'Reuse it with the same query, search_field, and filters.'
       )
@@ -471,6 +474,86 @@ RSpec.describe 'MCP endpoint' do
           'f_inclusive.level.1' => '{!term f=level_ssim}Item'
         )
         expect(params.fetch(:q)).to eq('Knuth')
+      end
+    end
+
+    it 'ranks results by meaning when search_field is hybrid or semantic' do
+      solr_connection = instance_double(RSolr::Client)
+      allow(RSolr).to receive(:connect).and_return(solr_connection)
+      requests = []
+      allow(solr_connection).to receive(:send_and_receive) do |_path, options|
+        requests << options
+        {
+          'responseHeader' => { 'status' => 0, 'params' => {} },
+          'response' => { 'numFound' => 0, 'start' => 0, 'docs' => [] },
+          'facet_counts' => { 'facet_fields' => {} }
+        }
+      end
+      embedder = instance_double(SemanticSearch::QueryEmbeddingCache, embed: [0.1, 0.2, 0.3])
+      allow(SemanticSearch::QueryEmbeddingCache).to receive(:new).and_return(embedder)
+      allow(Settings.semantic_search).to receive(:min_similarity).and_return(0.0)
+
+      post_mcp(
+        {
+          jsonrpc: '2.0',
+          id: 'search-hybrid-1',
+          method: 'tools/call',
+          params: { name: 'search_archival_materials', arguments: { query: 'shipwrecks', search_field: 'hybrid' } }
+        },
+        headers: { 'MCP-Protocol-Version' => '2025-11-25' }
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(embedder).to have_received(:embed).with('shipwrecks')
+      # The semantic query's json.query clause is sent as a JSON POST body, not query-string params.
+      hybrid_body = JSON.parse(requests.fetch(0).fetch(:data))
+      should = hybrid_body.dig('query', 'bool', 'should')
+      expect(should.first).to eq('edismax' => { 'query' => 'shipwrecks' })
+      expect(should.last).to eq('{!knn f=embedding_vector topK=100}[0.1,0.2,0.3]')
+      expect(hybrid_body.dig('params', 'q')).to be_nil
+
+      post_mcp(
+        {
+          jsonrpc: '2.0',
+          id: 'search-semantic-1',
+          method: 'tools/call',
+          params: { name: 'search_archival_materials', arguments: { query: 'shipwrecks', search_field: 'semantic' } }
+        },
+        headers: { 'MCP-Protocol-Version' => '2025-11-25' }
+      )
+
+      expect(response).to have_http_status(:ok)
+      semantic_body = JSON.parse(requests.fetch(1).fetch(:data))
+      expect(semantic_body['query']).to eq('bool' => { 'must' => ['{!knn f=embedding_vector topK=100}[0.1,0.2,0.3]'] })
+      expect(semantic_body.dig('params', 'q')).to be_nil
+    end
+
+    it "does not run semantic ranking when browsing all records with query '*'" do
+      solr_connection = instance_double(RSolr::Client)
+      allow(RSolr).to receive(:connect).and_return(solr_connection)
+      allow(solr_connection).to receive(:send_and_receive).and_return(
+        {
+          'responseHeader' => { 'status' => 0, 'params' => {} },
+          'response' => { 'numFound' => 0, 'start' => 0, 'docs' => [] },
+          'facet_counts' => { 'facet_fields' => {} }
+        }
+      )
+      allow(SemanticSearch::QueryEmbeddingCache).to receive(:new)
+
+      post_mcp(
+        {
+          jsonrpc: '2.0',
+          id: 'search-hybrid-browse-1',
+          method: 'tools/call',
+          params: { name: 'search_archival_materials', arguments: { query: '*', search_field: 'hybrid' } }
+        },
+        headers: { 'MCP-Protocol-Version' => '2025-11-25' }
+      )
+
+      expect(response).to have_http_status(:ok)
+      expect(SemanticSearch::QueryEmbeddingCache).not_to have_received(:new)
+      expect(solr_connection).to have_received(:send_and_receive) do |_path, options|
+        expect(options.fetch(:params).fetch(:q)).to eq('*')
       end
     end
 
