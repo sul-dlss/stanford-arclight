@@ -187,11 +187,14 @@ module StanfordArclightMcp
         ),
         search_field: {
           type: 'string',
-          enum: %w[keyword name place subject title container call_number],
+          enum: %w[keyword name place subject title container call_number semantic hybrid],
           default: 'keyword',
           description: 'Part of each record to search. keyword searches broadly; name searches people and ' \
                        'organizations; place searches geographic names; subject searches topics; title searches ' \
-                       'titles; container searches box and folder labels; call_number searches archival identifiers.'
+                       'titles; container searches box and folder labels; call_number searches archival identifiers; ' \
+                       'semantic ranks results by meaning using vector embeddings, useful for conceptual queries ' \
+                       'where relevant records may not contain the query words; hybrid combines keyword and ' \
+                       "semantic ranking. semantic and hybrid have no effect when query is '*'."
         },
         limit: {
           type: 'integer',

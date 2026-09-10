@@ -139,6 +139,19 @@ RSpec.describe SearchBehavior::SemanticQuery do
         end
       end
 
+      %w[*:* *].each do |browse_query|
+        context "with the browse-all query '#{browse_query}'" do
+          let(:params) { { q: browse_query, search_field: 'hybrid' } }
+
+          it 'is a no-op and never embeds' do
+            solr_params = { q: browse_query }
+            builder.add_semantic_query(solr_params)
+            expect(solr_params).to eq(q: browse_query)
+            expect(SemanticSearch::QueryEmbeddingCache).not_to have_received(:new)
+          end
+        end
+      end
+
       context 'when embedding fails' do
         before { allow(embedder).to receive(:embed).and_raise(StandardError, 'gateway down') }
 
