@@ -248,7 +248,7 @@ GEM
     jbuilder (2.15.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (3.0.0)
+    json (2.21.2)
     jsonpath (1.1.5)
       multi_json
     kaminari (1.2.2)
@@ -619,6 +619,7 @@ DEPENDENCIES
   honeybadger (~> 5.2)
   importmap-rails
   jbuilder
+  json (~> 2.0)
   okcomputer (~> 1.18)
   pdf-reader (~> 2.12)
   pg (~> 1.5)

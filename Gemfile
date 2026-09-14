@@ -106,6 +106,8 @@ gem 'global_alerts'
 
 gem 'honeybadger', '~> 5.2'
 
+gem 'json', '~> 2.0' # remove once https://github.com/rails/rails/issues/56291 is fixed
+
 gem 'okcomputer', '~> 1.18'
 
 gem 'pdf-reader', '~> 2.12'
