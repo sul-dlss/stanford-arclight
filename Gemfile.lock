@@ -112,7 +112,7 @@ GEM
     blacklight_range_limit (9.2.0)
       blacklight (>= 7.25.2, < 10)
       view_component (>= 2.54, < 5)
-    bootsnap (1.25.0)
+    bootsnap (1.26.0)
       msgpack (~> 1.5)
     bot_challenge_page (1.0.0)
       http (~> 5.2)
@@ -177,7 +177,7 @@ GEM
       capistrano-one_time_key (>= 0.2.0)
       capistrano-shared_configs
       ed25519
-    domain_name (0.6.20260829)
+    domain_name (0.6.20260902)
     dot-properties (0.1.4)
       bundler (>= 2.2.33)
     drb (2.2.3)
@@ -330,7 +330,7 @@ GEM
       benchmark
     orm_adapter (0.5.0)
     ostruct (0.6.3)
-    parallel (2.1.0)
+    parallel (2.2.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
@@ -481,7 +481,7 @@ GEM
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
-    rubyzip (3.5.0)
+    rubyzip (3.6.0)
     securerandom (0.4.1)
     selenium-webdriver (4.48.0)
       base64 (~> 0.2)
@@ -619,6 +619,7 @@ DEPENDENCIES
   honeybadger (~> 5.2)
   importmap-rails
   jbuilder
+  json (~> 2.0)
   okcomputer (~> 1.18)
   pdf-reader (~> 2.12)
   pg (~> 1.5)
@@ -648,4 +649,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-  4.0.19
+  4.0.20
