@@ -219,23 +219,6 @@
       </analyzer>
     </fieldType>
 
-    <fieldType name="textSpell" class="solr.TextField" positionIncrementGap="100" >
-      <analyzer>
-        <tokenizer class="solr.StandardTokenizerFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt"/>
-        <filter class="solr.LowerCaseFilterFactory"/>
-        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
-      </analyzer>
-    </fieldType>
-
-    <fieldType name="textSuggest" class="solr.TextField" positionIncrementGap="100">
-       <analyzer>
-          <tokenizer class="solr.KeywordTokenizerFactory"/>
-          <filter class="solr.LowerCaseFilterFactory"/>
-          <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
-       </analyzer>
-    </fieldType>
-
     <!-- This is an example of using the KeywordTokenizer along
          With various TokenFilterFactories to produce a sortable field
          that does not include some properties of the source text
@@ -325,8 +308,6 @@
    <dynamicField name="random_*" type="random" />
 
    <dynamicField name="*_sort" type="alphaNumericSort" indexed="true" stored="false" multiValued="false" />
-   <dynamicField name="*spell" type="textSpell" indexed="true" stored="false" multiValued="true" />
-   <dynamicField name="*suggest" type="textSuggest" indexed="true" stored="false" multiValued="true" />
 
    <!-- uncomment the following to ignore any fields that don't already match an existing
         field name or dynamic field, rather than reporting them as an error.
@@ -417,18 +398,4 @@
    <!-- sort fields -->
    <copyField source="normalized_title_ssm" dest="title_sort"/> <!-- TODO: assumes single values -->
    <copyField source="normalized_date_ssm" dest="date_sort"/> <!-- TODO: assumes single values -->
-
-   <!-- spellcheck fields -->
-   <!-- default spell check;  should match fields for default request handler -->
-   <!-- it won't work with a copy of a copy field -->
-   <copyField source="*_t" dest="spell"/>
-
-   <!-- for suggestions -->
-   <copyField source="normalized_title_ssm" dest="suggest"/>
-   <copyField source="collection_ssim" dest="suggest"/>
-   <copyField source="names_ssim" dest="suggest"/>
-   <copyField source="repository_ssim" dest="suggest"/>
-   <copyField source="places_ssim" dest="suggest"/>
-   <copyField source="access_subjects_ssim" dest="suggest"/>
-
 </schema>

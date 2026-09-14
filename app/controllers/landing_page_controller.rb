@@ -8,10 +8,7 @@ class LandingPageController < ApplicationController
     config.header_component = LandingPage::HeaderComponent
     config.logo_link = 'https://library.stanford.edu'
     config.full_width_layout = true
-
-    # Configuration for autocomplete suggestor
     config.autocomplete_enabled = false
-    config.autocomplete_path = 'suggest'
   end
 
   def index
