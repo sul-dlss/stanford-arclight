@@ -31,7 +31,12 @@ class CatalogController < ApplicationController
       'collection.q': '{!terms f=id v=$row._root_}',
       'collection.defType': 'lucene',
       'collection.fl': '*',
-      'collection.rows': 1
+      'collection.rows': 1,
+      # Give collection-level documents a relevance floor. Without this, a component with a very
+      # short title that exactly matches the query terms can outscore the collection it belongs to,
+      # even when the collection is a much better overall result (e.g. matches on title and has many
+      # matching components). See https://github.com/sul-dlss/stanford-arclight/issues/1240
+      bq: 'level_ssim:Collection^150'
     }
 
     # Sets the indexed Solr field that will display with highlighted matches
