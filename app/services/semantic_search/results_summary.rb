@@ -11,6 +11,7 @@ module SemanticSearch
   # Ruby (never LLM-generated, so its count can never be wrong), and citations
   # are resolved server-side against a fixed candidate list rather than trusted
   # from the model's output, so the model can never emit an arbitrary link.
+  # rubocop:disable Metrics/ModuleLength
   module ResultsSummary
     # Fields eligible for the "narrow these results" suggestion, in preference
     # order when hit counts tie. Blacklight keys (not raw Solr field names) -
@@ -88,13 +89,21 @@ module SemanticSearch
         - Write 2-3 plain sentences. No headings, no lists, no HTML or markdown.
         - If there isn't enough information to say something specific, write a shorter, more general
           summary rather than guessing.
+        - Write in a neutral, third-person voice describing the results themselves. Never use "I" or
+          "we" statements (e.g. "I found", "we can see", "I couldn't determine").
+        - You MAY characterize how closely results relate to the search query and to what degree -
+          e.g. note when top-ranked results are a direct/strong match versus when lower-ranked
+          results relate only loosely or thematically. Base this on the rank order and the titles/
+          descriptions given, not on the rank number itself (never state a rank number in the
+          summary - it is for your judgment only).
       PROMPT
     end
     # rubocop:enable Metrics/MethodLength
 
     def user_prompt(query, total, candidates)
-      lines = ["Search query: \"#{query}\"", "Total matching results: #{total}", '', 'Results you may cite:']
-      candidates.each { |label, doc| lines << "#{label}. #{describe(doc)}" }
+      lines = ["Search query: \"#{query}\"", "Total matching results: #{total}", '',
+               'Results you may cite, in relevance rank order (rank 1 = the strongest match):']
+      candidates.each_with_index { |(label, doc), index| lines << "#{label}. (rank #{index + 1}) #{describe(doc)}" }
       lines.join("\n")
     end
 
@@ -179,4 +188,5 @@ module SemanticSearch
       "semantic_search/results_summary/#{Settings.results_summary.model}/#{normalized_query}/#{filters}"
     end
   end
+  # rubocop:enable Metrics/ModuleLength
 end
