@@ -79,36 +79,37 @@ RSpec.describe SearchBehavior::SemanticQuery do
         end
       end
 
-      context 'with a min-similarity floor configured' do
-        # Configured via ENV (SEMANTIC_SEARCH_MIN_SIMILARITY), read into a constant
-        # at load time - there are no per-request overrides on this branch.
+      context 'with a min-similarity floor configured for hybrid search' do
         let(:params) { { q: 'ships', search_field: 'hybrid' } }
         let(:solr_params) { { q: 'ships' } }
+        let(:floor) { '{!vectorSimilarity f=embedding_vector minReturn=0.85}[0.1,0.2,0.3]' }
 
         before do
           allow(Settings.semantic_search).to receive(:min_similarity).and_return(0.85)
           builder.add_semantic_query(solr_params)
         end
 
-        it 'swaps the topK KNN for a vectorSimilarity floor in both the should clause and reRank' do
-          clause = solr_params.dig(:json, :query, :bool, :should).last
-          expect(clause).to eq('{!vectorSimilarity f=embedding_vector minReturn=0.85}[0.1,0.2,0.3]')
-          expect(solr_params[:knn_rq]).to eq(clause)
+        it 'intersects the bounded topK KNN with the floor in the should-clause match' do
+          expect(solr_params.dig(:json, :query, :bool, :should).last).to eq(bool: { must: [knn, floor] })
+        end
+
+        it 'applies the same floor to the bounded reRank step' do
+          expect(solr_params[:knn_rq]).to eq(floor)
         end
       end
 
       context 'with a min-similarity floor in the semantic (vector-only) field' do
         let(:params) { { q: 'ships', search_field: 'semantic' } }
         let(:solr_params) { { q: 'ships' } }
+        let(:floor) { '{!vectorSimilarity f=embedding_vector minReturn=0.9}[0.1,0.2,0.3]' }
 
         before do
           allow(Settings.semantic_search).to receive(:min_similarity).and_return(0.9)
           builder.add_semantic_query(solr_params)
         end
 
-        it 'uses the vectorSimilarity floor as the whole query' do
-          expect(solr_params.dig(:json, :query))
-            .to eq(bool: { must: ['{!vectorSimilarity f=embedding_vector minReturn=0.9}[0.1,0.2,0.3]'] })
+        it 'intersects the bounded topK KNN with the floor rather than scanning the whole collection' do
+          expect(solr_params.dig(:json, :query)).to eq(bool: { must: [knn, floor] })
         end
       end
 

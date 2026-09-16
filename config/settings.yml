@@ -53,6 +53,10 @@ semantic_search:
   top_k: 100
   rerank_docs: 100
   rerank_weight: 10.0
+  # Always intersected with a bounded topK KNN search (see
+  # SearchBehavior::SemanticQuery#knn_match_clause), so this is safe at any
+  # value. Its relevance effect is still unvalidated (see
+  # scratchpad/session_handoff.md) - a separate question from safety.
   min_similarity: 0.84
   query_embed_timeout: 20
 
