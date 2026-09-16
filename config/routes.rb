@@ -23,6 +23,11 @@ Rails.application.routes.draw do
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :hierarchy, Arclight::Routes::Hierarchy.new
 
+  # Must be declared BEFORE `resources :solr_documents` below: that resource's
+  # `show` route (`GET /catalog/:id`) is also mounted at path '/catalog', and
+  # being declared first would otherwise swallow this path with :id="results_summary".
+  get '/catalog/results_summary' => 'catalog#results_summary', as: :results_summary
+
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
     concerns :hierarchy
     concerns :exportable

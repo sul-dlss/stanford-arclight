@@ -473,4 +473,13 @@ class CatalogController < ApplicationController
   def search_tips
     render SearchTipsComponent.new
   end
+
+  # Backs the lazy-loaded "About these results" Turbo Frame on the search
+  # results page (see app/views/catalog/_search_results_header.html.erb). Runs
+  # the same search as #index so the summary reflects the exact result set the
+  # user is looking at; the LLM call itself lives in SemanticSearch::ResultsSummary
+  # and is timeout-guarded and cached, so this is safe to run on its own request.
+  def results_summary
+    @response = search_service.search_results
+  end
 end
