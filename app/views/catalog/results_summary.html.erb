@@ -1,0 +1,3 @@
+<%= turbo_frame_tag 'results-summary' do %>
+  <%= render ResultsSummaryComponent.new(response: @response, search_state: search_state) %>
+<% end %>

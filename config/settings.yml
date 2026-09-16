@@ -55,10 +55,24 @@ semantic_search:
   rerank_weight: 10.0
   # Always intersected with a bounded topK KNN search (see
   # SearchBehavior::SemanticQuery#knn_match_clause), so this is safe at any
-  # value. Its relevance effect is still unvalidated (see
-  # scratchpad/session_handoff.md) - a separate question from safety.
-  min_similarity: 0.84
+  # value. Disabled (0): evaluated against scratchpad/judgements/search_test_cases.json
+  # and found to not cleanly separate relevant from irrelevant results (real true
+  # positives scored below 0.84 on some queries, real false positives scored above it
+  # on others - see scratchpad/judgements/min_similarity_floor_findings.md), while
+  # actively costing semantic-mode recall once bounded to top_k (MAP 0.168 -> 0.091 on
+  # the same suite). Prefer letting irrelevant matches through over blocking real ones.
+  min_similarity: 0
   query_embed_timeout: 20
+
+# Prototype: AI-generated "About these results" summary panel on the search
+# results page. Lazy-loaded (see catalog#results_summary), so a slow/failed
+# call never blocks the results page itself.
+results_summary:
+  enabled: true
+  model: claude-haiku
+  max_documents: 6
+  timeout: 8
+  cache_ttl: 3600
 
 pdf_generation:
   create_on_ead_download: true

@@ -1,0 +1,12 @@
+<%= render 'shared/breadcrumbs' %>
+
+<h1 class="sr-only visually-hidden top-content-title"><%= search_results_header_text %></h1>
+
+<% if search_state.query_param.present? %>
+  <%# `loading: 'lazy'` only defers a frame until it scrolls into view - since this
+      frame sits at the very top of the page, that observer never has a reason to
+      fire, so the frame stays empty. `eager` (the Turbo default) still loads
+      asynchronously, after the surrounding page has already rendered - the results
+      list is never blocked on it either way. %>
+  <%= turbo_frame_tag 'results-summary', src: results_summary_path(request.query_parameters) %>
+<% end %>

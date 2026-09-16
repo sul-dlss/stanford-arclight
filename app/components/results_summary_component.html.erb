@@ -1,0 +1,19 @@
+<div class="alert alert-secondary alert-dismissible shadow-sm results-summary" role="status">
+  <div class="d-flex align-items-center flex-wrap mb-2">
+    <strong class="me-2">✦ About these results</strong>
+    <span class="badge bg-warning text-dark me-2">Beta</span>
+    <small class="text-muted me-4">AI-generated from finding-aid descriptions</small>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <p class="mb-2"><%= summary_html %></p>
+
+  <% if narrow %>
+    <div class="mt-2">
+      <strong class="d-block mb-1 small text-uppercase text-muted">✦ Narrow these results</strong>
+      <%= link_to narrow_href, class: 'btn btn-outline-secondary btn-sm rounded-pill', data: { turbo_frame: '_top' } do %>
+        + <%= narrow[:field_label] %>: <%= narrow[:item].value %> &middot; <%= narrow[:item].hits %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
