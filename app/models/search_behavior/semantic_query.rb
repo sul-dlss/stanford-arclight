@@ -36,7 +36,7 @@ module SearchBehavior
 
     def apply_semantic_query(solr_parameters, vector)
       if SEMANTIC_SEARCH_FIELDS[semantic_search_field] == :vector
-        apply_vector_query(solr_parameters, vector_query(vector))
+        apply_vector_query(solr_parameters, knn_match_clause(vector))
       else
         apply_hybrid_query(solr_parameters, blacklight_params[:q], vector)
       end
@@ -53,39 +53,65 @@ module SearchBehavior
       default.respond_to?(:key) ? default.key : default
     end
 
-    # The vector-search clause. Default is a topK KNN; when a minimum-similarity
-    # floor is configured it becomes a `vectorSimilarity` query (returns only
-    # docs at/above the cosine cutoff).
-    def vector_query(vector)
-      literal = "[#{SemanticSearch.solr_vector(vector).join(',')}]"
-      floor = Settings.semantic_search.min_similarity
-      return "{!vectorSimilarity f=embedding_vector minReturn=#{floor}}#{literal}" if floor.positive?
+    def vector_literal(vector)
+      "[#{SemanticSearch.solr_vector(vector).join(',')}]"
+    end
 
-      "{!knn f=embedding_vector topK=#{Settings.semantic_search.top_k}}#{literal}"
+    def min_similarity_floor?
+      Settings.semantic_search.min_similarity.positive?
+    end
+
+    def knn_query(vector)
+      "{!knn f=embedding_vector topK=#{Settings.semantic_search.top_k}}#{vector_literal(vector)}"
+    end
+
+    # Unbounded: `minReturn` scores the whole collection, and how many docs
+    # clear the cutoff varies wildly by query. Only safe combined with a
+    # bounded clause (knn_match_clause) or over an already-small candidate
+    # set (rerank_clause) - never as a standalone match query.
+    def similarity_floor_query(vector)
+      floor = Settings.semantic_search.min_similarity
+      "{!vectorSimilarity f=embedding_vector minReturn=#{floor}}#{vector_literal(vector)}"
+    end
+
+    # Intersecting with the bounded KNN clause caps the floor's cost instead
+    # of letting it scan the whole collection.
+    def knn_match_clause(vector)
+      knn = knn_query(vector)
+      return knn unless min_similarity_floor?
+
+      { bool: { must: [knn, similarity_floor_query(vector)] } }
+    end
+
+    # Reranking only scores the reRankDocs candidates already selected, so
+    # the floor is cheap here regardless.
+    def rerank_clause(vector)
+      min_similarity_floor? ? similarity_floor_query(vector) : knn_query(vector)
     end
 
     def apply_vector_query(solr_parameters, knn)
       solr_parameters[:json] ||= {}
-      # Wrap the KNN string in a bool clause so Solr parses it with the `lucene`
-      # parser (which honors the `{!knn}` local param).
-      solr_parameters[:json][:query] = { bool: { must: [knn] } }
+      # A raw KNN string needs wrapping in a bool clause so Solr parses it
+      # with the `lucene` parser (which honors the `{!knn}` local param); a
+      # floor-filtered match clause is already a structured bool query.
+      solr_parameters[:json][:query] = knn.is_a?(String) ? { bool: { must: [knn] } } : knn
       # The KNN query is the whole query now; drop the plain lexical q.
       solr_parameters.delete(:q)
     end
 
     def apply_hybrid_query(solr_parameters, query, vector)
-      apply_rerank_hybrid(solr_parameters, query, vector_query(vector))
+      apply_rerank_hybrid(solr_parameters, query, knn_match_clause(vector), rerank_clause(vector))
     end
 
-    def apply_rerank_hybrid(solr_parameters, query, knn)
+    def apply_rerank_hybrid(solr_parameters, query, knn_match, knn_rerank)
       solr_parameters[:json] ||= {}
       solr_parameters[:json][:query] = {
-        bool: { should: [{ edismax: { query: query } }, knn] }
+        bool: { should: [{ edismax: { query: query } }, knn_match] }
       }
       solr_parameters[:rq] = '{!rerank reRankQuery=$knn_rq ' \
                              "reRankDocs=#{Settings.semantic_search.rerank_docs} " \
                              "reRankWeight=#{Settings.semantic_search.rerank_weight}}"
-      solr_parameters[:knn_rq] = knn
+      solr_parameters[:knn_rq] = knn_rerank
       # The lexical query is now carried by json.query; drop the plain q so Solr
       # does not also run it as a separate top-level query.
       solr_parameters.delete(:q)
