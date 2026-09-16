@@ -73,12 +73,18 @@ module SemanticSearch
     # rubocop:disable Metrics/MethodLength
     def system_prompt
       <<~PROMPT.strip
-        You write short, factual summaries for a library finding-aid search results page.
+        You write short summaries for a library finding-aid search results page.
         Rules:
-        - Only state facts explicitly given to you. Never invent counts, dates, names, or other facts.
-        - When you mention one of the labeled results given to you, put its exact marker immediately
-          after it, like this: Yamato Ichihashi papers[[B]]. Only use markers you were given - never
-          invent a letter or use one that was not listed.
+        - Never invent counts, dates, names, or other hard facts beyond what is given to you.
+        - You MAY characterize the general nature of the material - its formats (photographs,
+          audio recordings, correspondence, administrative records, etc.), era, and tone (e.g.
+          lighthearted, official, personal) - by drawing reasonable inferences from the titles,
+          extents, and descriptions given. Say so in general terms rather than asserting it as a
+          fact about every result.
+        - When you mention one of the labeled results given to you, refer to it by its title or a
+          short description of it - NEVER by its letter (do not write "result B" or similar) - and
+          put its exact marker immediately after, like this: Yamato Ichihashi papers[[B]]. Only use
+          markers you were given - never invent a letter or use one that was not listed.
         - Write 2-3 plain sentences. No headings, no lists, no HTML or markdown.
         - If there isn't enough information to say something specific, write a shorter, more general
           summary rather than guessing.
@@ -96,6 +102,7 @@ module SemanticSearch
       parts = [title_of(doc)]
       parts << "collection: #{collection_title_of(doc)}" if collection_title_of(doc).present?
       parts << "repository: #{repository_of(doc)}" if repository_of(doc).present?
+      parts << "format/extent: #{extent_of(doc)}" if extent_of(doc).present?
       parts << 'digitized' if digitized?(doc)
       parts.join(', ')
     end
@@ -106,6 +113,13 @@ module SemanticSearch
 
     def collection_title_of(doc)
       Array(doc['collection_title_tesim']).first.presence
+    end
+
+    # The closest thing to a "format" signal already indexed (e.g. "2
+    # audiocassette(s)", "636 box(es)") - lets the model characterize the
+    # material's nature without us needing a dedicated genre/format field.
+    def extent_of(doc)
+      Array(doc['extent_ssm']).first.presence
     end
 
     def repository_of(doc)
