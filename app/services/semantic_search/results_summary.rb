@@ -45,7 +45,19 @@ module SemanticSearch
     end
 
     def applicable?(response, search_state)
-      Settings.results_summary.enabled && search_state.query_param.present? && response.total.to_i.positive?
+      return false unless Settings.results_summary.enabled
+      return false if search_state.query_param.blank?
+      return false unless response.total.to_i.positive?
+
+      query_safe?(search_state.query_param)
+    end
+
+    # See SemanticSearch::QuerySafety - fails closed, so disabling it (dev/test
+    # only) is the one way to skip the check rather than an error suppressing it.
+    def query_safe?(query)
+      return true unless Settings.query_safety.enabled
+
+      SemanticSearch::QuerySafety.safe?(query)
     end
 
     def build(response, search_state)
