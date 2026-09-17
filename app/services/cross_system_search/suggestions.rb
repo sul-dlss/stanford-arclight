@@ -13,6 +13,13 @@ module CrossSystemSearch
   # links are real data from the source system, never LLM-generated - the
   # model only characterizes a real sample it was actually given.
   module Suggestions
+    # Exact-phrase escape hatch (same pattern as the zero-total rule below):
+    # lets the model flag topical mismatch - e.g. a natural-language query
+    # like "how do you make candy" matching only on stopwords - without
+    # inventing a false unifying theme. Downgrades the tier deterministically
+    # (see apply_blurbs!); the phrase itself is never trusted beyond that.
+    UNRELATED_PHRASE = 'Results may not be closely related to this query.'
+
     System = Struct.new(:label, :client_class, :doc_view, :search_url, :describe_for_prompt)
 
     # Hardcoded to these two systems for now rather than a generic registry;
@@ -107,6 +114,10 @@ module CrossSystemSearch
         - Never invent or restate a specific count as a fact - the real total is shown separately by
           the app. Do not state a number.
         - If a system's real total is zero, the sentence MUST be exactly "No related results found."
+        - If the sample doesn't look topically related to the search query - e.g. a natural-language
+          query where the sample only shares common words (how/do/you/make) rather than real
+          relevance - do NOT invent a unifying theme. The sentence MUST instead be exactly
+          "#{UNRELATED_PHRASE}"
         - Write in a neutral, third-person voice. No headings, no lists, no markdown, no citations.
       PROMPT
     end
@@ -125,7 +136,11 @@ module CrossSystemSearch
 
     def apply_blurbs!(sources, summary)
       parsed = parse_summary_lines(summary)
-      sources.each { |source| source[:blurb_html] = sanitize(parsed[source[:label]]) }
+      sources.each do |source|
+        text = parsed[source[:label]]
+        source[:tier] = :low_confidence if text&.strip == UNRELATED_PHRASE
+        source[:blurb_html] = sanitize(text)
+      end
     end
 
     def parse_summary_lines(summary)
@@ -143,7 +158,7 @@ module CrossSystemSearch
 
     def cache_key(query)
       normalized_query = query.to_s.strip.downcase.gsub(/\s+/, ' ')
-      "cross_system_search/suggestions/#{Settings.cross_system_search.model}/v3/#{normalized_query}"
+      "cross_system_search/suggestions/#{Settings.cross_system_search.model}/v4/#{normalized_query}"
     end
   end
 end
