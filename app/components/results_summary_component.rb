@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # "About these results" panel above the search results list: an AI-generated
-# summary of the current result set with citations, plus a facet suggestion to
-# narrow the results. See SemanticSearch::ResultsSummary for how it's built.
+# summary of the current result set with citations, plus related-topic
+# suggestions. See SemanticSearch::ResultsSummary for how it's built.
 #
 # Renders only when there is a summary to show, so a failed/slow/disabled
 # lookup simply shows no panel (same defensive pattern as RelatedCollectionsComponent).
@@ -21,14 +21,15 @@ class ResultsSummaryComponent < ViewComponent::Base
     summary[:summary_html]
   end
 
-  def narrow
-    summary[:narrow]
+  def related_topics
+    summary[:related_topics] || []
   end
 
-  def narrow_href
-    return nil unless narrow
-
-    helpers.search_action_path(@search_state.add_facet_params_and_redirect(narrow[:field_key], narrow[:item]))
+  # A fresh topic browse, not a narrowing of the current search - the term
+  # came from the query text alone, so it isn't guaranteed to overlap with
+  # this search's current results (see SemanticSearch::ResultsSummary).
+  def related_topic_href(term)
+    helpers.search_action_path(f: { SemanticSearch::ResultsSummary::RELATED_TOPICS_FIELD => [term] })
   end
 
   private

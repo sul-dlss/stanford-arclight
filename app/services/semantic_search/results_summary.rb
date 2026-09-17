@@ -5,20 +5,22 @@ require 'erb'
 module SemanticSearch
   # "About these results": a short AI-generated summary of the current search
   # results page, with citations to specific documents already on the page (no
-  # extra Solr call) and a facet suggestion to narrow the result set.
+  # extra Solr call) and related-topic suggestions.
   #
-  # PROTOTYPE - deliberately simple: the facet suggestion is computed in plain
-  # Ruby (never LLM-generated, so its count can never be wrong), and citations
-  # are resolved server-side against a fixed candidate list rather than trusted
-  # from the model's output, so the model can never emit an arbitrary link.
-  # rubocop:disable Metrics/ModuleLength
+  # PROTOTYPE - deliberately simple: citations are resolved server-side against
+  # a fixed candidate list rather than trusted from the model's output, so the
+  # model can never emit an arbitrary link. Related topics are a nearest-
+  # neighbor lookup against the REAL subject vocabulary already in the index
+  # (SubjectVocabulary), not LLM-generated, so a suggested topic can never be
+  # one that doesn't exist in the archive - though unlike the old aggregation-
+  # based narrow suggestion, it is NOT guaranteed to overlap with the CURRENT
+  # result set, since it's found from the query text alone. That's why it
+  # links to a fresh topic browse rather than adding a facet to this search.
   module ResultsSummary
-    # Fields eligible for the "narrow these results" suggestion, in preference
-    # order when hit counts tie. Blacklight keys (not raw Solr field names) -
-    # `response.aggregations` is keyed by both. Limited to descriptive/subject
-    # facets (not e.g. repository or collection) so the suggestion narrows by
-    # what the results are ABOUT, not where they happen to live.
-    NARROW_FIELDS = { 'access_subjects' => 'Subject', 'places' => 'Place', 'names' => 'Name' }.freeze
+    # Blacklight facet config key (not the raw Solr field name) for related
+    # topic links - `search_action_path(f: { RELATED_TOPICS_FIELD => [term] })`.
+    RELATED_TOPICS_FIELD = 'access_subjects'
+    RELATED_TOPICS_LIMIT = 5
 
     # Candidate documents are labeled A, B, C... for the model to cite.
     LABELS = ('A'..'Z').to_a.freeze
@@ -29,7 +31,7 @@ module SemanticSearch
 
     # @param response [Blacklight::Solr::Response]
     # @param search_state [Blacklight::SearchState]
-    # @return [Hash, nil] { summary_html:, narrow: { field_key:, field_label:, item: } or nil }
+    # @return [Hash, nil] { summary_html:, related_topics: Array<String> }
     def for(response:, search_state:)
       return nil unless applicable?(response, search_state)
 
@@ -53,7 +55,9 @@ module SemanticSearch
       summary_text = fetch_summary(search_state.query_param, response.total.to_i, candidates)
       return nil if summary_text.blank?
 
-      { summary_html: render_citations(summary_text, candidates), narrow: narrow_suggestion(response, search_state) }
+      related_topics = SemanticSearch::SubjectVocabulary.related_terms(search_state.query_param,
+                                                                       limit: RELATED_TOPICS_LIMIT)
+      { summary_html: render_citations(summary_text, candidates), related_topics: related_topics }
     end
 
     # `response.documents` is empty for a GROUPED response (?group=true) - the
@@ -159,34 +163,10 @@ module SemanticSearch
       %(<sup><a href="#{ERB::Util.html_escape(path)}" data-turbo-frame="_top">#{label}</a></sup>)
     end
 
-    # Highest-count value from an allowlisted facet field that isn't already
-    # applied as a filter. Never LLM-generated - just today's top facet count.
-    def narrow_suggestion(response, search_state)
-      candidates = NARROW_FIELDS.filter_map do |field_key, field_label|
-        narrow_candidate(response, search_state, field_key, field_label)
-      end
-      candidates.max_by { |candidate| candidate[:item].hits.to_i }
-    end
-
-    def narrow_candidate(response, search_state, field_key, field_label)
-      return nil if already_filtered?(search_state, field_key)
-
-      aggregation = response.aggregations[field_key]
-      item = aggregation&.items&.max_by { |i| i.hits.to_i }
-      return nil unless item
-
-      { field_key: field_key, field_label: field_label, item: item }
-    end
-
-    def already_filtered?(search_state, field_key)
-      Array(search_state.params.dig(:f, field_key)).any?
-    end
-
     def cache_key(search_state)
       normalized_query = search_state.query_param.to_s.strip.downcase.gsub(/\s+/, ' ')
       filters = search_state.params[:f].to_h.sort.to_s
       "semantic_search/results_summary/#{Settings.results_summary.model}/#{normalized_query}/#{filters}"
     end
   end
-  # rubocop:enable Metrics/ModuleLength
 end
