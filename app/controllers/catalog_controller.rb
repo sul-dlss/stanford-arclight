@@ -482,4 +482,13 @@ class CatalogController < ApplicationController
   def results_summary
     @response = search_service.search_results
   end
+
+  # Backs the lazy-loaded "Looking for more?" Turbo Frame (see
+  # app/views/catalog/_search_results_header.html.erb). Fans out the current
+  # query to SearchWorks and Exhibits directly from the server, so their
+  # timeouts/failures are ours to control rather than the browser's - see
+  # CrossSystemSearch::Suggestions.
+  def cross_system_suggestions
+    @query = search_state.query_param
+  end
 end
