@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   # `show` route (`GET /catalog/:id`) is also mounted at path '/catalog', and
   # being declared first would otherwise swallow this path with :id="results_summary".
   get '/catalog/results_summary' => 'catalog#results_summary', as: :results_summary
+  get '/catalog/cross_system_suggestions' => 'catalog#cross_system_suggestions', as: :cross_system_suggestions
 
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
     concerns :hierarchy

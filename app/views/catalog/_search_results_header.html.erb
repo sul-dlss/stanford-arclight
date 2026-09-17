@@ -9,4 +9,5 @@
       asynchronously, after the surrounding page has already rendered - the results
       list is never blocked on it either way. %>
   <%= turbo_frame_tag 'results-summary', src: results_summary_path(request.query_parameters) %>
+  <%= turbo_frame_tag 'cross-system-suggestions', src: cross_system_suggestions_path(request.query_parameters) %>
 <% end %>

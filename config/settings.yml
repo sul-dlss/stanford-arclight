@@ -74,6 +74,23 @@ results_summary:
   timeout: 8
   cache_ttl: 3600
 
+# Prototype: AI-suggested "Looking for more?" panel that fans out the current
+# query to SearchWorks' and Exhibits' own public search APIs (server-side)
+# and asks the model for a one-line blurb per system. Lazy-loaded (see
+# catalog#cross_system_suggestions), so a slow/failed call never blocks the
+# results page itself.
+cross_system_search:
+  enabled: true
+  model: claude-haiku
+  # Also doubles as the sample size the model sees when summarizing the kinds
+  # of results a source has - not just the count of results shown/cited.
+  rows: 5
+  timeout: 5
+  # Total hits at/above this from a source counts as a "Strong match" badge
+  # rather than "Worth a look" - deterministic, never LLM-judged.
+  strong_match_min: 3
+  cache_ttl: 3600
+
 pdf_generation:
   create_on_ead_download: true
   ead_to_fo_xsl_path: './app/xslt/ead_to_fo.xsl'

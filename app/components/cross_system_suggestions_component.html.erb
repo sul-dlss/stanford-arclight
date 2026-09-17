@@ -1,0 +1,40 @@
+<div class="alert alert-secondary alert-dismissible shadow-sm cross-system-suggestions" role="status">
+  <div class="d-flex align-items-center flex-wrap mb-2">
+    <strong class="me-2">✦ Looking for more?</strong>
+    <span class="badge bg-warning text-dark me-2">Beta</span>
+    <small class="text-muted">AI-suggested next steps from your search</small>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <strong class="d-block mb-2 small text-uppercase text-muted">Search the library's other systems</strong>
+
+  <% sources.each do |source| %>
+    <div class="mb-3 pb-2 border-bottom">
+      <div class="mb-1">
+        <% if source[:tier] == :strong_match %>
+          <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle me-1">Strong match</span>
+        <% elsif source[:tier] == :worth_a_look %>
+          <span class="badge bg-light text-secondary border me-1">Worth a look</span>
+        <% end %>
+        <strong><%= source[:label] %></strong>
+        <span class="text-muted">&middot; <%= number_with_delimiter(source[:total]) %> record<%= 's' unless source[:total] == 1 %></span>
+      </div>
+
+      <% if source[:blurb_html] %>
+        <p class="mb-2 small text-muted"><%= source[:blurb_html] %></p>
+      <% end %>
+
+      <% if source[:doc] %>
+        <div class="mb-2">
+          <span class="text-muted small">For example:</span>
+          <%= link_to source[:doc][:title], source[:doc][:url], class: 'fw-semibold text-decoration-none' %>
+        </div>
+      <% end %>
+
+      <% if source[:tier] != :no_match %>
+        <%= link_to "See all results on #{source[:label]}", source[:search_url],
+                    class: 'btn btn-outline-secondary btn-sm rounded-pill' %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
