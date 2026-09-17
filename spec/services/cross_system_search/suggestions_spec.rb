@@ -54,6 +54,18 @@ RSpec.describe CrossSystemSearch::Suggestions do
     expect(user_message).to include('Jazz theory')
   end
 
+  it 'downgrades the tier to :low_confidence when the model flags the sample as unrelated to the query' do
+    phrase = CrossSystemSearch::Suggestions::UNRELATED_PHRASE
+    unrelated = "SearchWorks:: #{phrase}\nExhibits:: No related results found."
+    allow_any_instance_of(SemanticSearch::ChatCompletionService) # rubocop:disable RSpec/AnyInstance
+      .to receive(:complete).and_return(unrelated)
+
+    searchworks = described_class.for(query: 'how do you make candy')[:sources].find { |s| s[:label] == 'SearchWorks' }
+
+    expect(searchworks[:tier]).to eq :low_confidence
+    expect(searchworks[:blurb_html]).to eq CrossSystemSearch::Suggestions::UNRELATED_PHRASE
+  end
+
   it 'escapes the model output rather than trusting it as HTML' do
     allow_any_instance_of(SemanticSearch::ChatCompletionService) # rubocop:disable RSpec/AnyInstance
       .to receive(:complete).and_return("SearchWorks:: <script>alert(1)</script>\nExhibits:: No related results found.")
