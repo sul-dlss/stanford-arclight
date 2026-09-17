@@ -8,11 +8,14 @@
 
   <p class="mb-2"><%= summary_html %></p>
 
-  <% if narrow %>
+  <% if related_topics.any? %>
     <div class="mt-2">
-      <strong class="d-block mb-1 small text-uppercase text-muted">✦ Narrow these results</strong>
-      <%= link_to narrow_href, class: 'btn btn-outline-secondary btn-sm rounded-pill', data: { turbo_frame: '_top' } do %>
-        + <%= narrow[:field_label] %>: <%= narrow[:item].value %> &middot; <%= narrow[:item].hits %>
+      <strong class="d-block mb-1 small text-uppercase text-muted">✦ Search related topics</strong>
+      <% related_topics.each do |term| %>
+        <%= link_to related_topic_href(term), class: 'btn btn-outline-secondary btn-sm rounded-pill me-1 mb-1',
+                                               data: { turbo_frame: '_top' } do %>
+          <%= term %>
+        <% end %>
       <% end %>
     </div>
   <% end %>
