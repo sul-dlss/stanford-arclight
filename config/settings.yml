@@ -74,6 +74,16 @@ results_summary:
   timeout: 8
   cache_ttl: 3600
 
+# Content-safety gate for the results_summary panel (see SemanticSearch::QuerySafety):
+# fails CLOSED, not open - any error, timeout, or non-YES response suppresses the
+# whole panel rather than showing it. Disabling this skips the extra gateway call -
+# fine for local dev, never disable in production.
+query_safety:
+  enabled: true
+  model: claude-haiku
+  timeout: 5
+  cache_ttl: 86400
+
 # Prototype: AI-suggested "Looking for more?" panel that fans out the current
 # query to SearchWorks' and Exhibits' own public search APIs (server-side)
 # and asks the model for a one-line blurb per system. Lazy-loaded (see
