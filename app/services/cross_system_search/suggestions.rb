@@ -18,11 +18,11 @@ module CrossSystemSearch
   # gate exists to protect against, so a query judged unsafe gets no panel at
   # all here either, not just a version with the blurb stripped.
   module Suggestions
-    # Exact-phrase escape hatch (same pattern as the zero-total rule below):
-    # lets the model flag topical mismatch - e.g. a natural-language query
-    # like "how do you make candy" matching only on stopwords - without
-    # inventing a false unifying theme. Downgrades the tier deterministically
-    # (see apply_blurbs!); the phrase itself is never trusted beyond that.
+    # Exact-phrase escape hatch: lets the model flag topical mismatch - e.g. a
+    # natural-language query like "how do you make candy" matching only on
+    # stopwords - without inventing a false unifying theme. Downgrades the
+    # tier deterministically (see apply_blurbs!); the phrase itself is never
+    # trusted beyond that.
     UNRELATED_PHRASE = 'Results may not be closely related to this query.'
 
     System = Struct.new(:label, :client_class, :doc_view, :search_url, :describe_for_prompt)
@@ -88,16 +88,25 @@ module CrossSystemSearch
       Thread.new { [system, system.client_class.new(timeout: timeout).search(query, rows: rows)] }
     end
 
+    # A system with zero real results has nothing worth showing - treated the
+    # same as a system that failed to respond, so it's dropped rather than
+    # rendered as an empty "no results" stub. If BOTH systems drop out this
+    # way, fetch_sources returns empty and build's own check hides the whole
+    # panel, not just one system's section.
     def source_from(query, system, result)
       return nil unless result
+      return nil if result.total.to_i.zero?
 
+      build_source(query, system, result)
+    end
+
+    def build_source(query, system, result)
       { label: system.label, total: result.total, tier: tier_for(result.total),
         doc: system.doc_view.call(result.docs.first), search_url: system.search_url.call(query),
         sample: result.docs.filter_map { |doc| system.describe_for_prompt.call(doc) } }
     end
 
     def tier_for(total)
-      return :no_match if total.to_i.zero?
       return :strong_match if total.to_i >= Settings.cross_system_search.strong_match_min
 
       :worth_a_look
@@ -126,7 +135,6 @@ module CrossSystemSearch
           using words like "including" or "such as" rather than claiming it describes every result.
         - Never invent or restate a specific count as a fact - the real total is shown separately by
           the app. Do not state a number.
-        - If a system's real total is zero, the sentence MUST be exactly "No related results found."
         - If the sample doesn't look topically related to the search query - e.g. a natural-language
           query where the sample only shares common words (how/do/you/make) rather than real
           relevance - do NOT invent a unifying theme. The sentence MUST instead be exactly
