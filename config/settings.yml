@@ -80,7 +80,10 @@ results_summary:
 # fine for local dev, never disable in production.
 query_safety:
   enabled: true
-  model: claude-haiku
+  # gemini-3.1-flash-lite: validated 13/13 against the safety regression set,
+  # clean bare YES/NO output (no reasoning-token overhead like gemma-4-31b),
+  # ~1/4 the cost of claude-haiku for this simple a classification task.
+  model: gemini-3.1-flash-lite
   timeout: 5
   cache_ttl: 86400
 
