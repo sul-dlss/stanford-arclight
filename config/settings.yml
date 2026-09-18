@@ -49,6 +49,20 @@ aspace:
 
 data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>
 
+relevance:
+  # Multiplicative boost toward Collection-level docs with more catalogued
+  # sub-components, applied to the lexical (BM25) score. Without it, BM25's
+  # title-length normalization means a single-item hit with a short title
+  # ("Julius Shuchat oral history") can outrank a major collection with the
+  # same title terms but a longer title (SC0932, 812 components; SC1017,
+  # 492), even though the bigger collection actually holds far more matching
+  # material - see SearchBehavior::ComponentCountBoost. 0 disables. Batch-
+  # tested against other broad topical queries (jazz, opera) plus precise
+  # known-item queries (exact call number/title/name) - only reorders among
+  # docs that already have the field (Collection level), never displaces an
+  # exact-title match.
+  component_count_boost_divisor: 6
+
 semantic_search:
   top_k: 100
   rerank_docs: 100
