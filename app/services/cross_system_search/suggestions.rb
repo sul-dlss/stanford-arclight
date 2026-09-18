@@ -12,6 +12,11 @@ module CrossSystemSearch
   # Same house rule as SemanticSearch::ResultsSummary: counts, titles, and
   # links are real data from the source system, never LLM-generated - the
   # model only characterizes a real sample it was actually given.
+  #
+  # Also shares ResultsSummary's content-safety gate (SemanticSearch::QuerySafety):
+  # the per-system blurb is the same kind of free-text characterization that
+  # gate exists to protect against, so a query judged unsafe gets no panel at
+  # all here either, not just a version with the blurb stripped.
   module Suggestions
     # Exact-phrase escape hatch (same pattern as the zero-total rule below):
     # lets the model flag topical mismatch - e.g. a natural-language query
@@ -48,7 +53,15 @@ module CrossSystemSearch
     end
 
     def applicable?(query)
-      Settings.cross_system_search.enabled && query.present?
+      Settings.cross_system_search.enabled && query.present? && query_safe?(query)
+    end
+
+    # See SemanticSearch::QuerySafety - fails closed, so disabling it (dev/test
+    # only) is the one way to skip the check rather than an error suppressing it.
+    def query_safe?(query)
+      return true unless Settings.query_safety.enabled
+
+      SemanticSearch::QuerySafety.safe?(query)
     end
 
     def build(query)
