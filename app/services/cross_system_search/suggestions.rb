@@ -17,17 +17,16 @@ module CrossSystemSearch
   # the per-system blurb is the same kind of free-text characterization that
   # gate exists to protect against, so a query judged unsafe gets no panel at
   # all here either, not just a version with the blurb stripped.
+  # rubocop:disable Metrics/ModuleLength
   module Suggestions
     # Relevance judgment the model emits alongside (not embedded in) the free-
-    # text blurb - see system_prompt/parse_summary_lines. Deliberately a
-    # separate, tightly-constrained field rather than an exact-phrase match on
-    # the sentence itself: a model can honestly convey "this doesn't really
-    # relate to the query" in its own words without hitting a literal required
-    # string, which silently defeated the earlier phrase-matching version (a
-    # real query surfaced high-count, topically-unrelated results tagged
-    # "Strong match" because the model described the mismatch honestly instead
-    # of emitting the exact recognized phrase).
+    # text blurb - a separate, tightly-constrained field rather than an exact-
+    # phrase match on the sentence itself, which silently failed once: a real
+    # query surfaced high-count, unrelated results tagged "Strong match"
+    # because the model described the mismatch honestly instead of emitting
+    # the one exact phrase the old parser looked for.
     RELEVANCE_VALUES = %w[RELATED UNRELATED].freeze
+    RELEVANCE_PATTERN = /\A\s*([^:]+)::\s*(#{RELEVANCE_VALUES.join('|')})::\s*(.+?)\s*\z/i
 
     System = Struct.new(:label, :client_class, :doc_view, :search_url, :describe_for_prompt)
 
@@ -179,7 +178,7 @@ module CrossSystemSearch
     # blurb (see apply_blurbs!) rather than a mismatched or invented one.
     def parse_summary_lines(summary)
       summary.each_line.filter_map do |line|
-        match = line.match(/\A\s*([^:]+)::\s*(RELATED|UNRELATED)::\s*(.+?)\s*\z/i)
+        match = line.match(RELEVANCE_PATTERN)
         next unless match
 
         label, relevance, sentence = match.captures
@@ -201,4 +200,5 @@ module CrossSystemSearch
       "cross_system_search/suggestions/#{Settings.cross_system_search.model}/v4/#{normalized_query}"
     end
   end
+  # rubocop:enable Metrics/ModuleLength
 end
