@@ -10,13 +10,17 @@ RSpec.describe CrossSystemSearch::Suggestions do
              { 'id' => '2', 'title_display' => 'Jazz theory' }]
     )
   end
+  # Always zero in these fixtures - Exhibits is dropped from sources entirely
+  # (see suggestions.rb#source_from), so it never reaches the prompt either.
   let(:exhibits_result) { CrossSystemSearch::ExhibitsClient::Result.new(total: 0, docs: []) }
-  let(:completion) do
-    "SearchWorks:: A digitized sound recording from the same era.\nExhibits:: No related results found."
-  end
+  let(:completion) { 'SearchWorks:: RELATED:: A digitized sound recording from the same era.' }
   let(:sent_messages) { [] }
 
   before do
+    # Stubbed independently of ChatCompletionService so it can't be confused
+    # with the Suggestions blurb call below - these examples aren't testing
+    # the safety gate itself (see query_safety_spec.rb for that).
+    allow(SemanticSearch::QuerySafety).to receive(:safe?).and_return(true)
     allow(CrossSystemSearch::SearchworksClient).to receive(:new)
       .and_return(instance_double(CrossSystemSearch::SearchworksClient, search: searchworks_result))
     allow(CrossSystemSearch::ExhibitsClient).to receive(:new)
@@ -31,19 +35,26 @@ RSpec.describe CrossSystemSearch::Suggestions do
   it 'builds sources with real totals/tiers, the real top doc as its own link, and a plain-text caption' do
     result = described_class.for(query: 'jazz')
     searchworks = result[:sources].find { |s| s[:label] == 'SearchWorks' }
-    exhibits = result[:sources].find { |s| s[:label] == 'Exhibits' }
 
     expect(searchworks[:total]).to eq 1204
     expect(searchworks[:tier]).to eq :strong_match
     expect(searchworks[:doc]).to eq(title: 'Jazz', url: 'https://searchworks.stanford.edu/view/1')
     expect(searchworks[:blurb_html]).to eq 'A digitized sound recording from the same era.'
     expect(searchworks[:search_url]).to eq 'https://searchworks.stanford.edu/catalog?q=jazz'
+  end
 
-    expect(exhibits[:total]).to eq 0
-    expect(exhibits[:tier]).to eq :no_match
-    expect(exhibits[:doc]).to be_nil
-    expect(exhibits[:blurb_html]).to eq 'No related results found.'
-    expect(exhibits[:search_url]).to eq 'https://exhibits.stanford.edu/search?q=jazz&search_field=default'
+  it 'drops a system with zero real results rather than showing an empty stub' do
+    result = described_class.for(query: 'jazz')
+
+    expect(result[:sources].pluck(:label)).to eq ['SearchWorks']
+  end
+
+  it 'returns nil when every system has zero real results' do
+    allow(CrossSystemSearch::SearchworksClient).to receive(:new)
+      .and_return(instance_double(CrossSystemSearch::SearchworksClient,
+                                  search: CrossSystemSearch::SearchworksClient::Result.new(total: 0, docs: [])))
+
+    expect(described_class.for(query: 'jazz')).to be_nil
   end
 
   it 'grounds the prompt in a real sample (with format) of results, not just the top doc' do
@@ -54,21 +65,28 @@ RSpec.describe CrossSystemSearch::Suggestions do
     expect(user_message).to include('Jazz theory')
   end
 
-  it 'downgrades the tier to :low_confidence when the model flags the sample as unrelated to the query' do
-    phrase = CrossSystemSearch::Suggestions::UNRELATED_PHRASE
-    unrelated = "SearchWorks:: #{phrase}\nExhibits:: No related results found."
+  it 'downgrades the tier to :low_confidence when the model judges the sample unrelated to the query' do
     allow_any_instance_of(SemanticSearch::ChatCompletionService) # rubocop:disable RSpec/AnyInstance
-      .to receive(:complete).and_return(unrelated)
+      .to receive(:complete).and_return('SearchWorks:: UNRELATED:: Results about an unrelated historical topic.')
 
     searchworks = described_class.for(query: 'how do you make candy')[:sources].find { |s| s[:label] == 'SearchWorks' }
 
     expect(searchworks[:tier]).to eq :low_confidence
-    expect(searchworks[:blurb_html]).to eq CrossSystemSearch::Suggestions::UNRELATED_PHRASE
+    expect(searchworks[:blurb_html]).to eq 'Results about an unrelated historical topic.'
+  end
+
+  it 'drops a source line that omits the required RELATED/UNRELATED field rather than guessing' do
+    allow_any_instance_of(SemanticSearch::ChatCompletionService) # rubocop:disable RSpec/AnyInstance
+      .to receive(:complete).and_return('SearchWorks:: A digitized sound recording from the same era.')
+
+    searchworks = described_class.for(query: 'jazz')[:sources].find { |s| s[:label] == 'SearchWorks' }
+
+    expect(searchworks[:blurb_html]).to be_nil
   end
 
   it 'escapes the model output rather than trusting it as HTML' do
     allow_any_instance_of(SemanticSearch::ChatCompletionService) # rubocop:disable RSpec/AnyInstance
-      .to receive(:complete).and_return("SearchWorks:: <script>alert(1)</script>\nExhibits:: No related results found.")
+      .to receive(:complete).and_return('SearchWorks:: RELATED:: <script>alert(1)</script>')
 
     searchworks = described_class.for(query: 'jazz')[:sources].find { |s| s[:label] == 'SearchWorks' }
 
