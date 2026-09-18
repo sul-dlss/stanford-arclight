@@ -18,12 +18,16 @@ module CrossSystemSearch
   # gate exists to protect against, so a query judged unsafe gets no panel at
   # all here either, not just a version with the blurb stripped.
   module Suggestions
-    # Exact-phrase escape hatch: lets the model flag topical mismatch - e.g. a
-    # natural-language query like "how do you make candy" matching only on
-    # stopwords - without inventing a false unifying theme. Downgrades the
-    # tier deterministically (see apply_blurbs!); the phrase itself is never
-    # trusted beyond that.
-    UNRELATED_PHRASE = 'Results may not be closely related to this query.'
+    # Relevance judgment the model emits alongside (not embedded in) the free-
+    # text blurb - see system_prompt/parse_summary_lines. Deliberately a
+    # separate, tightly-constrained field rather than an exact-phrase match on
+    # the sentence itself: a model can honestly convey "this doesn't really
+    # relate to the query" in its own words without hitting a literal required
+    # string, which silently defeated the earlier phrase-matching version (a
+    # real query surfaced high-count, topically-unrelated results tagged
+    # "Strong match" because the model described the mismatch honestly instead
+    # of emitting the exact recognized phrase).
+    RELEVANCE_VALUES = %w[RELATED UNRELATED].freeze
 
     System = Struct.new(:label, :client_class, :doc_view, :search_url, :describe_for_prompt)
 
@@ -128,17 +132,21 @@ module CrossSystemSearch
         specific item (a top result is shown separately, already rendered, so do not just restate
         its title). You are given a small SAMPLE of real results already fetched from each system
         (never the full set). For EACH system listed, respond with exactly one line in this exact
-        format: "<Label>:: <sentence>" - one sentence (under 25 words), one line per system, in the
-        order given, nothing else.
+        format: "<Label>:: <RELATED or UNRELATED>:: <sentence>" - one line per system, in the order
+        given, nothing else.
+        The middle field is a relevance judgment, exactly the word RELATED or UNRELATED: write
+        RELATED if the sample genuinely relates to the search query's topic, or UNRELATED if the
+        sample only shares incidental keywords/stopwords with the query without real topical
+        relevance (e.g. a natural-language query like "how do you make candy" matching only on
+        "how/do/you/make", or a person's name matching documents that merely contain those words).
+        Judge this honestly and independently of how you phrase the sentence.
         Rules:
         - Base the sentence ONLY on the sample given - synthesize across it (formats, eras, topics),
           using words like "including" or "such as" rather than claiming it describes every result.
         - Never invent or restate a specific count as a fact - the real total is shown separately by
           the app. Do not state a number.
-        - If the sample doesn't look topically related to the search query - e.g. a natural-language
-          query where the sample only shares common words (how/do/you/make) rather than real
-          relevance - do NOT invent a unifying theme. The sentence MUST instead be exactly
-          "#{UNRELATED_PHRASE}"
+        - Write the sentence honestly either way - if UNRELATED, describe what the sample actually
+          contains rather than pretending it relates to the query.
         - Write in a neutral, third-person voice. No headings, no lists, no markdown, no citations.
       PROMPT
     end
@@ -158,14 +166,25 @@ module CrossSystemSearch
     def apply_blurbs!(sources, summary)
       parsed = parse_summary_lines(summary)
       sources.each do |source|
-        text = parsed[source[:label]]
-        source[:tier] = :low_confidence if text&.strip == UNRELATED_PHRASE
-        source[:blurb_html] = sanitize(text)
+        parsed_line = parsed[source[:label]]
+        source[:tier] = :low_confidence if parsed_line && parsed_line[:relevance] == 'UNRELATED'
+        source[:blurb_html] = sanitize(parsed_line && parsed_line[:sentence])
       end
     end
 
+    # A line that doesn't match the required "<Label>:: <RELATED|UNRELATED>::
+    # <sentence>" shape - wrong relevance word, missing field, reworded by the
+    # model - is dropped rather than guessed at, same as an unrecognized
+    # citation marker elsewhere in this feature: that source just gets no
+    # blurb (see apply_blurbs!) rather than a mismatched or invented one.
     def parse_summary_lines(summary)
-      summary.each_line.filter_map { |line| line.match(/\A\s*([^:]+)::\s*(.+?)\s*\z/)&.captures }.to_h
+      summary.each_line.filter_map do |line|
+        match = line.match(/\A\s*([^:]+)::\s*(RELATED|UNRELATED)::\s*(.+?)\s*\z/i)
+        next unless match
+
+        label, relevance, sentence = match.captures
+        [label, { relevance: relevance.upcase, sentence: sentence }]
+      end.to_h
     end
 
     # The model's raw output is never trusted as HTML (same rule as
