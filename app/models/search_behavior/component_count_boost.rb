@@ -16,9 +16,10 @@ module SearchBehavior
     DIVISOR = 6
     MIN_SCORE = 20
 
-    # Below this size the multiplier tops out around 1.65x (1 + ln(51)/DIVISOR),
-    # too small to flip a ranking on its own, so these collections skip the
-    # relevance check and get boosted unconditionally.
+    # Below this size the multiplier tops out around 1.28x (1 + log10(51)/DIVISOR
+    # - Solr's log() is base-10, not natural log), too small to flip a ranking
+    # on its own, so these collections skip the relevance check and get
+    # boosted unconditionally.
     RELEVANCE_CHECK_FLOOR = 50
 
     def apply_component_count_boost(solr_parameters)
