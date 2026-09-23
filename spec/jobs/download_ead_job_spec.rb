@@ -97,69 +97,102 @@ RSpec.describe DownloadEadJob do
   end
 
   describe '.enqueue_all_updated' do
+    let(:updated_after) { Time.utc(2023, 12, 12) }
+
     before do
       allow(client).to receive(:published_resources).with(
-        repository_id: '11', updated_after: '2023-12-12'
+        repository_id: '11', updated_after:
       ).and_return(
         [{ 'uri' => '/repositories/11/resources/1', 'ead_id' => 'ars123' },
          { 'uri' => '/repositories/11/resources/2', 'ead_id' => 'ars456' }]
       )
       allow(client).to receive(:published_resource_with_updated_component_uris).with(
-        repository_id: '11', updated_after: '2023-12-12',
+        repository_id: '11', updated_after:,
         uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
       ).and_return(
         [{ 'uri' => '/repositories/11/resources/3', 'ead_id' => 'ars789' }]
       )
       allow(client).to receive(:published_resource_with_linked_agent_uris).with(
-        repository_id: '11', updated_after: '2023-12-12',
+        repository_id: '11', updated_after:,
         uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
       ).and_return(
         [{ 'uri' => '/repositories/11/resources/4', 'ead_id' => 'ars000' }]
       )
       allow(client).to receive(:published_resources).with(
-        repository_id: '4', updated_after: '2023-12-12'
+        repository_id: '4', updated_after:
       ).and_return(
         [{ 'uri' => '/repositories/4/resources/1', 'ead_id' => 'eal123' },
          { 'uri' => '/repositories/4/resources/2', 'ead_id' => 'eal456' }]
       )
       allow(client).to receive(:published_resource_with_updated_component_uris).with(
-        repository_id: '4', updated_after: '2023-12-12',
+        repository_id: '4', updated_after:,
         uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
       ).and_return(
         [{ 'uri' => '/repositories/4/resources/3', 'ead_id' => 'eal789' }]
       )
       allow(client).to receive(:published_resource_with_linked_agent_uris).with(
-        repository_id: '4', updated_after: '2023-12-12',
+        repository_id: '4', updated_after:,
         uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
       ).and_return(
         [{ 'uri' => '/repositories/4/resources/4', 'ead_id' => 'eal000' }]
       )
     end
 
-    it 'fetches all resource uris from aspace limited to a specified date' do
-      described_class.enqueue_all_updated(updated_after: '2023-12-12')
-      expect(client).to have_received(:published_resources).with(repository_id: '11', updated_after: '2023-12-12')
+    it 'fetches all resource uris from aspace limited to a specified time' do
+      described_class.enqueue_all_updated(updated_after:)
+      expect(client).to have_received(:published_resources).with(repository_id: '11', updated_after:)
       expect(client).to have_received(:published_resource_with_updated_component_uris).with(
         repository_id: '11',
-        updated_after: '2023-12-12',
+        updated_after:,
         uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
       )
       expect(client).to have_received(:published_resource_with_linked_agent_uris).with(
         repository_id: '11',
-        updated_after: '2023-12-12',
+        updated_after:,
         uris_to_exclude: ['/repositories/11/resources/1', '/repositories/11/resources/2']
       )
-      expect(client).to have_received(:published_resources).with(repository_id: '4', updated_after: '2023-12-12')
+      expect(client).to have_received(:published_resources).with(repository_id: '4', updated_after:)
       expect(client).to have_received(:published_resource_with_updated_component_uris).with(
         repository_id: '4',
-        updated_after: '2023-12-12',
+        updated_after:,
         uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
       )
       expect(client).to have_received(:published_resource_with_linked_agent_uris).with(
         repository_id: '4',
-        updated_after: '2023-12-12',
+        updated_after:,
         uris_to_exclude: ['/repositories/4/resources/1', '/repositories/4/resources/2']
       )
+    end
+
+    context 'without an explicit updated_after' do
+      let(:last_synced_at) { Time.utc(2026, 4, 23, 12, 0, 0) }
+
+      before do
+        allow(AspaceRepositorySync).to receive(:last_synced_at_for).and_return(last_synced_at)
+        allow(client).to receive_messages(published_resources: [], published_resource_with_updated_component_uris: [],
+                                          published_resource_with_linked_agent_uris: [])
+        allow(AspaceRepositorySync).to receive(:record_sync)
+      end
+
+      it 'uses the stored sync timestamp for each repository' do
+        described_class.enqueue_all_updated
+        expect(client).to have_received(:published_resources).with(repository_id: '11',
+                                                                   updated_after: last_synced_at)
+        expect(client).to have_received(:published_resources).with(repository_id: '4',
+                                                                   updated_after: last_synced_at)
+      end
+
+      context 'when no sync timestamp exists for a repository' do
+        before { allow(AspaceRepositorySync).to receive(:last_synced_at_for).and_return(nil) }
+
+        it 'falls back to approximately 2 hours ago' do
+          described_class.enqueue_all_updated
+          expect(client).to have_received(:published_resources).with(
+            repository_id: '11',
+            updated_after: be_within(5.seconds).of(2.hours.ago)
+          )
+        end
+      end
     end
   end
 
