@@ -17,7 +17,6 @@ RSpec.describe LandingPage::AccessCardComponent, type: :component do
     expect(page).to have_text('Field Reading Room')
     expect(page).to have_text('Located on the second floor of Green Library West.')
     expect(page).to have_text('Open until 5:00 PM')
-    # Temporarily disable due to issue #1360
-    # expect(page).to have_link('How to request materials')
+    expect(page).to have_link('How to request materials')
   end
 end
