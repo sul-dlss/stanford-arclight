@@ -16,12 +16,7 @@
   background-color: var(--stanford-black);
   border-top: none;
   margin-bottom: 0;
-   
-  .form-select {
-    background-size: 1.125rem 1.125rem;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+
 
   /* fill entire width on small screens, 75% when larger */
   .search-query-form {
@@ -55,12 +50,6 @@
   .custom-select {
     display: block;
   }
-}
-
-.masthead ~ .navbar-search .custom-select.form-select {
-  width: auto;
-  flex: 0 0 auto;
-  border: none;
 }
 
 /* Misc other styles */
