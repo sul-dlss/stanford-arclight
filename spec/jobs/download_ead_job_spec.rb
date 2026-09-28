@@ -40,11 +40,33 @@ RSpec.describe DownloadEadJob do
   end
 
   context 'when index param value is true' do
-    it 'enqueues an indexing job with the EAD file' do
-      expect do
+    context 'when SIDEKIQ_REDIS_URL is set' do
+      let(:redis) { instance_double(Redis, lpush: 1) }
+
+      before do
+        allow(Sidekiq).to receive(:redis).and_yield(redis)
+        allow(ENV).to receive(:fetch).and_call_original
+        allow(ENV).to receive(:[]).and_call_original
+        allow(ENV).to receive(:[]).with('SIDEKIQ_REDIS_URL').and_return('redis://localhost:6379')
+      end
+
+      it 'pushes the EAD file path to the Redis pending files list' do
         described_class.perform_now(resource_uri: '/repositories/1/resources/123', aspace_config_set: 'default',
                                     file_name: 'abc123', file_dir: '/data/archive/', index: true, generate_pdf: false)
-      end.to enqueue_job(IndexEadJob).once.with(file_path: '/data/archive/abc123.xml')
+
+        expect(redis).to have_received(:lpush).with(DrainIndexQueueJob::PENDING_FILES_KEY, '/data/archive/abc123.xml')
+      end
+    end
+
+    context 'when SIDEKIQ_REDIS_URL is not set' do
+      before { allow(ENV).to receive(:[]).with('SIDEKIQ_REDIS_URL').and_return(nil) }
+
+      it 'enqueues an IndexEadJob directly with the downloaded file' do
+        expect do
+          described_class.perform_now(resource_uri: '/repositories/1/resources/123', aspace_config_set: 'default',
+                                      file_name: 'abc123', file_dir: '/data/archive/', index: true, generate_pdf: false)
+        end.to enqueue_job(IndexEadJob).once.with(file_paths: ['/data/archive/abc123.xml'])
+      end
     end
   end
 
