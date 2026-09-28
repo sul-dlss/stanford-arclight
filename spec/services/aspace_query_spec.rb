@@ -21,6 +21,32 @@ RSpec.describe AspaceQuery, type: :service do
                                                     '}' })
       # rubocop:enable Layout/LineLength
     end
+
+    context 'with an updated_after Time' do
+      let(:updated_after) { Time.utc(2024, 5, 10, 14, 30, 0) }
+      let(:aspace_query) { described_class.new(client: aspace_client, repository_id: '1', updated_after:, options:) }
+
+      it 'includes a range_query on system_mtime with full timestamp precision' do
+        subqueries = JSON.parse(aspace_query.query_params[:aq]).dig('query', 'subqueries')
+        range_query = subqueries.find { |q| q['jsonmodel_type'] == 'range_query' }
+
+        expect(range_query).to include(
+          'jsonmodel_type' => 'range_query',
+          'field' => 'system_mtime',
+          'from' => '2024-05-10T14:30:00Z',
+          'to' => '*',
+          'inclusive_lower' => false,
+          'inclusive_upper' => true
+        )
+      end
+
+      it 'does not include a date_field_query for system_mtime' do
+        subqueries = JSON.parse(aspace_query.query_params[:aq]).dig('query', 'subqueries')
+        date_query = subqueries.find { |q| q['jsonmodel_type'] == 'date_field_query' }
+
+        expect(date_query).to be_nil
+      end
+    end
   end
 
   describe '#keys_to_return' do

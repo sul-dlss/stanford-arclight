@@ -16,6 +16,10 @@ class EnqueueRepositoryDownload
   end
 
   def enqueue_repository
+    # Capture before issuing any ASpace queries so changes that occur during a slow
+    # sync run are not lost — the next run will use this time as its lower bound.
+    sync_started_at = Time.current
+
     uris_to_exclude = []
     repository.each_published_resource(updated_after: config.updated_after) do |resource|
       uris_to_exclude << resource.uri if config.check_record_dates
@@ -23,6 +27,8 @@ class EnqueueRepositoryDownload
     end
 
     check_for_updated_components_and_agents(uris_to_exclude:)
+
+    AspaceRepositorySync.record_sync(repository:, synced_at: sync_started_at) if config.check_record_dates
   end
 
   private
