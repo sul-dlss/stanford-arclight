@@ -10,6 +10,28 @@ class SearchBuilder < Blacklight::SearchBuilder
                                    :apply_digital_content_sort,
                                    :min_match_for_boolean]
 
+  # Upstream Arclight::SearchBehavior#add_hierarchy_behavior sets `fl=*` for
+  # hierarchy queries, which drops the inherited `collection:[subquery]`
+  # parent lookup that otherwise ran once per child. We narrow `fl` further to
+  # only the fields the hierarchy tree view renders.
+  HIERARCHY_FL = %w[
+    id
+    normalized_title_ssm
+    level_ssm
+    child_component_count_isi
+    _nest_path_
+    component_level_isim
+    containers_ssim
+    has_online_content_ssim
+  ].join(',').freeze
+
+  def add_hierarchy_behavior(solr_parameters)
+    super # upstream sets fl=* here, dropping the collection:[subquery] parent lookup
+    return unless search_state.controller&.action_name == 'hierarchy'
+
+    solr_parameters[:fl] = HIERARCHY_FL
+  end
+
   # If no query is supplied when results are grouped and sorted by relevance,
   # we adjust the sort order so that each group is sorted in component order
   # with collections last.
