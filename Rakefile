@@ -53,7 +53,7 @@ task seed: :environment do
   repo_config.keys.map do |repository|
     # Index all EAD fixtures in directories matching the configured repository codes
     Dir.glob(Rails.root.join('spec', 'fixtures', 'ead', repository, '*.xml').to_s).each do |file|
-      IndexEadJob.perform_now(file_path: file, arclight_repository_code: repository)
+      IndexEadJob.perform_now(file_paths: [file], arclight_repository_code: repository)
     end
   end
 end
