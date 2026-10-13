@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CollectionContextComponent, type: :component do # rubocop:disable RSpec/MultipleMemoizedHelpers
+RSpec.describe CollectionContextComponent, type: :component do
   subject(:component) { described_class.new(presenter:, download_component: DocumentDownloadComponent) }
 
   let(:presenter) { instance_double(Blacklight::DocumentPresenter, document:) }
