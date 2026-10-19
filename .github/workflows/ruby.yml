@@ -19,5 +19,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+      # Docker would create the bind-mounted solr-data as root, which the solr user can't write to.
+      - name: Create Solr data directory
+        run: mkdir -p solr-data && chmod 777 solr-data
       - name: Run tests
         run: bundle exec rake
