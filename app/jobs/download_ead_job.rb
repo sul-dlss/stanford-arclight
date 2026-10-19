@@ -7,8 +7,8 @@ class DownloadEadJob < ApplicationJob
   class Config
     attr_reader :updated_after, :data_directory, :generate_pdf, :index, :check_record_dates
 
-    # @example DownloadEadJob::Config.new(updated_after: '2024-05-10', check_record_dates: true)
-    # @param updated_after [String] YYYY-MM-DD optionally limit the downloads by updated date
+    # @example DownloadEadJob::Config.new(updated_after: Time.current, check_record_dates: true)
+    # @param updated_after [Time] optionally limit the downloads to resources updated after this time
     # @param data_directory [String] sets the directory where the files will be saved
     # @param generate_pdf [Boolean] if true a job to generate a PDF file will be enqueued
     # @param index [Boolean] if true a job to index the EAD file will be enqueued
@@ -28,12 +28,26 @@ class DownloadEadJob < ApplicationJob
     end
   end
 
-  # By default this will enqueue all harvestable repositories updated since (and including) yesterday.
-  # Intended as a convenience method for use in a daily cron job.
-  # @example DownloadEadJob.enqueue_all_updated(updated_after: '2024-05-10')
-  # @param updated_after [String] YYYY-MM-DD limit the response to resources updated after a specific date
-  def self.enqueue_all_updated(updated_after: 2.days.ago.strftime('%Y-%m-%d'))
-    enqueue_all(config: DownloadEadJob::Config.new(updated_after:, check_record_dates: true))
+  # Enqueues all harvestable repositories for incremental update.
+  # Uses each repository's last recorded sync timestamp so that only records changed
+  # since the previous run are fetched. Falls back to 2 hours ago for repositories
+  # that have never been synced.
+  #
+  # Pass updated_after to override the per-repository lookup — useful for manual
+  # backfills or testing.
+  #
+  # @example DownloadEadJob.enqueue_all_updated
+  # @example DownloadEadJob.enqueue_all_updated(updated_after: 1.week.ago)
+  # @param updated_after [Time, nil] override the per-repository sync timestamp
+  def self.enqueue_all_updated(updated_after: nil)
+    create_directories(data_dir: DownloadEadJob::Config.new.data_directory)
+    AspaceRepositories.all_harvestable.each do |repository|
+      sync_updated_after = updated_after ||
+                           AspaceRepositorySync.last_synced_at_for(repository) ||
+                           2.hours.ago
+      config = DownloadEadJob::Config.new(updated_after: sync_updated_after, check_record_dates: true)
+      EnqueueRepositoryDownload.call(repository:, config:)
+    end
   end
 
   # This will enqueue all harvestable repositories.
