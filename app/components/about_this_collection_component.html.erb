@@ -1,0 +1,32 @@
+<% if render_deterministic? %>
+  <section id="about-this-collection" aria-labelledby="about-this-collection-heading">
+    <h2 id="about-this-collection-heading" class="al-show-sub-heading text-cardinal fs-4"><span aria-hidden="true">✦</span> <%= t('about_this_collection.heading') %></h2>
+    <dl class="row dl-invert mb-0">
+      <dt class="col-md-3"><%= t('about_this_collection.organization.label') %></dt>
+      <dd class="col-md-8"><%= organization_text %></dd>
+    </dl>
+  </section>
+<% end %>
+
+<% if ai_summary %>
+  <section id="about-this-collection-ai" aria-labelledby="about-this-collection-ai-heading">
+    <div class="d-flex align-items-center gap-2 mb-2">
+      <h2 id="about-this-collection-ai-heading" class="al-show-sub-heading text-cardinal fs-4 mb-0"><span aria-hidden="true">✦</span> <%= t('about_this_collection.heading') %></h2>
+      <span class="badge bg-illuminating-light me-2 text-stanford-black">Beta</span>
+      <span class="text-80-black small"><%= t('about_this_collection.ai_disclosure') %></span>
+    </div>
+    <p><%= safe_join(ai_summary['statements'].to_a.map { |statement| safe_join([statement['text'], citations(statement)]) }, ' ') %></p>
+    <dl class="row dl-invert mb-0">
+      <% ai_summary['highlights'].to_a.each do |highlight| %>
+        <dt class="col-md-3"><%= highlight['label'] %></dt>
+        <dd class="col-md-8"><%= highlight['value'] %><%= citations(highlight) %></dd>
+      <% end %>
+    </dl>
+    <% if ai_problems.any? %>
+      <details class="small text-muted">
+        <summary><%= t('about_this_collection.ai.review_notes', count: ai_problems.size) %></summary>
+        <ul><% ai_problems.each do |problem| %><li><%= problem %></li><% end %></ul>
+      </details>
+    <% end %>
+  </section>
+<% end %>

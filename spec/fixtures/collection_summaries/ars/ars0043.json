@@ -1,0 +1,21 @@
+{
+  "file": "ars/ars0043.xml",
+  "model": "gemini-3.8-flash",
+  "summary": {
+    "statements": [
+      { "text": "Recordings of concerts at the hall make up the largest series.", "cites": [403, 1] },
+      { "text": "The collection is open for research.", "cites": [0] },
+      { "text": "Listening appointments may require 24 hours notice.", "cites": [0, 1, 403] }
+    ],
+    "highlights": [
+      { "label": "Bulk of the material", "value": "Concert recordings", "cites": [403] },
+      { "label": "Formats", "value": "Open reel tapes and audio cassettes", "cites": [403] }
+    ]
+  },
+  "refs": {
+    "0": { "ref": null, "title": null },
+    "1": { "ref": "aspace_ref1_mvn", "title": "Series 1: Administrative Files" },
+    "403": { "ref": "aspace_ref52_k0v", "title": "Series 10: Concert Recordings" }
+  },
+  "problems": ["new label: Oddities"]
+}
