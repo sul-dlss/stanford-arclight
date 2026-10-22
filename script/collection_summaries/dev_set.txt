@@ -1,0 +1,12 @@
+manuscripts/m0733.xml
+manuscripts/m1463.xml
+manuscripts/m0224.xml
+manuscripts/m0702.xml
+manuscripts/m1125.xml
+manuscripts/m2508.xml
+uarc/sc0337.xml
+uarc/sc0340.xml
+uarc/sc1179.xml
+ars/ars0043.xml
+ars/ars0124.xml
+chs/ms_3800.xml

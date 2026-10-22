@@ -31,6 +31,10 @@ RSpec.describe 'Collection Page' do
       end
     end
 
+    it 'displays About this collection between the title and the summary' do
+      expect(page).to have_text('657 components in 10 series.')
+    end
+
     it 'displays the collection contents in the sidebar' do
       expect(page).to have_css('#collection-context')
     end

@@ -1,0 +1,9 @@
+inherit_from: ../../.rubocop.yml
+
+# One-off analysis scripts run with plain Ruby, not Rails, and favour long
+# report-building methods over many small ones.
+Rails:
+  Enabled: false
+
+Metrics:
+  Enabled: false

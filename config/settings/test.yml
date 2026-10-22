@@ -1,2 +1,3 @@
 mcp:
   allowed_hosts: 'www.example.com'
+collection_summaries_dir: './spec/fixtures/collection_summaries'
