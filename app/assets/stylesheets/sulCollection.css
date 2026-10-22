@@ -125,6 +125,17 @@
   border-top: none;
 }
 
+#about-this-collection,
+#about-this-collection-ai {
+  background: linear-gradient(90deg, #EAF4F7 0%, #EDF6F6 55%, #FFFBEE 100%);
+  padding: 1rem;
+  margin-bottom: 4rem;
+
+  dt {
+    font-size: 1rem;
+  }
+}
+
 /* AL Core overrides for metadata sections and the top title areas
 Those borders should look the same but have different types of markup in AL Core */
 #summary-container,

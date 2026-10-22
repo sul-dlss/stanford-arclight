@@ -48,6 +48,9 @@ aspace:
       - chs
 
 data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>
+# AI summaries for the About this collection block, laid out like data_dir.
+# script/collection_summaries/generate.rb writes them.
+collection_summaries_dir: <%= ENV['COLLECTION_SUMMARIES_DIR'] || '/opt/app/arclight/data/collection_summaries' %>
 
 semantic_search:
   top_k: 100

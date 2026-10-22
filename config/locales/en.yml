@@ -130,6 +130,28 @@ en:
       name: Your name
     submit:
       submit: Send
+  about_this_collection:
+    ai_disclosure: 'AI-generated from the finding aid — every claim links to a series or folder'
+    heading: 'At a glance'
+    components:
+      one: '1 component'
+      other: '%{formatted} components'
+    series:
+      one: '1 series'
+      other: '%{formatted} series'
+    groups:
+      one: '1 group'
+      other: '%{formatted} groups'
+    organization:
+      label: 'Organization'
+      grouped: '%{components} in %{groups}.'
+      largest_html: 'The largest is %{title}, with %{components}.'
+      flat: '%{components} in a single list.'
+      none: 'No contents list.'
+    ai:
+      review_notes:
+        one: '1 review note'
+        other: '%{count} review notes'
   using_these_materials:
     heading: "Using these materials"
     info_for_visitors: "Info for visitors"

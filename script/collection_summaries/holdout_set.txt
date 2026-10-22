@@ -1,0 +1,6 @@
+manuscripts/m1090.xml
+manuscripts/m1854.xml
+manuscripts/m2281.xml
+uarc/sc1256.xml
+ars/ars0002.xml
+chs/pc_010.xml
