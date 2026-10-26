@@ -75,6 +75,25 @@ bin/rails runner 'DownloadEadJob.enqueue_one_by(aspace_repository_code: "ars", u
 ```
 5. You can monitor job progress in the Sidekiq admin UI, which is available at: `http://localhost:3000/sidekiq`
 
+### Finding and fetching a single resource from ArchivesSpace
+To download (and re-index) one finding aid, first look up its ArchivesSpace resource URI by EAD ID or another keyword:
+```shell
+bundle exec rake stanford_arclight:find_resource\['sc1368'\]
+```
+Each match shows the resource's URI, EAD ID, identifier, publication status, ARK, and a ready-to-run fetch command:
+```
+/repositories/2/resources/10408  speccoll (default)
+  title:     Dee (Thomas D., II) papers
+  ead_id:    "sc1368.xml"  identifier: "SC1368"
+  published: true  suppressed: false  ark: ark:/22236/s1de3f780a-69e5-43cd-b807-b522b16f298c
+  fetch:     bin/rails "stanford_arclight:fetch_resource[/repositories/2/resources/10408,default]"
+```
+Then copy the fetch command to download the EAD to the same location the harvester would save it, and queue jobs to index it and generate its PDF:
+```shell
+bin/rails "stanford_arclight:fetch_resource[/repositories/2/resources/10408,default]"
+```
+Only published, unsuppressed resources can be fetched. In development, run Sidekiq (see above) so the queued jobs complete.
+
 ### Deleting a collection
 There is a rake task for deleting a single collection and all of its components from the Solr index.
 
