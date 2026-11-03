@@ -1,0 +1,22 @@
+<div class="alert alert-dismissible results-summary" role="status">
+  <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
+    <h2 class="fs-5 mb-0 text-cardinal"><span aria-hidden="true">✦</span> About these results</h2>
+    <span class="badge bg-illuminating-light text-stanford-black">Beta</span>
+    <span class="text-80-black small">AI-generated from finding-aid descriptions</span>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <p class="mb-2"><%= summary_html %></p>
+
+  <% if related_topics.any? %>
+    <div class="mt-2">
+      <strong class="d-block mb-1 small text-uppercase text-80-black">Search related topics</strong>
+      <% related_topics.each do |term| %>
+        <%= link_to related_topic_href(term), class: 'btn btn-outline-primary btn-sm rounded-pill me-1 mb-1',
+                                               data: { turbo_frame: '_top' } do %>
+          <%= term %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

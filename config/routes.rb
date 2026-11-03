@@ -23,6 +23,12 @@ Rails.application.routes.draw do
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :hierarchy, Arclight::Routes::Hierarchy.new
 
+  # Must be declared BEFORE `resources :solr_documents` below: that resource's
+  # `show` route (`GET /catalog/:id`) is also mounted at path '/catalog', and
+  # being declared first would otherwise swallow this path with :id="results_summary".
+  get '/catalog/results_summary' => 'catalog#results_summary', as: :results_summary
+  get '/catalog/cross_system_suggestions' => 'catalog#cross_system_suggestions', as: :cross_system_suggestions
+
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
     concerns :hierarchy
     concerns :exportable
@@ -41,6 +47,8 @@ Rails.application.routes.draw do
   get '/search_tips' => 'catalog#search_tips'
 
   get '/using-this-site' => 'using_this_site#index'
+
+  match '/mcp', to: 'mcp#create', via: %i[get post delete]
 
   # Match ARKs that contain:
   # - a repository shoulder (one letter followed by one digit)

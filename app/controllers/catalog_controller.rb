@@ -31,7 +31,11 @@ class CatalogController < ApplicationController
       'collection.q': '{!terms f=id v=$row._root_}',
       'collection.defType': 'lucene',
       'collection.fl': '*',
-      'collection.rows': 1
+      'collection.rows': 1,
+      # Give the top-level collection document a boost so that component matches especially
+      # with short titles don't outrank collections.
+      # See https://github.com/sul-dlss/stanford-arclight/issues/1240
+      bq: 'component_level_isim:0^150'
     }
 
     # Sets the indexed Solr field that will display with highlighted matches
@@ -217,6 +221,17 @@ class CatalogController < ApplicationController
     config.add_search_field 'keyword', label: 'Keyword' do |field|
       field.qt = 'search' # default
     end
+
+    # Semantic/Hybrid search configurations.
+    config.json_solr_path = 'select'
+    config.default_search_field = config.search_fields['hybrid']
+    config.add_search_field 'hybrid', label: 'Hybrid' do |field|
+      field.qt = 'search'
+    end
+    config.add_search_field 'semantic', label: 'Semantic' do |field|
+      field.qt = 'search'
+    end
+
     config.add_search_field 'name', label: 'Name' do |field|
       field.qt = 'search'
       field.solr_parameters = {
@@ -456,5 +471,23 @@ class CatalogController < ApplicationController
 
   def search_tips
     render SearchTipsComponent.new
+  end
+
+  # Backs the lazy-loaded "About these results" Turbo Frame on the search
+  # results page (see app/views/catalog/_search_results_header.html.erb). Runs
+  # the same search as #index so the summary reflects the exact result set the
+  # user is looking at; the LLM call itself lives in SemanticSearch::ResultsSummary
+  # and is timeout-guarded and cached, so this is safe to run on its own request.
+  def results_summary
+    @response = search_service.search_results
+  end
+
+  # Backs the lazy-loaded "Looking for more?" Turbo Frame (see
+  # app/views/catalog/_search_results_header.html.erb). Fans out the current
+  # query to SearchWorks and Exhibits directly from the server, so their
+  # timeouts/failures are ours to control rather than the browser's - see
+  # CrossSystemSearch::Suggestions.
+  def cross_system_suggestions
+    @query = search_state.query_param
   end
 end

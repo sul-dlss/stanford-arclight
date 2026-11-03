@@ -1,0 +1,29 @@
+/* "About these results" and "Looking for more?" panels above the search
+results list. Matches the record page's "At a glance" AI summary styling. */
+.results-summary,
+.cross-system-suggestions {
+  --bs-alert-bg: transparent;
+  --bs-alert-border-color: transparent;
+  --bs-alert-color: var(--stanford-black);
+  background: linear-gradient(90deg, #EAF4F7 0%, #EDF6F6 55%, #FFFBEE 100%);
+  padding: 1rem;
+}
+
+.results-summary a:not(.btn),
+.cross-system-suggestions a:not(.btn) {
+  color: var(--stanford-digital-blue);
+}
+
+.results-summary .btn-outline-primary,
+.cross-system-suggestions .btn-outline-primary {
+  --bs-btn-color: var(--stanford-digital-blue);
+  --bs-btn-border-color: var(--stanford-digital-blue);
+  --bs-btn-hover-bg: var(--stanford-digital-blue);
+  --bs-btn-hover-border-color: var(--stanford-digital-blue);
+  color: var(--bs-btn-color);
+}
+
+.results-summary .btn-outline-primary:hover,
+.cross-system-suggestions .btn-outline-primary:hover {
+  color: white;
+}
