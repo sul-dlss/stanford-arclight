@@ -11,6 +11,22 @@ body {
   min-height: 100vh;
 }
 
+.text-cardinal {
+  color: rgba(var(--stanford-cardinal-rgb), 1);
+}
+
+.text-stanford-black {
+  color: var(--stanford-black);
+}
+
+.text-80-black {
+  color: var(--stanford-80-black);
+}
+
+.bg-illuminating-light {
+  background: rgb(var(--stanford-illuminating-light-rgb));
+}
+
 /* make the content area full bleed */
 #main-container {
   padding: 0;

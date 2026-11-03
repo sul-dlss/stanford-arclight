@@ -1,0 +1,40 @@
+<div class="alert alert-dismissible cross-system-suggestions" role="status">
+  <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
+    <h2 class="fs-5 mb-0 text-cardinal"><span aria-hidden="true">✦</span> Looking for more?</h2>
+    <span class="badge bg-illuminating-light text-stanford-black">Beta</span>
+    <span class="text-80-black small">AI-suggested next steps from your search</span>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+  <strong class="d-block mb-2 small text-uppercase text-80-black">Search the library's other systems</strong>
+
+  <% sources.each do |source| %>
+    <div class="mb-3 pb-2 border-bottom">
+      <div class="mb-1">
+        <% if source[:tier] == :strong_match %>
+          <span class="badge bg-success-subtle text-success-emphasis border border-success-subtle me-1">Strong match</span>
+        <% elsif source[:tier] == :worth_a_look %>
+          <span class="badge bg-light text-secondary border me-1">Worth a look</span>
+        <% elsif source[:tier] == :low_confidence %>
+          <span class="badge bg-light text-muted border me-1">Uncertain match</span>
+        <% end %>
+        <strong><%= source[:label] %></strong>
+        <span class="text-80-black">&middot; <%= number_with_delimiter(source[:total]) %> record<%= 's' unless source[:total] == 1 %></span>
+      </div>
+
+      <% if source[:blurb_html] %>
+        <p class="mb-2 small text-80-black"><%= source[:blurb_html] %></p>
+      <% end %>
+
+      <% if source[:doc] && source[:tier] != :low_confidence %>
+        <div class="mb-2">
+          <span class="text-80-black small">For example:</span>
+          <%= link_to source[:doc][:title], source[:doc][:url], class: 'fw-semibold' %>
+        </div>
+      <% end %>
+
+      <%= link_to "See all results on #{source[:label]}", source[:search_url],
+                  class: 'btn btn-outline-primary btn-sm rounded-pill' %>
+    </div>
+  <% end %>
+</div>

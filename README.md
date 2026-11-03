@@ -13,6 +13,12 @@ The following command will start a local Solr instance at `localhost:8983`, with
 ```shell
 docker compose up
 ```
+
+## Model Context Protocol endpoint
+
+The experimental, read-only MCP server is available at `/mcp` to anyone who can reach the website.
+`Settings.mcp.allowed_hosts` protects the transport's `Host` validation; record URLs use the origin of each Rails request.
+
 ### Managing data
 Data for the solr and redis services are persisted using docker named volumes. You can see what volumes are currently present with:
 

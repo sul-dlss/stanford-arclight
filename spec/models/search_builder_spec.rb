@@ -91,4 +91,70 @@ RSpec.describe SearchBuilder do
       end
     end
   end
+
+  describe '#apply_component_count_boost' do
+    subject(:solr_parameters) do
+      search_builder.with(query).processed_parameters
+    end
+
+    context 'when there is no query' do
+      let(:query) { { q: '' } }
+
+      it 'does not set a boost' do
+        expect(solr_parameters[:boost]).to be_nil
+      end
+    end
+
+    context 'when browsing all results' do
+      let(:query) { { q: '*:*' } }
+
+      it 'does not set a boost' do
+        expect(solr_parameters[:boost]).to be_nil
+      end
+    end
+
+    context 'when there is a query' do
+      let(:query) { { q: 'a query' } }
+
+      it 'boosts small collections unconditionally, gating larger ones on their own relevance' do
+        size_boost = 'sum(1,div(log(sum(def(total_component_count_is,0),1)),6))'
+
+        expect(solr_parameters[:boost]).to eq(
+          'if(gt(def(total_component_count_is,0),50),' \
+          "if(gt(query({!edismax v=$component_count_q boost=1 bq=''}),20),#{size_boost},1)," \
+          "#{size_boost})"
+        )
+      end
+
+      it 'gives the relevance check its own copy of the query' do
+        expect(solr_parameters[:component_count_q]).to eq('a query')
+      end
+
+      it 'stops the inner relevance check from recursing into its own boost' do
+        expect(solr_parameters[:boost]).to include('boost=1')
+      end
+
+      it 'stops the inner relevance check from inheriting the collection-level bq boost' do
+        expect(solr_parameters[:boost]).to include("bq=''")
+      end
+    end
+
+    context 'when hybrid search drops the plain q' do
+      subject(:solr_parameters) do
+        described_class.new(CatalogController.new).with(query).processed_parameters
+      end
+
+      let(:query) { { q: 'oral history', search_field: 'hybrid' } }
+      let(:embedder) { instance_double(SemanticSearch::QueryEmbeddingCache, embed: [0.1, 0.2, 0.3]) }
+
+      before { allow(SemanticSearch::QueryEmbeddingCache).to receive(:new).and_return(embedder) }
+
+      it 'still gives the relevance check the query, on the nested lexical query' do
+        expect(solr_parameters).not_to have_key(:q)
+        expect(solr_parameters[:component_count_q]).to eq('oral history')
+        expect(solr_parameters.dig(:json, :query, :bool, :should, 0, :edismax, :boost))
+          .to include('v=$component_count_q')
+      end
+    end
+  end
 end
