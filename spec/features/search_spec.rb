@@ -16,8 +16,8 @@ RSpec.describe 'Searching', :js do
     end
 
     it 'renders the search results page with default params' do
-      expect(page).to have_text(/You searched for:\s*Keyword Example search query/)
-      expect(page.current_url).to include('group=true&search_field=keyword&q=Example+search+query')
+      expect(page).to have_text(/You searched for:\s*Example search query/)
+      expect(page.current_url).to include('group=true&search_field=hybrid&q=Example+search+query')
     end
 
     it 'creates Clear all link with the group=true parameter' do
@@ -34,7 +34,7 @@ RSpec.describe 'Searching', :js do
       within '.search-btn-wrapper' do
         click_on 'Search'
       end
-      expect(page).to have_text(/You searched for:\s*Keyword jazz/)
+      expect(page).to have_text(/You searched for:\s*jazz/)
       expect(page.current_url).not_to include('group=true')
     end
   end
@@ -47,7 +47,7 @@ RSpec.describe 'Searching', :js do
         click_on 'Search'
       end
 
-      expect(page).to have_text(/You searched for:\s*Keyword knuth/)
+      expect(page).to have_text(/You searched for:\s*knuth/)
       expect(page.current_url).not_to include('group=true')
     end
   end
@@ -60,7 +60,7 @@ RSpec.describe 'Searching', :js do
       within '.search-btn-wrapper' do
         click_on 'Search'
       end
-      expect(page).to have_text(/You searched for:\s*Keyword jazz/)
+      expect(page).to have_text(/You searched for:\s*jazz/)
       expect(page.current_url).to include('group=true')
     end
   end

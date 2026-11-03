@@ -218,18 +218,23 @@ class CatalogController < ApplicationController
 
     # Field-based searches. We have registered handlers in the Solr configuration
     # so we have Blacklight use the `qt` parameter to invoke them
+    # Keyword-only and semantic-only searches stay available by URL (and to the
+    # MCP server and relevance evaluations), but the dropdown offers only the
+    # hybrid search.
     config.add_search_field 'keyword', label: 'Keyword' do |field|
-      field.qt = 'search' # default
+      field.qt = 'search'
+      field.include_in_simple_select = false
     end
 
     # Semantic/Hybrid search configurations.
     config.json_solr_path = 'select'
-    config.default_search_field = config.search_fields['hybrid']
     config.add_search_field 'hybrid', label: 'Hybrid' do |field|
       field.qt = 'search'
+      field.default = true
     end
     config.add_search_field 'semantic', label: 'Semantic' do |field|
       field.qt = 'search'
+      field.include_in_simple_select = false
     end
 
     config.add_search_field 'name', label: 'Name' do |field|

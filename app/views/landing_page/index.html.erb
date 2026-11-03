@@ -12,7 +12,7 @@
           <%= render(LandingPageSearchBarComponent.new(
             url: search_action_url,
             params: search_state.params_for_search.except(:qt),
-            search_field: 'keyword',
+            search_field: 'hybrid',
             autocomplete_path: suggest_index_catalog_path)) %>
         </div>
       </div>
