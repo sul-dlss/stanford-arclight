@@ -8,6 +8,16 @@
       fire, so the frame stays empty. `eager` (the Turbo default) still loads
       asynchronously, after the surrounding page has already rendered - the results
       list is never blocked on it either way. %>
-  <%= turbo_frame_tag 'results-summary', src: results_summary_path(request.query_parameters) %>
-  <%= turbo_frame_tag 'cross-system-suggestions', src: cross_system_suggestions_path(request.query_parameters) %>
+  <%= turbo_frame_tag 'results-summary', src: results_summary_path(request.query_parameters) do %>
+    <% if Settings.results_summary.enabled %>
+      <%= render 'catalog/ai_panel_loading', panel_class: 'results-summary', title: 'About these results',
+                                             subtitle: 'AI-generated from finding-aid descriptions' %>
+    <% end %>
+  <% end %>
+  <%= turbo_frame_tag 'cross-system-suggestions', src: cross_system_suggestions_path(request.query_parameters) do %>
+    <% if Settings.cross_system_search.enabled %>
+      <%= render 'catalog/ai_panel_loading', panel_class: 'cross-system-suggestions', title: 'Looking for more?',
+                                             subtitle: 'AI-suggested next steps from your search' %>
+    <% end %>
+  <% end %>
 <% end %>
