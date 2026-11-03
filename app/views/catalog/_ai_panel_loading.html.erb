@@ -1,0 +1,17 @@
+<%# Placeholder shown inside an AI panel's Turbo Frame until its lazy-loaded
+    content arrives. Turbo swaps the frame's contents on response, so this
+    disappears on its own - including when the panel has nothing to show. %>
+<div class="alert <%= panel_class %> ai-panel-loading" aria-busy="true">
+  <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
+    <h2 class="fs-5 mb-0 text-cardinal"><span aria-hidden="true">✦</span> <%= title %></h2>
+    <span class="badge bg-illuminating-light text-stanford-black">Beta</span>
+    <span class="text-80-black small"><%= subtitle %></span>
+  </div>
+
+  <span class="visually-hidden" role="status">Loading <%= title %></span>
+  <div class="placeholder-glow" aria-hidden="true">
+    <span class="placeholder col-12"></span>
+    <span class="placeholder col-11"></span>
+    <span class="placeholder col-7"></span>
+  </div>
+</div>

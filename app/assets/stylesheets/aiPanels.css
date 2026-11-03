@@ -27,3 +27,11 @@ results list. Matches the record page's "At a glance" AI summary styling. */
 .cross-system-suggestions .btn-outline-primary:hover {
   color: white;
 }
+
+/* Loading shell rendered inside each panel's Turbo Frame until it loads. */
+.ai-panel-loading .placeholder {
+  min-height: 0.9em;
+  margin-bottom: 0.4rem;
+  border-radius: 0.25rem;
+  color: var(--stanford-80-black);
+}
