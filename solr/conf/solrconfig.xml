@@ -107,6 +107,8 @@
          name_teim^10
          place_teim^10
          subject_teim^2
+         abstract_tesim^5
+         scopecontent_tesim^3
          identifier_search
          container_teim
          parent_unittitles_tesim
@@ -121,6 +123,8 @@
          name_teim^20
          place_teim^20
          subject_teim^5
+         abstract_tesim^10
+         scopecontent_tesim^6
          identifier_search^2
          container_teim^2
          parent_unittitles_tesim^2
