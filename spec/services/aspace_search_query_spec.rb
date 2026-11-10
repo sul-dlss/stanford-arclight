@@ -10,11 +10,31 @@ RSpec.describe AspaceSearchQuery, type: :service do
     it 'returns query params using the q parameter' do
       expect(aspace_search_query.query_params).to eq({ q: 'test' })
     end
+
+    context 'with a type' do
+      let(:aspace_search_query) do
+        described_class.new(client: aspace_client, repository_id: '1', query: 'test', type: 'resource')
+      end
+
+      it 'limits the query to that type' do
+        expect(aspace_search_query.query_params).to eq({ q: 'test', 'type[]': 'resource' })
+      end
+    end
   end
 
   describe '#keys_to_return' do
     it 'uses uri as the key to return' do
       expect(aspace_search_query.keys_to_return).to eq(['uri'])
+    end
+
+    context 'with keys_to_return' do
+      let(:aspace_search_query) do
+        described_class.new(client: aspace_client, repository_id: '1', query: 'test', keys_to_return: %w[uri title])
+      end
+
+      it 'uses the given keys' do
+        expect(aspace_search_query.keys_to_return).to eq(%w[uri title])
+      end
     end
   end
 end

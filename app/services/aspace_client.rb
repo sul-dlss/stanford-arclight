@@ -52,6 +52,27 @@ class AspaceClient
     AspaceQuery.new(client: self, repository_id:, updated_after:, options: { published: true, suppressed: false })
   end
 
+  # Returns the published, unsuppressed resource with the given URI, or nil if there isn't one
+  # e.g. {"ead_id"=>"sc0348.xml", "identifier"=>"SC-0348", "uri"=>"/repositories/2/resources/5363"}
+  # @example client.published_resource(repository_id: 2, uri: '/repositories/2/resources/5363')
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param uri [String] the URI of the resource
+  def published_resource(repository_id:, uri:)
+    published_unsuppressed_resource_query(repository_id:, resource_uris: [uri]).each.first
+  end
+
+  # Returns an instance of AspaceSearchQuery that responds to :each returning
+  # hashes describing resources matching a keyword search,
+  # e.g. {"uri"=>"/repositories/2/resources/10408", "ead_id"=>"sc1368.xml", "identifier"=>"SC1368",
+  #       "title"=>"Dee (Thomas D., II) papers", "publish"=>true, "suppressed"=>false, "ark_name"=>["ark:/..."]}
+  # @example client.search_resources(repository_id: 2, query: 'sc1368').each { |r| do something }
+  # @param repository_id [Integer] the repository id in ArchivesSpace
+  # @param query [String] the keyword search, such as an EAD ID
+  def search_resources(repository_id:, query:)
+    AspaceSearchQuery.new(client: self, repository_id:, query:, type: 'resource',
+                          keys_to_return: %w[uri ead_id identifier title publish suppressed ark_name])
+  end
+
   # Returns an array of all published resource ARKs in ASpace for the specified repository
   # e.g. ["ark:/22236/r50bc21642-111d-46e3-8e44-d30f9463d6a9", "ark:/22236/r523b42772-48e8-4090-9bc9-dbdfc75ae777"]
   # @example client.all_published_resource_arks_by(repository_id: '11')
