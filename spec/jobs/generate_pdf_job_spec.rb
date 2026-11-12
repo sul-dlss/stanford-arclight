@@ -2,7 +2,6 @@
 
 require 'rails_helper'
 
-# rubocop: disable RSpec/MultipleMemoizedHelpers
 RSpec.describe GeneratePdfJob do
   let(:file_path) { '/repo/ARS.0043_ead.xml' }
   let(:file_name) { 'ARS.0043_ead.xml' }
@@ -94,4 +93,3 @@ RSpec.describe GeneratePdfJob do
     end
   end
 end
-# rubocop: enable RSpec/MultipleMemoizedHelpers

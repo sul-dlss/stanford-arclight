@@ -79,13 +79,25 @@ class DownloadEadJob < ApplicationJob
   def perform(resource_uri:, aspace_config_set:, file_name:, file_dir:, index:, generate_pdf:) # rubocop:disable Metrics/ParameterLists
     ead_xml = AspaceClient.new(aspace_config_set:).resource_description(resource_uri)
     file_path = File.join(file_dir, "#{file_name}.xml")
+    write_ead_file(file_path:, ead_xml:)
+    enqueue_index(file_path:) if index
+    GeneratePdfJob.perform_later(file_path:, file_name:, data_dir: file_dir, skip_existing: false) if generate_pdf
+  end
 
+  private
+
+  def write_ead_file(file_path:, ead_xml:)
     File.open(file_path, 'wb') do |f|
       ead = Nokogiri::XML(ead_xml, &:noblanks)
       f.puts ead.to_xml(indent: 2)
     end
+  end
 
-    IndexEadJob.perform_later(file_path:) if index
-    GeneratePdfJob.perform_later(file_path:, file_name:, data_dir: file_dir, skip_existing: false) if generate_pdf
+  def enqueue_index(file_path:)
+    if ENV['SIDEKIQ_REDIS_URL']
+      Sidekiq.redis { |r| r.lpush(DrainIndexQueueJob::PENDING_FILES_KEY, file_path) }
+    else
+      IndexEadJob.perform_later(file_paths: [file_path])
+    end
   end
 end
