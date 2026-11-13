@@ -76,4 +76,21 @@ RSpec.describe SolrDocument do
       expect(document.ead_file_without_namespace_href).to eq '/download/ars0001.xml?without_namespace=true'
     end
   end
+
+  describe '#as_json' do
+    let(:document) do
+      described_class.new(
+        id: 'ars0001_c01',
+        embedding_vector: [0.1, 0.2],
+        collection: { numFound: 1, docs: [{ id: 'ars0001', embedding_vector: [0.3, 0.4] }] }
+      )
+    end
+
+    it 'leaves out the embedding vector of the document and its collection' do
+      expect(document.as_json).to eq(
+        'id' => 'ars0001_c01',
+        'collection' => { 'numFound' => 1, 'docs' => [{ 'id' => 'ars0001' }] }
+      )
+    end
+  end
 end

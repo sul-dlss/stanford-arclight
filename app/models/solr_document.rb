@@ -55,6 +55,15 @@ class SolrDocument
     DocumentLocalFileMapper.new(document: self, format: :pdf).size
   end
 
+  # The stored embedding vector is only for Solr similarity queries, and it is
+  # several KB per record, so keep it out of the JSON API (e.g. the breadcrumbs
+  # field, which serializes the whole document and its collection).
+  def as_json(*)
+    super.except('embedding_vector').tap do |json|
+      json['collection']&.fetch('docs', nil)&.each { |doc| doc.delete('embedding_vector') }
+    end
+  end
+
   # self.unique_key = 'id'
 
   # DublinCore uses the semantic field mappings below to assemble an OAI-compliant Dublin Core document
