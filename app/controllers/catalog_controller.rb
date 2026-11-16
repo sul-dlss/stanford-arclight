@@ -31,7 +31,11 @@ class CatalogController < ApplicationController
       'collection.q': '{!terms f=id v=$row._root_}',
       'collection.defType': 'lucene',
       'collection.fl': '*',
-      'collection.rows': 1
+      'collection.rows': 1,
+      # Give the top-level collection document a boost so that component matches especially
+      # with short titles don't outrank collections.
+      # See https://github.com/sul-dlss/stanford-arclight/issues/1240
+      bq: 'component_level_isim:0^150'
     }
 
     # Sets the indexed Solr field that will display with highlighted matches
