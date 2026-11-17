@@ -26,6 +26,10 @@ every :day do
   runner 'DownloadEadJob.enqueue_all_updated'
 end
 
+every 2.minutes do
+  runner 'DrainIndexQueueJob.perform_later'
+end
+
 every :day, at: '3:00 am' do
   runner 'GeneratePdfJob.enqueue_all_missing_and_invalid'
 end
