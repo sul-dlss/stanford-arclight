@@ -76,6 +76,10 @@ results_summary:
   max_documents: 6
   timeout: 8
   cache_ttl: 3600
+  # Current Claude models think by default, and the hidden thinking counts
+  # against max_tokens - at the default effort it can use the whole budget and
+  # leave the panel empty. Blank to use the model's default.
+  reasoning_effort: low
 
 # Content-safety gate for the results_summary panel (see SemanticSearch::QuerySafety):
 # fails CLOSED, not open - any error, timeout, or non-YES response suppresses the
@@ -106,6 +110,10 @@ cross_system_search:
   # rather than "Worth a look" - deterministic, never LLM-judged.
   strong_match_min: 3
   cache_ttl: 3600
+  # Current Claude models think by default, and the hidden thinking counts
+  # against max_tokens - at the default effort it can use the whole budget and
+  # leave the panel empty. Blank to use the model's default.
+  reasoning_effort: low
 
 pdf_generation:
   create_on_ead_download: true

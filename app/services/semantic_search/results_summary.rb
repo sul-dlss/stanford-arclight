@@ -83,7 +83,8 @@ module SemanticSearch
       messages = [{ role: 'system', content: system_prompt },
                   { role: 'user', content: user_prompt(query, total, candidates) }]
       ChatCompletionService.new(timeout: Settings.results_summary.timeout)
-                           .complete(messages, model: Settings.results_summary.model, max_tokens: 220)
+                           .complete(messages, model: Settings.results_summary.model, max_tokens: 500,
+                                               reasoning_effort: Settings.results_summary.reasoning_effort)
                            .strip
     end
 
@@ -178,7 +179,7 @@ module SemanticSearch
     def cache_key(search_state)
       normalized_query = search_state.query_param.to_s.strip.downcase.gsub(/\s+/, ' ')
       filters = search_state.params[:f].to_h.sort.to_s
-      "semantic_search/results_summary/#{Settings.results_summary.model}/#{normalized_query}/#{filters}"
+      "semantic_search/results_summary/#{Settings.results_summary.model}/v2/#{normalized_query}/#{filters}"
     end
   end
 end

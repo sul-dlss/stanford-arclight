@@ -24,9 +24,17 @@ module SemanticSearch
 
     # @param messages [Array<Hash>] OpenAI-style [{role:, content:}, ...]
     # @param model [String]
+    # @param temperature [Float, nil] omitted from the request when nil, so the
+    #   model's default applies. The gateway's current Claude models reject any
+    #   temperature other than 1, so don't pass one for them.
+    # @param reasoning_effort [String, nil] e.g. "low"; omitted when nil. Current
+    #   Claude models think by default, and that hidden thinking counts against
+    #   max_tokens - on a short completion it can use the whole budget and
+    #   return empty text.
     # @return [String] the completion text
-    def complete(messages, model:, max_tokens: 400, temperature: 0.2)
-      body = { model: model, messages: messages, max_tokens: max_tokens, temperature: temperature }
+    def complete(messages, model:, max_tokens: 400, temperature: nil, reasoning_effort: nil)
+      body = { model: model, messages: messages, max_tokens: max_tokens,
+               temperature: temperature, reasoning_effort: reasoning_effort }.compact
       response = post_chat(body)
       raise ApiError, "Chat completion gateway returned #{response.status}: #{response.body}" unless response.success?
 

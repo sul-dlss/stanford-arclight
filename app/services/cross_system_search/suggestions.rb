@@ -117,9 +117,10 @@ module CrossSystemSearch
 
     def fetch_summary(query, sources)
       messages = [{ role: 'system', content: system_prompt }, { role: 'user', content: user_prompt(query, sources) }]
-      model = Settings.cross_system_search.model
-      SemanticSearch::ChatCompletionService.new(timeout: Settings.cross_system_search.timeout)
-                                           .complete(messages, model: model, max_tokens: 120)
+      settings = Settings.cross_system_search
+      SemanticSearch::ChatCompletionService.new(timeout: settings.timeout)
+                                           .complete(messages, model: settings.model, max_tokens: 300,
+                                                               reasoning_effort: settings.reasoning_effort)
                                            .strip
     end
 
@@ -197,7 +198,7 @@ module CrossSystemSearch
 
     def cache_key(query)
       normalized_query = query.to_s.strip.downcase.gsub(/\s+/, ' ')
-      "cross_system_search/suggestions/#{Settings.cross_system_search.model}/v4/#{normalized_query}"
+      "cross_system_search/suggestions/#{Settings.cross_system_search.model}/v5/#{normalized_query}"
     end
   end
   # rubocop:enable Metrics/ModuleLength
