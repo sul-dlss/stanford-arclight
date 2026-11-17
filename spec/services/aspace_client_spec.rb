@@ -91,7 +91,7 @@ RSpec.describe AspaceClient do
 
     before do
       allow(AspaceQuery).to receive(:new)
-        .with(client:, repository_id: 11, updated_after: '2024-05-06', primary_type: nil,
+        .with(client:, repository_id: 11, updated_after: Time.utc(2024, 5, 6), primary_type: nil,
               options: { contains_fields: ['resource'], select_fields: ['resource'],
                          exclude_field_values: { 'resource' => nil } })
         .and_return(aspace_query)
@@ -103,13 +103,14 @@ RSpec.describe AspaceClient do
 
     it 'returns an instance of AspaceQuery' do
       expect(client.published_resource_with_updated_component_uris(repository_id: 11,
-                                                                   updated_after: '2024-05-06')).to eq aspace_query
+                                                                   updated_after: Time.utc(2024, 5,
+                                                                                           6))).to eq aspace_query
     end
 
     context 'without a repository_id argument' do
       it 'raises an error' do
         expect do
-          client.published_resource_with_updated_component_uris(updated_after: '2024-05-06')
+          client.published_resource_with_updated_component_uris(updated_after: Time.utc(2024, 5, 6))
         end.to raise_error(ArgumentError)
       end
     end
@@ -147,7 +148,7 @@ RSpec.describe AspaceClient do
     context 'without a repository_id argument' do
       it 'raises an error' do
         expect do
-          client.published_resource_with_linked_agent_uris(updated_after: '2024-05-10')
+          client.published_resource_with_linked_agent_uris(updated_after: Time.utc(2024, 5, 10))
         end.to raise_error(ArgumentError)
       end
     end
@@ -165,20 +166,20 @@ RSpec.describe AspaceClient do
     let(:aspace_query) { instance_double(AspaceQuery) }
 
     before do
-      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 11, updated_after: '2024-05-06',
+      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 11, updated_after: Time.utc(2024, 5, 6),
                                                primary_type: nil,
                                                options: { contains_fields: [], contains_type: 'agent' })
                                          .and_return(aspace_query)
     end
 
     it 'returns an instance of AspaceQuery' do
-      expect(client.updated_agents(repository_id: 11, updated_after: '2024-05-06')).to eq aspace_query
+      expect(client.updated_agents(repository_id: 11, updated_after: Time.utc(2024, 5, 6))).to eq aspace_query
     end
 
     context 'without a repository_id argument' do
       it 'raises an error' do
         expect do
-          client.updated_agents(updated_after: '2024-05-06')
+          client.updated_agents(updated_after: Time.utc(2024, 5, 6))
         end.to raise_error(ArgumentError)
       end
     end
