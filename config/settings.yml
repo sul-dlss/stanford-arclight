@@ -27,6 +27,14 @@ hours_locations:
     location: 'library-circulation'
     url: 'https://library-hours.stanford.edu/'
 
+# In EAD notes, a link whose href is a `from` URL gets the `to` URL as its href instead. This
+# includes bare URLs that the app turns into links. The link text stays as written in the EAD.
+ead_href_rewrites:
+  - from: 'http://library.stanford.edu/depts/spc/pubserv/permissions.html'
+    to: 'https://library.stanford.edu/special-collections-policies'
+  - from: 'http://library.stanford.edu/depts/spc/spc.html'
+    to: 'https://library.stanford.edu/libraries/special-collections'
+
 aspace:
   default:
     user: <%= ENV['ASPACE_USER'] %>
