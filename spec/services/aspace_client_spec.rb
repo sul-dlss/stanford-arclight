@@ -65,6 +65,36 @@ RSpec.describe AspaceClient do
     end
   end
 
+  describe '#published_resource' do
+    let(:resource) { { 'ead_id' => 'sc1368.xml', 'identifier' => 'SC1368', 'uri' => '/repositories/2/resources/1' } }
+
+    before do
+      allow(AspaceQuery).to receive(:new).with(client:, repository_id: 2,
+                                               options: { published: true, suppressed: false,
+                                                          limit_results_to_uris: ['/repositories/2/resources/1'] })
+                                         .and_return([resource])
+    end
+
+    it 'returns the matching published resource' do
+      expect(client.published_resource(repository_id: 2, uri: '/repositories/2/resources/1')).to eq resource
+    end
+  end
+
+  describe '#search_resources' do
+    let(:aspace_search_query) { instance_double(AspaceSearchQuery) }
+
+    before do
+      allow(AspaceSearchQuery).to receive(:new)
+        .with(client:, repository_id: 2, query: 'sc1368', type: 'resource',
+              keys_to_return: %w[uri ead_id identifier title publish suppressed ark_name])
+        .and_return(aspace_search_query)
+    end
+
+    it 'returns an instance of AspaceSearchQuery limited to resources' do
+      expect(client.search_resources(repository_id: 2, query: 'sc1368')).to eq aspace_search_query
+    end
+  end
+
   describe '#all_published_resource_arks_by' do
     let(:published_resource_arks) do
       [{ 'ark_name' => ['ark:/22236/c88366e7e5-b138-4d4f-b210-9063f159547c'] },
