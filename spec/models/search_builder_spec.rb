@@ -8,6 +8,30 @@ RSpec.describe SearchBuilder do
   let(:blacklight_config) { Blacklight::Configuration.new }
   let(:scope) { instance_double ApplicationController, blacklight_config:, action_name: nil }
 
+  describe '#add_hierarchy_behavior' do
+    subject(:solr_parameters) do
+      search_builder.with(query).processed_parameters
+    end
+
+    let(:query) { { id: 'abc123' } }
+
+    context 'when the action is hierarchy' do
+      let(:scope) { instance_double ApplicationController, blacklight_config:, action_name: 'hierarchy' }
+
+      # Upstream drops the collection:[subquery] parent lookup by setting fl=*;
+      # this override narrows fl further to just the fields the tree view renders.
+      it 'narrows fl to only the fields needed by the hierarchy view' do
+        expect(solr_parameters[:fl]).to eq(SearchBuilder::HIERARCHY_FL)
+      end
+    end
+
+    context 'when the action is not hierarchy' do
+      it 'does not override fl' do
+        expect(solr_parameters[:fl]).to be_nil
+      end
+    end
+  end
+
   describe '#apply_group_sort_parameter' do
     subject(:solr_parameters) do
       search_builder.with(query).processed_parameters
