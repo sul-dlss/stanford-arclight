@@ -46,6 +46,9 @@ aspace:
 
 data_dir: <%= ENV['DATA_DIR'] || './spec/fixtures/ead' %>
 
+indexing:
+  batch_size: 5
+
 pdf_generation:
   create_on_ead_download: true
   ead_to_fo_xsl_path: './app/xslt/ead_to_fo.xsl'

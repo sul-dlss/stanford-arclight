@@ -36,7 +36,6 @@ RSpec.describe DeleteEadJob do
     expect(rsolr_client).to have_received(:commit)
   end
 
-  # rubocop:disable RSpec/MultipleMemoizedHelpers
   describe '.enqueue_all' do
     let(:harvestable_repos) do
       [Aspace::Repository.new(repo_code: 'ars', uri: '/repositories/11',
@@ -80,5 +79,4 @@ RSpec.describe DeleteEadJob do
       end
     end
   end
-  # rubocop:enable RSpec/MultipleMemoizedHelpers
 end
