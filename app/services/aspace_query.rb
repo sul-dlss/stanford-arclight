@@ -11,7 +11,7 @@ class AspaceQuery
   # @param client [AspaceClient] the client used to make requests
   # @param repository_id [Integer] the ID of the repository
   # @param primary_type [String] the primary record type to query, defaults to 'resource'
-  # @param updated_after [String] YYYY-MM-DD optionally limit to records that have been updated after a specific date
+  # @param updated_after [Time] optionally limit to records that have been updated after a specific time
   # @param options [Hash] additional query options with keys:
   #   - :published [Boolean] published status the records must have
   #   - :suppressed [Boolean] suppressed status the records must have
@@ -134,18 +134,19 @@ class AspaceQuery
       'literal' => true }
   end
 
-  # Optionally, limit the response to records updated after the
-  # date provided in the form of YYYY-MM-DD
+  # Limit the response to records updated after the given time.
+  # Uses a Solr range_query rather than date_field_query so that the full timestamp
+  # is respected — date_field_query with DAY precision floors to midnight and returns
+  # nothing for sub-day windows.
   def updated_after_query
     return unless updated_after
 
-    { 'field' => 'system_mtime',
-      'value' => updated_after,
-      'comparator' => 'greater_than',
-      'precision' => 'DAY',
-      'jsonmodel_type' => 'date_field_query',
-      'negated' => false,
-      'literal' => false }
+    { 'jsonmodel_type' => 'range_query',
+      'field' => 'system_mtime',
+      'from' => updated_after.utc.iso8601,
+      'to' => '*',
+      'inclusive_lower' => false,
+      'inclusive_upper' => true }
   end
 
   # Limit the response to records with field values that are not in the exclusion list
